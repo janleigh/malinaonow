@@ -1,57 +1,57 @@
 {
-  "expo": {
-    "name": "malinaonow",
-    "slug": "malinaonow",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
-    "scheme": "malinaonow",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.malinaonow"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./src/assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./src/assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "fonts": [
-      "./src/assets/fonts/LexendMega-ExtraLight.ttf",
-      "./src/assets/fonts/LexendMega-Light.ttf",
-      "./src/assets/fonts/LexendMega-Thin.ttf",
-      "./src/assets/fonts/LexendMega-Medium.ttf",
-      "./src/assets/fonts/LexendMega-Regular.ttf",
-      "./src/assets/fonts/LexendMega-Bold.ttf",
-      "./src/assets/fonts/LexendMega-Black.ttf",
-      "./src/assets/fonts/LexendMega-SemiBold.ttf",
-      "./src/assets/fonts/LexendMega-ExtraBold.ttf"
-    ],
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "3b93606a-5d66-49da-b7c9-66bd3f89a089"
-      }
-    }
-  }
+	"expo": {
+		"name": "malinaonow",
+		"slug": "malinaonow",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./src/assets/images/icon.png",
+		"scheme": "malinaonow",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./src/assets/images/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"edgeToEdgeEnabled": true,
+			"package": "com.anonymous.malinaonow"
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./src/assets/images/favicon.png"
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"image": "./src/assets/images/splash-icon.png",
+					"imageWidth": 200,
+					"resizeMode": "contain",
+					"backgroundColor": "#ffffff"
+				}
+			]
+		],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"fonts": [
+			"./src/assets/fonts/LexendMega-ExtraLight.ttf",
+			"./src/assets/fonts/LexendMega-Light.ttf",
+			"./src/assets/fonts/LexendMega-Thin.ttf",
+			"./src/assets/fonts/LexendMega-Medium.ttf",
+			"./src/assets/fonts/LexendMega-Regular.ttf",
+			"./src/assets/fonts/LexendMega-Bold.ttf",
+			"./src/assets/fonts/LexendMega-Black.ttf",
+			"./src/assets/fonts/LexendMega-SemiBold.ttf",
+			"./src/assets/fonts/LexendMega-ExtraBold.ttf"
+		],
+		"extra": {
+			"router": {},
+			"eas": {
+				"projectId": "3b93606a-5d66-49da-b7c9-66bd3f89a089"
+			}
+		}
+	}
 }
