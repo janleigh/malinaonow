@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { router, useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
@@ -61,9 +60,9 @@ export default function OTPScreen() {
 			// Navigate based on the flow type
 			if (type === "signup") {
 				// TODO: Do an create profile page.
-				router.replace("/");
+				router.replace("/home");
 			} else {
-				router.replace("/");
+				router.replace("/home");
 			}
 		} catch (err) {
 			console.error("Verification error:", err);
@@ -94,7 +93,7 @@ export default function OTPScreen() {
 	};
 
 	return (
-		<LinearGradient colors={["#fbdfff", "#c5a1ff"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} className="flex-1">
+		<View className="flex-1 bg-[#faf4f0]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="p-6">
@@ -183,6 +182,6 @@ export default function OTPScreen() {
 					</View>
 				</View>
 			</SafeAreaView>
-		</LinearGradient>
+		</View>
 	);
 }

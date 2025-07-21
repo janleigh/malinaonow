@@ -44,6 +44,7 @@ export default function RootLayout() {
 			<Stack.Screen name="auth/login" />
 			<Stack.Screen name="auth/signup" />
 			<Stack.Screen name="auth/otp" />
+			<Stack.Screen name="home/index" />
 			<Stack.Screen name="+not-found" />
 		</Stack>
 	);

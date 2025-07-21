@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
@@ -36,7 +35,7 @@ export default function LoginScreen() {
 	};
 
 	return (
-		<LinearGradient colors={["#fbdfff", "#c5a1ff"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} className="flex-1">
+		<View className="flex-1 bg-[#faf4f0]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="p-6">
@@ -66,7 +65,8 @@ export default function LoginScreen() {
 									setEmail(text);
 									setError("");
 								}}
-								placeholder="your@email.com"
+								placeholder="youremail@company.com"
+								placeholderTextColor="#666666"
 								className="text-base font-lexend text-black"
 								autoCapitalize="none"
 								keyboardType="email-address"
@@ -109,6 +109,6 @@ export default function LoginScreen() {
 					</View>
 				</View>
 			</SafeAreaView>
-		</LinearGradient>
+		</View>
 	);
 }
