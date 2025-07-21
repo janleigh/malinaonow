@@ -37,15 +37,21 @@
 			"typedRoutes": true
 		},
 		"fonts": [
-			"./src/assets/fonts/LexendMega-ExtraLight.ttf",
-			"./src/assets/fonts/LexendMega-Light.ttf",
-			"./src/assets/fonts/LexendMega-Thin.ttf",
+			"./src/assets/fonts/LexendMega-Bold.ttf",
+			"./src/assets/fonts/LexendMega-ExtraBold.ttf",
 			"./src/assets/fonts/LexendMega-Medium.ttf",
 			"./src/assets/fonts/LexendMega-Regular.ttf",
-			"./src/assets/fonts/LexendMega-Bold.ttf",
-			"./src/assets/fonts/LexendMega-Black.ttf",
 			"./src/assets/fonts/LexendMega-SemiBold.ttf",
-			"./src/assets/fonts/LexendMega-ExtraBold.ttf"
+			"./src/assets/fonts/PublicSans-Bold.ttf",
+			"./src/assets/fonts/PublicSans-BoldItalic.ttf",
+			"./src/assets/fonts/PublicSans-ExtraBold.ttf",
+			"./src/assets/fonts/PublicSans-ExtraBoldItalic.ttf",
+			"./src/assets/fonts/PublicSans-Italic.ttf",
+			"./src/assets/fonts/PublicSans-Medium.ttf",
+			"./src/assets/fonts/PublicSans-MediumItalic.ttf",
+			"./src/assets/fonts/PublicSans-Regular.ttf",
+			"./src/assets/fonts/PublicSans-SemiBold.ttf",
+			"./src/assets/fonts/PublicSans-SemiBoldItalic.ttf"
 		],
 		"extra": {
 			"router": {},
