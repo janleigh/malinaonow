@@ -153,8 +153,8 @@ export default function OTPScreen() {
 								return (
 									<View
 										key={`digit-${index}`}
-										className={`mx-1.5 h-12 w-12 items-center justify-center rounded-xl
-                                            border ${digit ? "border-[#9ee3ae]" : "border-[#333333]"} bg-white`}
+										className={`mx-1.5 h-12 w-12 items-center justify-center
+                                            border ${digit ? "border-[#fed787]" : "border-[#333333]"} bg-white`}
 										style={shadowStyles.standard}
 									>
 										{showCursor ? (
@@ -174,8 +174,8 @@ export default function OTPScreen() {
 								return (
 									<View
 										key={`digit-${index}`}
-										className={`mx-1.5 h-12 w-12 items-center justify-center rounded-xl
-                                            border ${digit ? "border-[#9ee3ae]" : "border-[#333333]"} bg-white`}
+										className={`mx-1.5 h-12 w-12 items-center justify-center
+                                            border ${digit ? "border-[#fed787]" : "border-[#333333]"} bg-white`}
 										style={shadowStyles.standard}
 									>
 										{showCursor ? (
@@ -191,7 +191,7 @@ export default function OTPScreen() {
 							<Text className="mt-4 text-red-500 font-lexend tracking-tighter-lexend">{error}</Text>
 						) : null}
 						<TouchableOpacity
-							className="mt-8 h-12 w-full items-center justify-center rounded-lg bg-[#fed787] border border-[#333333]"
+							className="mt-8 h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
 							style={shadowStyles.standard}
 							onPress={handleVerify}
 							disabled={isLoading || otp.replace(/\D/g, "").length !== 6}

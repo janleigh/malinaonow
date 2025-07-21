@@ -48,7 +48,7 @@ export default function SignupScreen() {
 					</Text>
 					<View className="mt-4 space-y-4">
 						<View
-							className="rounded-lg bg-white p-4 border border-[#333333]"
+							className="bg-white p-4 border border-[#333333]"
 							style={shadowStyles.standard}
 						>
 							<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
@@ -72,7 +72,7 @@ export default function SignupScreen() {
 						) : null}
 					</View>
 					<TouchableOpacity
-						className="mt-8 h-12 w-full items-center justify-center rounded-lg bg-[#fed787] border border-[#333333]"
+						className="mt-8 h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
 						style={shadowStyles.standard}
 						onPress={handleSignup}
 						disabled={isLoading}

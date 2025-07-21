@@ -76,7 +76,7 @@ export default function HomePage() {
 				<ScrollView className="flex-1">
 					<View className="px-4">
 						<View 
-							className="h-48 bg-white rounded-lg mb-4 overflow-hidden border border-[#333333]"
+							className="h-48 bg-white mb-4 overflow-hidden border border-[#333333]"
 							style={shadowStyles.standard}
 						>
 							<View className="flex-1 items-center justify-center bg-gray-200">
@@ -88,7 +88,7 @@ export default function HomePage() {
 							{/* // TODO: Add functionality to the button */}
 							<View className="absolute bottom-2 right-2">
 								<TouchableOpacity 
-									className="bg-white h-8 w-8 rounded-full items-center justify-center border border-[#333333]"
+									className="bg-white h-8 w-8 items-center justify-center border border-[#333333]"
 									style={shadowStyles.small}
 								>
 									<Feather name="plus" size={18} color="black" />
@@ -112,7 +112,7 @@ export default function HomePage() {
 							{dummyEvents.map(event => (
 								<TouchableOpacity 
 									key={event.id}
-									className="bg-white rounded-lg mb-4 border border-[#333333] overflow-hidden w-[48%]"
+									className="bg-white mb-4 border border-[#333333] overflow-hidden w-[48%]"
 									style={shadowStyles.standard}
 								>
 									<View>
