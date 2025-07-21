@@ -10,16 +10,11 @@
 		"newArchEnabled": true,
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./src/assets/images/adaptive-icon.png",
+				"foregroundImage": "./src/assets/images/icon.png",
 				"backgroundColor": "#ffffff"
 			},
 			"edgeToEdgeEnabled": true,
-			"package": "com.anonymous.malinaonow"
-		},
-		"web": {
-			"bundler": "metro",
-			"output": "static",
-			"favicon": "./src/assets/images/favicon.png"
+			"package": "com.jnlghmz.malinaonow"
 		},
 		"plugins": [
 			"expo-router",
