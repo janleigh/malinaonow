@@ -1,3 +1,4 @@
+import { shadowStyles } from "@/utils/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
@@ -48,13 +49,7 @@ export default function SignupScreen() {
 					<View className="mt-4 space-y-4">
 						<View
 							className="rounded-lg bg-white p-4 border border-[#333333]"
-							style={{
-								shadowColor: "#000000",
-								shadowOffset: { width: 0, height: 4 },
-								shadowOpacity: 1,
-								shadowRadius: 0,
-								elevation: 6
-							}}
+							style={shadowStyles.standard}
 						>
 							<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
 								EMAIL
@@ -77,21 +72,15 @@ export default function SignupScreen() {
 						) : null}
 					</View>
 					<TouchableOpacity
-						className="mt-8 h-12 w-full items-center justify-center rounded-lg bg-[#ffdc58] border border-[#333333]"
-						style={{
-							shadowColor: "#000000",
-							shadowOffset: { width: 0, height: 4 },
-							shadowOpacity: 1,
-							shadowRadius: 0,
-							elevation: 6
-						}}
+						className="mt-8 h-12 w-full items-center justify-center rounded-lg bg-[#fed787] border border-[#333333]"
+						style={shadowStyles.standard}
 						onPress={handleSignup}
 						disabled={isLoading}
 					>
 						{isLoading ? (
 							<ActivityIndicator color="#000" />
 						) : (
-							<Text className="text-base text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend">
+							<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
 								Create Account
 							</Text>
 						)}

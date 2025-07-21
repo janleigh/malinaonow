@@ -1,3 +1,4 @@
+import { shadowStyles } from '@/utils/styles';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Link, router } from "expo-router";
 import React from "react";
@@ -23,32 +24,20 @@ export default function LandingPage() {
 				<View className="w-full px-5 pb-10 space-y-3">
 					<Link href="/auth/signup" asChild>
 						<TouchableOpacity
-							className="h-12 w-full flex-row items-center justify-center rounded-lg bg-white px-4 border border-[#333333]"
-							style={{
-								shadowColor: "#000000",
-								shadowOffset: { width: 0, height: 4 },
-								shadowOpacity: 1,
-								shadowRadius: 1,
-								elevation: 6
-							}}
+							className="h-12 w-full flex-row items-center justify-center bg-white px-4 border border-[#333333]"
+							style={shadowStyles.standard}
 						>
-							<Text className="text-base text-black font-extrabold android:font-normal font-public-sans-extrabold">
+							<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
 								Sign up with email
 							</Text>
 						</TouchableOpacity>
 					</Link>
 					<TouchableOpacity
-						className="h-12 w-full android:mt-2 flex-row items-center justify-center rounded-lg bg-[#ffdc58] px-4 border border-[#333333]"
-						style={{
-							shadowColor: "#000000",
-							shadowOffset: { width: 0, height: 4 },
-							shadowOpacity: 1,
-							shadowRadius: 1,
-							elevation: 6
-						}}
+						className="h-12 w-full android:mt-2 flex-row items-center justify-center bg-[#9ee3ae] px-4 border border-[#333333]"
+						style={shadowStyles.standard}
 					>
 						<AntDesign className="mr-2" name="google" size={24} color="black" />
-						<Text className="text-base text-black font-extrabold android:font-normal font-public-sans-extrabold">
+						<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
 							Continue with Google
 						</Text>
 					</TouchableOpacity>

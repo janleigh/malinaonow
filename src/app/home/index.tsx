@@ -1,3 +1,4 @@
+import { shadowStyles } from "@/utils/styles";
 import { AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
 import React from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -15,21 +16,48 @@ const dummyEvents = [
 	},
 	{
 		id: '2',
-		title: 'Malinao Fiesta',
-		date: 'May 1, 2026',
+		title: 'Event 2',
+		date: 'August 15, 2025',
 		time: '10:00 AM - 6:00 PM',
-		location: 'Malinao Town Plaza',
-		image: 'https://via.placeholder.com/150',
+		location: 'Malinao Town Center',
+		image: 'https://i.redd.it/3k7x1q9z4vwe1.jpg',
 		distance: '1.2 km away'
 	},
 	{
 		id: '3',
-		title: 'Lorem Ipsum',
-		date: 'September 11, 2001',
-		time: '8:14 AM',
-		location: 'Somewhere only we know',
-		image: 'https://via.placeholder.com/150',
-		distance: '0.8 km away'
+		title: 'Event 3',
+		date: 'September 5, 2025',
+		time: '9:00 AM - 5:00 PM',
+		location: 'Malinao Plaza',
+		image: 'https://i.redd.it/4k7x1q9z4vwe1.jpg',
+		distance: '2.0 km away'
+	},
+	{
+		id: '4',
+		title: 'Event 4',
+		date: 'October 10, 2025',
+		time: '8:00 AM - 4:00 PM',
+		location: 'Malinao Sports Complex',
+		image: 'https://i.redd.it/5k7x1q9z4vwe1.jpg',
+		distance: '3.5 km away'
+	},
+	{
+		id: '5',
+		title: 'Event 5',
+		date: 'November 20, 2025',
+		time: '11:00 AM - 3:00 PM',
+		location: 'Malinao',
+		image: 'https://i.redd.it/6k7x1q9z4vwe1.jpg',
+		distance: '4.0 km away'
+	},
+	{
+		id: '6',
+		title: 'Event 6',
+		date: 'December 25, 2025',
+		time: '12:00 PM - 6:00 PM',
+		location: 'Malinao',
+		image: 'https://i.redd.it/7k7x1q9z4vwe1.jpg',
+		distance: '5.0 km away'
 	}
 ];
 
@@ -49,13 +77,7 @@ export default function HomePage() {
 					<View className="px-4">
 						<View 
 							className="h-48 bg-white rounded-lg mb-4 overflow-hidden border border-[#333333]"
-							style={{
-								shadowColor: "#000000",
-								shadowOffset: { width: 0, height: 4 },
-								shadowOpacity: 1,
-								shadowRadius: 0,
-								elevation: 6
-							}}
+							style={shadowStyles.standard}
 						>
 							<View className="flex-1 items-center justify-center bg-gray-200">
 								<Feather name="map" size={48} color="#555" />
@@ -67,13 +89,7 @@ export default function HomePage() {
 							<View className="absolute bottom-2 right-2">
 								<TouchableOpacity 
 									className="bg-white h-8 w-8 rounded-full items-center justify-center border border-[#333333]"
-									style={{
-										shadowColor: "#000000",
-										shadowOffset: { width: 0, height: 2 },
-										shadowOpacity: 1,
-										shadowRadius: 0,
-										elevation: 3
-									}}
+									style={shadowStyles.small}
 								>
 									<Feather name="plus" size={18} color="black" />
 								</TouchableOpacity>
@@ -92,70 +108,56 @@ export default function HomePage() {
 								<AntDesign name="filter" size={18} color="black" />
 							</TouchableOpacity>
 						</View>
-						{dummyEvents.map(event => (
-							<TouchableOpacity 
-								key={event.id}
-								className="bg-white rounded-lg mb-4 border border-[#333333] overflow-hidden"
-								style={{
-									shadowColor: "#000000",
-									shadowOffset: { width: 0, height: 4 },
-									shadowOpacity: 1,
-									shadowRadius: 0,
-									elevation: 6
-								}}
-							>
-								<View className="flex-row">
-									<View className="w-24 h-24">
-										<Image 
-											source={{ uri: event.image }} 
-											className="w-full h-full" 
-											resizeMode="cover"
-										/>
-									</View>
-									<View className="flex-1 p-3">
-										<Text className="text-base font-bold font-public-sans-extrabold text-black">
-											{event.title}
-										</Text>
-										<View className="flex-row items-center mt-1">
-											<FontAwesome name="calendar" size={12} color="#555" />
-											<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]">
-												{event.date} · {event.time}
-											</Text>
+						<View className="flex-row flex-wrap justify-between">
+							{dummyEvents.map(event => (
+								<TouchableOpacity 
+									key={event.id}
+									className="bg-white rounded-lg mb-4 border border-[#333333] overflow-hidden w-[48%]"
+									style={shadowStyles.standard}
+								>
+									<View>
+										<View className="w-full h-32">
+											<Image 
+												source={{ uri: event.image }} 
+												className="w-full h-full" 
+												resizeMode="cover"
+											/>
 										</View>
-										<View className="flex-row items-center mt-1">
-											<FontAwesome name="map-marker" size={12} color="#555" />
-											<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]">
-												{event.location}
+										<View className="p-3">
+											<Text className="text-sm font-bold font-public-sans-extrabold text-black" numberOfLines={1}>
+												{event.title}
 											</Text>
-										</View>
-										<View className="flex-row items-center mt-1">
-											<AntDesign name="enviromento" size={12} color="#555" />
-											<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]">
-												{event.distance}
-											</Text>
+											<View className="flex-row items-center mt-1">
+												<FontAwesome name="calendar" size={10} color="#555" />
+												<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]" numberOfLines={1}>
+													{event.date}
+												</Text>
+											</View>
+											<View className="flex-row items-center mt-1">
+												<AntDesign name="enviromento" size={10} color="#555" />
+												<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]" numberOfLines={1}>
+													{event.location}
+												</Text>
+											</View>
 										</View>
 									</View>
-								</View>
-							</TouchableOpacity>
-						))}
+								</TouchableOpacity>
+							))}
+						</View>
 					</View>
 				</ScrollView>
 				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
 					<TouchableOpacity className="items-center">
 						<AntDesign name="home" size={24} color="#333" />
-						{/* <Text className="text-xs font-lexend tracking-tighter-lexend text-[#333]">Home</Text> */}
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center">
 						<AntDesign name="search1" size={24} color="#999" />
-						{/* <Text className="text-xs font-lexend tracking-tighter-lexend text-[#999]">Explore</Text> */}
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center">
 						<AntDesign name="calendar" size={24} color="#999" />
-						{/* <Text className="text-xs font-lexend tracking-tighter-lexend text-[#999]">Events</Text> */}
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center">
 						<AntDesign name="hearto" size={24} color="#999" />
-						{/* <Text className="text-xs font-lexend tracking-tighter-lexend text-[#999]">Saved</Text> */}
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
