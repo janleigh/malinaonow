@@ -28,6 +28,7 @@ export default function SignupScreen() {
 				params: { email, type: "signup" }
 			});
 		} catch (err) {
+			console.error("Signup error:", err);
 			setError("Something went wrong. Please try again.");
 		} finally {
 			setIsLoading(false);
@@ -39,7 +40,7 @@ export default function SignupScreen() {
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="p-6">
-					<Text className="mb-2 text-3xl font-extrabold text-black font-lexend tracking-tighter-lexend">
+					<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 						Create Account
 					</Text>
 					<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
@@ -90,17 +91,16 @@ export default function SignupScreen() {
 						{isLoading ? (
 							<ActivityIndicator color="#000" />
 						) : (
-							<Text className="text-base font-extrabold text-black font-lexend tracking-tighter-lexend">
+							<Text className="text-base text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend">
 								Create Account
 							</Text>
 						)}
 					</TouchableOpacity>
-
 					<View className="mt-6 items-center">
 						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
 							Already have an account?{" "}
 							<Text
-								className="font-extrabold text-black font-lexend tracking-tighter-lexend"
+								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
 								onPress={() => router.replace("/auth/login")}
 							>
 								Log in

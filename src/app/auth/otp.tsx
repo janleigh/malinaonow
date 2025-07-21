@@ -66,6 +66,7 @@ export default function OTPScreen() {
 				router.replace("/");
 			}
 		} catch (err) {
+			console.error("Verification error:", err);
 			setError("Invalid verification code. Please try again.");
 		} finally {
 			setIsLoading(false);
@@ -80,6 +81,7 @@ export default function OTPScreen() {
 			// TODO: Resend OTP function here
 			await new Promise((resolve) => setTimeout(resolve, 1500));
 		} catch (err) {
+			console.error("Resend code error:", err);
 			setError("Failed to resend code. Please try again.");
 		} finally {
 			setIsResending(false);
@@ -96,7 +98,7 @@ export default function OTPScreen() {
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="p-6">
-					<Text className="mb-2 text-3xl font-extrabold text-black font-lexend tracking-tighter-lexend">
+					<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 						Verification Code
 					</Text>
 					<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
@@ -130,14 +132,13 @@ export default function OTPScreen() {
 									<View
 										key={`digit-${index}`}
 										className={`mx-1.5 h-12 w-12 items-center justify-center rounded-xl
-                                            ${index === 3 ? "ml-4" : ""}
                                             border ${digit ? "border-[#333333]" : "border-[#e0e0e0]"} bg-white`}
 										style={{
 											shadowColor: "#000000",
-											shadowOffset: { width: 0, height: 2 },
-											shadowOpacity: 0.1,
-											shadowRadius: 4,
-											elevation: 2
+											shadowOffset: { width: 0, height: 4 },
+											shadowOpacity: 1,
+											shadowRadius: 0,
+											elevation: 6
 										}}
 									>
 										<Text className="text-xl font-bold font-lexend text-black">{digit || ""}</Text>
@@ -163,7 +164,7 @@ export default function OTPScreen() {
 							{isLoading ? (
 								<ActivityIndicator color="#000" />
 							) : (
-								<Text className="text-base font-extrabold text-black font-lexend tracking-tighter-lexend">
+								<Text className="text-base font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 									Verify
 								</Text>
 							)}
@@ -172,7 +173,7 @@ export default function OTPScreen() {
 							<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
 								Didn&apos;t receive code?{" "}
 								<Text
-									className="font-extrabold text-black font-lexend tracking-tighter-lexend"
+									className="font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend"
 									onPress={handleResendCode}
 								>
 									{isResending ? "Sending..." : "Resend"}
