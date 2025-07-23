@@ -46,9 +46,9 @@ export default function OTPScreen() {
 	// Create blinking cursor effect
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setCursorVisible(prev => !prev);
+			setCursorVisible((prev) => !prev);
 		}, 500);
-        
+
 		return () => clearInterval(interval);
 	}, []);
 
@@ -83,9 +83,9 @@ export default function OTPScreen() {
 			// Navigate based on the flow type
 			if (type === "signup") {
 				// TODO: Do an create profile page.
-				router.replace("/home");
+				router.replace("/(home)");
 			} else {
-				router.replace("/home");
+				router.replace("/(home)");
 			}
 		} catch (err) {
 			console.error("Verification error:", err);
@@ -121,7 +121,7 @@ export default function OTPScreen() {
 			<SafeAreaView className="flex-1">
 				<View className="p-6">
 					<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                        Verification Code
+						Verification Code
 					</Text>
 					<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
 						{`We've sent a 6-digit code to ${email || "your email"}`}
@@ -160,7 +160,9 @@ export default function OTPScreen() {
 										{showCursor ? (
 											<View className="h-5 w-0.5 bg-black animate-pulse" />
 										) : (
-											<Text className="text-xl font-bold font-lexend text-black">{digit || ""}</Text>
+											<Text className="text-xl font-bold font-lexend text-black">
+												{digit || ""}
+											</Text>
 										)}
 									</View>
 								);
@@ -181,7 +183,9 @@ export default function OTPScreen() {
 										{showCursor ? (
 											<View className="h-5 w-0.5 bg-black animate-pulse" />
 										) : (
-											<Text className="text-xl font-bold font-lexend text-black">{digit || ""}</Text>
+											<Text className="text-xl font-bold font-lexend text-black">
+												{digit || ""}
+											</Text>
 										)}
 									</View>
 								);
@@ -200,13 +204,13 @@ export default function OTPScreen() {
 								<ActivityIndicator color="#000" />
 							) : (
 								<Text className="text-base font-extrabold android:font-normal text-black font-lexend-medium tracking-tighter-lexend">
-                                    Verify
+									Verify
 								</Text>
 							)}
 						</TouchableOpacity>
 						<View className="mt-6 items-center">
 							<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
-                                Didn&apos;t receive code?{" "}
+								Didn&apos;t receive code?{" "}
 								<Text
 									className="font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend"
 									onPress={handleResendCode}

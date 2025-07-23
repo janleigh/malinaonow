@@ -1,7 +1,7 @@
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
 import "react-native-reanimated";
 import "../styles/globals.css";
 
@@ -9,11 +9,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const [fontsLoaded, fontError] = useFonts({
-		'LexendMega-Bold': require('../assets/fonts/LexendMega-Bold.ttf'),
-		'LexendMega-ExtraBold': require('../assets/fonts/LexendMega-ExtraBold.ttf'),
-		'LexendMega-Medium': require('../assets/fonts/LexendMega-Medium.ttf'),
-		'LexendMega-Regular': require('../assets/fonts/LexendMega-Regular.ttf'),
-		'LexendMega-SemiBold': require('../assets/fonts/LexendMega-SemiBold.ttf')
+		"LexendMega-Bold": require("../assets/fonts/LexendMega-Bold.ttf"),
+		"LexendMega-ExtraBold": require("../assets/fonts/LexendMega-ExtraBold.ttf"),
+		"LexendMega-Medium": require("../assets/fonts/LexendMega-Medium.ttf"),
+		"LexendMega-Regular": require("../assets/fonts/LexendMega-Regular.ttf"),
+		"LexendMega-SemiBold": require("../assets/fonts/LexendMega-SemiBold.ttf")
 	});
 
 	useEffect(() => {
@@ -29,10 +29,8 @@ export default function RootLayout() {
 	return (
 		<Stack screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="index" />
-			<Stack.Screen name="auth/login" />
-			<Stack.Screen name="auth/signup" />
-			<Stack.Screen name="auth/otp" />
-			<Stack.Screen name="home/index" />
+			<Stack.Screen name="(auth)" />
+			<Stack.Screen name="(home)" />
 			<Stack.Screen name="+not-found" />
 		</Stack>
 	);

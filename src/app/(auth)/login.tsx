@@ -5,12 +5,12 @@ import React, { useState } from "react";
 import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function SignupScreen() {
+export default function LoginScreen() {
 	const [email, setEmail] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	const handleSignup = async () => {
+	const handleLogin = async () => {
 		if (!email || !email.includes("@")) {
 			setError("Please enter a valid email address");
 			return;
@@ -24,11 +24,11 @@ export default function SignupScreen() {
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 
 			router.push({
-				pathname: "/auth/otp",
-				params: { email, type: "signup" }
+				pathname: "/otp",
+				params: { email, type: "login" }
 			});
 		} catch (err) {
-			console.error("Signup error:", err);
+			console.error("Login error:", err);
 			setError("Something went wrong. Please try again.");
 		} finally {
 			setIsLoading(false);
@@ -40,17 +40,14 @@ export default function SignupScreen() {
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="p-6">
-					<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-						Create Account
+					<Text className="text-3xl font-extrabold android:text-4xl android:font-normal text-black font-lexend tracking-tighter-lexend">
+						Welcome Back
 					</Text>
 					<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
-						Sign up to get started with MalinaoNow
+						Log in to continue using MalinaoNow
 					</Text>
 					<View className="mt-4 space-y-4">
-						<View
-							className="bg-white p-4 border border-[#333333]"
-							style={shadowStyles.standard}
-						>
+						<View className="bg-white p-4 border border-[#333333]" style={shadowStyles.standard}>
 							<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
 								EMAIL
 							</Text>
@@ -74,25 +71,25 @@ export default function SignupScreen() {
 					<TouchableOpacity
 						className="mt-8 h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
 						style={shadowStyles.standard}
-						onPress={handleSignup}
+						onPress={handleLogin}
 						disabled={isLoading}
 					>
 						{isLoading ? (
 							<ActivityIndicator color="#000" />
 						) : (
-							<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
-								Create Account
+							<Text className="text-base font-extrabold android:font-normal text-black font-lexend-medium tracking-tighter-lexend">
+								Login
 							</Text>
 						)}
 					</TouchableOpacity>
 					<View className="mt-6 items-center">
 						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
-							Already have an account?{" "}
+							Don&apos;t have an account?{" "}
 							<Text
 								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
-								onPress={() => router.replace("/auth/login")}
+								onPress={() => router.replace("/signup")}
 							>
-								Log in
+								Sign up
 							</Text>
 						</Text>
 					</View>
