@@ -13,19 +13,7 @@ export default function RootLayout() {
 		'LexendMega-ExtraBold': require('../assets/fonts/LexendMega-ExtraBold.ttf'),
 		'LexendMega-Medium': require('../assets/fonts/LexendMega-Medium.ttf'),
 		'LexendMega-Regular': require('../assets/fonts/LexendMega-Regular.ttf'),
-		'LexendMega-SemiBold': require('../assets/fonts/LexendMega-SemiBold.ttf'),
-
-		// Public Sans
-		'PublicSans-Bold': require('../assets/fonts/PublicSans-Bold.ttf'),
-		'PublicSans-BoldItalic': require('../assets/fonts/PublicSans-BoldItalic.ttf'),
-		'PublicSans-ExtraBold': require('../assets/fonts/PublicSans-ExtraBold.ttf'),
-		'PublicSans-ExtraBoldItalic': require('../assets/fonts/PublicSans-ExtraBoldItalic.ttf'),
-		'PublicSans-Italic': require('../assets/fonts/PublicSans-Italic.ttf'),
-		'PublicSans-Medium': require('../assets/fonts/PublicSans-Medium.ttf'),
-		'PublicSans-MediumItalic': require('../assets/fonts/PublicSans-MediumItalic.ttf'),
-		'PublicSans-Regular': require('../assets/fonts/PublicSans-Regular.ttf'),
-		'PublicSans-SemiBold': require('../assets/fonts/PublicSans-SemiBold.ttf'),
-		'PublicSans-SemiBoldItalic': require('../assets/fonts/PublicSans-SemiBoldItalic.ttf'),
+		'LexendMega-SemiBold': require('../assets/fonts/LexendMega-SemiBold.ttf')
 	});
 
 	useEffect(() => {

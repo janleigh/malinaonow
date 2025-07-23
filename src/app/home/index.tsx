@@ -1,10 +1,13 @@
+import { Event, EventCard } from "@/components/EventCard";
+import { UserSidebar } from "@/components/UserSidebar";
 import { shadowStyles } from "@/utils/styles";
-import { AntDesign, Feather, FontAwesome } from '@expo/vector-icons';
-import React from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { AntDesign, Feather } from '@expo/vector-icons';
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const dummyEvents = [
+const dummyEvents: Event[] = [
 	{
 		id: '1',
 		title: 'Shabuhan Kanday Cel',
@@ -19,7 +22,7 @@ const dummyEvents = [
 		title: 'Event 2',
 		date: 'August 15, 2025',
 		time: '10:00 AM - 6:00 PM',
-		location: 'Malinao Town Center',
+		location: 'Malinao Town Hall',
 		image: 'https://i.redd.it/3k7x1q9z4vwe1.jpg',
 		distance: '1.2 km away'
 	},
@@ -62,6 +65,22 @@ const dummyEvents = [
 ];
 
 export default function HomePage() {
+	const [sidebarVisible, setSidebarVisible] = useState(false);
+    
+	const openSidebar = () => {
+		setSidebarVisible(true);
+	};
+    
+	const closeSidebar = () => {
+		setSidebarVisible(false);
+	};
+    
+	const handleSignOut = () => {
+		// TODO: Add sign out logic
+		closeSidebar();
+		router.replace("/");
+	};
+
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
 			<SafeAreaView className="flex-1">
@@ -69,7 +88,7 @@ export default function HomePage() {
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
                         MalinaoNow
 					</Text>
-					<TouchableOpacity className="p-2">
+					<TouchableOpacity className="p-2" onPress={openSidebar}>
 						<Feather name="user" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
@@ -98,7 +117,7 @@ export default function HomePage() {
 					</View>
 					<View className="px-4 py-2">
 						<View className="flex-row justify-between items-center mb-4">
-							<Text className="text-xl font-bold font-public-sans-extrabold text-black">
+							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
                                 Local Events
 							</Text>
 							<TouchableOpacity className="flex-row items-center">
@@ -108,41 +127,17 @@ export default function HomePage() {
 								<AntDesign name="filter" size={18} color="black" />
 							</TouchableOpacity>
 						</View>
-						<View className="flex-row flex-wrap justify-between">
-							{dummyEvents.map(event => (
-								<TouchableOpacity 
-									key={event.id}
-									className="bg-white mb-4 border border-[#333333] overflow-hidden w-[48%]"
-									style={shadowStyles.standard}
-								>
-									<View>
-										<View className="w-full h-32">
-											<Image 
-												source={{ uri: event.image }} 
-												className="w-full h-full" 
-												resizeMode="cover"
-											/>
-										</View>
-										<View className="p-3">
-											<Text className="text-sm font-bold font-public-sans-extrabold text-black" numberOfLines={1}>
-												{event.title}
-											</Text>
-											<View className="flex-row items-center mt-1">
-												<FontAwesome name="calendar" size={10} color="#555" />
-												<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]" numberOfLines={1}>
-													{event.date}
-												</Text>
-											</View>
-											<View className="flex-row items-center mt-1">
-												<AntDesign name="enviromento" size={10} color="#555" />
-												<Text className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]" numberOfLines={1}>
-													{event.location}
-												</Text>
-											</View>
-										</View>
-									</View>
-								</TouchableOpacity>
-							))}
+						<View className="flex-row justify-between">
+							<View className="w-[48%] space-y-4">
+								{dummyEvents.slice(0, Math.ceil(dummyEvents.length/2)).map(event => (
+									<EventCard key={event.id} event={event} />
+								))}
+							</View>
+							<View className="w-[48%] space-y-4">
+								{dummyEvents.slice(Math.ceil(dummyEvents.length/2)).map(event => (
+									<EventCard key={event.id} event={event} />
+								))}
+							</View>
 						</View>
 					</View>
 				</ScrollView>
@@ -160,6 +155,13 @@ export default function HomePage() {
 						<AntDesign name="hearto" size={24} color="#999" />
 					</TouchableOpacity>
 				</View>
+				<UserSidebar
+					visible={sidebarVisible}
+					onClose={closeSidebar}
+					onSignOut={handleSignOut}
+					username="User Name"
+					email="user@example.com"
+				/>
 			</SafeAreaView>
 		</View>
 	);
