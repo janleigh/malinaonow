@@ -1,6 +1,6 @@
 import { Event, EventCard } from "@/components/home/EventCard";
 import { UserSidebar } from "@/components/home/UserSidebar";
-import { MAPBOX_API_KEY } from "@/utils/config";
+import { API_KEYS } from "@/utils/config";
 import { shadowStyles } from "@/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -25,7 +25,7 @@ const mapboxHtml = `
 		<body>
 			<div id="map"></div>
 			<script>
-				mapboxgl.accessToken = '${MAPBOX_API_KEY}';
+				mapboxgl.accessToken = '${API_KEYS.mapbox}';
 				
 				const map = new mapboxgl.Map({
 					container: 'map',
@@ -121,7 +121,7 @@ export default function HomePage() {
 		closeSidebar();
 		router.replace("/");
 	};
-    
+
 	const toggleMapFullscreen = useCallback(() => {
 		if (!mapFullscreen) {
 			setMapFullscreen(true);
@@ -129,12 +129,12 @@ export default function HomePage() {
 				Animated.timing(mapScaleAnim, {
 					toValue: 1,
 					duration: 300,
-					useNativeDriver: true,
+					useNativeDriver: true
 				}),
 				Animated.timing(mapOpacityAnim, {
 					toValue: 1,
 					duration: 300,
-					useNativeDriver: true,
+					useNativeDriver: true
 				})
 			]).start();
 		} else {
@@ -142,29 +142,29 @@ export default function HomePage() {
 				Animated.timing(mapScaleAnim, {
 					toValue: 0,
 					duration: 300,
-					useNativeDriver: true,
+					useNativeDriver: true
 				}),
 				Animated.timing(mapOpacityAnim, {
 					toValue: 0,
 					duration: 300,
-					useNativeDriver: true,
+					useNativeDriver: true
 				})
 			]).start(() => {
 				setMapFullscreen(false);
 			});
 		}
 	}, [mapFullscreen, mapScaleAnim, mapOpacityAnim]);
-    
+
 	// Handle back button press when map is in fullscreen
 	useEffect(() => {
-		const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+		const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
 			if (mapFullscreen) {
 				toggleMapFullscreen();
 				return true;
 			}
 			return false;
 		});
-        
+
 		return () => backHandler.remove();
 	}, [mapFullscreen, toggleMapFullscreen]);
 
@@ -173,7 +173,7 @@ export default function HomePage() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                        MalinaoNow
+						MalinaoNow
 					</Text>
 					<TouchableOpacity className="p-2" onPress={openSidebar}>
 						<Feather name="user" size={24} color="black" />
@@ -181,10 +181,7 @@ export default function HomePage() {
 				</View>
 				<ScrollView className="flex-1">
 					<View className="px-4">
-						<View
-							className="h-48 overflow-hidden border border-[#333333]"
-							style={shadowStyles.standard}
-						>
+						<View className="h-48 overflow-hidden border border-[#333333]" style={shadowStyles.standard}>
 							<WebView
 								source={{ html: mapboxHtml }}
 								style={{ flex: 1 }}
@@ -216,7 +213,7 @@ export default function HomePage() {
 					<View className="px-4 py-2">
 						<View className="flex-row justify-between items-center mb-4">
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
-                                Local Events
+								Local Events
 							</Text>
 							<TouchableOpacity className="flex-row items-center">
 								<Text className="mr-1 font-lexend tracking-tighter-lexend text-black">Filter</Text>
@@ -237,7 +234,7 @@ export default function HomePage() {
 						</View>
 					</View>
 				</ScrollView>
-                
+
 				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
 					<TouchableOpacity className="items-center">
 						<AntDesign name="home" size={24} color="#333" />
@@ -252,19 +249,19 @@ export default function HomePage() {
 						<AntDesign name="hearto" size={24} color="#999" />
 					</TouchableOpacity>
 				</View>
-                
+
 				<Modal visible={mapFullscreen} transparent={true} animationType="none">
-					<Animated.View 
+					<Animated.View
 						style={{
 							flex: 1,
-							backgroundColor: '#faf4f0',
+							backgroundColor: "#faf4f0",
 							opacity: mapOpacityAnim,
 							transform: [
-								{ 
+								{
 									scale: mapScaleAnim.interpolate({
 										inputRange: [0, 1],
-										outputRange: [0.8, 1],
-									}) 
+										outputRange: [0.8, 1]
+									})
 								}
 							]
 						}}
@@ -272,7 +269,7 @@ export default function HomePage() {
 						<SafeAreaView className="flex-1">
 							<View className="flex-row justify-between items-center p-4 border-b border-[#333333]">
 								<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
-                                    Map View
+									Map View
 								</Text>
 								<TouchableOpacity onPress={toggleMapFullscreen}>
 									<Feather name="x" size={24} color="black" />
@@ -301,7 +298,7 @@ export default function HomePage() {
 						</SafeAreaView>
 					</Animated.View>
 				</Modal>
-                
+
 				<UserSidebar visible={sidebarVisible} onClose={closeSidebar} onSignOut={handleSignOut} />
 			</SafeAreaView>
 		</View>

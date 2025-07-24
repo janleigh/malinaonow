@@ -8,9 +8,9 @@
 		"ios": "expo run:ios",
 		"web": "expo start --web",
 		"lint": "expo lint",
-		"lint:fix": "eslint src/app --ext .ts --fix",
-		"format": "prettier --write src/app",
-		"format:check": "prettier --check src/app"
+		"lint:fix": "eslint src --ext .ts --fix",
+		"format": "prettier --write src",
+		"format:check": "prettier --check src"
 	},
 	"dependencies": {
 		"@expo/vector-icons": "^14.1.0",

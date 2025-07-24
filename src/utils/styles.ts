@@ -6,7 +6,7 @@ export const shadowStyles = {
 		shadowRadius: 0,
 		elevation: 6,
 		borderBottomWidth: 2,
-		borderBottomColor: "#000",
+		borderBottomColor: "#000"
 	},
 	small: {
 		shadowColor: "#000000",
