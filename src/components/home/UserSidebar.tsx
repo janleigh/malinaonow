@@ -21,7 +21,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, emai
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 	const contentFadeAnim = useRef(new Animated.Value(0)).current;
 	const [modalVisible, setModalVisible] = useState(false);
-    
+
 	const userEmail = user?.primaryEmailAddress?.emailAddress || email;
 	const userName = user?.fullName || username || "Guest";
 	const userProfileImage = user?.imageUrl || profileImage;
@@ -38,7 +38,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, emai
 			slideAnim.setValue(Dimensions.get("window").width);
 			fadeAnim.setValue(0);
 			contentFadeAnim.setValue(0);
-            
+
 			const animationTimeout = setTimeout(() => {
 				Animated.parallel([
 					Animated.timing(slideAnim, {
@@ -60,10 +60,10 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, emai
 						useNativeDriver: true
 					}).start();
 				}, 100);
-                
+
 				return () => clearTimeout(contentTimeout);
 			}, 10);
-            
+
 			return () => clearTimeout(animationTimeout);
 		} else if (!visible && modalVisible) {
 			Animated.parallel([
@@ -91,10 +91,12 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, emai
 	const handleSignOut = async () => {
 		try {
 			onClose();
-			
-			setTimeout(async () => {
-				await signOut();
-			}, 300);
+
+			await signOut();
+
+			// setTimeout(async () => {
+			// 	await signOut();
+			// }, 300);
 		} catch (error) {
 			console.error("Sign out error:", error);
 		}

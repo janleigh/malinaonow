@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const signUp = async (email: string, firstName?: string, lastName?: string) => {
 		try {
 			setCurrentEmail(email);
-			
+
 			const result = await clerkSignUp?.create({
 				emailAddress: email,
 				firstName,
@@ -108,9 +108,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				if (verification?.status === "complete" || verification?.verifications?.emailAddress?.status === "verified") {
 					if (verification.createdSessionId) {
 						await setActiveSignUp?.({ session: verification.createdSessionId });
-						
+
 						await new Promise(resolve => setTimeout(resolve, 300));
-						
+
 						router.replace("/(home)");
 					} else {
 						console.error("No session ID returned after verification");
@@ -144,7 +144,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const signOut = async () => {
 		try {
 			await clerk.signOut();
-			router.replace("/");
+			// router.replace("/");
+			router.dismissAll();
 		} catch (error) {
 			console.error("Error during sign out:", error);
 			throw error;
