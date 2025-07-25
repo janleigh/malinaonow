@@ -1,3 +1,5 @@
+import { OAuthButton } from "@/components/auth/OAuthButton";
+import { useAuth } from "@/context/AuthContext";
 import { shadowStyles } from "@/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Link, router } from "expo-router";
@@ -6,6 +8,15 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LandingPage() {
+	const { isSignedIn } = useAuth();
+
+	// If user is already signed in, redirect to home
+	React.useEffect(() => {
+		if (isSignedIn) {
+			router.replace("/(home)");
+		}
+	}, [isSignedIn]);
+
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
 			<SafeAreaView className="flex-1 items-center justify-center">
@@ -32,23 +43,18 @@ export default function LandingPage() {
 							</Text>
 						</TouchableOpacity>
 					</Link>
-					<Link href="/+not-found" asChild>
-						<TouchableOpacity
-							className="h-12 w-full android:mt-2 flex-row items-center justify-center bg-[#9ee3ae] px-4 border border-[#333333]"
-							style={shadowStyles.standard}
-						>
-							<AntDesign className="mr-2" name="google" size={24} color="black" />
-							<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
-								Continue with Google
-							</Text>
-						</TouchableOpacity>
-					</Link>
+					<OAuthButton
+						strategy="oauth_google"
+						text="Continue with Google"
+						icon={<AntDesign className="mr-2" name="google" size={24} color="black" />}
+						className="android:mt-2"
+					/>
 					<View className="mt-6 items-center">
 						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
 							Already have an account?{" "}
 							<Text
 								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
-								onPress={() => router.replace("/(home)")}
+								onPress={() => router.push("/(auth)/login")}
 							>
 								Log in
 							</Text>

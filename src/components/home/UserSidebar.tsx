@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext";
 import { shadowStyles } from "@/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -14,27 +15,31 @@ interface UserSidebarProps {
 	profileImage?: string;
 }
 
-export const UserSidebar: React.FC<UserSidebarProps> = ({
-	visible,
-	onClose,
-	onSignOut,
-	email = "tomboyishgirl@gensokyo.com",
-	username = "Cirno",
-	profileImage = "https://github.com/janleigh.png"
-}) => {
+export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, email, username, profileImage }) => {
+	const { signOut, user } = useAuth();
 	const slideAnim = useRef(new Animated.Value(Dimensions.get("window").width)).current;
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 	const contentFadeAnim = useRef(new Animated.Value(0)).current;
 	const [modalVisible, setModalVisible] = useState(false);
+    
+	const userEmail = user?.primaryEmailAddress?.emailAddress || email;
+	const userName = user?.fullName || username || "Guest";
+	const userProfileImage = user?.imageUrl || profileImage;
 
 	useEffect(() => {
 		if (visible) {
+			setModalVisible(true);
+		}
+	}, [visible]);
+
+	useEffect(() => {
+		if (visible && modalVisible) {
+			// Reset animation values
 			slideAnim.setValue(Dimensions.get("window").width);
 			fadeAnim.setValue(0);
 			contentFadeAnim.setValue(0);
-			setModalVisible(true);
-
-			setTimeout(() => {
+            
+			const animationTimeout = setTimeout(() => {
 				Animated.parallel([
 					Animated.timing(slideAnim, {
 						toValue: 0,
@@ -48,16 +53,19 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 					})
 				]).start();
 
-				// Delay the content fade-in slightly
-				setTimeout(() => {
+				const contentTimeout = setTimeout(() => {
 					Animated.timing(contentFadeAnim, {
 						toValue: 1,
 						duration: 250,
 						useNativeDriver: true
 					}).start();
 				}, 100);
+                
+				return () => clearTimeout(contentTimeout);
 			}, 10);
-		} else {
+            
+			return () => clearTimeout(animationTimeout);
+		} else if (!visible && modalVisible) {
 			Animated.parallel([
 				Animated.timing(slideAnim, {
 					toValue: Dimensions.get("window").width,
@@ -78,14 +86,17 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 				setModalVisible(false);
 			});
 		}
-	}, [visible, slideAnim, fadeAnim, contentFadeAnim]);
+	}, [visible, modalVisible, slideAnim, fadeAnim, contentFadeAnim]);
 
-	const handleSignOut = () => {
-		if (onSignOut) {
-			router.replace("/");
-		} else {
+	const handleSignOut = async () => {
+		try {
 			onClose();
-			router.replace("/");
+			
+			setTimeout(async () => {
+				await signOut();
+			}, 300);
+		} catch (error) {
+			console.error("Sign out error:", error);
 		}
 	};
 
@@ -147,22 +158,24 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 								</TouchableOpacity>
 							</View>
 							<View className="items-center py-6 border-b border-gray-200">
-								{profileImage ? (
+								{userProfileImage ? (
 									<Image
-										source={{ uri: profileImage }}
+										source={{ uri: userProfileImage }}
 										className="w-20 h-20 rounded-full border border-[#333333]"
 									/>
 								) : (
 									<View className="w-20 h-20 rounded-full bg-[#8ED1DC] items-center justify-center border border-[#333333]">
 										<Text className="text-xl font-extrabold text-black font-lexend tracking-tighter-lexend">
-											{getInitials(username)}
+											{getInitials(userName)}
 										</Text>
 									</View>
 								)}
 								<Text className="mt-3 text-lg font-lexend-bold tracking-tighter-lexend text-black">
-									{username}
+									{userName}
 								</Text>
-								<Text className="text-sm text-[#666] font-lexend tracking-tighter-lexend">{email}</Text>
+								<Text className="text-sm text-[#666] font-lexend tracking-tighter-lexend">
+									{userEmail}
+								</Text>
 							</View>
 							<View className="flex-1 p-4 space-y-1">
 								<TouchableOpacity

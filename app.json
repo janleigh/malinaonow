@@ -1,48 +1,49 @@
 {
-	"expo": {
-		"name": "MalinaoNow",
-		"slug": "malinaonow",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./src/assets/images/icon.png",
-		"scheme": "malinaonow",
-		"userInterfaceStyle": "automatic",
-		"newArchEnabled": false,
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./src/assets/images/icon.png",
-				"backgroundColor": "#ffffff"
-			},
-			"edgeToEdgeEnabled": true,
-			"package": "com.jnlghmz.malinaonow"
-		},
-		"plugins": [
-			"expo-router",
-			[
-				"expo-splash-screen",
-				{
-					"image": "./src/assets/images/icon.png",
-					"imageWidth": 200,
-					"resizeMode": "contain",
-					"backgroundColor": "#ffffff"
-				}
-			]
-		],
-		"experiments": {
-			"typedRoutes": true
-		},
-		"fonts": [
-			"./src/assets/fonts/LexendMega-Bold.ttf",
-			"./src/assets/fonts/LexendMega-ExtraBold.ttf",
-			"./src/assets/fonts/LexendMega-Medium.ttf",
-			"./src/assets/fonts/LexendMega-Regular.ttf",
-			"./src/assets/fonts/LexendMega-SemiBold.ttf"
-		],
-		"extra": {
-			"router": {},
-			"eas": {
-				"projectId": "3b93606a-5d66-49da-b7c9-66bd3f89a089"
-			}
-		}
-	}
+  "expo": {
+    "name": "MalinaoNow",
+    "slug": "malinaonow",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/icon.png",
+    "scheme": "malinaonow",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.jnlghmz.malinaonow"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/images/icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "fonts": [
+      "./src/assets/fonts/LexendMega-Bold.ttf",
+      "./src/assets/fonts/LexendMega-ExtraBold.ttf",
+      "./src/assets/fonts/LexendMega-Medium.ttf",
+      "./src/assets/fonts/LexendMega-Regular.ttf",
+      "./src/assets/fonts/LexendMega-SemiBold.ttf"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3b93606a-5d66-49da-b7c9-66bd3f89a089"
+      }
+    }
+  }
 }

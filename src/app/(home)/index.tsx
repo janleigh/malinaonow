@@ -1,5 +1,6 @@
 import { Event, EventCard } from "@/components/home/EventCard";
 import { UserSidebar } from "@/components/home/UserSidebar";
+import { useAuth } from "@/context/AuthContext";
 import { API_KEYS } from "@/utils/config";
 import { shadowStyles } from "@/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -30,7 +31,7 @@ const mapboxHtml = `
 				const map = new mapboxgl.Map({
 					container: 'map',
 					style: 'mapbox://styles/janleigh/cmdg17r3z002o01se8uw28phr',
-					center: [122.330000, 11.670000], // Malinao, Aklan approximate coordinates
+					center: [122.330000, 11.670000],
 					zoom: 10
 				});
 				
@@ -116,10 +117,18 @@ export default function HomePage() {
 		setSidebarVisible(false);
 	};
 
-	const handleSignOut = () => {
-		// TODO: Add sign out logic
-		closeSidebar();
-		router.replace("/");
+	const { signOut } = useAuth();
+
+	const handleSignOut = async () => {
+		try {
+			closeSidebar();
+			
+			setTimeout(async () => {
+				await signOut();
+			}, 300);
+		} catch (error) {
+			console.error("Sign out error:", error);
+		}
 	};
 
 	const toggleMapFullscreen = useCallback(() => {
@@ -155,7 +164,6 @@ export default function HomePage() {
 		}
 	}, [mapFullscreen, mapScaleAnim, mapOpacityAnim]);
 
-	// Handle back button press when map is in fullscreen
 	useEffect(() => {
 		const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
 			if (mapFullscreen) {
