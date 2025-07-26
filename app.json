@@ -32,13 +32,6 @@
     "experiments": {
       "typedRoutes": true
     },
-    "fonts": [
-      "./src/assets/fonts/LexendMega-Bold.ttf",
-      "./src/assets/fonts/LexendMega-ExtraBold.ttf",
-      "./src/assets/fonts/LexendMega-Medium.ttf",
-      "./src/assets/fonts/LexendMega-Regular.ttf",
-      "./src/assets/fonts/LexendMega-SemiBold.ttf"
-    ],
     "extra": {
       "router": {},
       "eas": {
