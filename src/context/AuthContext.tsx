@@ -1,6 +1,6 @@
 import { useClerkAuth } from "@/api/clerk";
 import { useUser } from "@clerk/clerk-expo";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useLayoutEffect, useState } from "react";
 
 interface AuthContextProps {
 	isLoaded: boolean;
@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [currentEmail, setCurrentEmail] = useState<string | null>(null);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (clerkLoaded) {
 			setIsLoaded(true);
 		}
