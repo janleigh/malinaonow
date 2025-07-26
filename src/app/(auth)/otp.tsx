@@ -21,7 +21,7 @@ export default function OTPScreen() {
 	const handleOtpChange = (text: string) => {
 		const digitsOnly = text.replace(/\D/g, "");
 		const truncated = digitsOnly.slice(0, 6);
-        
+
 		setOtp(truncated);
 
 		if (error) {
@@ -107,7 +107,7 @@ export default function OTPScreen() {
 				<View className="flex-1 p-6 flex-col justify-between">
 					<View>
 						<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                            Verification Code
+							Verification Code
 						</Text>
 						<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
 							{`We've sent a 6-digit code to ${email || "your email"}`}
@@ -167,16 +167,16 @@ export default function OTPScreen() {
 									<ActivityIndicator color="#000" />
 								) : (
 									<Text className="text-base font-extrabold android:font-normal text-black font-lexend-medium tracking-tighter-lexend">
-                                        Verify
+										Verify
 									</Text>
 								)}
 							</TouchableOpacity>
 						</View>
 					</View>
-                    
+
 					<View className="items-center pb-4">
 						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
-                            Didn&apos;t receive code?{" "}
+							Didn&apos;t receive code?{" "}
 							<Text
 								className="font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend"
 								onPress={handleResendCode}

@@ -38,7 +38,7 @@ export const OAuthButton = ({ strategy, text, icon, className }: OAuthButtonProp
 
 	return (
 		<TouchableOpacity
-			className={`h-12 w-full flex-row items-center justify-center bg-[#9ee3ae] px-4 border border-[#333333] ${className || ''}`}
+			className={`h-12 w-full flex-row items-center justify-center bg-[#9ee3ae] px-4 border border-[#333333] ${className || ""}`}
 			style={shadowStyles.standard}
 			onPress={handlePress}
 			disabled={loading}

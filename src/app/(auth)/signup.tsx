@@ -19,7 +19,7 @@ export default function SignupScreen() {
 			setError("Please enter your first name");
 			return;
 		}
-        
+
 		if (!lastName.trim()) {
 			setError("Please enter your last name");
 			return;
@@ -49,16 +49,16 @@ export default function SignupScreen() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 p-6 flex-col justify-between">
 					<View>
-						<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                            Create Account
+						<Text className="mb-2 text-3xl font-extrabold android:text-4xl android:font-normal text-black font-lexend tracking-tighter-lexend">
+							Create Account
 						</Text>
 						<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
-                            Sign up to get started with MalinaoNow
+							Sign up to get started with MalinaoNow
 						</Text>
 						<View className="mt-1 space-y-4">
 							<View className="bg-white p-4 my-2 border border-[#333333]" style={shadowStyles.standard}>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
-                                    FIRST NAME
+									FIRST NAME
 								</Text>
 								<TextInput
 									value={firstName}
@@ -74,7 +74,7 @@ export default function SignupScreen() {
 							</View>
 							<View className="bg-white p-4 my-2 border border-[#333333]" style={shadowStyles.standard}>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
-                                    LAST NAME
+									LAST NAME
 								</Text>
 								<TextInput
 									value={lastName}
@@ -90,7 +90,7 @@ export default function SignupScreen() {
 							</View>
 							<View className="bg-white p-4 my-2 border border-[#333333]" style={shadowStyles.standard}>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
-                                    EMAIL
+									EMAIL
 								</Text>
 								<TextInput
 									value={email}
@@ -119,20 +119,20 @@ export default function SignupScreen() {
 								<ActivityIndicator color="#000" />
 							) : (
 								<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
-                                    Create Account
+									Create Account
 								</Text>
 							)}
 						</TouchableOpacity>
 					</View>
-					
+
 					<View className="items-center pb-4">
 						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
-                            Already have an account?{" "}
+							Already have an account?{" "}
 							<Text
 								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
 								onPress={() => router.replace("/login")}
 							>
-                                Log in
+								Log in
 							</Text>
 						</Text>
 					</View>

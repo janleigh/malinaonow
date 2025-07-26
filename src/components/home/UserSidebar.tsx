@@ -91,12 +91,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, emai
 	const handleSignOut = async () => {
 		try {
 			onClose();
-
 			await signOut();
-
-			// setTimeout(async () => {
-			// 	await signOut();
-			// }, 300);
 		} catch (error) {
 			console.error("Sign out error:", error);
 		}

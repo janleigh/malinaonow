@@ -24,7 +24,7 @@
           "image": "./src/assets/images/icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#00000000"
         }
       ],
       "expo-secure-store"

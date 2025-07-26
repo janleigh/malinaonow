@@ -3,19 +3,33 @@ import { useAuth } from "@/context/AuthContext";
 import { shadowStyles } from "@/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Link, router } from "expo-router";
-import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LandingPage() {
-	const { isSignedIn } = useAuth();
+	const { isSignedIn, signOut } = useAuth();
+	const [showDialog, setShowDialog] = useState(false);
 
-	// If user is already signed in, redirect to home
-	React.useEffect(() => {
-		if (isSignedIn) {
-			router.replace("/(home)");
+	useEffect(() => {
+		if (isSignedIn === true) {
+			setShowDialog(true);
 		}
 	}, [isSignedIn]);
+
+	const handleGoToHome = () => {
+		setShowDialog(false);
+		router.replace("/(home)");
+	};
+
+	const handleSignOut = async () => {
+		try {
+			setShowDialog(false);
+			await signOut();
+		} catch (error) {
+			console.error("Sign out error:", error);
+		}
+	};
 
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
@@ -62,6 +76,38 @@ export default function LandingPage() {
 					</View>
 				</View>
 			</SafeAreaView>
+			<Modal visible={showDialog} transparent={true} animationType="fade">
+				<View className="flex-1 justify-center items-center bg-black/30">
+					<View className="w-[80%] bg-white p-5 border-2 border-[#333333]" style={shadowStyles.standard}>
+						<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4 text-center">
+							You&apos;re already signed in
+						</Text>
+						<Text className="mb-6 font-lexend tracking-tighter-lexend text-[#333333] text-center">
+							Would you like to continue to the app or sign out?
+						</Text>
+						<View className="space-y-3">
+							<TouchableOpacity
+								className="h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
+								style={shadowStyles.standard}
+								onPress={handleGoToHome}
+							>
+								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+									Go to home page
+								</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								className="h-12 w-full mt-2 items-center justify-center bg-white border border-[#333333]"
+								style={shadowStyles.standard}
+								onPress={handleSignOut}
+							>
+								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+									Sign out
+								</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</View>
+			</Modal>
 		</View>
 	);
 }

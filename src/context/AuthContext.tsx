@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		try {
 			setCurrentEmail(email);
 			const result = await clerkSignIn?.create({
-				identifier: email,
+				identifier: email
 			});
 
 			if (!result) {
@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			}
 
 			const emailAddressId = result.supportedFirstFactors.find(
-				factor => factor.strategy === 'email_code'
+				(factor) => factor.strategy === "email_code"
 			)?.emailAddressId;
 
 			if (!emailAddressId) {
@@ -105,11 +105,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				});
 
 				console.log("Signup verification response:", JSON.stringify(verification, null, 2));
-				if (verification?.status === "complete" || verification?.verifications?.emailAddress?.status === "verified") {
+				if (
+					verification?.status === "complete" ||
+					verification?.verifications?.emailAddress?.status === "verified"
+				) {
 					if (verification.createdSessionId) {
 						await setActiveSignUp?.({ session: verification.createdSessionId });
 
-						await new Promise(resolve => setTimeout(resolve, 300));
+						await new Promise((resolve) => setTimeout(resolve, 300));
 
 						router.replace("/(home)");
 					} else {
@@ -144,8 +147,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const signOut = async () => {
 		try {
 			await clerk.signOut();
-			// router.replace("/");
-			router.dismissAll();
+			router.replace("/(auth)/login");
 		} catch (error) {
 			console.error("Error during sign out:", error);
 			throw error;
