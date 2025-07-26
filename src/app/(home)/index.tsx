@@ -1,11 +1,22 @@
+import { Location as CardLocation, LocationCard } from "@/components/home/LocationCard";
 import { UserSidebar } from "@/components/home/UserSidebar";
+import { API_KEYS } from "@/config";
 import { useAuth } from "@/context/AuthContext";
-import { API_KEYS } from "@/utils/config";
-import { shadowStyles } from "@/utils/styles";
+import { shadowStyles } from "@/lib/utils/styles";
+import { locationService } from "@/services/locationService";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Animated, BackHandler, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Animated,
+	BackHandler,
+	Modal,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 
@@ -48,7 +59,10 @@ const mapboxHtml = `
 export default function HomePage() {
 	const [sidebarVisible, setSidebarVisible] = useState(false);
 	const [mapFullscreen, setMapFullscreen] = useState(false);
-	const [isGridView, setIsGridView] = useState(true); // Add state for view mode
+	const [isGridView, setIsGridView] = useState(true);
+	const [locations, setLocations] = useState<CardLocation[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 	const mapScaleAnim = useRef(new Animated.Value(0)).current;
 	const mapOpacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -73,6 +87,24 @@ export default function HomePage() {
 			console.error("Sign out error:", error);
 		}
 	};
+
+	const fetchLocations = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+			const data = await locationService.getLocations();
+			setLocations(data);
+		} catch (err) {
+			console.error("Failed to fetch locations:", err);
+			setError("Failed to load locations. Please try again.");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchLocations();
+	}, []);
 
 	const toggleMapFullscreen = useCallback(() => {
 		if (!mapFullscreen) {
@@ -119,7 +151,6 @@ export default function HomePage() {
 		return () => backHandler.remove();
 	}, [mapFullscreen, toggleMapFullscreen]);
 
-	// Add toggle view function
 	const toggleView = () => {
 		setIsGridView(!isGridView);
 	};
@@ -177,22 +208,51 @@ export default function HomePage() {
 								<Feather name={isGridView ? "list" : "grid"} size={18} color="black" />
 							</TouchableOpacity>
 						</View>
-						{/* Add under construction tab */}
-						<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
-							<View className="items-center">
-								<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
-									<Feather name="tool" size={24} color="#333" />
-								</View>
-								<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-									Under Construction
-								</Text>
-								<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-									We&apos;re currently working on bringing you the best locations in Malinao. Check back soon!
-								</Text>
+						{loading ? (
+							<View className="p-4 items-center justify-center">
+								<ActivityIndicator size="large" color="#fed787" />
+								<Text className="mt-2 font-lexend text-[#666666]">Loading locations...</Text>
 							</View>
-						</View>
-						{/* {isGridView ? (
-							// Grid View (current implementation)
+						) : error ? (
+							<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
+								<View className="items-center">
+									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
+										<Feather name="alert-triangle" size={24} color="#333" />
+									</View>
+									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
+										Error Loading Data
+									</Text>
+									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
+										{error}
+									</Text>
+									<TouchableOpacity
+										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"
+										style={shadowStyles.small}
+										onPress={fetchLocations}
+									>
+										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+											Retry
+										</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+						) : locations.length === 0 ? (
+							<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
+								<View className="items-center">
+									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
+										<Feather name="tool" size={24} color="#333" />
+									</View>
+									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
+										Under Construction
+									</Text>
+									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
+										We&apos;re currently working on bringing you the best locations in Malinao.
+										Check back soon!
+									</Text>
+								</View>
+							</View>
+						) : isGridView ? (
+							// Grid View
 							<View className="flex-row justify-between">
 								<View className="w-[48%] space-y-4">
 									{locations.slice(0, Math.ceil(locations.length / 2)).map((location) => (
@@ -212,7 +272,7 @@ export default function HomePage() {
 									<LocationCard key={location.id} location={location} listView={true} />
 								))}
 							</View>
-						)} */}
+						)}
 					</View>
 					<View className="p-4">
 						<TouchableOpacity
@@ -231,10 +291,6 @@ export default function HomePage() {
 					<TouchableOpacity className="items-center">
 						<AntDesign name="home" size={24} color="#333" />
 					</TouchableOpacity>
-					{ /* I don't think we need this anymore */ }
-					{/* <TouchableOpacity className="items-center" onPress={() => router.push("/+not-found")}>
-						<AntDesign name="search1" size={24} color="#999" />
-					</TouchableOpacity> */}
 					<TouchableOpacity className="items-center" onPress={() => router.push("/+not-found")}>
 						<AntDesign name="calendar" size={24} color="#999" />
 					</TouchableOpacity>
@@ -290,7 +346,6 @@ export default function HomePage() {
 						</SafeAreaView>
 					</Animated.View>
 				</Modal>
-
 				<UserSidebar visible={sidebarVisible} onClose={closeSidebar} onSignOut={handleSignOut} />
 			</SafeAreaView>
 		</View>

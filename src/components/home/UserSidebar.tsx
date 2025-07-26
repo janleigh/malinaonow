@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { shadowStyles } from "@/utils/styles";
+import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";

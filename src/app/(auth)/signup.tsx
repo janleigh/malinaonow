@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { shadowStyles } from "@/utils/styles";
+import { shadowStyles } from "@/lib/utils/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";

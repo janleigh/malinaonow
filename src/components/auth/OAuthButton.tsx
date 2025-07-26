@@ -1,4 +1,4 @@
-import { shadowStyles } from "@/utils/styles";
+import { shadowStyles } from "@/lib/utils/styles";
 import { useOAuth } from "@clerk/clerk-expo";
 import { OAuthStrategy } from "@clerk/types";
 import AntDesign from "@expo/vector-icons/AntDesign";

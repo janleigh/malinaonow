@@ -1,6 +1,6 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
 import { useAuth } from "@/context/AuthContext";
-import { shadowStyles } from "@/utils/styles";
+import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";

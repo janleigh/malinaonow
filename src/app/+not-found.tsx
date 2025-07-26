@@ -1,4 +1,4 @@
-import { shadowStyles } from "@/utils/styles";
+import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
 import React from "react";
