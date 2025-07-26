@@ -25,9 +25,11 @@ export const OAuthButton = ({ strategy, text, icon, className }: OAuthButtonProp
 			if (createdSessionId) {
 				await setActive?.({ session: createdSessionId });
 
-				setTimeout(() => {
-					router.replace("/(home)");
-				}, 300);
+				// Wait for auth state to be fully updated
+				await new Promise((resolve) => setTimeout(resolve, 500));
+
+				// Navigate directly to home without additional setTimeout
+				router.replace("/(home)");
 			}
 		} catch (err) {
 			console.error(`Error during ${strategy} authentication:`, err);
