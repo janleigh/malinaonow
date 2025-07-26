@@ -1,5 +1,6 @@
 import { API_KEYS } from "@/config";
 import { AuthProvider } from "@/context/AuthContext";
+import "@/lib/styles/globals.css";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -7,8 +8,6 @@ import * as SecureStore from "expo-secure-store";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import "../lib/styles/globals.css";
-
 
 const CLERK_PUBLISHABLE_KEY = API_KEYS.clerk.publishableKey;
 
