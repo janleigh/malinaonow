@@ -2,8 +2,8 @@ import { OAuthButton } from "@/components/auth/OAuthButton";
 import { useAuth } from "@/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Link, router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { Link, router, useFocusEffect } from "expo-router";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -11,7 +11,15 @@ export default function LandingPage() {
 	const { isSignedIn, signOut } = useAuth();
 	const [showDialog, setShowDialog] = useState(false);
 
-	useEffect(() => {
+	useFocusEffect(
+		useCallback(() => {
+			return () => {
+				setShowDialog(false);
+			};
+		}, [])
+	);
+
+	useLayoutEffect(() => {
 		if (isSignedIn === true) {
 			setShowDialog(true);
 		}
