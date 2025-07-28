@@ -1,26 +1,16 @@
+import { API_KEYS } from "@/config";
+import { Location } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Animated, Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Animated, Image, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-export type Location = {
-	id: string;
-	name: string;
-	address: string;
-	image: {
-		banner: string;
-		360: string;
-	};
-	coordinates: {
-		latitude: number;
-		longitude: number;
-	};
-	description: string;
-};
+import { WebView } from "react-native-webview";
 
 export const LocationCard = ({ location, listView = false }: { location: Location; listView?: boolean }) => {
 	const [expanded, setExpanded] = useState(false);
+	const [view360Open, setView360Open] = useState(false);
+	const [viewMapOpen, setViewMapOpen] = useState(false);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -57,6 +47,99 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 		}
 	};
 
+	const handleView360 = () => {
+		setView360Open(true);
+	};
+
+	const close360View = () => {
+		setView360Open(false);
+	};
+
+	const handleViewMap = () => {
+		setViewMapOpen(true);
+	};
+
+	const closeMapView = () => {
+		setViewMapOpen(false);
+	};
+
+	const getFormattedAddress = (addr: Location) => {
+		if (!addr.address) return "";
+		const { street, barangay, town } = addr.address;
+		return [street, barangay, town].filter(Boolean).join(", ");
+	};
+
+	// HTML for the 360° photo viewer
+	const get360ViewerHTML = (photoUrl: string) => `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+            <style>
+                body { margin: 0; padding: 0; overflow: hidden; }
+                #panorama { width: 100%; height: 100vh; }
+            </style>
+        </head>
+        <body>
+            <div id="panorama"></div>
+            <script>
+                pannellum.viewer('panorama', {
+                    type: "equirectangular",
+                    panorama: "${photoUrl}",
+                    autoLoad: true,
+                    compass: true,
+                    autoRotate: -3,
+                    mouseZoom: false
+                });
+            </script>
+        </body>
+        </html>
+    `;
+
+	// HTML for the map viewer
+	// TODO: Fix why location name is undefined/null
+	const getMapViewerHTML = (name: string) => `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+            <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet">
+            <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
+            <style>
+                body { margin: 0; padding: 0; }
+                #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+            </style>
+        </head>
+        <body>
+            <div id="map"></div>
+            <script>
+                mapboxgl.accessToken = '${API_KEYS.mapbox}';
+                
+                const map = new mapboxgl.Map({
+                    container: 'map',
+                    center: [${location.coordinates.longitude}, ${location.coordinates.latitude}],
+                    zoom: 15
+                });
+                
+                map.addControl(new mapboxgl.NavigationControl());
+				map.on('load', function() {
+					new mapboxgl.Popup()
+						.setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
+						.setHTML('<h3>${name == null ? name : "You are here"}</h3>')
+						.setMaxWidth("300px")
+						.addTo(map);
+					new mapboxgl.Marker({color: '#fed787'})
+						.setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
+						.addTo(map);
+				});
+            </script>
+        </body>
+        </html>
+    `;
+
 	return (
 		<>
 			<TouchableOpacity
@@ -69,7 +152,11 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 					// List view layout
 					<View className="flex-row">
 						<View className="w-1/3 h-24">
-							<Image source={{ uri: location.image.banner }} className="w-full h-full" resizeMode="cover" />
+							<Image
+								source={{ uri: location.image.banner }}
+								className="w-full h-full"
+								resizeMode="cover"
+							/>
 						</View>
 						<View className="p-3 flex-1">
 							<Text
@@ -84,16 +171,26 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555] flex-1"
 									numberOfLines={2}
 								>
-									{location.description}
+									{getFormattedAddress(location)}
 								</Text>
 							</View>
+							<Text
+								className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1"
+								numberOfLines={2}
+							>
+								{location.description}
+							</Text>
 						</View>
 					</View>
 				) : (
 					// Grid view layout (original)
 					<View>
 						<View className="w-full h-32">
-							<Image source={{ uri: location.image.banner }} className="w-full h-full" resizeMode="cover" />
+							<Image
+								source={{ uri: location.image.banner }}
+								className="w-full h-full"
+								resizeMode="cover"
+							/>
 						</View>
 						<View className="p-3">
 							<Text
@@ -108,14 +205,19 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555] flex-1"
 									numberOfLines={2}
 								>
-									{location.description}
+									{getFormattedAddress(location)}
 								</Text>
 							</View>
+							<Text
+								className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1"
+								numberOfLines={2}
+							>
+								{location.description}
+							</Text>
 						</View>
 					</View>
 				)}
 			</TouchableOpacity>
-
 			<Modal visible={expanded} transparent={true} animationType="none">
 				<Animated.View
 					style={{
@@ -142,39 +244,40 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 							</TouchableOpacity>
 						</View>
 						<View className="flex-1">
-							<Image
-								source={{ uri: location.image.banner }}
-								className="w-full h-52"
-								resizeMode="cover"
-							/>
+							<Image source={{ uri: location.image.banner }} className="w-full h-52" resizeMode="cover" />
 							<View className="p-4">
 								<View className="flex-row items-start mb-4">
 									<AntDesign name="enviromento" size={16} color="#333" style={{ marginTop: 2 }} />
 									<Text className="ml-2 text-base font-lexend tracking-tighter-lexend text-[#333] flex-1">
-										{location.address}
+										{getFormattedAddress(location)}
 									</Text>
 								</View>
 								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
 									Description
 								</Text>
-								<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
-									{location.description}
-								</Text>
-
+								<ScrollView
+									className="border-l-2 border-[#fed787] pl-2 max-h-72"
+									showsVerticalScrollIndicator={true}
+								>
+									<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
+										{location.description}
+									</Text>
+								</ScrollView>
 								<View className="mt-6">
 									<TouchableOpacity
 										className="bg-[#fed787] h-12 w-full items-center justify-center border border-[#333333]"
 										style={shadowStyles.standard}
+										onPress={handleViewMap}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
 											View on Map
 										</Text>
 									</TouchableOpacity>
-
 									{location.image[360] ? (
 										<TouchableOpacity
 											className="bg-white h-12 w-full items-center justify-center border border-[#333333] mt-3"
 											style={shadowStyles.standard}
+											onPress={handleView360}
 										>
 											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
 												View 360° Photo
@@ -186,6 +289,57 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 						</View>
 					</SafeAreaView>
 				</Animated.View>
+			</Modal>
+			<Modal visible={viewMapOpen} transparent={false} animationType="slide">
+				<SafeAreaView className="flex-1 bg-[#faf4f0]">
+					<View className="flex-row justify-between items-center p-4 bg-[#faf4f0] border-b border-[#333333]">
+						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">Map View</Text>
+						<TouchableOpacity onPress={closeMapView}>
+							<Feather name="x" size={24} color="black" />
+						</TouchableOpacity>
+					</View>
+					<View className="flex-1">
+						<WebView
+							source={{ html: getMapViewerHTML(location.name) }}
+							style={{ flex: 1, backgroundColor: "transparent" }}
+							javaScriptEnabled={true}
+							domStorageEnabled={true}
+							startInLoadingState={true}
+							renderLoading={() => (
+								<View className="absolute inset-0 flex-1 items-center justify-center bg-[#faf4f0]">
+									<ActivityIndicator size="large" color="#fed787" />
+									<Text className="mt-2 font-lexend text-[#666666]">Loading map...</Text>
+								</View>
+							)}
+							onError={(e) => console.error("WebView error:", e.nativeEvent)}
+							scrollEnabled={false}
+							bounces={false}
+							scalesPageToFit={true}
+						/>
+					</View>
+				</SafeAreaView>
+			</Modal>
+			<Modal visible={view360Open} transparent={false} animationType="slide">
+				<SafeAreaView className="flex-1 bg-black">
+					<View className="flex-row justify-between items-center p-4 bg-[#faf4f0] border-b border-[#333333]">
+						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">360° View</Text>
+						<TouchableOpacity onPress={close360View}>
+							<Feather name="x" size={24} color="black" />
+						</TouchableOpacity>
+					</View>
+					<View className="flex-1">
+						{location.image[360] && (
+							<WebView
+								source={{ html: get360ViewerHTML(location.image[360]) }}
+								style={{ flex: 1 }}
+								javaScriptEnabled={true}
+								domStorageEnabled={true}
+								scrollEnabled={false}
+								bounces={false}
+							/>
+						)}
+					</View>
+				</SafeAreaView>
 			</Modal>
 		</>
 	);

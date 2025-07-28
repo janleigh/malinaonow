@@ -1,6 +1,5 @@
 import { supabase } from "@/api/supabase";
-import { Location as CardLocation } from "@/components/home/LocationCard";
-import { Location as SupabaseLocation } from "@/lib/types/supabase";
+import { Location as CardLocation, Location as SupabaseLocation } from "@/lib/types/supabase";
 
 export const locationService = {
 	/**
@@ -51,14 +50,10 @@ export const locationService = {
 	 * @return {CardLocation} - The mapped CardLocation object
 	 */
 	mapToCardLocation(location: SupabaseLocation): CardLocation {
-		const address = [location.address.street, location.address.barangay, location.address.town]
-			.filter(Boolean)
-			.join(", ");
-
 		return {
 			id: location.id,
 			name: location.name,
-			address: address,
+			address: location.address,
 			image: {
 				banner: location.image.banner,
 				360: location.image["360"] || ""

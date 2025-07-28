@@ -1,70 +1,43 @@
-import { Location as CardLocation, LocationCard } from "@/components/home/LocationCard";
-import { UserSidebar } from "@/components/home/UserSidebar";
-import { API_KEYS } from "@/config";
+import { Event, EventCard, LocationCard, UserSidebar } from "@/components/home";
 import { useAuth } from "@/context/AuthContext";
+import { Location } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { locationService } from "@/services/locationService";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-	ActivityIndicator,
-	Animated,
-	BackHandler,
-	Modal,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { WebView } from "react-native-webview";
 
-const mapboxHtml = `
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-            <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet">
-            <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
-            <style>
-                body { margin: 0; padding: 0; }
-                #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-            </style>
-        </head>
-        <body>
-            <div id="map"></div>
-            <script>
-                mapboxgl.accessToken = '${API_KEYS.mapbox}';
-                
-                const map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/janleigh/cmdg17r3z002o01se8uw28phr',
-                    center: [122.330000, 11.670000],
-                    zoom: 10
-                });
-                
-                map.addControl(new mapboxgl.NavigationControl());
-                map.on('load', function() {
-                    new mapboxgl.Marker({color: '#fed787'})
-                        .setLngLat([122.330000, 11.670000])
-                        .addTo(map);
-                });
-            </script>
-        </body>
-    </html>
-    `;
+const sampleEvents: Event[] = [
+	{
+		id: "1",
+		title: "Malinao Fiesta 2025",
+		date: "idk",
+		time: "8:00 AM - hasta mahilong",
+		location: "Malinao",
+		image: "https://rzgswlkldumfbqpdjzqo.supabase.co/storage/v1/object/public/app-assets//malinao-fiesta.jpg"
+	},
+	{
+		id: "2",
+		title: "Pasukan",
+		date: "August 11, 2025",
+		time: "8:00 AM - 7:00 PM",
+		location: "Garcia College of Technology",
+		image: "https://www.gct.edu.ph/wp-content/uploads/2024/08/GctCampus.jpg"
+	}
+];
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const EVENT_CARD_WIDTH = SCREEN_WIDTH - 28; // Accounting for padding
 
 export default function HomePage() {
 	const [sidebarVisible, setSidebarVisible] = useState(false);
-	const [mapFullscreen, setMapFullscreen] = useState(false);
 	const [isGridView, setIsGridView] = useState(true);
-	const [locations, setLocations] = useState<CardLocation[]>([]);
+	const [locations, setLocations] = useState<Location[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const mapScaleAnim = useRef(new Animated.Value(0)).current;
-	const mapOpacityAnim = useRef(new Animated.Value(0)).current;
+	const [activeEventIndex, setActiveEventIndex] = useState(0);
 
 	const openSidebar = () => {
 		setSidebarVisible(true);
@@ -106,51 +79,6 @@ export default function HomePage() {
 		fetchLocations();
 	}, []);
 
-	const toggleMapFullscreen = useCallback(() => {
-		if (!mapFullscreen) {
-			setMapFullscreen(true);
-			Animated.parallel([
-				Animated.timing(mapScaleAnim, {
-					toValue: 1,
-					duration: 300,
-					useNativeDriver: true
-				}),
-				Animated.timing(mapOpacityAnim, {
-					toValue: 1,
-					duration: 300,
-					useNativeDriver: true
-				})
-			]).start();
-		} else {
-			Animated.parallel([
-				Animated.timing(mapScaleAnim, {
-					toValue: 0,
-					duration: 300,
-					useNativeDriver: true
-				}),
-				Animated.timing(mapOpacityAnim, {
-					toValue: 0,
-					duration: 300,
-					useNativeDriver: true
-				})
-			]).start(() => {
-				setMapFullscreen(false);
-			});
-		}
-	}, [mapFullscreen, mapScaleAnim, mapOpacityAnim]);
-
-	useEffect(() => {
-		const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
-			if (mapFullscreen) {
-				toggleMapFullscreen();
-				return true;
-			}
-			return false;
-		});
-
-		return () => backHandler.remove();
-	}, [mapFullscreen, toggleMapFullscreen]);
-
 	const toggleView = () => {
 		setIsGridView(!isGridView);
 	};
@@ -167,32 +95,51 @@ export default function HomePage() {
 					</TouchableOpacity>
 				</View>
 				<ScrollView className="flex-1">
-					<View className="px-4">
-						<View className="h-48 overflow-hidden border border-[#333333]" style={shadowStyles.standard}>
-							<WebView
-								source={{ html: mapboxHtml }}
-								style={{ flex: 1 }}
-								javaScriptEnabled={true}
-								domStorageEnabled={true}
-								startInLoadingState={true}
-								scalesPageToFit={true}
-								bounces={false}
-							/>
-							<View className="absolute bottom-2 right-2 flex-row">
-								<TouchableOpacity
-									className="bg-white h-8 w-8 items-center justify-center border border-[#333333] mr-2"
-									style={shadowStyles.small}
-									onPress={toggleMapFullscreen}
-								>
-									<Feather name="maximize-2" size={16} color="black" />
-								</TouchableOpacity>
-								<TouchableOpacity
-									className="bg-white h-8 w-8 items-center justify-center border border-[#333333]"
-									style={shadowStyles.small}
-									onPress={() => router.push("/+not-found")}
-								>
-									<Feather name="plus" size={18} color="black" />
-								</TouchableOpacity>
+					<View className="px-4 mb-6">
+						<View className="flex-row justify-between items-center mb-4">
+							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
+								Upcoming Events
+							</Text>
+							<TouchableOpacity onPress={() => router.push("/+not-found")}>
+								<Text className="text-sm font-lexend tracking-tighter-lexend text-black">See all</Text>
+							</TouchableOpacity>
+						</View>
+						<View>
+							<ScrollView
+								horizontal
+								showsHorizontalScrollIndicator={false}
+								pagingEnabled
+								snapToInterval={EVENT_CARD_WIDTH + 16} // width + margin
+								decelerationRate="fast"
+								contentContainerStyle={{ paddingEnd: 16 }}
+								onMomentumScrollEnd={(e) => {
+									const newIndex = Math.round(
+										e.nativeEvent.contentOffset.x / (EVENT_CARD_WIDTH + 16)
+									);
+									setActiveEventIndex(newIndex);
+								}}
+							>
+								{sampleEvents.map((event, index) => (
+									<View
+										key={event.id}
+										style={{
+											width: EVENT_CARD_WIDTH,
+											marginRight: 16
+										}}
+									>
+										<EventCard 
+											event={event} 
+										/>
+									</View>
+								))}
+							</ScrollView>
+							<View className="flex-row justify-center mt-3">
+								{sampleEvents.map((_, index) => (
+									<View
+										key={index}
+										className={`h-2 w-2 rounded-full mx-1 ${index === activeEventIndex ? "bg-[#fed787]" : "bg-[#cccccc]"}`}
+									/>
+								))}
 							</View>
 						</View>
 					</View>
@@ -298,54 +245,6 @@ export default function HomePage() {
 						<AntDesign name="book" size={24} color="#999" />
 					</TouchableOpacity>
 				</View>
-				<Modal visible={mapFullscreen} transparent={true} animationType="none">
-					<Animated.View
-						style={{
-							flex: 1,
-							backgroundColor: "#faf4f0",
-							opacity: mapOpacityAnim,
-							transform: [
-								{
-									scale: mapScaleAnim.interpolate({
-										inputRange: [0, 1],
-										outputRange: [0.8, 1]
-									})
-								}
-							]
-						}}
-					>
-						<SafeAreaView className="flex-1">
-							<View className="flex-row justify-between items-center p-4 border-b border-[#333333]">
-								<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
-									Map View
-								</Text>
-								<TouchableOpacity onPress={toggleMapFullscreen}>
-									<Feather name="x" size={24} color="black" />
-								</TouchableOpacity>
-							</View>
-							<View className="flex-1">
-								<WebView
-									source={{ html: mapboxHtml }}
-									style={{ flex: 1 }}
-									javaScriptEnabled={true}
-									domStorageEnabled={true}
-									startInLoadingState={true}
-									scalesPageToFit={true}
-									bounces={false}
-								/>
-								<View className="absolute bottom-6 right-6">
-									<TouchableOpacity
-										className="bg-white h-12 w-12 items-center justify-center rounded-full border border-[#333333]"
-										style={shadowStyles.small}
-										onPress={() => router.push("/+not-found")}
-									>
-										<Feather name="plus" size={24} color="black" />
-									</TouchableOpacity>
-								</View>
-							</View>
-						</SafeAreaView>
-					</Animated.View>
-				</Modal>
 				<UserSidebar visible={sidebarVisible} onClose={closeSidebar} onSignOut={handleSignOut} />
 			</SafeAreaView>
 		</View>
