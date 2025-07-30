@@ -13,9 +13,10 @@ interface UserSidebarProps {
 	email?: string;
 	username?: string;
 	profileImage?: string;
+	onShowBookmarks?: () => void; // Add this line
 }
 
-export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, email, username, profileImage }) => {
+export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, email, username, profileImage, onShowBookmarks }) => {
 	const { signOut, user } = useAuth();
 	const slideAnim = useRef(new Animated.Value(Dimensions.get("window").width)).current;
 	const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -197,30 +198,6 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, emai
 									<Feather name="message-square" size={20} color="#333" />
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
 										My Reviews
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									className="flex-row items-center py-4"
-									onPress={() => {
-										onClose();
-										router.push("/+not-found");
-									}}
-								>
-									<Feather name="calendar" size={20} color="#333" />
-									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										My Events
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									className="flex-row items-center py-4"
-									onPress={() => {
-										onClose();
-										router.push("/+not-found");
-									}}
-								>
-									<Feather name="settings" size={20} color="#333" />
-									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										Settings
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity

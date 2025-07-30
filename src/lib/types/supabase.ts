@@ -1,3 +1,12 @@
+export interface Event {
+	id: string;
+	name: string;
+	date: string;
+	time: string;
+	location: string;
+	banner_image: string;
+}
+
 export interface Location {
 	id: string;
 	name: string;

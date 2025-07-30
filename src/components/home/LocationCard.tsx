@@ -10,7 +10,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 import { ReviewForm, ReviewList } from "./reviews";
 
-export const LocationCard = ({ location, listView = false }: { location: Location; listView?: boolean }) => {
+export const LocationCard = ({ location, listView = false, isBookmarked = false, onToggleBookmark }: { 
+	location: Location; 
+	listView?: boolean; 
+	isBookmarked?: boolean;
+	onToggleBookmark?: (locationId: string, newStatus: boolean) => void;
+}) => {
 	const [expanded, setExpanded] = useState(false);
 	const [view360Open, setView360Open] = useState(false);
 	const [viewMapOpen, setViewMapOpen] = useState(false);
@@ -19,6 +24,7 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 	const [showReviewForm, setShowReviewForm] = useState(false);
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 	const [descriptionHeight, setDescriptionHeight] = useState(0);
+	const [bookmarked, setBookmarked] = useState(isBookmarked);
 	const { isSignedIn, user } = useAuth();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -109,6 +115,21 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 			loadReviews();
 		}
 	}, [expanded, loadReviews]);
+
+	useEffect(() => {
+		setBookmarked(isBookmarked);
+	}, [isBookmarked]);
+
+	const handleToggleBookmark = async (e: any) => {
+		e.stopPropagation();
+		
+		const newStatus = !bookmarked;
+		setBookmarked(newStatus);
+		
+		if (onToggleBookmark) {
+			onToggleBookmark(location.id, newStatus);
+		}
+	};
 
 	const handleSubmitReview = async (rating: number, comment: string) => {
 		if (!isSignedIn || !user) return;
@@ -283,6 +304,16 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 						</View>
 					</View>
 				)}
+				<TouchableOpacity 
+					className="absolute top-2 right-2 bg-white/70 rounded-full p-1 z-10"
+					onPress={handleToggleBookmark}
+				>
+					<AntDesign 
+						name={bookmarked ? "heart" : "hearto"} 
+						size={20} 
+						color={bookmarked ? "#FE5B62" : "#333"} 
+					/>
+				</TouchableOpacity>
 			</TouchableOpacity>
 			<Modal visible={expanded} transparent={true} animationType="none">
 				<Animated.View
@@ -328,6 +359,20 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 										{getFormattedAddress(location)}
 									</Text>
 								</View>
+								<TouchableOpacity
+									className="absolute top-6 right-8 p-2 z-10 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
+									style={shadowStyles.standard}
+									onPress={(e) => {
+										e.stopPropagation();
+										handleToggleBookmark(e);
+									}}
+								>
+									<AntDesign 
+										name={bookmarked ? "heart" : "hearto"} 
+										size={24} 
+										color={bookmarked ? "#FE5B62" : "#333"} 
+									/>
+								</TouchableOpacity>
 								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
                                     Description
 								</Text>
