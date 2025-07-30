@@ -1,7 +1,7 @@
 import { supabase } from "@/api/supabase";
 import { Review } from "@/lib/types/supabase";
 
-export const reviewService = {
+export const ReviewService = {
 	/**
 	 * Fetch reviews for a specific location
 	 * @param {string} locationId - The ID of the location

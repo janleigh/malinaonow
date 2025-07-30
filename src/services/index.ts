@@ -1,2 +1,3 @@
-export { locationService } from "./locationService";
-export { reviewService } from "./reviewService";
+export { LocationService } from "./LocationService";
+export { ReviewService } from "./ReviewService";
+

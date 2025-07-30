@@ -2,7 +2,7 @@ import { Event, EventCard, LocationCard, UserSidebar } from "@/components/home";
 import { useAuth } from "@/context/AuthContext";
 import { Location } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
-import { locationService } from "@/services/locationService";
+import { LocationService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -65,7 +65,7 @@ export default function HomePage() {
 		try {
 			setLoading(true);
 			setError(null);
-			const data = await locationService.getLocations();
+			const data = await LocationService.getLocations();
 			setLocations(data);
 			console.log("Fetched locations:", data);
 		} catch (err) {

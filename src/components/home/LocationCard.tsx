@@ -2,7 +2,7 @@ import { API_KEYS } from "@/config";
 import { useAuth } from "@/context/AuthContext";
 import { Location, Review } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
-import { reviewService } from "@/services/reviewService";
+import { ReviewService } from "@/services/ReviewService";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Animated, Image, LayoutChangeEvent, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -34,7 +34,7 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 		setIsDescriptionExpanded(!isDescriptionExpanded);
 	};
 
-	const rating = location.rating || reviewService.calculateAverageRating(reviews);
+	const rating = location.rating || ReviewService.calculateAverageRating(reviews);
 	const reviewCount = location.review_count || reviews.length;
 
 	const toggleExpand = () => {
@@ -95,7 +95,7 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 	const loadReviews = React.useCallback(async () => {
 		setIsLoadingReviews(true);
 		try {
-			const fetchedReviews = await reviewService.getReviews(location.id);
+			const fetchedReviews = await ReviewService.getReviews(location.id);
 			setReviews(fetchedReviews);
 		} catch (error) {
 			console.error("Failed to load reviews:", error);
@@ -121,7 +121,7 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 			comment
 		};
 
-		const newReview = await reviewService.addReview(reviewData);
+		const newReview = await ReviewService.addReview(reviewData);
 		if (newReview) {
 			setReviews((prev) => [newReview, ...prev]);
 			setShowReviewForm(false);

@@ -1,7 +1,7 @@
 import { supabase } from "@/api/supabase";
 import { Location as CardLocation, Location as SupabaseLocation } from "@/lib/types/supabase";
 
-export const locationService = {
+export const LocationService = {
 	/**
 	 * Fetch all locations
 	 * @returns {Promise<CardLocation[]>} - A promise that resolves to an array of CardLocation objects
