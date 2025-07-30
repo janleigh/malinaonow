@@ -1,18 +1,41 @@
 import { API_KEYS } from "@/config";
-import { Location } from "@/lib/types/supabase";
+import { useAuth } from "@/context/AuthContext";
+import { Location, Review } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
+import { reviewService } from "@/services/reviewService";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
-import { ActivityIndicator, Animated, Image, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { ActivityIndicator, Animated, Image, LayoutChangeEvent, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
+import { ReviewForm, ReviewList } from "./reviews";
 
 export const LocationCard = ({ location, listView = false }: { location: Location; listView?: boolean }) => {
 	const [expanded, setExpanded] = useState(false);
 	const [view360Open, setView360Open] = useState(false);
 	const [viewMapOpen, setViewMapOpen] = useState(false);
+	const [reviews, setReviews] = useState<Review[]>([]);
+	const [isLoadingReviews, setIsLoadingReviews] = useState(false);
+	const [showReviewForm, setShowReviewForm] = useState(false);
+	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+	const [descriptionHeight, setDescriptionHeight] = useState(0);
+	const { isSignedIn, user } = useAuth();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
+
+	const shouldShowToggle = true;
+
+	const onDescriptionLayout = (event: LayoutChangeEvent) => {
+		const { height } = event.nativeEvent.layout;
+		setDescriptionHeight(height);
+	};
+
+	const toggleDescription = () => {
+		setIsDescriptionExpanded(!isDescriptionExpanded);
+	};
+
+	const rating = location.rating || reviewService.calculateAverageRating(reviews);
+	const reviewCount = location.review_count || reviews.length;
 
 	const toggleExpand = () => {
 		if (!expanded) {
@@ -69,6 +92,42 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 		return [street, barangay, town].filter(Boolean).join(", ");
 	};
 
+	const loadReviews = React.useCallback(async () => {
+		setIsLoadingReviews(true);
+		try {
+			const fetchedReviews = await reviewService.getReviews(location.id);
+			setReviews(fetchedReviews);
+		} catch (error) {
+			console.error("Failed to load reviews:", error);
+		} finally {
+			setIsLoadingReviews(false);
+		}
+	}, [location.id]);
+
+	useEffect(() => {
+		if (expanded) {
+			loadReviews();
+		}
+	}, [expanded, loadReviews]);
+
+	const handleSubmitReview = async (rating: number, comment: string) => {
+		if (!isSignedIn || !user) return;
+
+		const reviewData = {
+			location_id: location.id,
+			user_id: user.id,
+			user_name: user.fullName || user.firstName || "Anonymous",
+			rating,
+			comment
+		};
+
+		const newReview = await reviewService.addReview(reviewData);
+		if (newReview) {
+			setReviews((prev) => [newReview, ...prev]);
+			setShowReviewForm(false);
+		}
+	};
+
 	// HTML for the 360° photo viewer
 	const get360ViewerHTML = (photoUrl: string) => `
         <!DOCTYPE html>
@@ -99,7 +158,6 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
     `;
 
 	// HTML for the map viewer
-	// TODO: Fix why location name is undefined/null
 	const getMapViewerHTML = (name: string) => `
         <!DOCTYPE html>
         <html>
@@ -125,16 +183,16 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
                 });
                 
                 map.addControl(new mapboxgl.NavigationControl());
-				map.on('load', function() {
-					new mapboxgl.Popup()
-						.setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
-						.setHTML('<h3>${name == null ? name : "You are here"}</h3>')
-						.setMaxWidth("300px")
-						.addTo(map);
-					new mapboxgl.Marker({color: '#fed787'})
-						.setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
-						.addTo(map);
-				});
+                map.on('load', function() {
+                    new mapboxgl.Popup()
+                        .setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
+                        .setHTML('<h3>${name == null ? name : "You are here"}</h3>')
+                        .setMaxWidth("300px")
+                        .addTo(map);
+                    new mapboxgl.Marker({color: '#fed787'})
+                        .setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
+                        .addTo(map);
+                });
             </script>
         </body>
         </html>
@@ -149,7 +207,7 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 				onPress={toggleExpand}
 			>
 				{listView ? (
-					// List view layout
+				// List view layout
 					<View className="flex-row">
 						<View className="w-1/3 h-24">
 							<Image
@@ -165,6 +223,16 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 							>
 								{location.name}
 							</Text>
+							<View className="flex-row items-center mt-1">
+								<Text className="text-[#fed787] mr-1">★</Text>
+								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
+									{rating.toFixed(1)}
+								</Text>
+								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
+									{" "}
+                                    ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+								</Text>
+							</View>
 							<View className="flex-row items-start mt-1">
 								<AntDesign name="enviromento" size={10} color="#555" style={{ marginTop: 2 }} />
 								<Text
@@ -174,16 +242,10 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 									{getFormattedAddress(location)}
 								</Text>
 							</View>
-							<Text
-								className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1"
-								numberOfLines={2}
-							>
-								{location.description}
-							</Text>
 						</View>
 					</View>
 				) : (
-					// Grid view layout (original)
+				// Grid view layout (original)
 					<View>
 						<View className="w-full h-32">
 							<Image
@@ -199,6 +261,16 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 							>
 								{location.name}
 							</Text>
+							<View className="flex-row items-center mt-1">
+								<Text className="text-[#fed787] mr-1">★</Text>
+								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
+									{rating.toFixed(1)}
+								</Text>
+								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
+									{" "}
+                                    ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+								</Text>
+							</View>
 							<View className="flex-row items-start mt-1">
 								<AntDesign name="enviromento" size={10} color="#555" style={{ marginTop: 2 }} />
 								<Text
@@ -208,12 +280,6 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 									{getFormattedAddress(location)}
 								</Text>
 							</View>
-							<Text
-								className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1"
-								numberOfLines={2}
-							>
-								{location.description}
-							</Text>
 						</View>
 					</View>
 				)}
@@ -243,9 +309,19 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 								<Feather name="x" size={24} color="black" />
 							</TouchableOpacity>
 						</View>
-						<View className="flex-1">
+						<ScrollView className="flex-1">
 							<Image source={{ uri: location.image.banner }} className="w-full h-52" resizeMode="cover" />
 							<View className="p-4">
+								<View className="flex-row items-center mb-2">
+									<Text className="text-[#fed787] text-2xl mr-1">★</Text>
+									<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+										{rating.toFixed(1)}
+									</Text>
+									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666]">
+										{" "}
+                                        ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+									</Text>
+								</View>
 								<View className="flex-row items-start mb-4">
 									<AntDesign name="enviromento" size={16} color="#333" style={{ marginTop: 2 }} />
 									<Text className="ml-2 text-base font-lexend tracking-tighter-lexend text-[#333] flex-1">
@@ -253,40 +329,88 @@ export const LocationCard = ({ location, listView = false }: { location: Locatio
 									</Text>
 								</View>
 								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
-									Description
+                                    Description
 								</Text>
-								<ScrollView
-									className="border-l-2 border-[#fed787] pl-2 max-h-72"
-									showsVerticalScrollIndicator={true}
-								>
-									<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
-										{location.description}
-									</Text>
-								</ScrollView>
-								<View className="mt-6">
+								<View className="border-l-2 border-[#fed787] pl-2" style={{ maxHeight: isDescriptionExpanded ? undefined : 80 }}>
+									<View onLayout={onDescriptionLayout}>
+										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
+											{location.description}
+										</Text>
+									</View>
+								</View>
+								{shouldShowToggle && (
+									<TouchableOpacity 
+										onPress={toggleDescription} 
+										className="mt-2 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
+										style={shadowStyles.small}
+									>
+										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black">
+											{isDescriptionExpanded ? "Show less ↑" : "Show more ↓"}
+										</Text>
+									</TouchableOpacity>
+								)}
+								<View className="mt-6 flex-row space-x-2">
 									<TouchableOpacity
-										className="bg-[#fed787] h-12 w-full items-center justify-center border border-[#333333]"
+										className="flex-1 bg-[#fed787] h-12 mr-1 items-center justify-center border border-[#333333]"
 										style={shadowStyles.standard}
 										onPress={handleViewMap}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-											View on Map
+                                            View on Map
 										</Text>
 									</TouchableOpacity>
 									{location.image[360] ? (
 										<TouchableOpacity
-											className="bg-white h-12 w-full items-center justify-center border border-[#333333] mt-3"
+											className="flex-1 bg-white h-12 ml-1 items-center justify-center border border-[#333333]"
 											style={shadowStyles.standard}
 											onPress={handleView360}
 										>
 											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-												View 360° Photo
+                                                View 360°
 											</Text>
 										</TouchableOpacity>
 									) : null}
 								</View>
+								<View className="mt-8">
+									<View className="flex-row justify-between items-center">
+										<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+                                            Reviews
+										</Text>
+										{isSignedIn && !showReviewForm && (
+											<TouchableOpacity
+												onPress={() => setShowReviewForm(true)}
+												className="bg-[#fed787] px-4 py-2 border border-[#333333]"
+												style={shadowStyles.small}
+											>
+												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+                                                    Write a review
+												</Text>
+											</TouchableOpacity>
+										)}
+									</View>
+									{showReviewForm && (
+										<View className="mt-4">
+											<ReviewForm locationId={location.id} onSubmit={handleSubmitReview} />
+											<TouchableOpacity className="mt-4" onPress={() => setShowReviewForm(false)}>
+												<Text className="text-sm font-lexend text-[#666] text-center">
+                                                    Cancel
+												</Text>
+											</TouchableOpacity>
+										</View>
+									)}
+									{isLoadingReviews ? (
+										<View className="py-8 items-center">
+											<ActivityIndicator size="small" color="#fed787" />
+											<Text className="mt-2 font-lexend text-[#666]">Loading reviews...</Text>
+										</View>
+									) : (
+										<View className="mt-4">
+											<ReviewList reviews={reviews} />
+										</View>
+									)}
+								</View>
 							</View>
-						</View>
+						</ScrollView>
 					</SafeAreaView>
 				</Animated.View>
 			</Modal>

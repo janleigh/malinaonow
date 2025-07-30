@@ -15,8 +15,7 @@ export const locationService = {
 				return [];
 			}
 
-			// Map the Supabase data to the format expected by LocationCard
-			return (data || []).map(this.mapToCardLocation);
+			return (data || []).map(location => this.mapToCardLocation(location));
 		} catch (error) {
 			console.error("Exception fetching locations:", error);
 			return [];

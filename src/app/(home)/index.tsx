@@ -67,6 +67,7 @@ export default function HomePage() {
 			setError(null);
 			const data = await locationService.getLocations();
 			setLocations(data);
+			console.log("Fetched locations:", data);
 		} catch (err) {
 			console.error("Failed to fetch locations:", err);
 			setError("Failed to load locations. Please try again.");
@@ -127,9 +128,7 @@ export default function HomePage() {
 											marginRight: 16
 										}}
 									>
-										<EventCard 
-											event={event} 
-										/>
+										<EventCard event={event} />
 									</View>
 								))}
 							</ScrollView>
