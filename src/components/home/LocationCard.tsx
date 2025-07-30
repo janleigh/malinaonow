@@ -304,16 +304,6 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 						</View>
 					</View>
 				)}
-				<TouchableOpacity 
-					className="absolute top-2 right-2 bg-white/70 rounded-full p-1 z-10"
-					onPress={handleToggleBookmark}
-				>
-					<AntDesign 
-						name={bookmarked ? "heart" : "hearto"} 
-						size={20} 
-						color={bookmarked ? "#FE5B62" : "#333"} 
-					/>
-				</TouchableOpacity>
 			</TouchableOpacity>
 			<Modal visible={expanded} transparent={true} animationType="none">
 				<Animated.View

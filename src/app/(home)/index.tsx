@@ -119,7 +119,7 @@ export default function HomePage() {
 	};
 
 	const toggleBookmarksView = () => {
-		setShowingBookmarksOnly(!showingBookmarksOnly);
+		router.push("/(home)/bookmarks");
 	};
 
 	const displayedLocations = showingBookmarksOnly 
@@ -352,7 +352,7 @@ export default function HomePage() {
 							color={!showingBookmarksOnly ? "#333" : "#999"} 
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity className="items-center" onPress={() => router.push("/+not-found")}>
+					<TouchableOpacity className="items-center" onPress={() => router.push("/(home)/calendar")}>
 						<AntDesign name="calendar" size={24} color="#999" />
 					</TouchableOpacity>
 					<TouchableOpacity 

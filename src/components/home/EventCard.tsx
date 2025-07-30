@@ -1,3 +1,4 @@
+import { formatDate, formatTime } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
@@ -84,13 +85,13 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 								className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555]"
 								numberOfLines={1}
 							>
-								{event.date}
+								{formatDate(event.date)}
 							</Text>
 						</View>
 						<View className="flex-row items-center mt-1">
 							<AntDesign name="clockcircleo" size={10} color="#555" />
 							<Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555]">
-								{event.time}
+								{formatTime(event.time)}
 							</Text>
 						</View>
 						<View className="flex-row items-start mt-1">
@@ -143,7 +144,7 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 												DATE
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
-												{event.date}
+												{formatDate(event.date)}
 											</Text>
 										</View>
 									</View>
@@ -156,7 +157,7 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 												TIME
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
-												{event.time}
+												{formatTime(event.time)}
 											</Text>
 										</View>
 									</View>
