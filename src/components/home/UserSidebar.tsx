@@ -16,7 +16,14 @@ interface UserSidebarProps {
 	onShowBookmarks?: () => void; // Add this line
 }
 
-export const UserSidebar: React.FC<UserSidebarProps> = ({ visible, onClose, email, username, profileImage, onShowBookmarks }) => {
+export const UserSidebar: React.FC<UserSidebarProps> = ({
+	visible,
+	onClose,
+	email,
+	username,
+	profileImage,
+	onShowBookmarks
+}) => {
 	const { signOut, user } = useAuth();
 	const slideAnim = useRef(new Animated.Value(Dimensions.get("window").width)).current;
 	const fadeAnim = useRef(new Animated.Value(0)).current;

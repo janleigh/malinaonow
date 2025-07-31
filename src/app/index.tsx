@@ -21,7 +21,8 @@ export default function LandingPage() {
 
 	useLayoutEffect(() => {
 		if (isSignedIn === true) {
-			setShowDialog(true);
+			// Automatically redirect to home page if already signed in
+			handleGoToHome();
 		}
 	}, [isSignedIn]);
 

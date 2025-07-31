@@ -3,16 +3,35 @@ import { useAuth } from "@/context/AuthContext";
 import { Location, Review } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ReviewService } from "@/services/ReviewService";
+import { supabase } from "@/api/supabase";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Animated, Image, LayoutChangeEvent, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Animated,
+	GestureResponderEvent,
+	Image,
+	LayoutChangeEvent,
+	Modal,
+	NativeSyntheticEvent,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
+import { WebViewError } from 'react-native-webview/lib/WebViewTypes';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 import { ReviewForm, ReviewList } from "./reviews";
 
-export const LocationCard = ({ location, listView = false, isBookmarked = false, onToggleBookmark }: { 
-	location: Location; 
-	listView?: boolean; 
+export const LocationCard = ({
+	location,
+	listView = false,
+	isBookmarked = false,
+	onToggleBookmark
+}: {
+	location: Location;
+	listView?: boolean;
 	isBookmarked?: boolean;
 	onToggleBookmark?: (locationId: string, newStatus: boolean) => void;
 }) => {
@@ -25,6 +44,8 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 	const [descriptionHeight, setDescriptionHeight] = useState(0);
 	const [bookmarked, setBookmarked] = useState(isBookmarked);
+	const [avgRating, setAvgRating] = useState(location.rating || 0);
+	const [totalReviews, setTotalReviews] = useState(location.review_count || 0);
 	const { isSignedIn, user } = useAuth();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -40,8 +61,9 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 		setIsDescriptionExpanded(!isDescriptionExpanded);
 	};
 
-	const rating = location.rating || ReviewService.calculateAverageRating(reviews);
-	const reviewCount = location.review_count || reviews.length;
+	// Use local state for rating and review count that can be updated after initial load
+	const rating = avgRating || 0;
+	const reviewCount = totalReviews;
 
 	const toggleExpand = () => {
 		if (!expanded) {
@@ -98,21 +120,46 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 		return [street, barangay, town].filter(Boolean).join(", ");
 	};
 
-	const loadReviews = React.useCallback(async () => {
-		setIsLoadingReviews(true);
-		try {
-			const fetchedReviews = await ReviewService.getReviews(location.id);
-			setReviews(fetchedReviews);
-		} catch (error) {
-			console.error("Failed to load reviews:", error);
-		} finally {
-			setIsLoadingReviews(false);
-		}
-	}, [location.id]);
+	const loadReviews = React.useCallback(
+		async (loadFullReviews = false) => {
+			try {
+				const { data: reviewStats } = await supabase.from("reviews").select("*").eq("location_id", location.id);
 
+				if (reviewStats && reviewStats.length > 0) {
+					// Convert to Review type before calculating average
+					const reviews = reviewStats as Review[];
+					const avg = ReviewService.calculateAverageRating(reviews);
+					setAvgRating(avg);
+					setTotalReviews(reviewStats.length);
+
+					// Only load full reviews if we're expanding the card
+					if (loadFullReviews) {
+						setIsLoadingReviews(true);
+						const fetchedReviews = await ReviewService.getReviews(location.id);
+						setReviews(fetchedReviews);
+					}
+				} else {
+					setAvgRating(0);
+					setTotalReviews(0);
+				}
+			} catch (error) {
+				console.error("Failed to load reviews:", error);
+			} finally {
+				setIsLoadingReviews(false);
+			}
+		},
+		[location.id]
+	);
+
+	// Load review stats on initial mount
+	useEffect(() => {
+		loadReviews(false);
+	}, [loadReviews]);
+
+	// Load full reviews when expanded
 	useEffect(() => {
 		if (expanded) {
-			loadReviews();
+			loadReviews(true);
 		}
 	}, [expanded, loadReviews]);
 
@@ -120,12 +167,12 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 		setBookmarked(isBookmarked);
 	}, [isBookmarked]);
 
-	const handleToggleBookmark = async (e: any) => {
+	const handleToggleBookmark = async (e: GestureResponderEvent) => {
 		e.stopPropagation();
-		
+
 		const newStatus = !bookmarked;
 		setBookmarked(newStatus);
-		
+
 		if (onToggleBookmark) {
 			onToggleBookmark(location.id, newStatus);
 		}
@@ -134,18 +181,30 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 	const handleSubmitReview = async (rating: number, comment: string) => {
 		if (!isSignedIn || !user) return;
 
-		const reviewData = {
-			location_id: location.id,
-			user_id: user.id,
-			user_name: user.fullName || user.firstName || "Anonymous",
-			rating,
-			comment
-		};
+		try {
+			const reviewData = {
+				location_id: location.id,
+				user_id: user.id,
+				user_name: user.fullName || user.firstName || "Anonymous",
+				rating,
+				comment,
+				created_at: new Date().toISOString()
+			};
 
-		const newReview = await ReviewService.addReview(reviewData);
-		if (newReview) {
-			setReviews((prev) => [newReview, ...prev]);
-			setShowReviewForm(false);
+			const newReview = await ReviewService.addReview(reviewData);
+			if (newReview) {
+				// Update local state immediately for instant feedback
+				setReviews((prev) => [newReview, ...prev]);
+				setShowReviewForm(false);
+
+				// Update the average rating and review count
+				const updatedReviews = [newReview, ...reviews];
+				const newAvgRating = ReviewService.calculateAverageRating(updatedReviews);
+				setAvgRating(newAvgRating);
+				setTotalReviews(updatedReviews.length);
+			}
+		} catch (error) {
+			console.error("Error submitting review:", error);
 		}
 	};
 
@@ -228,7 +287,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 				onPress={toggleExpand}
 			>
 				{listView ? (
-				// List view layout
+					// List view layout
 					<View className="flex-row">
 						<View className="w-1/3 h-24">
 							<Image
@@ -251,7 +310,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 								</Text>
 								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
 									{" "}
-                                    ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+									({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
 								</Text>
 							</View>
 							<View className="flex-row items-start mt-1">
@@ -266,7 +325,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 						</View>
 					</View>
 				) : (
-				// Grid view layout (original)
+					// Grid view layout (original)
 					<View>
 						<View className="w-full h-32">
 							<Image
@@ -289,7 +348,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 								</Text>
 								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
 									{" "}
-                                    ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+									({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
 								</Text>
 							</View>
 							<View className="flex-row items-start mt-1">
@@ -340,7 +399,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666]">
 										{" "}
-                                        ({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+										({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
 									</Text>
 								</View>
 								<View className="flex-row items-start mb-4">
@@ -357,16 +416,19 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 										handleToggleBookmark(e);
 									}}
 								>
-									<AntDesign 
-										name={bookmarked ? "heart" : "hearto"} 
-										size={24} 
-										color={bookmarked ? "#FE5B62" : "#333"} 
+									<AntDesign
+										name={bookmarked ? "heart" : "hearto"}
+										size={24}
+										color={bookmarked ? "#FE5B62" : "#333"}
 									/>
 								</TouchableOpacity>
 								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
-                                    Description
+									Description
 								</Text>
-								<View className="border-l-2 border-[#fed787] pl-2" style={{ maxHeight: isDescriptionExpanded ? undefined : 80 }}>
+								<View
+									className="border-l-2 border-[#fed787] pl-2"
+									style={{ maxHeight: isDescriptionExpanded ? undefined : 80 }}
+								>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
 											{location.description}
@@ -374,8 +436,8 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 									</View>
 								</View>
 								{shouldShowToggle && (
-									<TouchableOpacity 
-										onPress={toggleDescription} 
+									<TouchableOpacity
+										onPress={toggleDescription}
 										className="mt-2 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
 										style={shadowStyles.small}
 									>
@@ -391,7 +453,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 										onPress={handleViewMap}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-                                            View on Map
+											View on Map
 										</Text>
 									</TouchableOpacity>
 									{location.image[360] ? (
@@ -401,7 +463,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 											onPress={handleView360}
 										>
 											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-                                                View 360°
+												View 360°
 											</Text>
 										</TouchableOpacity>
 									) : null}
@@ -409,7 +471,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 								<View className="mt-8">
 									<View className="flex-row justify-between items-center">
 										<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
-                                            Reviews
+											Reviews
 										</Text>
 										{isSignedIn && !showReviewForm && (
 											<TouchableOpacity
@@ -418,7 +480,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 												style={shadowStyles.small}
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-                                                    Write a review
+													Write a review
 												</Text>
 											</TouchableOpacity>
 										)}
@@ -428,7 +490,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 											<ReviewForm locationId={location.id} onSubmit={handleSubmitReview} />
 											<TouchableOpacity className="mt-4" onPress={() => setShowReviewForm(false)}>
 												<Text className="text-sm font-lexend text-[#666] text-center">
-                                                    Cancel
+													Cancel
 												</Text>
 											</TouchableOpacity>
 										</View>
@@ -470,7 +532,7 @@ export const LocationCard = ({ location, listView = false, isBookmarked = false,
 									<Text className="mt-2 font-lexend text-[#666666]">Loading map...</Text>
 								</View>
 							)}
-							onError={(e) => console.error("WebView error:", e.nativeEvent)}
+							onError={(e: NativeSyntheticEvent<WebViewError>) => console.error("WebView error:", e.nativeEvent)}
 							scrollEnabled={false}
 							bounces={false}
 							scalesPageToFit={true}

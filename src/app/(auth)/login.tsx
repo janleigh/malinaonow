@@ -25,10 +25,10 @@ export default function LoginScreen() {
 
 		try {
 			await signIn(email);
+			// Don't set loading to false here, let the auth state change handle the navigation
 		} catch (err) {
 			console.error("Login error:", err);
 			setError("Something went wrong. Please try again.");
-		} finally {
 			setIsLoading(false);
 		}
 	};
