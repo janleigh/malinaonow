@@ -15,7 +15,7 @@ export const LocationService = {
 				return [];
 			}
 
-			return (data || []).map(location => this.mapToCardLocation(location));
+			return (data || []).map((location) => this.mapToCardLocation(location));
 		} catch (error) {
 			console.error("Exception fetching locations:", error);
 			return [];

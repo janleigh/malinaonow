@@ -19,7 +19,7 @@ export default function HomePage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [activeEventIndex, setActiveEventIndex] = useState(0);
-    
+
 	const [events, setEvents] = useState<Event[]>([]);
 	const [loadingEvents, setLoadingEvents] = useState(true);
 	const [eventError, setEventError] = useState<string | null>(null);
@@ -63,7 +63,7 @@ export default function HomePage() {
 			setLoading(false);
 		}
 	};
-    
+
 	const fetchEvents = async () => {
 		try {
 			setLoadingEvents(true);
@@ -83,7 +83,7 @@ export default function HomePage() {
 			setBookmarkedLocations([]);
 			return;
 		}
-        
+
 		try {
 			const bookmarks = await BookmarkService.getBookmarks(user.id);
 			setBookmarkedLocations(bookmarks);
@@ -104,14 +104,14 @@ export default function HomePage() {
 
 	const handleToggleBookmark = async (locationId: string, newStatus: boolean) => {
 		if (!isSignedIn || !user) return;
-        
+
 		try {
 			if (newStatus) {
 				await BookmarkService.addBookmark(user.id, locationId);
-				setBookmarkedLocations(prev => [...prev, locationId]);
+				setBookmarkedLocations((prev) => [...prev, locationId]);
 			} else {
 				await BookmarkService.removeBookmark(user.id, locationId);
-				setBookmarkedLocations(prev => prev.filter(id => id !== locationId));
+				setBookmarkedLocations((prev) => prev.filter((id) => id !== locationId));
 			}
 		} catch (err) {
 			console.error("Failed to update bookmark:", err);
@@ -122,8 +122,8 @@ export default function HomePage() {
 		router.push("/(home)/bookmarks");
 	};
 
-	const displayedLocations = showingBookmarksOnly 
-		? locations.filter(location => bookmarkedLocations.includes(location.id))
+	const displayedLocations = showingBookmarksOnly
+		? locations.filter((location) => bookmarkedLocations.includes(location.id))
 		: locations;
 
 	return (
@@ -131,7 +131,7 @@ export default function HomePage() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                        MalinaoNow
+						MalinaoNow
 					</Text>
 					<TouchableOpacity className="p-2" onPress={openSidebar}>
 						<Feather name="user" size={24} color="black" />
@@ -141,7 +141,7 @@ export default function HomePage() {
 					<View className="px-4 mb-6">
 						<View className="flex-row justify-between items-center mb-4">
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
-                                Upcoming Events
+								Upcoming Events
 							</Text>
 							<TouchableOpacity onPress={() => router.push("/+not-found")}>
 								<Text className="text-sm font-lexend tracking-tighter-lexend text-black">See all</Text>
@@ -154,13 +154,16 @@ export default function HomePage() {
 									<Text className="mt-2 font-lexend text-[#666666]">Loading events...</Text>
 								</View>
 							) : eventError ? (
-								<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
+								<View
+									className="p-4 my-4 border border-[#333333] bg-white"
+									style={shadowStyles.standard}
+								>
 									<View className="items-center">
 										<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
 											<Feather name="alert-triangle" size={24} color="#333" />
 										</View>
 										<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                            Error Loading Events
+											Error Loading Events
 										</Text>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
 											{eventError}
@@ -171,22 +174,25 @@ export default function HomePage() {
 											onPress={fetchEvents}
 										>
 											<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-                                                Retry
+												Retry
 											</Text>
 										</TouchableOpacity>
 									</View>
 								</View>
 							) : events.length === 0 ? (
-								<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
+								<View
+									className="p-4 my-4 border border-[#333333] bg-white"
+									style={shadowStyles.standard}
+								>
 									<View className="items-center">
 										<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
 											<Feather name="calendar" size={24} color="#333" />
 										</View>
 										<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                            No Upcoming Events
+											No Upcoming Events
 										</Text>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-                                            There are no upcoming events at the moment. Check back soon!
+											There are no upcoming events at the moment. Check back soon!
 										</Text>
 									</View>
 								</View>
@@ -256,7 +262,7 @@ export default function HomePage() {
 										<Feather name="alert-triangle" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        Error Loading Data
+										Error Loading Data
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
 										{error}
@@ -267,7 +273,7 @@ export default function HomePage() {
 										onPress={fetchLocations}
 									>
 										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-                                            Retry
+											Retry
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -279,11 +285,11 @@ export default function HomePage() {
 										<Feather name="tool" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        Under Construction
+										Under Construction
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-                                        We&apos;re currently working on bringing you the best locations in Malinao.
-                                        Check back soon!
+										We&apos;re currently working on bringing you the best locations in Malinao.
+										Check back soon!
 									</Text>
 								</View>
 							</View>
@@ -294,45 +300,50 @@ export default function HomePage() {
 										<AntDesign name="heart" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        No Bookmarked Locations
+										No Bookmarked Locations
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-                                        You haven&apos;t bookmarked any locations yet. Tap the heart icon on a location to bookmark it!
+										You haven&apos;t bookmarked any locations yet. Tap the heart icon on a location
+										to bookmark it!
 									</Text>
 								</View>
 							</View>
 						) : isGridView ? (
-						// Grid View
+							// Grid View
 							<View className="flex-row justify-between">
 								<View className="w-[48%] space-y-4">
-									{displayedLocations.slice(0, Math.ceil(displayedLocations.length / 2)).map((location) => (
-										<LocationCard 
-											key={location.id} 
-											location={location} 
-											isBookmarked={bookmarkedLocations.includes(location.id)}
-											onToggleBookmark={handleToggleBookmark}
-										/>
-									))}
+									{displayedLocations
+										.slice(0, Math.ceil(displayedLocations.length / 2))
+										.map((location) => (
+											<LocationCard
+												key={location.id}
+												location={location}
+												isBookmarked={bookmarkedLocations.includes(location.id)}
+												onToggleBookmark={handleToggleBookmark}
+											/>
+										))}
 								</View>
 								<View className="w-[48%] space-y-4">
-									{displayedLocations.slice(Math.ceil(displayedLocations.length / 2)).map((location) => (
-										<LocationCard 
-											key={location.id} 
-											location={location} 
-											isBookmarked={bookmarkedLocations.includes(location.id)}
-											onToggleBookmark={handleToggleBookmark}
-										/>
-									))}
+									{displayedLocations
+										.slice(Math.ceil(displayedLocations.length / 2))
+										.map((location) => (
+											<LocationCard
+												key={location.id}
+												location={location}
+												isBookmarked={bookmarkedLocations.includes(location.id)}
+												onToggleBookmark={handleToggleBookmark}
+											/>
+										))}
 								</View>
 							</View>
 						) : (
-						// List View
+							// List View
 							<View className="space-y-4">
 								{displayedLocations.map((location) => (
-									<LocationCard 
-										key={location.id} 
-										location={location} 
-										listView={true} 
+									<LocationCard
+										key={location.id}
+										location={location}
+										listView={true}
 										isBookmarked={bookmarkedLocations.includes(location.id)}
 										onToggleBookmark={handleToggleBookmark}
 									/>
@@ -342,34 +353,20 @@ export default function HomePage() {
 					</View>
 				</ScrollView>
 				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity 
-						className="items-center"
-						onPress={() => setShowingBookmarksOnly(false)}
-					>
-						<AntDesign 
-							name="home" 
-							size={24} 
-							color={!showingBookmarksOnly ? "#333" : "#999"} 
-						/>
+					<TouchableOpacity className="items-center" onPress={() => setShowingBookmarksOnly(false)}>
+						<AntDesign name="home" size={24} color={!showingBookmarksOnly ? "#333" : "#999"} />
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center" onPress={() => router.push("/(home)/calendar")}>
 						<AntDesign name="calendar" size={24} color="#999" />
 					</TouchableOpacity>
-					<TouchableOpacity 
-						className="items-center" 
-						onPress={toggleBookmarksView}
-					>
-						<AntDesign 
-							name="heart" 
-							size={24} 
-							color={showingBookmarksOnly ? "#FE5B62" : "#999"} 
-						/>
+					<TouchableOpacity className="items-center" onPress={toggleBookmarksView}>
+						<AntDesign name="heart" size={24} color={showingBookmarksOnly ? "#FE5B62" : "#999"} />
 					</TouchableOpacity>
 				</View>
-				<UserSidebar 
-					visible={sidebarVisible} 
-					onClose={closeSidebar} 
-					onSignOut={handleSignOut} 
+				<UserSidebar
+					visible={sidebarVisible}
+					onClose={closeSidebar}
+					onSignOut={handleSignOut}
 					onShowBookmarks={toggleBookmarksView}
 				/>
 			</SafeAreaView>

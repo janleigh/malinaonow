@@ -24,24 +24,22 @@ export default function BookmarksPage() {
 			setLoading(false);
 			return;
 		}
-        
+
 		try {
 			setLoading(true);
 			setError(null);
-            
+
 			const bookmarks = await BookmarkService.getBookmarks(user.id);
 			setBookmarkedLocations(bookmarks);
-            
+
 			if (bookmarks.length === 0) {
 				setLocations([]);
 				setLoading(false);
 				return;
 			}
-            
+
 			const allLocations = await LocationService.getLocations();
-			const bookmarkedLocationsData = allLocations.filter(location => 
-				bookmarks.includes(location.id)
-			);
+			const bookmarkedLocationsData = allLocations.filter((location) => bookmarks.includes(location.id));
 			setLocations(bookmarkedLocationsData);
 		} catch (err) {
 			console.error("Failed to fetch bookmarked locations:", err);
@@ -61,12 +59,12 @@ export default function BookmarksPage() {
 
 	const handleToggleBookmark = async (locationId: string, newStatus: boolean) => {
 		if (!isSignedIn || !user) return;
-        
+
 		try {
 			if (!newStatus) {
 				await BookmarkService.removeBookmark(user.id, locationId);
-				setBookmarkedLocations(prev => prev.filter(id => id !== locationId));
-				setLocations(prev => prev.filter(location => location.id !== locationId));
+				setBookmarkedLocations((prev) => prev.filter((id) => id !== locationId));
+				setLocations((prev) => prev.filter((location) => location.id !== locationId));
 			}
 		} catch (err) {
 			console.error("Failed to update bookmark:", err);
@@ -79,16 +77,16 @@ export default function BookmarksPage() {
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<View className="flex-row items-center">
 						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                            Bookmarked Locations
+							Bookmarked Locations
 						</Text>
 					</View>
 				</View>
-                
+
 				<ScrollView className="flex-1">
 					<View className="mt-2 px-4 py-2">
 						<View className="flex-row justify-between items-center mb-4">
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
-                                My Bookmarks
+								My Bookmarks
 							</Text>
 							<TouchableOpacity className="flex-row items-center" onPress={toggleView}>
 								<Text className="mr-1 font-lexend tracking-tighter-lexend text-black">
@@ -97,7 +95,7 @@ export default function BookmarksPage() {
 								<Feather name={isGridView ? "list" : "grid"} size={18} color="black" />
 							</TouchableOpacity>
 						</View>
-                        
+
 						{loading ? (
 							<View className="p-4 items-center justify-center">
 								<ActivityIndicator size="large" color="#fed787" />
@@ -110,7 +108,7 @@ export default function BookmarksPage() {
 										<Feather name="alert-triangle" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        Error Loading Bookmarks
+										Error Loading Bookmarks
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
 										{error}
@@ -121,7 +119,7 @@ export default function BookmarksPage() {
 										onPress={fetchBookmarkedLocations}
 									>
 										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-                                            Retry
+											Retry
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -133,10 +131,11 @@ export default function BookmarksPage() {
 										<AntDesign name="heart" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        No Bookmarked Locations
+										No Bookmarked Locations
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-                                        You haven&apos;t bookmarked any locations yet. Tap the heart icon on a location to bookmark it!
+										You haven&apos;t bookmarked any locations yet. Tap the heart icon on a location
+										to bookmark it!
 									</Text>
 									<TouchableOpacity
 										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"
@@ -144,19 +143,19 @@ export default function BookmarksPage() {
 										onPress={() => router.push("/(home)")}
 									>
 										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-                                            Explore Locations
+											Explore Locations
 										</Text>
 									</TouchableOpacity>
 								</View>
 							</View>
 						) : isGridView ? (
-						// Grid View
+							// Grid View
 							<View className="flex-row justify-between">
 								<View className="w-[48%] space-y-4">
 									{locations.slice(0, Math.ceil(locations.length / 2)).map((location) => (
-										<LocationCard 
-											key={location.id} 
-											location={location} 
+										<LocationCard
+											key={location.id}
+											location={location}
 											isBookmarked={true}
 											onToggleBookmark={handleToggleBookmark}
 										/>
@@ -164,9 +163,9 @@ export default function BookmarksPage() {
 								</View>
 								<View className="w-[48%] space-y-4">
 									{locations.slice(Math.ceil(locations.length / 2)).map((location) => (
-										<LocationCard 
-											key={location.id} 
-											location={location} 
+										<LocationCard
+											key={location.id}
+											location={location}
 											isBookmarked={true}
 											onToggleBookmark={handleToggleBookmark}
 										/>
@@ -174,13 +173,13 @@ export default function BookmarksPage() {
 								</View>
 							</View>
 						) : (
-						// List View
+							// List View
 							<View className="space-y-4">
 								{locations.map((location) => (
-									<LocationCard 
-										key={location.id} 
-										location={location} 
-										listView={true} 
+									<LocationCard
+										key={location.id}
+										location={location}
+										listView={true}
 										isBookmarked={true}
 										onToggleBookmark={handleToggleBookmark}
 									/>
@@ -190,10 +189,7 @@ export default function BookmarksPage() {
 					</View>
 				</ScrollView>
 				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity 
-						className="items-center"
-						onPress={() => router.replace("/(home)")}
-					>
+					<TouchableOpacity className="items-center" onPress={() => router.replace("/(home)")}>
 						<AntDesign name="home" size={24} color="#999" />
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center" onPress={() => router.push("/(home)/calendar")}>

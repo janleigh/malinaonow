@@ -14,44 +14,44 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+// Memoize the auth context value to prevent unnecessary re-renders
+const useAuthValue = () => {
 	const { isLoaded: clerkLoaded, isSignedIn, user } = useUser();
 	const { signUp, signIn, verifyOtp, signOut } = useClerkAuth();
-
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [currentEmail, setCurrentEmail] = useState<string | null>(null);
 
+	// Only update isLoaded when clerkLoaded changes
 	useLayoutEffect(() => {
 		if (clerkLoaded) {
 			setIsLoaded(true);
 		}
 	}, [clerkLoaded]);
 
-	const handleSignUp = async (email: string, firstName?: string, lastName?: string) => {
-		setCurrentEmail(email);
-		return signUp(email, firstName, lastName);
-	};
-
-	const handleSignIn = async (email: string) => {
-		setCurrentEmail(email);
-		return signIn(email);
-	};
-
-	return (
-		<AuthContext.Provider
-			value={{
-				isLoaded,
-				isSignedIn: isSignedIn || false,
-				signUp: handleSignUp,
-				signIn: handleSignIn,
-				verifyOtp,
-				signOut,
-				user
-			}}
-		>
-			{children}
-		</AuthContext.Provider>
+	// Memoize the context value to prevent unnecessary re-renders
+	const contextValue = React.useMemo(
+		() => ({
+			isLoaded,
+			isSignedIn: isSignedIn || false,
+			signUp: async (email: string, firstName?: string, lastName?: string) => {
+				return signUp(email, firstName, lastName);
+			},
+			signIn: async (email: string) => {
+				return signIn(email);
+			},
+			verifyOtp,
+			signOut,
+			user
+		}),
+		[isLoaded, isSignedIn, user, signUp, signIn, verifyOtp, signOut]
 	);
+
+	return contextValue;
+};
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+	const contextValue = useAuthValue();
+
+	return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {

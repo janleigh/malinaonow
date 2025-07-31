@@ -10,27 +10,25 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const groupEventsByDate = (events: Event[]) => {
 	const grouped: Record<string, Event[]> = {};
-    
-	events.forEach(event => {
+
+	events.forEach((event) => {
 		if (!grouped[event.date]) {
 			grouped[event.date] = [];
 		}
 		grouped[event.date].push(event);
 	});
-    
+
 	return Object.keys(grouped)
 		.sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
-		.map(date => ({
+		.map((date) => ({
 			date,
-			events: grouped[date].sort((a, b) => 
-				a.time.localeCompare(b.time)
-			)
+			events: grouped[date].sort((a, b) => a.time.localeCompare(b.time))
 		}));
 };
 
 export default function CalendarPage() {
 	const [events, setEvents] = useState<Event[]>([]);
-	const [groupedEvents, setGroupedEvents] = useState<{date: string, events: Event[]}[]>([]);
+	const [groupedEvents, setGroupedEvents] = useState<{ date: string; events: Event[] }[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
@@ -59,13 +57,13 @@ export default function CalendarPage() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-                        Calendar
+						Calendar
 					</Text>
 				</View>
 				<ScrollView className="flex-1">
 					<View className="p-4">
 						<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4">
-                            Upcoming Events
+							Upcoming Events
 						</Text>
 						{loading ? (
 							<View className="p-4 items-center justify-center">
@@ -79,7 +77,7 @@ export default function CalendarPage() {
 										<Feather name="alert-triangle" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        Error Loading Events
+										Error Loading Events
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
 										{error}
@@ -90,7 +88,7 @@ export default function CalendarPage() {
 										onPress={fetchEvents}
 									>
 										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-                                            Retry
+											Retry
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -102,16 +100,16 @@ export default function CalendarPage() {
 										<Feather name="calendar" size={24} color="#333" />
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-                                        No Upcoming Events
+										No Upcoming Events
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-                                        There are no upcoming events at the moment. Check back soon!
+										There are no upcoming events at the moment. Check back soon!
 									</Text>
 								</View>
 							</View>
 						) : (
 							<View>
-								{groupedEvents.map(group => (
+								{groupedEvents.map((group) => (
 									<View key={group.date} className="mb-6">
 										<View className="flex-row items-center mb-2">
 											<View className="w-10 h-10 rounded-full bg-[#fed787] items-center justify-center mr-3 border border-[#333333]">
@@ -124,14 +122,14 @@ export default function CalendarPage() {
 												{isToday(group.date) && (
 													<View className="bg-[#fed787] px-2 py-0.5 rounded-sm">
 														<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-black">
-                                                            TODAY
+															TODAY
 														</Text>
 													</View>
 												)}
 											</View>
 										</View>
 										<View className="border-l-2 border-[#fed787] ml-5 pl-4">
-											{group.events.map(event => (
+											{group.events.map((event) => (
 												<TouchableOpacity
 													key={event.id}
 													className="bg-white p-4 mb-3 border border-[#333333]"
@@ -150,7 +148,12 @@ export default function CalendarPage() {
 																</Text>
 															</View>
 															<View className="flex-row items-start mt-1">
-																<AntDesign name="enviromento" size={12} color="#555" style={{ marginTop: 2 }} />
+																<AntDesign
+																	name="enviromento"
+																	size={12}
+																	color="#555"
+																	style={{ marginTop: 2 }}
+																/>
 																<Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555] flex-1">
 																	{event.location}
 																</Text>
@@ -167,19 +170,13 @@ export default function CalendarPage() {
 					</View>
 				</ScrollView>
 				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity 
-						className="items-center"
-						onPress={() => router.replace("/(home)")}
-					>
+					<TouchableOpacity className="items-center" onPress={() => router.replace("/(home)")}>
 						<AntDesign name="home" size={24} color="#999" />
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center">
 						<AntDesign name="calendar" size={24} color="#333" />
 					</TouchableOpacity>
-					<TouchableOpacity 
-						className="items-center" 
-						onPress={() => router.push("/(home)/bookmarks")}
-					>
+					<TouchableOpacity className="items-center" onPress={() => router.push("/(home)/bookmarks")}>
 						<AntDesign name="heart" size={24} color="#999" />
 					</TouchableOpacity>
 				</View>
