@@ -19,7 +19,7 @@ import {
 	TouchableOpacity,
 	View
 } from "react-native";
-import { WebViewError } from 'react-native-webview/lib/WebViewTypes';
+import { WebViewError } from 'react-native-webview';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 import { ReviewForm, ReviewList } from "./reviews";
