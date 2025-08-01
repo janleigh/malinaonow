@@ -7,268 +7,269 @@ import { LocationService, ReviewService } from "@/services";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+interface ReviewWithLocation extends Review {
+  locationName?: string;
+}
+
 export default function ModerateReviewsScreen() {
-	const [allReviews, setAllReviews] = useState<Review[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [searchQuery, setSearchQuery] = useState("");
-	const [filterRating, setFilterRating] = useState(0);
-	const [locationNames, setLocationNames] = useState<Record<string, string>>({});
-	const [flaggedReviews, setFlaggedReviews] = useState<Record<string, boolean>>({});
-	const [showFlagged, setShowFlagged] = useState(false);
+  const [reviews, setReviews] = useState<ReviewWithLocation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterRating, setFilterRating] = useState(0);
+  const [showFlagged, setShowFlagged] = useState(false);
 
-	const fetchAllReviews = async () => {
-		try {
-			setLoading(true);
-			setError(null);
+  const fetchReviews = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-			const locations = await LocationService.getLocations();
-			const namesMap = locations.reduce(
-				(acc, location) => {
-					acc[location.id] = location.name;
-					return acc;
-				},
-				{} as Record<string, string>
-			);
-			console.log("====================================");
-			console.log("Location Names Map:", namesMap);
-			console.log("====================================");
-			setLocationNames(namesMap);
+      // Get all locations first
+      const locations = await LocationService.getLocations();
+      const locationMap = locations.reduce((acc, loc) => ({
+        ...acc,
+        [loc.id]: loc.name
+      }), {} as Record<string, string>);
 
-			const data = [];
-			for (const location of locations) {
-				const reviews = await ReviewService.getReviews(location.id);
-				data.push(...reviews);
-			}
+      // Fetch reviews for all locations
+      const allReviews: ReviewWithLocation[] = [];
+      for (const location of locations) {
+        const locationReviews = await ReviewService.getReviews(location.id);
+        const reviewsWithLocation = locationReviews.map(review => ({
+          ...review,
+          locationName: locationMap[review.location_id] || 'Unknown Location'
+        }));
+        allReviews.push(...reviewsWithLocation);
+      }
 
-			console.log(data.length);
-			setAllReviews(data);
+      setReviews(allReviews);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      setError("Failed to load reviews. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-			const flagMap = data.reduce(
-				(acc, review) => {
-					acc[review.id] = review.flagged || false;
-					return acc;
-				},
-				{} as Record<string, boolean>
-			);
-			setFlaggedReviews(flagMap);
-		} catch (err) {
-			console.error("Failed to fetch reviews:", err);
-			setError("Failed to load reviews. Please try again.");
-		} finally {
-			setLoading(false);
-		}
-	};
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
-	useEffect(() => {
-		fetchAllReviews();
-	}, []);
+  const filteredReviews = reviews.filter(review => {
+    const matchesSearch = 
+      review.user_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      review.comment?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      review.locationName?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+    const matchesRating = filterRating === 0 || review.rating === filterRating;
+    const matchesFlagged = !showFlagged || review.flagged;
+    
+    return matchesSearch && matchesRating && matchesFlagged;
+  });
 
-	const filteredReviews = allReviews.filter((review) => {
-		const matchesSearch =
-			review.user_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			review.comment.toLowerCase().includes(searchQuery.toLowerCase());
-		const matchesRating = filterRating === 0 || review.rating === filterRating;
-		const matchesFlagged = !showFlagged || flaggedReviews[review.id];
-		return matchesSearch && matchesRating && matchesFlagged;
-	});
+  const handleFlagReview = async (reviewId: string) => {
+    try {
+      const review = reviews.find(r => r.id === reviewId);
+      if (!review) return;
 
-	const handleDeleteReview = async (reviewId: string) => {
-		Alert.alert("Confirm Delete", "Are you sure you want to delete this review? This action cannot be undone.", [
-			{ text: "Cancel", style: "cancel" },
-			{
-				text: "Delete",
-				style: "destructive",
-				onPress: async () => {
-					try {
-						setLoading(true);
-						const { error } = await supabase.from("reviews").delete().eq("id", reviewId);
+      const { error } = await supabase
+        .from("reviews")
+        .update({ flagged: !review.flagged })
+        .eq("id", reviewId);
 
-						if (error) throw error;
+      if (error) throw error;
 
-						await fetchAllReviews();
-					} catch (err) {
-						console.error("Error deleting review:", err);
-						Alert.alert("Error", "Failed to delete review. Please try again.");
-					} finally {
-						setLoading(false);
-					}
-				}
-			}
-		]);
-	};
+      // Update local state
+      setReviews(reviews.map(r => 
+        r.id === reviewId ? { ...r, flagged: !r.flagged } : r
+      ));
 
-	const handleFlagReview = async (reviewId: string) => {
-		try {
-			setLoading(true);
+    } catch (err) {
+      console.error("Error toggling flag:", err);
+      Alert.alert("Error", "Failed to update review status");
+    }
+  };
 
-			const newFlaggedStatus = !flaggedReviews[reviewId];
-			const { error } = await supabase.from("reviews").update({ flagged: newFlaggedStatus }).eq("id", reviewId);
+  const handleDeleteReview = async (reviewId: string) => {
+    Alert.alert(
+      "Delete Review",
+      "Are you sure you want to delete this review?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              const { error } = await supabase
+                .from("reviews")
+                .delete()
+                .eq("id", reviewId);
 
-			if (error) throw error;
+              if (error) throw error;
 
-			setFlaggedReviews((prev) => ({
-				...prev,
-				[reviewId]: newFlaggedStatus
-			}));
+              // Refresh reviews after deletion
+              await fetchReviews();
+            } catch (err) {
+              console.error("Error deleting review:", err);
+              Alert.alert("Error", "Failed to delete review");
+            }
+          },
+        },
+      ]
+    );
+  };
 
-			Alert.alert("Success", `Review ${newFlaggedStatus ? "flagged" : "unflagged"} successfully.`);
-		} catch (err) {
-			console.error("Error flagging review:", err);
-			Alert.alert("Error", "Failed to update review flag status.");
-		} finally {
-			setLoading(false);
-		}
-	};
+  const renderReviewItem = ({ item }: { item: ReviewWithLocation }) => (
+    <View className="mb-4 p-4 bg-white rounded-lg" style={shadowStyles.standard}>
+      <View className="flex-row justify-between items-start mb-2">
+        <Text className="text-lg font-bold">{item.user_name || 'Anonymous'}</Text>
+        <View className="flex-row items-center">
+          <RatingStars rating={item.rating} />
+          <Text className="ml-2 text-yellow-500 font-bold">{item.rating}/5</Text>
+        </View>
+      </View>
+      
+      {item.comment ? (
+        <Text className="text-gray-700 mb-2">{item.comment}</Text>
+      ) : (
+        <Text className="text-gray-400 italic mb-2">No comment</Text>
+      )}
+      
+      <View className="flex-row justify-between items-center">
+        <Text className="text-sm text-gray-500">
+          {item.locationName || 'Unknown Location'}
+        </Text>
+        <Text className="text-xs text-gray-400">
+          {formatDate(item.created_at)}
+        </Text>
+      </View>
+      
+      <View className="flex-row mt-3 space-x-2">
+        <TouchableOpacity
+          className={`flex-1 py-2 rounded items-center ${item.flagged ? 'bg-red-100' : 'bg-gray-100'}`}
+          onPress={() => handleFlagReview(item.id)}
+        >
+          <Text className={item.flagged ? 'text-red-600 font-medium' : 'text-gray-600'}>
+            {item.flagged ? 'Flagged' : 'Flag'}
+          </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          className="flex-1 py-2 bg-red-50 rounded items-center"
+          onPress={() => handleDeleteReview(item.id)}
+        >
+          <Text className="text-red-600 font-medium">Delete</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 
-	return (
-		<View className="flex-1 bg-[#faf4f0]">
-			<SafeAreaView className="flex-1">
-				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
-					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-						Moderate Reviews
-					</Text>
-					<TouchableOpacity onPress={() => router.push("/(admin)")}>
-						<Feather name="x" size={24} color="black" />
-					</TouchableOpacity>
-				</View>
-				<View className="p-4">
-					<View className="mb-4">
-						<View className="flex-row mb-4">
-							<View
-								className="flex-1 bg-white border border-[#333333] flex-row items-center px-3"
-								style={shadowStyles.standard}
-							>
-								<Feather name="search" size={18} color="#666" />
-								<TextInput
-									className="flex-1 py-2 px-2 text-black font-lexend"
-									placeholder="Search reviews..."
-									placeholderTextColor="#666666"
-									value={searchQuery}
-									onChangeText={setSearchQuery}
-								/>
-							</View>
-						</View>
-						<View className="flex-row mb-4">
-							<Text className="mr-2 font-lexend-medium tracking-tighter-lexend text-black">
-								Filter by rating:
-							</Text>
-							<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-								<TouchableOpacity
-									className={`px-3 py-1 mr-2 border ${filterRating === 0 ? "bg-[#fed787] border-[#333333]" : "bg-white border-[#cccccc]"}`}
-									onPress={() => setFilterRating(0)}
-								>
-									<Text className="font-lexend text-black tracking-tighter-lexend">All</Text>
-								</TouchableOpacity>
-								{[1, 2, 3, 4, 5].map((rating) => (
-									<TouchableOpacity
-										key={rating}
-										className={`px-3 py-1 mr-2 border ${filterRating === rating ? "bg-[#fed787] border-[#333333]" : "bg-white border-[#cccccc]"}`}
-										onPress={() => setFilterRating(rating)}
-									>
-										<Text className="font-lexend text-black tracking-tighter-lexend">
-											{rating} Star
-										</Text>
-									</TouchableOpacity>
-								))}
-								<TouchableOpacity
-									className={`px-3 py-1 ml-4 border ${showFlagged ? "bg-[#ffcccc] border-[#333333]" : "bg-white border-[#cccccc]"}`}
-									style={shadowStyles.standard}
-									onPress={() => setShowFlagged(!showFlagged)}
-								>
-									<Text className="font-lexend text-black tracking-tighter-lexend">
-										{showFlagged ? "All Reviews" : "Flagged Only"}
-									</Text>
-								</TouchableOpacity>
-							</ScrollView>
-						</View>
-					</View>
-					{loading ? (
-						<View className="flex-1 items-center justify-center py-8">
-							<ActivityIndicator size="large" color="#fed787" />
-							<Text className="mt-2 font-lexend text-[#666666]">Loading reviews...</Text>
-						</View>
-					) : error ? (
-						<View className="flex-1 items-center justify-center py-8">
-							<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
-								<Feather name="alert-triangle" size={24} color="#333" />
-							</View>
-							<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black mb-2">
-								{error}
-							</Text>
-							<TouchableOpacity
-								className="mt-2 bg-[#fed787] px-4 py-2 border border-[#333333]"
-								style={shadowStyles.small}
-								onPress={fetchAllReviews}
-							>
-								<Text className="font-lexend-medium tracking-tighter-lexend text-black">Try Again</Text>
-							</TouchableOpacity>
-						</View>
-					) : (
-						<ScrollView className="flex-1">
-							{filteredReviews.length === 0 ? (
-								<View className="items-center justify-center py-8">
-									<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#666666]">
-										No reviews found matching your criteria.
-									</Text>
-								</View>
-							) : (
-								<View className="space-y-4">
-									{filteredReviews.map((review) => (
-										<View
-											key={review.id}
-											className="bg-white p-4 border border-[#333333]"
-											style={shadowStyles.standard}
-										>
-											<View className="flex-row justify-between items-center mb-2">
-												<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black">
-													{review.user_name || "Anonymous"}
-												</Text>
-												<Text className="text-sm font-lexend tracking-tighter-lexend text-[#999]">
-													{formatDate(review.created_at)}
-												</Text>
-											</View>
-											<View className="flex-row items-center py-1">
-												<RatingStars rating={review.rating} />
-												<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-[#666666]">
-													at {locationNames[review.location_id] || "Unknown Location"}
-												</Text>
-											</View>
-											<Text className="font-lexend tracking-tighter-lexend text-[#333] mt-1 mb-3">
-												{review.comment}
-											</Text>
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text className="mt-2 text-gray-600">Loading reviews...</Text>
+      </View>
+    );
+  }
 
-											<View className="flex-row mt-2">
-												<TouchableOpacity
-													className={`flex-1 ${flaggedReviews[review.id] ? "bg-[#ffcccc]" : "bg-white"} h-10 mr-1 items-center justify-center border border-[#333333]`}
-													style={shadowStyles.small}
-													onPress={() => handleFlagReview(review.id)}
-												>
-													<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-														{flaggedReviews[review.id] ? "Unflag" : "Flag"}
-													</Text>
-												</TouchableOpacity>
-												<TouchableOpacity
-													className="flex-1 bg-white h-10 ml-1 items-center justify-center border border-[#333333]"
-													style={shadowStyles.small}
-													onPress={() => handleDeleteReview(review.id)}
-												>
-													<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-														Delete
-													</Text>
-												</TouchableOpacity>
-											</View>
-										</View>
-									))}
-								</View>
-							)}
-						</ScrollView>
-					)}
-				</View>
-			</SafeAreaView>
-		</View>
-	);
+  if (error) {
+    return (
+      <View className="flex-1 justify-center items-center p-4">
+        <Text className="text-red-500 mb-4 text-center">{error}</Text>
+        <TouchableOpacity
+          className="bg-blue-500 px-6 py-2 rounded"
+          onPress={fetchReviews}
+        >
+          <Text className="text-white font-medium">Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <View className="flex-1 bg-gray-50">
+      <SafeAreaView className="flex-1">
+        {/* Header */}
+        <View className="p-4 bg-white border-b border-gray-200">
+          <View className="flex-row justify-between items-center mb-4">
+            <Text className="text-xl font-bold">Moderate Reviews</Text>
+            <TouchableOpacity onPress={() => router.back()}>
+              <Feather name="x" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+          
+          {/* Search */}
+          <View className="flex-row items-center bg-gray-100 rounded-lg px-3 py-2 mb-3">
+            <Feather name="search" size={18} color="#666" />
+            <TextInput
+              className="flex-1 ml-2 text-base"
+              placeholder="Search reviews..."
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeholderTextColor="#999"
+            />
+          </View>
+          
+          {/* Filters */}
+          <View className="flex-row justify-between items-center">
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-1">
+              <View className="flex-row space-x-2">
+                <TouchableOpacity
+                  className={`px-3 py-1 rounded-full ${filterRating === 0 ? 'bg-blue-500' : 'bg-gray-200'}`}
+                  onPress={() => setFilterRating(0)}
+                >
+                  <Text className={filterRating === 0 ? 'text-white' : 'text-gray-700'}>All</Text>
+                </TouchableOpacity>
+                {[1, 2, 3, 4, 5].map((rating) => (
+                  <TouchableOpacity
+                    key={rating}
+                    className={`px-3 py-1 rounded-full ${filterRating === rating ? 'bg-blue-500' : 'bg-gray-200'}`}
+                    onPress={() => setFilterRating(rating)}
+                  >
+                    <Text className={filterRating === rating ? 'text-white' : 'text-gray-700'}>{rating}★</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+            
+            <TouchableOpacity
+              className={`px-3 py-1 rounded-full ${showFlagged ? 'bg-red-100' : 'bg-gray-200'}`}
+              onPress={() => setShowFlagged(!showFlagged)}
+            >
+              <Text className={showFlagged ? 'text-red-600' : 'text-gray-700'}>Flagged</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        
+        {/* Reviews List */}
+        <View className="flex-1 p-4">
+          {filteredReviews.length > 0 ? (
+            <FlatList
+              data={filteredReviews}
+              renderItem={renderReviewItem}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{ paddingBottom: 20 }}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            <View className="flex-1 justify-center items-center">
+              <Text className="text-gray-500 text-lg">
+                {reviews.length === 0 ? 'No reviews found' : 'No matching reviews'}
+              </Text>
+              {reviews.length > 0 && (
+                <Text className="text-gray-400 mt-2 text-center">
+                  Try adjusting your search or filter criteria
+                </Text>
+              )}
+            </View>
+          )}
+        </View>
+      </SafeAreaView>
+    </View>
+  );
 }
