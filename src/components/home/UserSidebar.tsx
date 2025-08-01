@@ -199,19 +199,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									className="flex-row items-center py-4"
 									onPress={() => {
 										onClose();
-										router.push("/+not-found");
-									}}
-								>
-									<Feather name="message-square" size={20} color="#333" />
-									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										My Reviews
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									className="flex-row items-center py-4"
-									onPress={() => {
-										onClose();
-										router.push("/+not-found");
+										router.push("/(admin)");
 									}}
 								>
 									<Feather name="shield" size={20} color="#333" />

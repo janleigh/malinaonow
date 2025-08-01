@@ -31,11 +31,11 @@ export const EventService = {
 	mapToComponentEvent(event: SupabaseEvent): ComponentEvent {
 		return {
 			id: event.id,
-			title: event.name,
+			name: event.name,
 			date: event.date,
 			time: event.time,
 			location: event.location,
-			image: event.banner_image
+			banner_image: event.banner_image
 		};
 	}
 };

@@ -7,11 +7,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export type Event = {
 	id: string;
-	title: string;
+	name: string;
 	date: string;
 	time: string;
 	location: string;
-	image: string;
+	banner_image: string;
 };
 
 export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => void }) => {
@@ -70,14 +70,14 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 			>
 				<View>
 					<View className="w-full h-32">
-						<Image source={{ uri: event.image }} className="w-full h-full" resizeMode="cover" />
+						<Image source={{ uri: event.banner_image }} className="w-full h-full" resizeMode="cover" />
 					</View>
 					<View className="p-3">
 						<Text
 							className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
 							numberOfLines={2}
 						>
-							{event.title}
+							{event.name}
 						</Text>
 						<View className="flex-row items-center mt-1">
 							<AntDesign name="calendar" size={10} color="#555" />
@@ -129,10 +129,10 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 							</TouchableOpacity>
 						</View>
 						<View className="flex-1">
-							<Image source={{ uri: event.image }} className="w-full h-52" resizeMode="cover" />
+							<Image source={{ uri: event.banner_image }} className="w-full h-52" resizeMode="cover" />
 							<View className="p-4">
 								<Text className="text-2xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4">
-									{event.title}
+									{event.name}
 								</Text>
 								<View className="space-y-3 mb-6">
 									<View className="flex-row items-center">

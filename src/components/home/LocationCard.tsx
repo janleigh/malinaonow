@@ -19,7 +19,7 @@ import {
 	TouchableOpacity,
 	View
 } from "react-native";
-import { WebViewError } from 'react-native-webview';
+import { WebViewError } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 import { ReviewForm, ReviewList } from "./reviews";
@@ -532,7 +532,9 @@ export const LocationCard = ({
 									<Text className="mt-2 font-lexend text-[#666666]">Loading map...</Text>
 								</View>
 							)}
-							onError={(e: NativeSyntheticEvent<WebViewError>) => console.error("WebView error:", e.nativeEvent)}
+							onError={(e: NativeSyntheticEvent<WebViewError>) =>
+								console.error("WebView error:", e.nativeEvent)
+							}
 							scrollEnabled={false}
 							bounces={false}
 							scalesPageToFit={true}
