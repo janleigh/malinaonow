@@ -108,7 +108,10 @@ export default function ManageEventsScreen() {
 	const handleTimeConfirm = (date: Date) => {
 		const hours = date.getHours().toString().padStart(2, "0");
 		const minutes = date.getMinutes().toString().padStart(2, "0");
-		setFormData({ ...formData, time: `${hours}:${minutes}` });
+		setFormData({
+			...formData,
+			time: `${hours}:${minutes}`
+		});
 		hideTimePicker();
 	};
 
@@ -125,11 +128,16 @@ export default function ManageEventsScreen() {
 			};
 
 			if (editingEvent) {
-				const { error } = await supabase.from("events").update(eventData).eq("id", editingEvent.id);
+				const { error } = await supabase
+					.from("events")
+					.update(eventData)
+					.eq("id", editingEvent.id);
 
 				if (error) throw error;
 			} else {
-				const { error } = await supabase.from("events").insert([eventData]);
+				const { error } = await supabase
+					.from("events")
+					.insert([eventData]);
 
 				if (error) throw error;
 			}
@@ -139,35 +147,48 @@ export default function ManageEventsScreen() {
 			resetForm();
 		} catch (err) {
 			console.error("Error saving event:", err);
-			Alert.alert("Error", "Failed to save event. Please try again.");
+			Alert.alert(
+				"Error",
+				"Failed to save event. Please try again."
+			);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	const handleDelete = async (eventId: string) => {
-		Alert.alert("Confirm Delete", "Are you sure you want to delete this event? This action cannot be undone.", [
-			{ text: "Cancel", style: "cancel" },
-			{
-				text: "Delete",
-				style: "destructive",
-				onPress: async () => {
-					try {
-						setLoading(true);
-						const { error } = await supabase.from("events").delete().eq("id", eventId);
+		Alert.alert(
+			"Confirm Delete",
+			"Are you sure you want to delete this event? This action cannot be undone.",
+			[
+				{ text: "Cancel", style: "cancel" },
+				{
+					text: "Delete",
+					style: "destructive",
+					onPress: async () => {
+						try {
+							setLoading(true);
+							const { error } = await supabase
+								.from("events")
+								.delete()
+								.eq("id", eventId);
 
-						if (error) throw error;
+							if (error) throw error;
 
-						await fetchEvents();
-					} catch (err) {
-						console.error("Error deleting event:", err);
-						Alert.alert("Error", "Failed to delete event. Please try again.");
-					} finally {
-						setLoading(false);
+							await fetchEvents();
+						} catch (err) {
+							console.error("Error deleting event:", err);
+							Alert.alert(
+								"Error",
+								"Failed to delete event. Please try again."
+							);
+						} finally {
+							setLoading(false);
+						}
 					}
 				}
-			}
-		]);
+			]
+		);
 	};
 
 	return (
@@ -194,18 +215,31 @@ export default function ManageEventsScreen() {
 					</TouchableOpacity>
 					{loading && events.length === 0 ? (
 						<View className="items-center justify-center py-8">
-							<ActivityIndicator size="large" color="#fed787" />
-							<Text className="mt-4 font-lexend text-[#666666]">Loading events...</Text>
+							<ActivityIndicator
+								size="large"
+								color="#fed787"
+							/>
+							<Text className="mt-4 font-lexend text-[#666666]">
+								Loading events...
+							</Text>
 						</View>
 					) : error ? (
 						<View className="items-center justify-center py-8">
-							<AntDesign name="exclamationcircle" size={40} color="#fed787" />
-							<Text className="mt-4 font-lexend text-[#666666]">{error}</Text>
+							<AntDesign
+								name="exclamationcircle"
+								size={40}
+								color="#fed787"
+							/>
+							<Text className="mt-4 font-lexend text-[#666666]">
+								{error}
+							</Text>
 							<TouchableOpacity
 								className="mt-4 bg-[#fed787] px-4 py-2 border border-[#333333]"
 								onPress={fetchEvents}
 							>
-								<Text className="font-lexend-medium text-black">Retry</Text>
+								<Text className="font-lexend-medium text-black">
+									Retry
+								</Text>
 							</TouchableOpacity>
 						</View>
 					) : (
@@ -218,7 +252,9 @@ export default function ManageEventsScreen() {
 								>
 									<View className="flex-row">
 										<Image
-											source={{ uri: event.banner_image }}
+											source={{
+												uri: event.banner_image
+											}}
 											className="w-24 h-24"
 											resizeMode="cover"
 										/>
@@ -227,19 +263,35 @@ export default function ManageEventsScreen() {
 												{event.name}
 											</Text>
 											<View className="flex-row items-center mt-1">
-												<AntDesign name="calendar" size={12} color="#555" />
+												<AntDesign
+													name="calendar"
+													size={12}
+													color="#555"
+												/>
 												<Text className="ml-1 text-sm font-lexend text-[#555555]">
-													{formatDate(event.date)}
+													{formatDate(
+														event.date
+													)}
 												</Text>
 											</View>
 											<View className="flex-row items-center mt-1">
-												<AntDesign name="clockcircleo" size={12} color="#555" />
+												<AntDesign
+													name="clockcircleo"
+													size={12}
+													color="#555"
+												/>
 												<Text className="ml-1 text-sm font-lexend text-[#555555]">
-													{formatTime(event.time)}
+													{formatTime(
+														event.time
+													)}
 												</Text>
 											</View>
 											<View className="flex-row items-center mt-1">
-												<AntDesign name="enviromento" size={12} color="#555" />
+												<AntDesign
+													name="enviromento"
+													size={12}
+													color="#555"
+												/>
 												<Text className="ml-1 text-sm font-lexend text-[#555555]">
 													{event.location}
 												</Text>
@@ -249,19 +301,31 @@ export default function ManageEventsScreen() {
 									<View className="flex-row border-t border-[#eee] p-2">
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
-											onPress={() => openEditModal(event)}
+											onPress={() =>
+												openEditModal(event)
+											}
 										>
 											<Text className="font-lexend-medium text-[#333333]">
-												<Feather name="edit" size={16} /> Edit
+												<Feather
+													name="edit"
+													size={16}
+												/>{" "}
+												Edit
 											</Text>
 										</TouchableOpacity>
 										<View className="border-r border-[#eee] mx-2" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
-											onPress={() => handleDelete(event.id)}
+											onPress={() =>
+												handleDelete(event.id)
+											}
 										>
 											<Text className="font-lexend-medium text-[#fe5b62]">
-												<Feather name="trash-2" size={16} /> Delete
+												<Feather
+													name="trash-2"
+													size={16}
+												/>{" "}
+												Delete
 											</Text>
 										</TouchableOpacity>
 									</View>
@@ -277,17 +341,26 @@ export default function ManageEventsScreen() {
 						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 							{editingEvent ? "Edit Event" : "Add Event"}
 						</Text>
-						<TouchableOpacity onPress={() => setModalVisible(false)}>
+						<TouchableOpacity
+							onPress={() => setModalVisible(false)}
+						>
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
 					</View>
 
 					<ScrollView className="p-4">
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">EVENT NAME</Text>
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								EVENT NAME
+							</Text>
 							<TextInput
 								value={formData.name}
-								onChangeText={(text) => setFormData({ ...formData, name: text })}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										name: text
+									})
+								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
 								placeholder="Event name"
 								placeholderTextColor="#666666"
@@ -295,17 +368,29 @@ export default function ManageEventsScreen() {
 						</View>
 
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">DATE</Text>
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								DATE
+							</Text>
 							<TouchableOpacity
 								onPress={showDatePicker}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend flex-row justify-between items-center"
 							>
 								<Text
-									className={formData.date ? "text-black font-lexend" : "text-[#999999] font-lexend"}
+									className={
+										formData.date
+											? "text-black font-lexend"
+											: "text-[#999999] font-lexend"
+									}
 								>
-									{formData.date ? formData.date : "Select date"}
+									{formData.date
+										? formData.date
+										: "Select date"}
 								</Text>
-								<Feather name="calendar" size={20} color="#333" />
+								<Feather
+									name="calendar"
+									size={20}
+									color="#333"
+								/>
 							</TouchableOpacity>
 							<DateTimePickerModal
 								isVisible={isDatePickerVisible}
@@ -316,17 +401,29 @@ export default function ManageEventsScreen() {
 						</View>
 
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">TIME</Text>
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								TIME
+							</Text>
 							<TouchableOpacity
 								onPress={showTimePicker}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend flex-row justify-between items-center"
 							>
 								<Text
-									className={formData.time ? "text-black font-lexend" : "text-[#999999] font-lexend"}
+									className={
+										formData.time
+											? "text-black font-lexend"
+											: "text-[#999999] font-lexend"
+									}
 								>
-									{formData.time ? formData.time : "Select time"}
+									{formData.time
+										? formData.time
+										: "Select time"}
 								</Text>
-								<Feather name="clock" size={20} color="#333" />
+								<Feather
+									name="clock"
+									size={20}
+									color="#333"
+								/>
 							</TouchableOpacity>
 							<DateTimePickerModal
 								isVisible={isTimePickerVisible}
@@ -337,10 +434,17 @@ export default function ManageEventsScreen() {
 						</View>
 
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">LOCATION</Text>
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								LOCATION
+							</Text>
 							<TextInput
 								value={formData.location}
-								onChangeText={(text) => setFormData({ ...formData, location: text })}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										location: text
+									})
+								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
 								placeholder="Event location"
 								placeholderTextColor="#666666"
@@ -348,10 +452,17 @@ export default function ManageEventsScreen() {
 						</View>
 
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">BANNER IMAGE</Text>
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								BANNER IMAGE
+							</Text>
 							<TextInput
 								value={formData.bannerImage}
-								onChangeText={(text) => setFormData({ ...formData, bannerImage: text })}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										bannerImage: text
+									})
+								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
 								placeholder="Banner image URL"
 								placeholderTextColor="#666666"
@@ -365,7 +476,10 @@ export default function ManageEventsScreen() {
 							disabled={loading}
 						>
 							{loading ? (
-								<ActivityIndicator size="small" color="#333333" />
+								<ActivityIndicator
+									size="small"
+									color="#333333"
+								/>
 							) : (
 								<Text className="font-lexend-medium tracking-tighter-lexend text-black">
 									Save Event

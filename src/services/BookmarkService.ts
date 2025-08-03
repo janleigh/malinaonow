@@ -10,7 +10,9 @@ export const BookmarkService = {
 	 */
 	async getBookmarks(userId: string): Promise<string[]> {
 		try {
-			const bookmarksJson = await AsyncStorage.getItem(`${BOOKMARK_STORAGE_KEY}_${userId}`);
+			const bookmarksJson = await AsyncStorage.getItem(
+				`${BOOKMARK_STORAGE_KEY}_${userId}`
+			);
 			return bookmarksJson ? JSON.parse(bookmarksJson) : [];
 		} catch (error) {
 			console.error("Error retrieving bookmarks:", error);
@@ -24,12 +26,18 @@ export const BookmarkService = {
 	 * @param {string} locationId - The ID of the location to bookmark
 	 * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating success
 	 */
-	async addBookmark(userId: string, locationId: string): Promise<boolean> {
+	async addBookmark(
+		userId: string,
+		locationId: string
+	): Promise<boolean> {
 		try {
 			const bookmarks = await this.getBookmarks(userId);
 			if (!bookmarks.includes(locationId)) {
 				bookmarks.push(locationId);
-				await AsyncStorage.setItem(`${BOOKMARK_STORAGE_KEY}_${userId}`, JSON.stringify(bookmarks));
+				await AsyncStorage.setItem(
+					`${BOOKMARK_STORAGE_KEY}_${userId}`,
+					JSON.stringify(bookmarks)
+				);
 			}
 			return true;
 		} catch (error) {
@@ -44,11 +52,19 @@ export const BookmarkService = {
 	 * @param {string} locationId - The ID of the location to remove from bookmarks
 	 * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating success
 	 */
-	async removeBookmark(userId: string, locationId: string): Promise<boolean> {
+	async removeBookmark(
+		userId: string,
+		locationId: string
+	): Promise<boolean> {
 		try {
 			const bookmarks = await this.getBookmarks(userId);
-			const updatedBookmarks = bookmarks.filter((id) => id !== locationId);
-			await AsyncStorage.setItem(`${BOOKMARK_STORAGE_KEY}_${userId}`, JSON.stringify(updatedBookmarks));
+			const updatedBookmarks = bookmarks.filter(
+				(id) => id !== locationId
+			);
+			await AsyncStorage.setItem(
+				`${BOOKMARK_STORAGE_KEY}_${userId}`,
+				JSON.stringify(updatedBookmarks)
+			);
 			return true;
 		} catch (error) {
 			console.error("Error removing bookmark:", error);
@@ -62,7 +78,10 @@ export const BookmarkService = {
 	 * @param {string} locationId - The ID of the location to check
 	 * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the location is bookmarked
 	 */
-	async isBookmarked(userId: string, locationId: string): Promise<boolean> {
+	async isBookmarked(
+		userId: string,
+		locationId: string
+	): Promise<boolean> {
 		try {
 			const bookmarks = await this.getBookmarks(userId);
 			return bookmarks.includes(locationId);

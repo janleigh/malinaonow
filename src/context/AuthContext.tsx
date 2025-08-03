@@ -1,11 +1,20 @@
 import { useClerkAuth } from "@/api/clerk";
 import { useUser } from "@clerk/clerk-expo";
-import React, { createContext, useContext, useLayoutEffect, useState } from "react";
+import React, {
+	createContext,
+	useContext,
+	useLayoutEffect,
+	useState
+} from "react";
 
 interface AuthContextProps {
 	isLoaded: boolean;
 	isSignedIn: boolean;
-	signUp: (email: string, firstName?: string, lastName?: string) => Promise<void>;
+	signUp: (
+		email: string,
+		firstName?: string,
+		lastName?: string
+	) => Promise<void>;
 	signIn: (email: string) => Promise<void>;
 	verifyOtp: (code: string, type: "login" | "signup") => Promise<void>;
 	signOut: () => Promise<void>;
@@ -32,7 +41,11 @@ const useAuthValue = () => {
 		() => ({
 			isLoaded,
 			isSignedIn: isSignedIn || false,
-			signUp: async (email: string, firstName?: string, lastName?: string) => {
+			signUp: async (
+				email: string,
+				firstName?: string,
+				lastName?: string
+			) => {
 				return signUp(email, firstName, lastName);
 			},
 			signIn: async (email: string) => {
@@ -51,7 +64,11 @@ const useAuthValue = () => {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const contextValue = useAuthValue();
 
-	return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={contextValue}>
+			{children}
+		</AuthContext.Provider>
+	);
 }
 
 export const useAuth = () => {

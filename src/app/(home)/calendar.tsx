@@ -5,7 +5,13 @@ import { EventService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const groupEventsByDate = (events: Event[]) => {
@@ -22,13 +28,17 @@ const groupEventsByDate = (events: Event[]) => {
 		.sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
 		.map((date) => ({
 			date,
-			events: grouped[date].sort((a, b) => a.time.localeCompare(b.time))
+			events: grouped[date].sort((a, b) =>
+				a.time.localeCompare(b.time)
+			)
 		}));
 };
 
 export default function CalendarPage() {
 	const [events, setEvents] = useState<Event[]>([]);
-	const [groupedEvents, setGroupedEvents] = useState<{ date: string; events: Event[] }[]>([]);
+	const [groupedEvents, setGroupedEvents] = useState<
+		{ date: string; events: Event[] }[]
+	>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
@@ -67,14 +77,26 @@ export default function CalendarPage() {
 						</Text>
 						{loading ? (
 							<View className="p-4 items-center justify-center">
-								<ActivityIndicator size="large" color="#fed787" />
-								<Text className="mt-2 font-lexend text-[#666666]">Loading events...</Text>
+								<ActivityIndicator
+									size="large"
+									color="#fed787"
+								/>
+								<Text className="mt-2 font-lexend text-[#666666]">
+									Loading events...
+								</Text>
 							</View>
 						) : error ? (
-							<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
+							<View
+								className="p-4 my-4 border border-[#333333] bg-white"
+								style={shadowStyles.standard}
+							>
 								<View className="items-center">
 									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
-										<Feather name="alert-triangle" size={24} color="#333" />
+										<Feather
+											name="alert-triangle"
+											size={24}
+											color="#333"
+										/>
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
 										Error Loading Events
@@ -94,30 +116,47 @@ export default function CalendarPage() {
 								</View>
 							</View>
 						) : groupedEvents.length === 0 ? (
-							<View className="p-4 my-4 border border-[#333333] bg-white" style={shadowStyles.standard}>
+							<View
+								className="p-4 my-4 border border-[#333333] bg-white"
+								style={shadowStyles.standard}
+							>
 								<View className="items-center">
 									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
-										<Feather name="calendar" size={24} color="#333" />
+										<Feather
+											name="calendar"
+											size={24}
+											color="#333"
+										/>
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
 										No Upcoming Events
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-										There are no upcoming events at the moment. Check back soon!
+										There are no upcoming events at the
+										moment. Check back soon!
 									</Text>
 								</View>
 							</View>
 						) : (
 							<View>
 								{groupedEvents.map((group) => (
-									<View key={group.date} className="mb-6">
+									<View
+										key={group.date}
+										className="mb-6"
+									>
 										<View className="flex-row items-center mb-2">
 											<View className="w-10 h-10 rounded-full bg-[#fed787] items-center justify-center mr-3 border border-[#333333]">
-												<AntDesign name="calendar" size={20} color="#333" />
+												<AntDesign
+													name="calendar"
+													size={20}
+													color="#333"
+												/>
 											</View>
 											<View>
 												<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black">
-													{formatDate(group.date)}
+													{formatDate(
+														group.date
+													)}
 												</Text>
 												{isToday(group.date) && (
 													<View className="bg-[#fed787] px-2 py-0.5 rounded-sm">
@@ -133,29 +172,51 @@ export default function CalendarPage() {
 												<TouchableOpacity
 													key={event.id}
 													className="bg-white p-4 mb-3 border border-[#333333]"
-													style={shadowStyles.standard}
-													onPress={() => setSelectedEvent(event)}
+													style={
+														shadowStyles.standard
+													}
+													onPress={() =>
+														setSelectedEvent(
+															event
+														)
+													}
 												>
 													<View className="flex-row justify-between">
 														<View className="flex-1">
 															<Text className="text-base font-lexend-extrabold tracking-tighter-lexend text-black mb-1">
-																{event.title}
+																{
+																	event.title
+																}
 															</Text>
 															<View className="flex-row items-center">
-																<AntDesign name="clockcircleo" size={12} color="#555" />
+																<AntDesign
+																	name="clockcircleo"
+																	size={
+																		12
+																	}
+																	color="#555"
+																/>
 																<Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555]">
-																	{event.time}
+																	{
+																		event.time
+																	}
 																</Text>
 															</View>
 															<View className="flex-row items-start mt-1">
 																<AntDesign
 																	name="enviromento"
-																	size={12}
+																	size={
+																		12
+																	}
 																	color="#555"
-																	style={{ marginTop: 2 }}
+																	style={{
+																		marginTop: 2
+																	}}
 																/>
 																<Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555] flex-1">
-																	{event.location}
+																	{
+																		event.location
+																	}
 																</Text>
 															</View>
 														</View>
@@ -170,13 +231,23 @@ export default function CalendarPage() {
 					</View>
 				</ScrollView>
 				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity className="items-center" onPress={() => router.replace("/(home)")}>
+					<TouchableOpacity
+						className="items-center"
+						onPress={() => router.replace("/(home)")}
+					>
 						<AntDesign name="home" size={24} color="#999" />
 					</TouchableOpacity>
 					<TouchableOpacity className="items-center">
-						<AntDesign name="calendar" size={24} color="#333" />
+						<AntDesign
+							name="calendar"
+							size={24}
+							color="#333"
+						/>
 					</TouchableOpacity>
-					<TouchableOpacity className="items-center" onPress={() => router.push("/(home)/bookmarks")}>
+					<TouchableOpacity
+						className="items-center"
+						onPress={() => router.push("/(home)/bookmarks")}
+					>
 						<AntDesign name="heart" size={24} color="#999" />
 					</TouchableOpacity>
 				</View>

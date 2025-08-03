@@ -13,7 +13,12 @@ interface OAuthButtonProps {
 	className?: string;
 }
 
-export const OAuthButton = ({ strategy, text, icon, className }: OAuthButtonProps) => {
+export const OAuthButton = ({
+	strategy,
+	text,
+	icon,
+	className
+}: OAuthButtonProps) => {
 	const [loading, setLoading] = React.useState(false);
 	const { startOAuthFlow } = useOAuth({ strategy });
 
@@ -23,7 +28,9 @@ export const OAuthButton = ({ strategy, text, icon, className }: OAuthButtonProp
 			const { createdSessionId, setActive } = await startOAuthFlow();
 
 			if (createdSessionId) {
-				await setActive?.({ session: createdSessionId });
+				await setActive?.({
+					session: createdSessionId
+				});
 
 				// Wait for auth state to be fully updated
 				await new Promise((resolve) => setTimeout(resolve, 500));
@@ -49,7 +56,14 @@ export const OAuthButton = ({ strategy, text, icon, className }: OAuthButtonProp
 				<ActivityIndicator color="#000" />
 			) : (
 				<>
-					{icon || <AntDesign className="mr-2" name="google" size={24} color="black" />}
+					{icon || (
+						<AntDesign
+							className="mr-2"
+							name="google"
+							size={24}
+							color="black"
+						/>
+					)}
 					<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
 						{text}
 					</Text>

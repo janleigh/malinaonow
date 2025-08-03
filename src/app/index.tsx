@@ -69,7 +69,14 @@ export default function LandingPage() {
 					<OAuthButton
 						strategy="oauth_google"
 						text="Continue with Google"
-						icon={<AntDesign className="mr-2" name="google" size={24} color="black" />}
+						icon={
+							<AntDesign
+								className="mr-2"
+								name="google"
+								size={24}
+								color="black"
+							/>
+						}
 						className="android:mt-2"
 					/>
 					<View className="mt-6 items-center">
@@ -77,7 +84,9 @@ export default function LandingPage() {
 							Already have an account?{" "}
 							<Text
 								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
-								onPress={() => router.push("/(auth)/login")}
+								onPress={() =>
+									router.push("/(auth)/login")
+								}
 							>
 								Log in
 							</Text>
@@ -85,14 +94,22 @@ export default function LandingPage() {
 					</View>
 				</View>
 			</SafeAreaView>
-			<Modal visible={showDialog} transparent={true} animationType="fade">
+			<Modal
+				visible={showDialog}
+				transparent={true}
+				animationType="fade"
+			>
 				<View className="flex-1 justify-center items-center bg-black/30">
-					<View className="w-[80%] bg-white p-5 border-2 border-[#333333]" style={shadowStyles.standard}>
+					<View
+						className="w-[80%] bg-white p-5 border-2 border-[#333333]"
+						style={shadowStyles.standard}
+					>
 						<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4 text-center">
 							You&apos;re already signed in
 						</Text>
 						<Text className="mb-6 font-lexend tracking-tighter-lexend text-[#333333] text-center">
-							Would you like to continue to the app or sign out?
+							Would you like to continue to the app or sign
+							out?
 						</Text>
 						<View className="space-y-3">
 							<TouchableOpacity

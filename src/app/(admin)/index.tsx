@@ -34,13 +34,16 @@ export default function AdminDashboard() {
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 						Admin Panel
 					</Text>
-					<TouchableOpacity onPress={() => router.replace("/(home)")}>
+					<TouchableOpacity
+						onPress={() => router.replace("/(home)")}
+					>
 						<Feather name="x" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
 				<View className="p-4">
 					<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] mb-6">
-						Manage locations, events, and moderate user reviews.
+						Manage locations, events, and moderate user
+						reviews.
 					</Text>
 					<View className="space-y-4">
 						{adminOptions.map((option, index) => (
@@ -54,7 +57,11 @@ export default function AdminDashboard() {
 								<View className="flex-row items-center">
 									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mr-4 border border-[#333333]">
 										{/* @ts-expect-error */}
-										<Feather name={option.icon} size={24} color="#333" />
+										<Feather
+											name={option.icon}
+											size={24}
+											color="#333"
+										/>
 									</View>
 									<View className="flex-1">
 										<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black">
@@ -64,7 +71,11 @@ export default function AdminDashboard() {
 											{option.description}
 										</Text>
 									</View>
-									<Feather name="chevron-right" size={24} color="#333" />
+									<Feather
+										name="chevron-right"
+										size={24}
+										color="#333"
+									/>
 								</View>
 							</TouchableOpacity>
 						))}

@@ -1,14 +1,23 @@
 import { useAuth } from "@/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import React, { useState } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
 
 interface ReviewFormProps {
 	locationId: string;
 	onSubmit: (rating: number, comment: string) => Promise<void>;
 }
 
-export const ReviewForm: React.FC<ReviewFormProps> = ({ locationId, onSubmit }) => {
+export const ReviewForm: React.FC<ReviewFormProps> = ({
+	locationId,
+	onSubmit
+}) => {
 	const { isSignedIn, user } = useAuth();
 	const [rating, setRating] = useState(5);
 	const [comment, setComment] = useState("");
@@ -48,20 +57,41 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ locationId, onSubmit }) 
 
 	return (
 		<View className="mt-4">
-			<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">Write a Review</Text>
+			<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">
+				Write a Review
+			</Text>
 			<View className="space-y-4">
 				<View>
-					<Text className="mb-1 text-sm font-lexend tracking-tighter-lexend text-[#666666]">RATING</Text>
+					<Text className="mb-1 text-sm font-lexend tracking-tighter-lexend text-[#666666]">
+						RATING
+					</Text>
 					<View className="flex-row mb-2">
 						{[1, 2, 3, 4, 5].map((star) => (
-							<TouchableOpacity key={star} onPress={() => setRating(star)} className="mr-1">
-								<Text style={{ fontSize: 28, color: star <= rating ? "#FED787" : "#CCCCCC" }}>★</Text>
+							<TouchableOpacity
+								key={star}
+								onPress={() => setRating(star)}
+								className="mr-1"
+							>
+								<Text
+									style={{
+										fontSize: 28,
+										color:
+											star <= rating
+												? "#FED787"
+												: "#CCCCCC"
+									}}
+								>
+									★
+								</Text>
 							</TouchableOpacity>
 						))}
 					</View>
 				</View>
 
-				<View className="bg-white p-4 border border-[#333333]" style={shadowStyles.small}>
+				<View
+					className="bg-white p-4 border border-[#333333]"
+					style={shadowStyles.small}
+				>
 					<TextInput
 						value={comment}
 						onChangeText={setComment}
@@ -75,7 +105,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ locationId, onSubmit }) 
 					/>
 				</View>
 
-				{error ? <Text className="text-red-500 font-lexend tracking-tighter-lexend">{error}</Text> : null}
+				{error ? (
+					<Text className="text-red-500 font-lexend tracking-tighter-lexend">
+						{error}
+					</Text>
+				) : null}
 
 				<TouchableOpacity
 					className="h-12 mt-2 w-full items-center justify-center bg-[#fed787] border border-[#333333]"

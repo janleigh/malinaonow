@@ -3,7 +3,13 @@ import { shadowStyles } from "@/lib/utils/styles";
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OTPScreen() {
@@ -16,7 +22,10 @@ export default function OTPScreen() {
 	const { verifyOtp, signIn, signUp } = useAuth();
 
 	// Get the email and flow type (login or signup) from route params
-	const { email, type } = useLocalSearchParams<{ email: string; type: "login" | "signup" }>();
+	const { email, type } = useLocalSearchParams<{
+		email: string;
+		type: "login" | "signup";
+	}>();
 
 	const handleOtpChange = (text: string) => {
 		const digitsOnly = text.replace(/\D/g, "");
@@ -135,7 +144,10 @@ export default function OTPScreen() {
 							>
 								{[0, 1, 2, 3, 4, 5].map((index) => {
 									const digit = otp[index];
-									const showCursor = cursorPosition === index && cursorVisible && !isComplete;
+									const showCursor =
+										cursorPosition === index &&
+										cursorVisible &&
+										!isComplete;
 									return (
 										<View
 											key={`digit-${index}`}
@@ -155,7 +167,9 @@ export default function OTPScreen() {
 								})}
 							</TouchableOpacity>
 							{error ? (
-								<Text className="mt-4 text-red-500 font-lexend tracking-tighter-lexend">{error}</Text>
+								<Text className="mt-4 text-red-500 font-lexend tracking-tighter-lexend">
+									{error}
+								</Text>
 							) : null}
 							<TouchableOpacity
 								className="mt-8 h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"

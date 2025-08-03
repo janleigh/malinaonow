@@ -2,11 +2,17 @@ import { useClerk, useSignIn, useSignUp } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 
 export const useClerkAuth = () => {
-	const { signUp: clerkSignUp, setActive: setActiveSignUp } = useSignUp();
-	const { signIn: clerkSignIn, setActive: setActiveSignIn } = useSignIn();
+	const { signUp: clerkSignUp, setActive: setActiveSignUp } =
+		useSignUp();
+	const { signIn: clerkSignIn, setActive: setActiveSignIn } =
+		useSignIn();
 	const clerk = useClerk();
 
-	const signUp = async (email: string, firstName?: string, lastName?: string) => {
+	const signUp = async (
+		email: string,
+		firstName?: string,
+		lastName?: string
+	) => {
 		try {
 			const result = await clerkSignUp?.create({
 				emailAddress: email,
@@ -18,7 +24,10 @@ export const useClerkAuth = () => {
 				throw new Error("Failed to create user account");
 			}
 
-			console.log("User creation response:", JSON.stringify(result, null, 2));
+			console.log(
+				"User creation response:",
+				JSON.stringify(result, null, 2)
+			);
 
 			await clerkSignUp?.prepareEmailAddressVerification({
 				strategy: "email_code"
@@ -74,42 +83,72 @@ export const useClerkAuth = () => {
 	const verifyOtp = async (code: string, type: "login" | "signup") => {
 		try {
 			if (type === "signup") {
-				const verification = await clerkSignUp?.attemptEmailAddressVerification({
-					code
-				});
+				const verification =
+					await clerkSignUp?.attemptEmailAddressVerification({
+						code
+					});
 
-				console.log("Signup verification response:", JSON.stringify(verification, null, 2));
+				console.log(
+					"Signup verification response:",
+					JSON.stringify(verification, null, 2)
+				);
 				if (
 					verification?.status === "complete" ||
-					verification?.verifications?.emailAddress?.status === "verified"
+					verification?.verifications?.emailAddress?.status ===
+						"verified"
 				) {
 					if (verification.createdSessionId) {
-						await setActiveSignUp?.({ session: verification.createdSessionId });
+						await setActiveSignUp?.({
+							session: verification.createdSessionId
+						});
 
-						await new Promise((resolve) => setTimeout(resolve, 300));
+						await new Promise((resolve) =>
+							setTimeout(resolve, 300)
+						);
 
 						router.replace("/(home)");
 					} else {
-						console.error("No session ID returned after verification");
-						throw new Error("Account created but no session available");
+						console.error(
+							"No session ID returned after verification"
+						);
+						throw new Error(
+							"Account created but no session available"
+						);
 					}
 				} else {
-					console.error("Verification failed with status:", verification?.status);
-					throw new Error("Verification failed or returned unexpected status");
+					console.error(
+						"Verification failed with status:",
+						verification?.status
+					);
+					throw new Error(
+						"Verification failed or returned unexpected status"
+					);
 				}
 			} else {
-				const verification = await clerkSignIn?.attemptFirstFactor({
-					strategy: "email_code",
-					code
-				});
+				const verification = await clerkSignIn?.attemptFirstFactor(
+					{
+						strategy: "email_code",
+						code
+					}
+				);
 
-				console.log("Login verification response:", JSON.stringify(verification, null, 2));
+				console.log(
+					"Login verification response:",
+					JSON.stringify(verification, null, 2)
+				);
 				if (verification?.status === "complete") {
-					await setActiveSignIn?.({ session: verification.createdSessionId });
+					await setActiveSignIn?.({
+						session: verification.createdSessionId
+					});
 					router.replace("/(home)");
 				} else {
-					console.error("Verification failed with status:", verification?.status);
-					throw new Error("Verification failed or returned unexpected status");
+					console.error(
+						"Verification failed with status:",
+						verification?.status
+					);
+					throw new Error(
+						"Verification failed or returned unexpected status"
+					);
 				}
 			}
 		} catch (error) {

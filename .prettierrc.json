@@ -7,5 +7,5 @@
 	"singleQuote": false,
 	"arrowParens": "always",
 	"quoteProps": "consistent",
-	"printWidth": 120
+	"printWidth": 75
 }

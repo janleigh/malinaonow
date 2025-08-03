@@ -19,9 +19,8 @@ import {
 	TouchableOpacity,
 	View
 } from "react-native";
-import { WebViewError } from "react-native-webview";
+import { WebViewError , WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { WebView } from "react-native-webview";
 import { ReviewForm, ReviewList } from "./reviews";
 
 export const LocationCard = ({
@@ -41,11 +40,14 @@ export const LocationCard = ({
 	const [reviews, setReviews] = useState<Review[]>([]);
 	const [isLoadingReviews, setIsLoadingReviews] = useState(false);
 	const [showReviewForm, setShowReviewForm] = useState(false);
-	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+	const [isDescriptionExpanded, setIsDescriptionExpanded] =
+		useState(false);
 	const [descriptionHeight, setDescriptionHeight] = useState(0);
 	const [bookmarked, setBookmarked] = useState(isBookmarked);
 	const [avgRating, setAvgRating] = useState(location.rating || 0);
-	const [totalReviews, setTotalReviews] = useState(location.review_count || 0);
+	const [totalReviews, setTotalReviews] = useState(
+		location.review_count || 0
+	);
 	const { isSignedIn, user } = useAuth();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -123,19 +125,24 @@ export const LocationCard = ({
 	const loadReviews = React.useCallback(
 		async (loadFullReviews = false) => {
 			try {
-				const { data: reviewStats } = await supabase.from("reviews").select("*").eq("location_id", location.id);
+				const { data: reviewStats } = await supabase
+					.from("reviews")
+					.select("*")
+					.eq("location_id", location.id);
 
 				if (reviewStats && reviewStats.length > 0) {
 					// Convert to Review type before calculating average
 					const reviews = reviewStats as Review[];
-					const avg = ReviewService.calculateAverageRating(reviews);
+					const avg =
+						ReviewService.calculateAverageRating(reviews);
 					setAvgRating(avg);
 					setTotalReviews(reviewStats.length);
 
 					// Only load full reviews if we're expanding the card
 					if (loadFullReviews) {
 						setIsLoadingReviews(true);
-						const fetchedReviews = await ReviewService.getReviews(location.id);
+						const fetchedReviews =
+							await ReviewService.getReviews(location.id);
 						setReviews(fetchedReviews);
 					}
 				} else {
@@ -199,7 +206,8 @@ export const LocationCard = ({
 
 				// Update the average rating and review count
 				const updatedReviews = [newReview, ...reviews];
-				const newAvgRating = ReviewService.calculateAverageRating(updatedReviews);
+				const newAvgRating =
+					ReviewService.calculateAverageRating(updatedReviews);
 				setAvgRating(newAvgRating);
 				setTotalReviews(updatedReviews.length);
 			}
@@ -291,7 +299,9 @@ export const LocationCard = ({
 					<View className="flex-row">
 						<View className="w-1/3 h-24">
 							<Image
-								source={{ uri: location.image.banner }}
+								source={{
+									uri: location.image.banner
+								}}
 								className="w-full h-full"
 								resizeMode="cover"
 							/>
@@ -304,17 +314,28 @@ export const LocationCard = ({
 								{location.name}
 							</Text>
 							<View className="flex-row items-center mt-1">
-								<Text className="text-[#fed787] mr-1">★</Text>
+								<Text className="text-[#fed787] mr-1">
+									★
+								</Text>
 								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
 									{rating.toFixed(1)}
 								</Text>
 								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
 									{" "}
-									({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+									({reviewCount}{" "}
+									{reviewCount === 1
+										? "review"
+										: "reviews"}
+									)
 								</Text>
 							</View>
 							<View className="flex-row items-start mt-1">
-								<AntDesign name="enviromento" size={10} color="#555" style={{ marginTop: 2 }} />
+								<AntDesign
+									name="enviromento"
+									size={10}
+									color="#555"
+									style={{ marginTop: 2 }}
+								/>
 								<Text
 									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555] flex-1"
 									numberOfLines={2}
@@ -329,7 +350,9 @@ export const LocationCard = ({
 					<View>
 						<View className="w-full h-32">
 							<Image
-								source={{ uri: location.image.banner }}
+								source={{
+									uri: location.image.banner
+								}}
 								className="w-full h-full"
 								resizeMode="cover"
 							/>
@@ -342,17 +365,28 @@ export const LocationCard = ({
 								{location.name}
 							</Text>
 							<View className="flex-row items-center mt-1">
-								<Text className="text-[#fed787] mr-1">★</Text>
+								<Text className="text-[#fed787] mr-1">
+									★
+								</Text>
 								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
 									{rating.toFixed(1)}
 								</Text>
 								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
 									{" "}
-									({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+									({reviewCount}{" "}
+									{reviewCount === 1
+										? "review"
+										: "reviews"}
+									)
 								</Text>
 							</View>
 							<View className="flex-row items-start mt-1">
-								<AntDesign name="enviromento" size={10} color="#555" style={{ marginTop: 2 }} />
+								<AntDesign
+									name="enviromento"
+									size={10}
+									color="#555"
+									style={{ marginTop: 2 }}
+								/>
 								<Text
 									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555] flex-1"
 									numberOfLines={2}
@@ -364,7 +398,11 @@ export const LocationCard = ({
 					</View>
 				)}
 			</TouchableOpacity>
-			<Modal visible={expanded} transparent={true} animationType="none">
+			<Modal
+				visible={expanded}
+				transparent={true}
+				animationType="none"
+			>
 				<Animated.View
 					style={{
 						flex: 1,
@@ -386,24 +424,47 @@ export const LocationCard = ({
 								{location.name}
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
-								<Feather name="x" size={24} color="black" />
+								<Feather
+									name="x"
+									size={24}
+									color="black"
+								/>
 							</TouchableOpacity>
 						</View>
 						<ScrollView className="flex-1">
-							<Image source={{ uri: location.image.banner }} className="w-full h-52" resizeMode="cover" />
+							<Image
+								source={{
+									uri: location.image.banner
+								}}
+								className="w-full h-52"
+								resizeMode="cover"
+							/>
 							<View className="p-4">
 								<View className="flex-row items-center mb-2">
-									<Text className="text-[#fed787] text-2xl mr-1">★</Text>
+									<Text className="text-[#fed787] text-2xl mr-1">
+										★
+									</Text>
 									<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
 										{rating.toFixed(1)}
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666]">
 										{" "}
-										({reviewCount} {reviewCount === 1 ? "review" : "reviews"})
+										({reviewCount}{" "}
+										{reviewCount === 1
+											? "review"
+											: "reviews"}
+										)
 									</Text>
 								</View>
 								<View className="flex-row items-start mb-4">
-									<AntDesign name="enviromento" size={16} color="#333" style={{ marginTop: 2 }} />
+									<AntDesign
+										name="enviromento"
+										size={16}
+										color="#333"
+										style={{
+											marginTop: 2
+										}}
+									/>
 									<Text className="ml-2 text-base font-lexend tracking-tighter-lexend text-[#333] flex-1">
 										{getFormattedAddress(location)}
 									</Text>
@@ -417,9 +478,13 @@ export const LocationCard = ({
 									}}
 								>
 									<AntDesign
-										name={bookmarked ? "heart" : "hearto"}
+										name={
+											bookmarked ? "heart" : "hearto"
+										}
 										size={24}
-										color={bookmarked ? "#FE5B62" : "#333"}
+										color={
+											bookmarked ? "#FE5B62" : "#333"
+										}
 									/>
 								</TouchableOpacity>
 								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
@@ -427,7 +492,11 @@ export const LocationCard = ({
 								</Text>
 								<View
 									className="border-l-2 border-[#fed787] pl-2"
-									style={{ maxHeight: isDescriptionExpanded ? undefined : 80 }}
+									style={{
+										maxHeight: isDescriptionExpanded
+											? undefined
+											: 80
+									}}
 								>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
@@ -442,7 +511,9 @@ export const LocationCard = ({
 										style={shadowStyles.small}
 									>
 										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black">
-											{isDescriptionExpanded ? "Show less ↑" : "Show more ↓"}
+											{isDescriptionExpanded
+												? "Show less ↑"
+												: "Show more ↓"}
 										</Text>
 									</TouchableOpacity>
 								)}
@@ -475,7 +546,9 @@ export const LocationCard = ({
 										</Text>
 										{isSignedIn && !showReviewForm && (
 											<TouchableOpacity
-												onPress={() => setShowReviewForm(true)}
+												onPress={() =>
+													setShowReviewForm(true)
+												}
 												className="bg-[#fed787] px-4 py-2 border border-[#333333]"
 												style={shadowStyles.small}
 											>
@@ -487,8 +560,20 @@ export const LocationCard = ({
 									</View>
 									{showReviewForm && (
 										<View className="mt-4">
-											<ReviewForm locationId={location.id} onSubmit={handleSubmitReview} />
-											<TouchableOpacity className="mt-4" onPress={() => setShowReviewForm(false)}>
+											<ReviewForm
+												locationId={location.id}
+												onSubmit={
+													handleSubmitReview
+												}
+											/>
+											<TouchableOpacity
+												className="mt-4"
+												onPress={() =>
+													setShowReviewForm(
+														false
+													)
+												}
+											>
 												<Text className="text-sm font-lexend text-[#666] text-center">
 													Cancel
 												</Text>
@@ -497,12 +582,19 @@ export const LocationCard = ({
 									)}
 									{isLoadingReviews ? (
 										<View className="py-8 items-center">
-											<ActivityIndicator size="small" color="#fed787" />
-											<Text className="mt-2 font-lexend text-[#666]">Loading reviews...</Text>
+											<ActivityIndicator
+												size="small"
+												color="#fed787"
+											/>
+											<Text className="mt-2 font-lexend text-[#666]">
+												Loading reviews...
+											</Text>
 										</View>
 									) : (
 										<View className="mt-4">
-											<ReviewList reviews={reviews} />
+											<ReviewList
+												reviews={reviews}
+											/>
 										</View>
 									)}
 								</View>
@@ -511,29 +603,50 @@ export const LocationCard = ({
 					</SafeAreaView>
 				</Animated.View>
 			</Modal>
-			<Modal visible={viewMapOpen} transparent={false} animationType="slide">
+			<Modal
+				visible={viewMapOpen}
+				transparent={false}
+				animationType="slide"
+			>
 				<SafeAreaView className="flex-1 bg-[#faf4f0]">
 					<View className="flex-row justify-between items-center p-4 bg-[#faf4f0] border-b border-[#333333]">
-						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">Map View</Text>
+						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+							Map View
+						</Text>
 						<TouchableOpacity onPress={closeMapView}>
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
 					</View>
 					<View className="flex-1">
 						<WebView
-							source={{ html: getMapViewerHTML(location.name) }}
-							style={{ flex: 1, backgroundColor: "transparent" }}
+							source={{
+								html: getMapViewerHTML(location.name)
+							}}
+							style={{
+								flex: 1,
+								backgroundColor: "transparent"
+							}}
 							javaScriptEnabled={true}
 							domStorageEnabled={true}
 							startInLoadingState={true}
 							renderLoading={() => (
 								<View className="absolute inset-0 flex-1 items-center justify-center bg-[#faf4f0]">
-									<ActivityIndicator size="large" color="#fed787" />
-									<Text className="mt-2 font-lexend text-[#666666]">Loading map...</Text>
+									<ActivityIndicator
+										size="large"
+										color="#fed787"
+									/>
+									<Text className="mt-2 font-lexend text-[#666666]">
+										Loading map...
+									</Text>
 								</View>
 							)}
-							onError={(e: NativeSyntheticEvent<WebViewError>) =>
-								console.error("WebView error:", e.nativeEvent)
+							onError={(
+								e: NativeSyntheticEvent<WebViewError>
+							) =>
+								console.error(
+									"WebView error:",
+									e.nativeEvent
+								)
 							}
 							scrollEnabled={false}
 							bounces={false}
@@ -542,10 +655,16 @@ export const LocationCard = ({
 					</View>
 				</SafeAreaView>
 			</Modal>
-			<Modal visible={view360Open} transparent={false} animationType="slide">
+			<Modal
+				visible={view360Open}
+				transparent={false}
+				animationType="slide"
+			>
 				<SafeAreaView className="flex-1 bg-black">
 					<View className="flex-row justify-between items-center p-4 bg-[#faf4f0] border-b border-[#333333]">
-						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">360° View</Text>
+						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+							360° View
+						</Text>
 						<TouchableOpacity onPress={close360View}>
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
@@ -553,7 +672,11 @@ export const LocationCard = ({
 					<View className="flex-1">
 						{location.image[360] && (
 							<WebView
-								source={{ html: get360ViewerHTML(location.image[360]) }}
+								source={{
+									html: get360ViewerHTML(
+										location.image[360]
+									)
+								}}
 								style={{ flex: 1 }}
 								javaScriptEnabled={true}
 								domStorageEnabled={true}

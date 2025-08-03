@@ -3,7 +3,15 @@ import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Dimensions, Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import {
+	Animated,
+	Dimensions,
+	Image,
+	Modal,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface UserSidebarProps {
@@ -25,7 +33,9 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 	onShowBookmarks
 }) => {
 	const { signOut, user } = useAuth();
-	const slideAnim = useRef(new Animated.Value(Dimensions.get("window").width)).current;
+	const slideAnim = useRef(
+		new Animated.Value(Dimensions.get("window").width)
+	).current;
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 	const contentFadeAnim = useRef(new Animated.Value(0)).current;
 	const [modalVisible, setModalVisible] = useState(false);
@@ -134,7 +144,11 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						opacity: fadeAnim
 					}}
 				>
-					<TouchableOpacity activeOpacity={1} onPress={onClose} className="flex-1" />
+					<TouchableOpacity
+						activeOpacity={1}
+						onPress={onClose}
+						className="flex-1"
+					/>
 				</Animated.View>
 				<Animated.View
 					style={[
@@ -152,20 +166,31 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						}
 					]}
 				>
-					<Animated.View style={{ opacity: contentFadeAnim, flex: 1 }}>
+					<Animated.View
+						style={{
+							opacity: contentFadeAnim,
+							flex: 1
+						}}
+					>
 						<SafeAreaView className="flex-1">
 							<View className="flex-row justify-between items-center p-4">
 								<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
 									Profile
 								</Text>
 								<TouchableOpacity onPress={onClose}>
-									<AntDesign name="close" size={24} color="black" />
+									<AntDesign
+										name="close"
+										size={24}
+										color="black"
+									/>
 								</TouchableOpacity>
 							</View>
 							<View className="items-center py-6 border-b border-gray-200">
 								{userProfileImage ? (
 									<Image
-										source={{ uri: userProfileImage }}
+										source={{
+											uri: userProfileImage
+										}}
 										className="w-20 h-20 rounded-full border border-[#333333]"
 									/>
 								) : (
@@ -187,24 +212,32 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									className="flex-row items-center py-4"
 									onPress={() => {
 										onClose();
-										router.push("/+not-found");
+										router.push("/(admin)");
 									}}
 								>
-									<Feather name="user" size={20} color="#333" />
+									<Feather
+										name="shield"
+										size={20}
+										color="#333"
+									/>
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										My Profile
+										Admin Panel
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
 									className="flex-row items-center py-4"
 									onPress={() => {
 										onClose();
-										router.push("/(admin)");
+										router.push("/+not-found");
 									}}
 								>
-									<Feather name="shield" size={20} color="#333" />
+									<Feather
+										name="settings"
+										size={20}
+										color="#333"
+									/>
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										Admin Panel
+										Settings
 									</Text>
 								</TouchableOpacity>
 							</View>
@@ -214,7 +247,11 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									style={shadowStyles.standard}
 									onPress={handleSignOut}
 								>
-									<Feather name="log-out" size={18} color="#333" />
+									<Feather
+										name="log-out"
+										size={18}
+										color="#333"
+									/>
 									<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
 										Sign Out
 									</Text>

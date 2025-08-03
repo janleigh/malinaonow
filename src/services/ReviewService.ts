@@ -32,9 +32,15 @@ export const ReviewService = {
 	 * @param {Omit<Review, 'id' | 'created_at'>} review - The review data
 	 * @returns {Promise<Review | null>} - A promise that resolves to the created Review or null
 	 */
-	async addReview(review: Omit<Review, "id" | "created_at">): Promise<Review | null> {
+	async addReview(
+		review: Omit<Review, "id" | "created_at">
+	): Promise<Review | null> {
 		try {
-			const { data, error } = await supabase.from("reviews").insert([review]).select().single();
+			const { data, error } = await supabase
+				.from("reviews")
+				.insert([review])
+				.select()
+				.single();
 
 			if (error) {
 				console.error("Error adding review:", error);
@@ -56,7 +62,10 @@ export const ReviewService = {
 	calculateAverageRating(reviews: Review[]): number {
 		if (reviews.length === 0) return 0;
 
-		const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+		const sum = reviews.reduce(
+			(acc, review) => acc + review.rating,
+			0
+		);
 		return Number((sum / reviews.length).toFixed(1));
 	}
 };

@@ -1,5 +1,8 @@
 import { supabase } from "@/api/supabase";
-import { Location as CardLocation, Location as SupabaseLocation } from "@/lib/types/supabase";
+import {
+	Location as CardLocation,
+	Location as SupabaseLocation
+} from "@/lib/types/supabase";
 
 export const LocationService = {
 	/**
@@ -8,14 +11,19 @@ export const LocationService = {
 	 */
 	async getLocations(): Promise<CardLocation[]> {
 		try {
-			const { data, error } = await supabase.from("locations").select("*").order("name");
+			const { data, error } = await supabase
+				.from("locations")
+				.select("*")
+				.order("name");
 
 			if (error) {
 				console.error("Error fetching locations:", error);
 				return [];
 			}
 
-			return (data || []).map((location) => this.mapToCardLocation(location));
+			return (data || []).map((location) =>
+				this.mapToCardLocation(location)
+			);
 		} catch (error) {
 			console.error("Exception fetching locations:", error);
 			return [];
@@ -29,7 +37,11 @@ export const LocationService = {
 	 */
 	async getLocationById(id: string): Promise<CardLocation | null> {
 		try {
-			const { data, error } = await supabase.from("locations").select("*").eq("id", id).single();
+			const { data, error } = await supabase
+				.from("locations")
+				.select("*")
+				.eq("id", id)
+				.single();
 
 			if (error) {
 				console.error("Error fetching location:", error);

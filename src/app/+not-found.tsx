@@ -22,7 +22,8 @@ export default function InDevelopmentScreen() {
 							We&apos;re working on this feature!
 						</Text>
 						<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-8">
-							This part of MalinaoNow is still under development. Check back soon for updates.
+							This part of MalinaoNow is still under
+							development. Check back soon for updates.
 						</Text>
 
 						<Link href="/" asChild>

@@ -50,7 +50,10 @@ export default function RootLayout() {
 	}
 
 	return (
-		<ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+		<ClerkProvider
+			publishableKey={CLERK_PUBLISHABLE_KEY}
+			tokenCache={tokenCache}
+		>
 			<AuthProvider>
 				<Stack screenOptions={{ headerShown: false }}>
 					<Stack.Screen name="index" />

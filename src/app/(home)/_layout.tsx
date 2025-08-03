@@ -1,5 +1,5 @@
-import { Stack, useNavigation, useRouter } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
+import { Stack, useNavigation, useRouter } from "expo-router";
 import { useEffect } from "react";
 
 export default function HomeLayout() {
@@ -7,15 +7,12 @@ export default function HomeLayout() {
 	const router = useRouter();
 	const navigation = useNavigation();
 
-	// Handle authentication state changes
 	useEffect(() => {
 		if (isLoaded && !isSignedIn) {
-			// If user is not signed in, redirect to login
 			router.replace("/");
 		}
-	}, [isSignedIn, isLoaded]);
+	}, [isSignedIn, isLoaded, router]);
 
-	// Don't render anything until auth state is loaded
 	if (!isLoaded) {
 		return null;
 	}

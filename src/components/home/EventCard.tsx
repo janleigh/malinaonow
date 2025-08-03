@@ -2,7 +2,14 @@ import { formatDate, formatTime } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Animated, Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import {
+	Animated,
+	Image,
+	Modal,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export type Event = {
@@ -14,7 +21,13 @@ export type Event = {
 	banner_image: string;
 };
 
-export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => void }) => {
+export const EventCard = ({
+	event,
+	onPress
+}: {
+	event: Event;
+	onPress?: () => void;
+}) => {
 	const [expanded, setExpanded] = useState(false);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -70,7 +83,13 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 			>
 				<View>
 					<View className="w-full h-32">
-						<Image source={{ uri: event.banner_image }} className="w-full h-full" resizeMode="cover" />
+						<Image
+							source={{
+								uri: event.banner_image
+							}}
+							className="w-full h-full"
+							resizeMode="cover"
+						/>
 					</View>
 					<View className="p-3">
 						<Text
@@ -80,7 +99,11 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 							{event.name}
 						</Text>
 						<View className="flex-row items-center mt-1">
-							<AntDesign name="calendar" size={10} color="#555" />
+							<AntDesign
+								name="calendar"
+								size={10}
+								color="#555"
+							/>
 							<Text
 								className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555]"
 								numberOfLines={1}
@@ -89,13 +112,22 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 							</Text>
 						</View>
 						<View className="flex-row items-center mt-1">
-							<AntDesign name="clockcircleo" size={10} color="#555" />
+							<AntDesign
+								name="clockcircleo"
+								size={10}
+								color="#555"
+							/>
 							<Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555]">
 								{formatTime(event.time)}
 							</Text>
 						</View>
 						<View className="flex-row items-start mt-1">
-							<AntDesign name="enviromento" size={10} color="#555" style={{ marginTop: 2 }} />
+							<AntDesign
+								name="enviromento"
+								size={10}
+								color="#555"
+								style={{ marginTop: 2 }}
+							/>
 							<Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555] flex-1">
 								{event.location}
 							</Text>
@@ -103,7 +135,11 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 					</View>
 				</View>
 			</TouchableOpacity>
-			<Modal visible={expanded} transparent={true} animationType="none">
+			<Modal
+				visible={expanded}
+				transparent={true}
+				animationType="none"
+			>
 				<Animated.View
 					style={{
 						flex: 1,
@@ -125,11 +161,21 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 								Event Details
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
-								<Feather name="x" size={24} color="black" />
+								<Feather
+									name="x"
+									size={24}
+									color="black"
+								/>
 							</TouchableOpacity>
 						</View>
 						<View className="flex-1">
-							<Image source={{ uri: event.banner_image }} className="w-full h-52" resizeMode="cover" />
+							<Image
+								source={{
+									uri: event.banner_image
+								}}
+								className="w-full h-52"
+								resizeMode="cover"
+							/>
 							<View className="p-4">
 								<Text className="text-2xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4">
 									{event.name}
@@ -137,7 +183,11 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 								<View className="space-y-3 mb-6">
 									<View className="flex-row items-center">
 										<View className="w-10 h-10 rounded-full bg-[#fed787] items-center justify-center border border-[#333333]">
-											<AntDesign name="calendar" size={20} color="#333" />
+											<AntDesign
+												name="calendar"
+												size={20}
+												color="#333"
+											/>
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
@@ -150,7 +200,11 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 									</View>
 									<View className="flex-row items-center">
 										<View className="w-10 h-10 mt-2 rounded-full bg-[#fed787] items-center justify-center border border-[#333333]">
-											<AntDesign name="clockcircleo" size={20} color="#333" />
+											<AntDesign
+												name="clockcircleo"
+												size={20}
+												color="#333"
+											/>
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
@@ -163,7 +217,11 @@ export const EventCard = ({ event, onPress }: { event: Event; onPress?: () => vo
 									</View>
 									<View className="flex-row items-center">
 										<View className="w-10 h-10 mt-2 rounded-full bg-[#fed787] items-center justify-center border border-[#333333]">
-											<AntDesign name="enviromento" size={20} color="#333" />
+											<AntDesign
+												name="enviromento"
+												size={20}
+												color="#333"
+											/>
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">

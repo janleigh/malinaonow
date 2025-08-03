@@ -7,7 +7,16 @@ import { LocationService, ReviewService } from "@/services";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Alert,
+	FlatList,
+	ScrollView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ReviewWithLocation extends Review {
@@ -38,11 +47,17 @@ export default function ModerateReviewsScreen() {
 
 			const allReviews: ReviewWithLocation[] = [];
 			for (const location of locations) {
-				const locationReviews = await ReviewService.getReviews(location.id);
-				const reviewsWithLocation = locationReviews.map((review) => ({
-					...review,
-					locationName: locationMap[review.location_id] || "Unknown Location"
-				}));
+				const locationReviews = await ReviewService.getReviews(
+					location.id
+				);
+				const reviewsWithLocation = locationReviews.map(
+					(review) => ({
+						...review,
+						locationName:
+							locationMap[review.location_id] ||
+							"Unknown Location"
+					})
+				);
 				allReviews.push(...reviewsWithLocation);
 			}
 
@@ -61,11 +76,18 @@ export default function ModerateReviewsScreen() {
 
 	const filteredReviews = reviews.filter((review) => {
 		const matchesSearch =
-			review.user_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			review.comment?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			review.locationName?.toLowerCase().includes(searchQuery.toLowerCase());
+			review.user_name
+				?.toLowerCase()
+				.includes(searchQuery.toLowerCase()) ||
+			review.comment
+				?.toLowerCase()
+				.includes(searchQuery.toLowerCase()) ||
+			review.locationName
+				?.toLowerCase()
+				.includes(searchQuery.toLowerCase());
 
-		const matchesRating = filterRating === 0 || review.rating === filterRating;
+		const matchesRating =
+			filterRating === 0 || review.rating === filterRating;
 		const matchesFlagged = !showFlagged || review.flagged;
 
 		return matchesSearch && matchesRating && matchesFlagged;
@@ -76,11 +98,18 @@ export default function ModerateReviewsScreen() {
 			const review = reviews.find((r) => r.id === reviewId);
 			if (!review) return;
 
-			const { error } = await supabase.from("reviews").update({ flagged: !review.flagged }).eq("id", reviewId);
+			const { error } = await supabase
+				.from("reviews")
+				.update({ flagged: !review.flagged })
+				.eq("id", reviewId);
 
 			if (error) throw error;
 
-			setReviews(reviews.map((r) => (r.id === reviewId ? { ...r, flagged: !r.flagged } : r)));
+			setReviews(
+				reviews.map((r) =>
+					r.id === reviewId ? { ...r, flagged: !r.flagged } : r
+				)
+			);
 		} catch (err) {
 			console.error("Error toggling flag:", err);
 			Alert.alert("Error", "Failed to update review status");
@@ -88,46 +117,69 @@ export default function ModerateReviewsScreen() {
 	};
 
 	const handleDeleteReview = async (reviewId: string) => {
-		Alert.alert("Delete Review", "Are you sure you want to delete this review?", [
-			{ text: "Cancel", style: "cancel" },
-			{
-				text: "Delete",
-				style: "destructive",
-				onPress: async () => {
-					try {
-						const { error } = await supabase.from("reviews").delete().eq("id", reviewId);
+		Alert.alert(
+			"Delete Review",
+			"Are you sure you want to delete this review?",
+			[
+				{ text: "Cancel", style: "cancel" },
+				{
+					text: "Delete",
+					style: "destructive",
+					onPress: async () => {
+						try {
+							const { error } = await supabase
+								.from("reviews")
+								.delete()
+								.eq("id", reviewId);
 
-						if (error) throw error;
+							if (error) throw error;
 
-						await fetchReviews();
-					} catch (err) {
-						console.error("Error deleting review:", err);
-						Alert.alert("Error", "Failed to delete review");
+							await fetchReviews();
+						} catch (err) {
+							console.error("Error deleting review:", err);
+							Alert.alert(
+								"Error",
+								"Failed to delete review"
+							);
+						}
 					}
 				}
-			}
-		]);
+			]
+		);
 	};
 
 	const renderReviewItem = ({ item }: { item: ReviewWithLocation }) => (
-		<View className="mb-4 p-4 bg-white border border-[#333333]" style={shadowStyles.standard}>
+		<View
+			className="mb-4 p-4 bg-white border border-[#333333]"
+			style={shadowStyles.standard}
+		>
 			<View className="flex-row justify-between items-start mb-2">
 				<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black">
 					{item.user_name || "Anonymous"}
 				</Text>
 				<View className="flex-row items-center">
 					<RatingStars rating={item.rating} />
-					<Text className="ml-2 font-lexend-medium text-black">{item.rating}/5</Text>
+					<Text className="ml-2 font-lexend-medium text-black">
+						{item.rating}/5
+					</Text>
 				</View>
 			</View>
 			{item.comment ? (
-				<Text className="font-lexend tracking-tighter-lexend text-[#333333] mb-2">{item.comment}</Text>
+				<Text className="font-lexend tracking-tighter-lexend text-[#333333] mb-2">
+					{item.comment}
+				</Text>
 			) : (
-				<Text className="font-lexend tracking-tighter-lexend text-[#666666] italic mb-2">No comment</Text>
+				<Text className="font-lexend tracking-tighter-lexend text-[#666666] italic mb-2">
+					No comment
+				</Text>
 			)}
 			<View className="flex-row justify-between items-center">
-				<Text className="text-sm font-lexend tracking-tighter-lexend text-[#666666]">{item.locationName || "Unknown Location"}</Text>
-				<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666666]">{formatDate(item.created_at)}</Text>
+				<Text className="text-sm font-lexend tracking-tighter-lexend text-[#666666]">
+					{item.locationName || "Unknown Location"}
+				</Text>
+				<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666666]">
+					{formatDate(item.created_at)}
+				</Text>
 			</View>
 			<View className="flex-row mt-3 space-x-2">
 				<TouchableOpacity
@@ -144,7 +196,9 @@ export default function ModerateReviewsScreen() {
 					style={shadowStyles.small}
 					onPress={() => handleDeleteReview(item.id)}
 				>
-					<Text className="font-lexend-medium tracking-tighter-lexend text-black">Delete</Text>
+					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+						Delete
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -154,7 +208,9 @@ export default function ModerateReviewsScreen() {
 		return (
 			<View className="flex-1 justify-center items-center bg-[#faf4f0]">
 				<ActivityIndicator size="large" color="#fed787" />
-				<Text className="mt-2 font-lexend text-[#666666]">Loading reviews...</Text>
+				<Text className="mt-2 font-lexend text-[#666666]">
+					Loading reviews...
+				</Text>
 			</View>
 		);
 	}
@@ -162,13 +218,17 @@ export default function ModerateReviewsScreen() {
 	if (error) {
 		return (
 			<View className="flex-1 justify-center items-center p-4 bg-[#faf4f0]">
-				<Text className="text-[#333333] mb-4 text-center font-lexend tracking-tighter-lexend">{error}</Text>
-				<TouchableOpacity 
-					className="bg-[#fed787] px-6 py-2 border border-[#333333]" 
+				<Text className="text-[#333333] mb-4 text-center font-lexend tracking-tighter-lexend">
+					{error}
+				</Text>
+				<TouchableOpacity
+					className="bg-[#fed787] px-6 py-2 border border-[#333333]"
 					style={shadowStyles.standard}
 					onPress={fetchReviews}
 				>
-					<Text className="font-lexend-medium tracking-tighter-lexend text-black">Retry</Text>
+					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+						Retry
+					</Text>
 				</TouchableOpacity>
 			</View>
 		);
@@ -197,21 +257,29 @@ export default function ModerateReviewsScreen() {
 						/>
 					</View>
 					<View className="flex-row justify-between items-center">
-						<ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-1">
+						<ScrollView
+							horizontal
+							showsHorizontalScrollIndicator={false}
+							className="flex-1"
+						>
 							<View className="flex-row space-x-2">
 								<TouchableOpacity
 									className={`px-3 py-1 mr-1 border border-[#333333] ${filterRating === 0 ? "bg-[#fed787]" : "bg-white"}`}
 									style={shadowStyles.small}
 									onPress={() => setFilterRating(0)}
 								>
-									<Text className="font-lexend-medium tracking-tighter-lexend text-black">All</Text>
+									<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+										All
+									</Text>
 								</TouchableOpacity>
 								{[1, 2, 3, 4, 5].map((rating) => (
 									<TouchableOpacity
 										key={rating}
 										className={`px-3 py-1 mr-1 border border-[#333333] ${filterRating === rating ? "bg-[#fed787]" : "bg-white"}`}
 										style={shadowStyles.small}
-										onPress={() => setFilterRating(rating)}
+										onPress={() =>
+											setFilterRating(rating)
+										}
 									>
 										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
 											{rating}★
@@ -225,7 +293,9 @@ export default function ModerateReviewsScreen() {
 							style={shadowStyles.small}
 							onPress={() => setShowFlagged(!showFlagged)}
 						>
-							<Text className="font-lexend-medium tracking-tighter-lexend text-black">Flagged</Text>
+							<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+								Flagged
+							</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -235,17 +305,22 @@ export default function ModerateReviewsScreen() {
 							data={filteredReviews}
 							renderItem={renderReviewItem}
 							keyExtractor={(item) => item.id}
-							contentContainerStyle={{ paddingBottom: 20 }}
+							contentContainerStyle={{
+								paddingBottom: 20
+							}}
 							showsVerticalScrollIndicator={false}
 						/>
 					) : (
 						<View className="flex-1 justify-center items-center">
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-								{reviews.length === 0 ? "No Reviews Found" : "No Matching Reviews"}
+								{reviews.length === 0
+									? "No Reviews Found"
+									: "No Matching Reviews"}
 							</Text>
 							{reviews.length > 0 && (
 								<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center">
-									Try adjusting your search or filter criteria
+									Try adjusting your search or filter
+									criteria
 								</Text>
 							)}
 						</View>

@@ -5,7 +5,13 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
@@ -45,7 +51,10 @@ export default function LoginScreen() {
 							Log in to continue using MalinaoNow
 						</Text>
 						<View className="mt-4 space-y-4">
-							<View className="bg-white p-4 border border-[#333333]" style={shadowStyles.standard}>
+							<View
+								className="bg-white p-4 border border-[#333333]"
+								style={shadowStyles.standard}
+							>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
 									EMAIL
 								</Text>
@@ -63,7 +72,9 @@ export default function LoginScreen() {
 								/>
 							</View>
 							{error ? (
-								<Text className="text-red-500 font-lexend tracking-tighter-lexend">{error}</Text>
+								<Text className="text-red-500 font-lexend tracking-tighter-lexend">
+									{error}
+								</Text>
 							) : null}
 						</View>
 						<TouchableOpacity
@@ -83,14 +94,23 @@ export default function LoginScreen() {
 
 						<View className="my-6 flex-row items-center">
 							<View className="flex-1 h-[1px] bg-[#cccccc]" />
-							<Text className="mx-4 text-[#666666] font-lexend tracking-tighter-lexend">OR</Text>
+							<Text className="mx-4 text-[#666666] font-lexend tracking-tighter-lexend">
+								OR
+							</Text>
 							<View className="flex-1 h-[1px] bg-[#cccccc]" />
 						</View>
 
 						<OAuthButton
 							strategy="oauth_google"
 							text="Continue with Google"
-							icon={<AntDesign className="mr-2" name="google" size={24} color="black" />}
+							icon={
+								<AntDesign
+									className="mr-2"
+									name="google"
+									size={24}
+									color="black"
+								/>
+							}
 						/>
 					</View>
 

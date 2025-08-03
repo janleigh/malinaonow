@@ -9,14 +9,19 @@ export const EventService = {
 	 */
 	async getEvents(): Promise<ComponentEvent[]> {
 		try {
-			const { data, error } = await supabase.from("events").select("*").order("date");
+			const { data, error } = await supabase
+				.from("events")
+				.select("*")
+				.order("date");
 
 			if (error) {
 				console.error("Error fetching events:", error);
 				return [];
 			}
 
-			return (data || []).map((event) => this.mapToComponentEvent(event));
+			return (data || []).map((event) =>
+				this.mapToComponentEvent(event)
+			);
 		} catch (error) {
 			console.error("Exception fetching events:", error);
 			return [];

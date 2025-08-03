@@ -3,7 +3,13 @@ import { shadowStyles } from "@/lib/utils/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignupScreen() {
@@ -56,7 +62,10 @@ export default function SignupScreen() {
 							Sign up to get started with MalinaoNow
 						</Text>
 						<View className="mt-1 space-y-4">
-							<View className="bg-white p-4 my-2 border border-[#333333]" style={shadowStyles.standard}>
+							<View
+								className="bg-white p-4 my-2 border border-[#333333]"
+								style={shadowStyles.standard}
+							>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
 									FIRST NAME
 								</Text>
@@ -72,7 +81,10 @@ export default function SignupScreen() {
 									autoCapitalize="words"
 								/>
 							</View>
-							<View className="bg-white p-4 my-2 border border-[#333333]" style={shadowStyles.standard}>
+							<View
+								className="bg-white p-4 my-2 border border-[#333333]"
+								style={shadowStyles.standard}
+							>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
 									LAST NAME
 								</Text>
@@ -88,7 +100,10 @@ export default function SignupScreen() {
 									autoCapitalize="words"
 								/>
 							</View>
-							<View className="bg-white p-4 my-2 border border-[#333333]" style={shadowStyles.standard}>
+							<View
+								className="bg-white p-4 my-2 border border-[#333333]"
+								style={shadowStyles.standard}
+							>
 								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
 									EMAIL
 								</Text>
@@ -106,7 +121,9 @@ export default function SignupScreen() {
 								/>
 							</View>
 							{error ? (
-								<Text className="text-red-500 font-lexend tracking-tighter-lexend">{error}</Text>
+								<Text className="text-red-500 font-lexend tracking-tighter-lexend">
+									{error}
+								</Text>
 							) : null}
 						</View>
 						<TouchableOpacity
