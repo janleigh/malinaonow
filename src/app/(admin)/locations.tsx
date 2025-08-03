@@ -161,7 +161,7 @@ export default function ManageLocationsScreen() {
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
+				<View className="flex-row justify-between items-center p-4 pb-6 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 						Manage Locations
 					</Text>
@@ -197,7 +197,7 @@ export default function ManageLocationsScreen() {
 							</TouchableOpacity>
 						</View>
 					) : (
-						<ScrollView>
+						<ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
 							{locations.map((location) => (
 								<View
 									key={location.id}
