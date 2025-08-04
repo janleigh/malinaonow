@@ -1,9 +1,9 @@
 import { useAuth } from "@/context/AuthContext";
+import { LANGUAGES, useTranslation } from "@/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
 	Alert,
 	ScrollView,
@@ -13,57 +13,31 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// Language options
-const LANGUAGES = [
-	{ id: "en", name: "English" },
-	{ id: "fil", name: "Filipino" },
-	{ id: "akl", name: "Aklanon" }
-];
-
-// Storage key for language preference
-const LANGUAGE_STORAGE_KEY = "app_language_preference";
-
 export default function SettingsScreen() {
-	const [selectedLanguage, setSelectedLanguage] = useState("en");
-	const [isLoading, setIsLoading] = useState(true);
+	const { language, setLanguage, t } = useTranslation();
+	const [isLoading, setIsLoading] = useState(false);
 	const { user } = useAuth();
-
-	// Load saved language preference
-	useEffect(() => {
-		const loadLanguagePreference = async () => {
-			try {
-				const savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
-				if (savedLanguage) {
-					setSelectedLanguage(savedLanguage);
-				}
-				setIsLoading(false);
-			} catch (error) {
-				console.error("Failed to load language preference:", error);
-				setIsLoading(false);
-			}
-		};
-
-		loadLanguagePreference();
-	}, []);
 
 	// Handle language change
 	const changeLanguage = async (languageId: string) => {
 		try {
-			setSelectedLanguage(languageId);
-			await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, languageId);
+			setIsLoading(true);
+			await setLanguage(languageId);
             
 			// Show confirmation
 			Alert.alert(
-				"Language Changed",
-				"Your language preference has been updated.",
+				t('settings.languageChanged'),
+				t('settings.languageChangedDesc'),
 				[{ text: "OK" }]
 			);
 		} catch (error) {
 			console.error("Failed to save language preference:", error);
 			Alert.alert(
-				"Error",
+				t('common.error'),
 				"Failed to save language preference. Please try again."
 			);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -72,7 +46,7 @@ export default function SettingsScreen() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-						Settings
+						{t('settings.title')}
 					</Text>
 					<TouchableOpacity
 						onPress={() => router.replace("/(home)")}
@@ -83,27 +57,28 @@ export default function SettingsScreen() {
 				<ScrollView className="flex-1 p-4">
 					<View className="mb-6">
 						<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">
-                            Language
+							{t('settings.language')}
 						</Text>
 						<Text className="text-sm text-gray-600 font-lexend tracking-tighter-lexend mb-4">
-                            Select your preferred language
+							{t('settings.selectLanguage')}
 						</Text>
 						<View className="space-y-3">
-							{LANGUAGES.map((language) => (
+							{LANGUAGES.map((lang) => (
 								<TouchableOpacity
-									key={language.id}
+									key={lang.id}
 									className={`flex-row items-center justify-between p-4 border ${
-										selectedLanguage === language.id
+										language === lang.id
 											? "border-black bg-[#fed787]"
 											: "border-gray-300 bg-white"
 									}`}
 									style={shadowStyles.small}
-									onPress={() => changeLanguage(language.id)}
+									onPress={() => changeLanguage(lang.id)}
+									disabled={isLoading}
 								>
 									<Text className="font-lexend tracking-tighter-lexend text-black">
-										{language.name}
+										{lang.name}
 									</Text>
-									{selectedLanguage === language.id && (
+									{language === lang.id && (
 										<Feather
 											name="check"
 											size={20}

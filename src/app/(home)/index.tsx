@@ -5,6 +5,7 @@ import {
 	UserSidebar
 } from "@/components/home";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/TranslationContext";
 import { Location } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import {
@@ -46,6 +47,7 @@ export default function HomePage() {
 	const [showingBookmarksOnly, setShowingBookmarksOnly] =
 		useState(false);
 	const { user, isSignedIn } = useAuth();
+	const { t } = useTranslation();
 
 	const openSidebar = () => {
 		setSidebarVisible(true);
@@ -170,7 +172,7 @@ export default function HomePage() {
 					<View className="px-4 mb-6">
 						<View className="flex-row justify-between items-center mb-4">
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
-								Upcoming Events
+								{t("home.upcomingEvents")}
 							</Text>
 						</View>
 						<View>
@@ -181,7 +183,7 @@ export default function HomePage() {
 										color="#fed787"
 									/>
 									<Text className="mt-2 font-lexend text-[#666666]">
-										Loading events...
+										{t("home.loadingEvents")}
 									</Text>
 								</View>
 							) : eventError ? (
@@ -228,11 +230,10 @@ export default function HomePage() {
 											/>
 										</View>
 										<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-											No Upcoming Events
+											{t("home.noEvents")}
 										</Text>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-											There are no upcoming events at
-											the moment. Check back soon!
+											{t("home.noEventsDesc")}
 										</Text>
 									</View>
 								</View>
@@ -289,8 +290,8 @@ export default function HomePage() {
 							<View className="flex-row items-center">
 								<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
 									{showingBookmarksOnly
-										? "Bookmarked Locations"
-										: "Featured Locations"}
+										? t("home.bookmarkedLocations")
+										: t("home.featuredLocations")}
 								</Text>
 							</View>
 							<TouchableOpacity
@@ -316,7 +317,7 @@ export default function HomePage() {
 									color="#fed787"
 								/>
 								<Text className="mt-2 font-lexend text-[#666666]">
-									Loading locations...
+									{t("home.loadingLocations")}
 								</Text>
 							</View>
 						) : error ? (
@@ -363,12 +364,10 @@ export default function HomePage() {
 										/>
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-										Under Construction
+										{t("home.noLocations")}
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-										We&apos;re currently working on
-										bringing you the best locations in
-										Malinao. Check back soon!
+										{t("home.noLocationsDesc")}
 									</Text>
 								</View>
 							</View>
@@ -387,12 +386,10 @@ export default function HomePage() {
 											/>
 										</View>
 										<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-										No Bookmarked Locations
+											{t("home.noBookmarks")}
 										</Text>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-										You haven&apos;t bookmarked any
-										locations yet. Tap the heart icon
-										on a location to bookmark it!
+											{t("home.noBookmarksDesc")}
 										</Text>
 									</View>
 								</View>

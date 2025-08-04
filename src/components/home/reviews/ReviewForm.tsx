@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import React, { useState } from "react";
 import {
@@ -23,6 +24,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	const [comment, setComment] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState("");
+	const { t } = useTranslation();
 
 	const handleSubmit = async () => {
 		if (!isSignedIn) {
@@ -58,12 +60,12 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	return (
 		<View className="mt-4">
 			<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">
-				Write a Review
+				{t("review.writeReview")}
 			</Text>
 			<View className="space-y-4">
 				<View>
 					<Text className="mb-1 text-sm font-lexend tracking-tighter-lexend text-[#666666]">
-						RATING
+						{t("review.rating")}
 					</Text>
 					<View className="flex-row mb-2">
 						{[1, 2, 3, 4, 5].map((star) => (
@@ -87,7 +89,6 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 						))}
 					</View>
 				</View>
-
 				<View
 					className="bg-white p-4 border border-[#333333]"
 					style={shadowStyles.small}
@@ -95,7 +96,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 					<TextInput
 						value={comment}
 						onChangeText={setComment}
-						placeholder="Share your thoughts about this place..."
+						placeholder={t("review.commentPlaceholder")}
 						placeholderTextColor="#666666"
 						className="text-base font-lexend text-black"
 						multiline
@@ -104,13 +105,11 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 						style={{ height: 100 }}
 					/>
 				</View>
-
 				{error ? (
 					<Text className="text-red-500 font-lexend tracking-tighter-lexend">
 						{error}
 					</Text>
 				) : null}
-
 				<TouchableOpacity
 					className="h-12 mt-2 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
 					style={shadowStyles.standard}
@@ -121,7 +120,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 						<ActivityIndicator color="#000" />
 					) : (
 						<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-							Submit Review
+							{t("review.submit")}
 						</Text>
 					)}
 				</TouchableOpacity>

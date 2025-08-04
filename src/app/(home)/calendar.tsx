@@ -1,4 +1,5 @@
 import { Event } from "@/components/home";
+import { useTranslation } from "@/context/TranslationContext";
 import { formatDate, isToday } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { EventService } from "@/services";
@@ -42,6 +43,7 @@ export default function CalendarPage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+	const { t } = useTranslation();
 
 	const fetchEvents = async () => {
 		try {
@@ -73,7 +75,7 @@ export default function CalendarPage() {
 				<ScrollView className="flex-1">
 					<View className="p-4">
 						<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4">
-							Upcoming Events
+							{t("home.upcomingEvents")}
 						</Text>
 						{loading ? (
 							<View className="p-4 items-center justify-center">
@@ -82,7 +84,7 @@ export default function CalendarPage() {
 									color="#fed787"
 								/>
 								<Text className="mt-2 font-lexend text-[#666666]">
-									Loading events...
+									{t("home.loadingEvents")}
 								</Text>
 							</View>
 						) : error ? (
@@ -129,11 +131,10 @@ export default function CalendarPage() {
 										/>
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-										No Upcoming Events
+										{t("home.noEvents")}
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-										There are no upcoming events at the
-										moment. Check back soon!
+										{t("home.noEventsDesc")}
 									</Text>
 								</View>
 							</View>

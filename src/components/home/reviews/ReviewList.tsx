@@ -1,3 +1,4 @@
+import { useTranslation } from "@/context/TranslationContext";
 import { Review } from "@/lib/types/supabase";
 import { formatDate } from "@/lib/utils/date";
 import React from "react";
@@ -8,11 +9,13 @@ interface ReviewListProps {
 }
 
 export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+	const { t } = useTranslation();
+
 	if (reviews.length === 0) {
 		return (
 			<View className="py-4">
 				<Text className="text-center font-lexend tracking-tighter-lexend text-[#666666]">
-					No reviews yet. Be the first to leave a review!
+					{t("review.noReviews")}
 				</Text>
 			</View>
 		);

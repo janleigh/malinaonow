@@ -1,5 +1,6 @@
 import { LocationCard } from "@/components/home";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/TranslationContext";
 import { Location } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { BookmarkService, LocationService } from "@/services";
@@ -24,6 +25,7 @@ export default function BookmarksPage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const { user, isSignedIn } = useAuth();
+	const { t } = useTranslation();
 
 	const fetchBookmarkedLocations = useCallback(async () => {
 		if (!isSignedIn || !user) {
@@ -96,7 +98,7 @@ export default function BookmarksPage() {
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<View className="flex-row items-center">
 						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-							Bookmarked Locations
+							{t("home.bookmarkedLocations")}
 						</Text>
 					</View>
 				</View>
@@ -105,7 +107,7 @@ export default function BookmarksPage() {
 					<View className="mt-2 px-4 py-2">
 						<View className="flex-row justify-between items-center mb-4">
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
-								My Bookmarks
+								{t("home.myBookmarks")}
 							</Text>
 							<TouchableOpacity
 								className="flex-row items-center"
@@ -178,12 +180,10 @@ export default function BookmarksPage() {
 										/>
 									</View>
 									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
-										No Bookmarked Locations
+										{t("home.noBookmarks")}
 									</Text>
 									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
-										You haven&apos;t bookmarked any
-										locations yet. Tap the heart icon
-										on a location to bookmark it!
+										{t("home.noBookmarksDesc")}
 									</Text>
 									<TouchableOpacity
 										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"

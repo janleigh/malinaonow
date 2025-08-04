@@ -1,9 +1,10 @@
+import { supabase } from "@/api/supabase";
 import { API_KEYS } from "@/config";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/TranslationContext";
 import { Location, Review } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ReviewService } from "@/services/ReviewService";
-import { supabase } from "@/api/supabase";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -13,14 +14,13 @@ import {
 	Image,
 	LayoutChangeEvent,
 	Modal,
-	NativeSyntheticEvent,
 	ScrollView,
 	Text,
 	TouchableOpacity,
 	View
 } from "react-native";
-import { WebViewError , WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { WebView } from "react-native-webview";
 import { ReviewForm, ReviewList } from "./reviews";
 
 export const LocationCard = ({
@@ -49,6 +49,7 @@ export const LocationCard = ({
 		location.review_count || 0
 	);
 	const { isSignedIn, user } = useAuth();
+	const { t } = useTranslation();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -512,8 +513,8 @@ export const LocationCard = ({
 									>
 										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black">
 											{isDescriptionExpanded
-												? "Show less ↑"
-												: "Show more ↓"}
+												? t("location.showLess")
+												: t("location.showMore")}
 										</Text>
 									</TouchableOpacity>
 								)}
@@ -524,7 +525,7 @@ export const LocationCard = ({
 										onPress={handleViewMap}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-											View on Map
+											{t("location.viewOnMap")}
 										</Text>
 									</TouchableOpacity>
 									{location.image[360] ? (
@@ -534,7 +535,7 @@ export const LocationCard = ({
 											onPress={handleView360}
 										>
 											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-												View 360°
+												{t("location.view360")}
 											</Text>
 										</TouchableOpacity>
 									) : null}
@@ -553,7 +554,7 @@ export const LocationCard = ({
 												style={shadowStyles.small}
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-													Write a review
+													{t("location.writeReview")}
 												</Text>
 											</TouchableOpacity>
 										)}
@@ -587,7 +588,7 @@ export const LocationCard = ({
 												color="#fed787"
 											/>
 											<Text className="mt-2 font-lexend text-[#666]">
-												Loading reviews...
+												{t(("common.loading"))}
 											</Text>
 										</View>
 									) : (
@@ -636,16 +637,14 @@ export const LocationCard = ({
 										color="#fed787"
 									/>
 									<Text className="mt-2 font-lexend text-[#666666]">
-										Loading map...
+										{t("common.loading")}
 									</Text>
 								</View>
 							)}
-							onError={(
-								e: NativeSyntheticEvent<WebViewError>
-							) =>
+							onError={(event) =>
 								console.error(
 									"WebView error:",
-									e.nativeEvent
+									event.nativeEvent
 								)
 							}
 							scrollEnabled={false}

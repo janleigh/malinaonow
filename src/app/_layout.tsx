@@ -1,5 +1,6 @@
 import { API_KEYS } from "@/config";
 import { AuthProvider } from "@/context/AuthContext";
+import { TranslationProvider } from "@/context/TranslationContext";
 import "@/lib/styles/globals.css";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
@@ -54,14 +55,16 @@ export default function RootLayout() {
 			publishableKey={CLERK_PUBLISHABLE_KEY}
 			tokenCache={tokenCache}
 		>
-			<AuthProvider>
-				<Stack screenOptions={{ headerShown: false }}>
-					<Stack.Screen name="index" />
-					<Stack.Screen name="(auth)" />
-					<Stack.Screen name="(home)" />
-					<Stack.Screen name="+not-found" />
-				</Stack>
-			</AuthProvider>
+			<TranslationProvider>
+				<AuthProvider>
+					<Stack screenOptions={{ headerShown: false }}>
+						<Stack.Screen name="index" />
+						<Stack.Screen name="(auth)" />
+						<Stack.Screen name="(home)" />
+						<Stack.Screen name="+not-found" />
+					</Stack>
+				</AuthProvider>
+			</TranslationProvider>
 		</ClerkProvider>
 	);
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from "@/context/TranslationContext";
 import { formatDate, formatTime } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -31,6 +32,7 @@ export const EventCard = ({
 	const [expanded, setExpanded] = useState(false);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
+	const { t } = useTranslation();
 
 	const toggleExpand = () => {
 		if (!expanded) {
@@ -158,7 +160,7 @@ export const EventCard = ({
 					<SafeAreaView className="flex-1">
 						<View className="flex-row justify-between items-center p-4 border-b border-[#333333]">
 							<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
-								Event Details
+								{t("event.eventDetails")}
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
 								<Feather
@@ -191,7 +193,7 @@ export const EventCard = ({
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
-												DATE
+												{t("event.date").toUpperCase()}
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
 												{formatDate(event.date)}
@@ -208,7 +210,7 @@ export const EventCard = ({
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
-												TIME
+												{t("event.time").toUpperCase()}
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
 												{formatTime(event.time)}
@@ -225,7 +227,7 @@ export const EventCard = ({
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
-												LOCATION
+												{t("event.location").toUpperCase()}
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
 												{event.location}
@@ -240,7 +242,7 @@ export const EventCard = ({
 										onPress={toggleExpand}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
-											Add to Calendar
+											{t("event.addToCalendar")}
 										</Text>
 									</TouchableOpacity>
 								</View>

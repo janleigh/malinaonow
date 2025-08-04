@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -33,6 +34,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 	onShowBookmarks
 }) => {
 	const { signOut, user } = useAuth();
+	const { t } = useTranslation();
 	const slideAnim = useRef(
 		new Animated.Value(Dimensions.get("window").width)
 	).current;
@@ -175,7 +177,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						<SafeAreaView className="flex-1">
 							<View className="flex-row justify-between items-center p-4">
 								<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
-									Profile
+									{t('userSidebar.profile')}
 								</Text>
 								<TouchableOpacity onPress={onClose}>
 									<AntDesign
@@ -221,14 +223,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#333"
 									/>
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										Admin Panel
+										{t('userSidebar.adminPanel')}
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
 									className="flex-row items-center py-4"
 									onPress={() => {
 										onClose();
-										router.push("/settings");
+										router.push("/(home)/settings");
 									}}
 								>
 									<Feather
@@ -237,7 +239,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#333"
 									/>
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										Settings
+										{t('userSidebar.settings')}
 									</Text>
 								</TouchableOpacity>
 							</View>
@@ -253,7 +255,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#333"
 									/>
 									<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
-										Sign Out
+										{t('userSidebar.signOut')}
 									</Text>
 								</TouchableOpacity>
 							</View>
