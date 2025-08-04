@@ -56,7 +56,6 @@ export default function AdminDashboard() {
 							>
 								<View className="flex-row items-center">
 									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mr-4 border border-[#333333]">
-										{/* @ts-expect-error */}
 										<Feather
 											name={option.icon}
 											size={24}

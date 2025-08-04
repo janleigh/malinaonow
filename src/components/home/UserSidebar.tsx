@@ -228,7 +228,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									className="flex-row items-center py-4"
 									onPress={() => {
 										onClose();
-										router.push("/+not-found");
+										router.push("/settings");
 									}}
 								>
 									<Feather

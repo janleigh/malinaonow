@@ -185,7 +185,7 @@ export default function CalendarPage() {
 														<View className="flex-1">
 															<Text className="text-base font-lexend-extrabold tracking-tighter-lexend text-black mb-1">
 																{
-																	event.title
+																	event.name
 																}
 															</Text>
 															<View className="flex-row items-center">

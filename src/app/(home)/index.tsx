@@ -172,13 +172,6 @@ export default function HomePage() {
 							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
 								Upcoming Events
 							</Text>
-							<TouchableOpacity
-								onPress={() => router.push("/+not-found")}
-							>
-								<Text className="text-sm font-lexend tracking-tighter-lexend text-black">
-									See all
-								</Text>
-							</TouchableOpacity>
 						</View>
 						<View>
 							{loadingEvents ? (
@@ -380,7 +373,7 @@ export default function HomePage() {
 								</View>
 							</View>
 						) : showingBookmarksOnly &&
-						  displayedLocations.length === 0 ? (
+							displayedLocations.length === 0 ? (
 								<View
 									className="p-4 my-4 border border-[#333333] bg-white"
 									style={shadowStyles.standard}
