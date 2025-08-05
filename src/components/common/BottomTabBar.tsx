@@ -6,17 +6,17 @@ import { TouchableOpacity, View } from "react-native";
 export type TabName = "home" | "calendar" | "bookmarks";
 
 interface BottomTabBarProps {
-  activeTab: TabName;
-  onHomePress?: () => void;
-  onCalendarPress?: () => void;
-  onBookmarksPress?: () => void;
+	activeTab: TabName;
+	onHomePress?: () => void;
+	onCalendarPress?: () => void;
+	onBookmarksPress?: () => void;
 }
 
 export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 	activeTab,
 	onHomePress,
 	onCalendarPress,
-	onBookmarksPress,
+	onBookmarksPress
 }) => {
 	const handleHomePress = () => {
 		if (onHomePress) {
@@ -44,28 +44,36 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 
 	return (
 		<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-			<TouchableOpacity className="items-center" onPress={handleHomePress}>
+			<TouchableOpacity
+				className="items-center"
+				onPress={handleHomePress}
+			>
 				<AntDesign
 					name="home"
 					size={24}
 					color={activeTab === "home" ? "#333" : "#999"}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity className="items-center" onPress={() => router.push("/+not-found")}>
-				<AntDesign
-					name="appstore-o"
-					size={24}
-					color="#999"
-				/>
+			<TouchableOpacity
+				className="items-center"
+				onPress={() => router.push("/+not-found")}
+			>
+				<AntDesign name="appstore-o" size={24} color="#999" />
 			</TouchableOpacity>
-			<TouchableOpacity className="items-center" onPress={handleCalendarPress}>
+			<TouchableOpacity
+				className="items-center"
+				onPress={handleCalendarPress}
+			>
 				<AntDesign
 					name="calendar"
 					size={24}
 					color={activeTab === "calendar" ? "#333" : "#999"}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity className="items-center" onPress={handleBookmarksPress}>
+			<TouchableOpacity
+				className="items-center"
+				onPress={handleBookmarksPress}
+			>
 				<AntDesign
 					name="heart"
 					size={24}

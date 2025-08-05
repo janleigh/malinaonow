@@ -46,6 +46,8 @@ export default function RootLayout() {
 		}
 	}, [fontsLoaded, fontError]);
 
+	// Don't render anything until fonts are loaded
+	// This prevents any fallback screens from appearing
 	if (!fontsLoaded && !fontError) {
 		return null;
 	}

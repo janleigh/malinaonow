@@ -193,7 +193,9 @@ export const EventCard = ({
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
-												{t("event.date").toUpperCase()}
+												{t(
+													"event.date"
+												).toUpperCase()}
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
 												{formatDate(event.date)}
@@ -210,7 +212,9 @@ export const EventCard = ({
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
-												{t("event.time").toUpperCase()}
+												{t(
+													"event.time"
+												).toUpperCase()}
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
 												{formatTime(event.time)}
@@ -227,7 +231,9 @@ export const EventCard = ({
 										</View>
 										<View className="ml-3">
 											<Text className="text-xs font-lexend-medium tracking-tighter-lexend text-[#666666]">
-												{t("event.location").toUpperCase()}
+												{t(
+													"event.location"
+												).toUpperCase()}
 											</Text>
 											<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333]">
 												{event.location}

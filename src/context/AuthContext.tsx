@@ -28,13 +28,27 @@ const useAuthValue = () => {
 	const { isLoaded: clerkLoaded, isSignedIn, user } = useUser();
 	const { signUp, signIn, verifyOtp, signOut } = useClerkAuth();
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [authStateStable, setAuthStateStable] = useState(false);
 
-	// Only update isLoaded when clerkLoaded changes
+	// Ensure auth state is stable before marking as loaded
 	useLayoutEffect(() => {
 		if (clerkLoaded) {
-			setIsLoaded(true);
+			// Add a small delay to ensure auth state is fully synchronized
+			// This prevents the race condition on Android after OAuth
+			const timer = setTimeout(() => {
+				setAuthStateStable(true);
+			}, 100);
+
+			return () => clearTimeout(timer);
 		}
 	}, [clerkLoaded]);
+
+	// Only mark as loaded when both Clerk is loaded and auth state is stable
+	useLayoutEffect(() => {
+		if (clerkLoaded && authStateStable) {
+			setIsLoaded(true);
+		}
+	}, [clerkLoaded, authStateStable]);
 
 	// Memoize the context value to prevent unnecessary re-renders
 	const contextValue = React.useMemo(

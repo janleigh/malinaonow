@@ -289,12 +289,12 @@ export const LocationCard = ({
 
 	// Get the appropriate description based on the current language
 	const getLocalizedDescription = (loc: Location): string => {
-		if (language === 'fil' && loc.description_fil) {
+		if (language === "fil" && loc.description_fil) {
 			return loc.description_fil;
-		} else if (language === 'akl' && loc.description_akl) {
+		} else if (language === "akl" && loc.description_akl) {
 			return loc.description_akl;
 		}
-		
+
 		return loc.description;
 	};
 
@@ -512,7 +512,9 @@ export const LocationCard = ({
 								>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
-											{getLocalizedDescription(location)}
+											{getLocalizedDescription(
+												location
+											)}
 										</Text>
 									</View>
 								</View>
@@ -565,7 +567,9 @@ export const LocationCard = ({
 												style={shadowStyles.small}
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-													{t("location.writeReview")}
+													{t(
+														"location.writeReview"
+													)}
 												</Text>
 											</TouchableOpacity>
 										)}
@@ -599,7 +603,7 @@ export const LocationCard = ({
 												color="#fed787"
 											/>
 											<Text className="mt-2 font-lexend text-[#666]">
-												{t(("common.loading"))}
+												{t("common.loading")}
 											</Text>
 										</View>
 									) : (

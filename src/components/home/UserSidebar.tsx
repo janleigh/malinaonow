@@ -177,7 +177,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						<SafeAreaView className="flex-1">
 							<View className="flex-row justify-between items-center p-4">
 								<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
-									{t('userSidebar.profile')}
+									{t("userSidebar.profile")}
 								</Text>
 								<TouchableOpacity onPress={onClose}>
 									<AntDesign
@@ -223,7 +223,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#333"
 									/>
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										{t('userSidebar.adminPanel')}
+										{t("userSidebar.adminPanel")}
 									</Text>
 								</TouchableOpacity>
 								<TouchableOpacity
@@ -239,7 +239,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#333"
 									/>
 									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										{t('userSidebar.settings')}
+										{t("userSidebar.settings")}
 									</Text>
 								</TouchableOpacity>
 							</View>
@@ -255,7 +255,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#333"
 									/>
 									<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
-										{t('userSidebar.signOut')}
+										{t("userSidebar.signOut")}
 									</Text>
 								</TouchableOpacity>
 							</View>

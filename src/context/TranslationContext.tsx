@@ -1,14 +1,19 @@
-import akl from '@/translations/akl';
-import en from '@/translations/en';
-import fil from '@/translations/fil';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import akl from "@/translations/akl";
+import en from "@/translations/en";
+import fil from "@/translations/fil";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useState
+} from "react";
 
-export const LANGUAGE_STORAGE_KEY = 'app_language_preference';
+export const LANGUAGE_STORAGE_KEY = "app_language_preference";
 export const LANGUAGES = [
-	{ id: 'en', name: 'English' },
-	{ id: 'fil', name: 'Filipino' },
-	{ id: 'akl', name: 'Aklanon' }
+	{ id: "en", name: "English" },
+	{ id: "fil", name: "Filipino" },
+	{ id: "akl", name: "Aklanon" }
 ];
 
 const translations = {
@@ -24,23 +29,30 @@ type TranslationContextType = {
 };
 
 const TranslationContext = createContext<TranslationContextType>({
-	language: 'en',
+	language: "en",
 	setLanguage: async () => {},
 	t: (key) => key
 });
 
-export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [language, setLanguageState] = useState('en');
+export const TranslationProvider: React.FC<{
+	children: React.ReactNode;
+}> = ({ children }) => {
+	const [language, setLanguageState] = useState("en");
 
 	useEffect(() => {
 		const loadLanguage = async () => {
 			try {
-				const savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+				const savedLanguage = await AsyncStorage.getItem(
+					LANGUAGE_STORAGE_KEY
+				);
 				if (savedLanguage) {
 					setLanguageState(savedLanguage);
 				}
 			} catch (error) {
-				console.error('Failed to load language preference:', error);
+				console.error(
+					"Failed to load language preference:",
+					error
+				);
 			}
 		};
 
@@ -52,17 +64,23 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 			await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
 			setLanguageState(lang);
 		} catch (error) {
-			console.error('Failed to save language preference:', error);
+			console.error("Failed to save language preference:", error);
 		}
 	};
 
 	const t = (key: string) => {
-		const languageTranslations = translations[language as keyof typeof translations] || translations.en;
-		const nestedKeys = key.split('.');
+		const languageTranslations =
+			translations[language as keyof typeof translations] ||
+			translations.en;
+		const nestedKeys = key.split(".");
 		let result = languageTranslations;
 
 		for (const nestedKey of nestedKeys) {
-			if (result && typeof result === 'object' && nestedKey in result) {
+			if (
+				result &&
+				typeof result === "object" &&
+				nestedKey in result
+			) {
 				// @ts-ignore
 				result = result[nestedKey];
 			} else {
@@ -70,7 +88,7 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 			}
 		}
 
-		return typeof result === 'string' ? result : key;
+		return typeof result === "string" ? result : key;
 	};
 
 	return (
