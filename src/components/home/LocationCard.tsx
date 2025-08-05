@@ -6,6 +6,7 @@ import { Location, Review } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ReviewService } from "@/services/ReviewService";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import * as ELocation from "expo-location";
 import React, { useEffect, useRef, useState } from "react";
 import {
 	ActivityIndicator,
@@ -48,10 +49,15 @@ export const LocationCard = ({
 	const [totalReviews, setTotalReviews] = useState(
 		location.review_count || 0
 	);
+	const [userLocation, setUserLocation] = useState<{
+		latitude: number;
+		longitude: number;
+	} | null>(null);
 	const { isSignedIn, user } = useAuth();
 	const { language, t } = useTranslation();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
+	const webViewRef = useRef<WebView>(null);
 
 	const shouldShowToggle = true;
 
@@ -246,56 +252,199 @@ export const LocationCard = ({
         </html>
     `;
 
-	// HTML for the map viewer
+	// HTML for the map viewer with directions
 	const getMapViewerHTML = (name: string) => `
-        <!DOCTYPE html>
-        <html>
+    <!DOCTYPE html>
+    <html>
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
             <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet">
             <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
+            <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css">
+            <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
             <style>
                 body { margin: 0; padding: 0; }
                 #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+                .destination-info {
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    background: white;
+                    padding: 10px;
+                    border-radius: 4px;
+                    z-index: 1;
+                    max-width: 300px;
+                    font-family: 'Lexend Mega', sans-serif;
+					letter-spacing: -0.15em;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    border: 1px solid #333333;
+					margin-bottom: 1.75em;
+                }
+                .destination-info h3 {
+                    margin: 0 0 5px 0;
+                    font-size: 16px;
+                }
+                .button-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    margin-top: 10px;
+                }
+                .map-btn {
+                    background-color: #fed787;
+                    border: 1px solid #333333;
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-weight: bold;
+					font-family: 'Lexend Mega', sans-serif;
+					letter-spacing: -0.15em;
+                }
+                .map-btn.active {
+                    background-color: #e5c067;
+                }
             </style>
         </head>
         <body>
             <div id="map"></div>
+            <div class="destination-info">
+                <h3>${name}</h3>
+                <div class="button-container">
+                    <button id="useMyLocation" class="map-btn">Use My Location</button>
+                    <button id="toggleSteps" class="map-btn active">Hide Step Instructions</button>
+                </div>
+            </div>
             <script>
                 mapboxgl.accessToken = '${API_KEYS.mapbox}';
                 
+                const destinationCoords = [${location.coordinates.longitude}, ${location.coordinates.latitude}];
+                let directions;
+                let showSteps = true;
+                
                 const map = new mapboxgl.Map({
                     container: 'map',
-                    center: [${location.coordinates.longitude}, ${location.coordinates.latitude}],
+                    center: destinationCoords,
                     zoom: 15
                 });
                 
                 map.addControl(new mapboxgl.NavigationControl());
+                
+                directions = new MapboxDirections({
+                    accessToken: mapboxgl.accessToken,
+                    unit: 'metric',
+                    profile: 'mapbox/driving',
+                    controls: {
+                        inputs: true,
+                        instructions: true
+                    },
+                    placeholderOrigin: 'Enter your starting point',
+                    placeholderDestination: 'Destination',
+                    geocoder: {
+                        language: 'en'
+                    }
+                });
+                
+                map.addControl(directions, 'top-left');
+                
                 map.on('load', function() {
-                    new mapboxgl.Popup()
-                        .setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
-                        .setHTML('<h3>${name == null ? name : "You are here"}</h3>')
-                        .setMaxWidth("300px")
-                        .addTo(map);
+                    directions.setDestination(destinationCoords);
+                    
                     new mapboxgl.Marker({color: '#fed787'})
-                        .setLngLat([${location.coordinates.longitude}, ${location.coordinates.latitude}])
+                        .setLngLat(destinationCoords)
                         .addTo(map);
+                        
+                    window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'mapLoaded'}));
+                });
+                
+                function toggleStepInstructions() {
+                    showSteps = !showSteps;
+                    const instructionsElement = document.querySelector('.mapbox-directions-instructions');
+                    const toggleBtn = document.getElementById('toggleSteps');
+                    
+                    if (instructionsElement) {
+                        if (showSteps) {
+                            instructionsElement.style.display = 'block';
+                            toggleBtn.textContent = 'Hide Step Instructions';
+                            toggleBtn.classList.add('active');
+                        } else {
+                            instructionsElement.style.display = 'none';
+                            toggleBtn.textContent = 'Show Step Instructions';
+                            toggleBtn.classList.remove('active');
+                        }
+                    }
+                }
+                
+                document.getElementById('toggleSteps').addEventListener('click', toggleStepInstructions);
+                document.getElementById('useMyLocation').addEventListener('click', function() {
+                    window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'getLocation'}));
+                    
+                    if (!window.ReactNativeWebView) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(position => {
+                                const userLocation = [position.coords.longitude, position.coords.latitude];
+                                directions.setOrigin(userLocation);
+                            }, error => {
+                                console.error('Error getting location:', error);
+                                alert('Unable to get your location. Please enter it manually.');
+                            }, {
+                                enableHighAccuracy: true,
+                                timeout: 5000,
+                                maximumAge: 0
+                            });
+                        } else {
+                            alert('Geolocation is not supported by this browser.');
+                        }
+                    }
                 });
             </script>
         </body>
-        </html>
-    `;
+    </html>
+`;
 
-	// Get the appropriate description based on the current language
 	const getLocalizedDescription = (loc: Location): string => {
-		if (language === 'fil' && loc.description_fil) {
+		if (language === "fil" && loc.description_fil) {
 			return loc.description_fil;
-		} else if (language === 'akl' && loc.description_akl) {
+		} else if (language === "akl" && loc.description_akl) {
 			return loc.description_akl;
 		}
-		
+
 		return loc.description;
+	};
+
+	const getUserLocation = async () => {
+		try {
+			const { status } =
+				await ELocation.requestForegroundPermissionsAsync();
+
+			if (status !== "granted") {
+				alert("Permission to access location was denied");
+				return;
+			}
+
+			const location = await ELocation.getCurrentPositionAsync({});
+			setUserLocation({
+				latitude: location.coords.latitude,
+				longitude: location.coords.longitude
+			});
+
+			// Pass the location to the WebView via injected JavaScript
+			if (webViewRef.current) {
+				const jsCode = `
+					const userLocation = [${location.coords.longitude}, ${location.coords.latitude}];
+					if (typeof directions !== 'undefined') {
+						directions.setOrigin(userLocation);
+					}
+				`;
+				webViewRef.current.injectJavaScript(jsCode);
+			}
+		} catch (error) {
+			console.error("Error getting location:", error);
+			alert("Unable to get your location. Please try again.");
+		}
 	};
 
 	return (
@@ -512,7 +661,9 @@ export const LocationCard = ({
 								>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
-											{getLocalizedDescription(location)}
+											{getLocalizedDescription(
+												location
+											)}
 										</Text>
 									</View>
 								</View>
@@ -565,7 +716,9 @@ export const LocationCard = ({
 												style={shadowStyles.small}
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-													{t("location.writeReview")}
+													{t(
+														"location.writeReview"
+													)}
 												</Text>
 											</TouchableOpacity>
 										)}
@@ -599,7 +752,7 @@ export const LocationCard = ({
 												color="#fed787"
 											/>
 											<Text className="mt-2 font-lexend text-[#666]">
-												{t(("common.loading"))}
+												{t("common.loading")}
 											</Text>
 										</View>
 									) : (
@@ -631,6 +784,7 @@ export const LocationCard = ({
 					</View>
 					<View className="flex-1">
 						<WebView
+							ref={webViewRef}
 							source={{
 								html: getMapViewerHTML(location.name)
 							}}
@@ -640,7 +794,23 @@ export const LocationCard = ({
 							}}
 							javaScriptEnabled={true}
 							domStorageEnabled={true}
+							geolocationEnabled={true}
 							startInLoadingState={true}
+							onMessage={(event) => {
+								try {
+									const data = JSON.parse(
+										event.nativeEvent.data
+									);
+									if (data.type === "getLocation") {
+										getUserLocation();
+									}
+								} catch (e) {
+									console.error(
+										"Error parsing WebView message:",
+										e
+									);
+								}
+							}}
 							renderLoading={() => (
 								<View className="absolute inset-0 flex-1 items-center justify-center bg-[#faf4f0]">
 									<ActivityIndicator

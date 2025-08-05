@@ -23,17 +23,17 @@ export default function SettingsScreen() {
 		try {
 			setIsLoading(true);
 			await setLanguage(languageId);
-            
+
 			// Show confirmation
 			Alert.alert(
-				t('settings.languageChanged'),
-				t('settings.languageChangedDesc'),
+				t("settings.languageChanged"),
+				t("settings.languageChangedDesc"),
 				[{ text: "OK" }]
 			);
 		} catch (error) {
 			console.error("Failed to save language preference:", error);
 			Alert.alert(
-				t('common.error'),
+				t("common.error"),
 				"Failed to save language preference. Please try again."
 			);
 		} finally {
@@ -46,7 +46,7 @@ export default function SettingsScreen() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-						{t('settings.title')}
+						{t("settings.title")}
 					</Text>
 					<TouchableOpacity
 						onPress={() => router.replace("/(home)")}
@@ -57,10 +57,10 @@ export default function SettingsScreen() {
 				<ScrollView className="flex-1 p-4">
 					<View className="mb-6">
 						<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">
-							{t('settings.language')}
+							{t("settings.language")}
 						</Text>
 						<Text className="text-sm text-gray-600 font-lexend tracking-tighter-lexend mb-4">
-							{t('settings.selectLanguage')}
+							{t("settings.selectLanguage")}
 						</Text>
 						<View className="space-y-3">
 							{LANGUAGES.map((lang) => (

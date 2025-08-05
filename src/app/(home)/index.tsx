@@ -371,7 +371,7 @@ export default function HomePage() {
 								</View>
 							</View>
 						) : showingBookmarksOnly &&
-							displayedLocations.length === 0 ? (
+						  displayedLocations.length === 0 ? (
 								<View
 									className="p-4 my-4 border border-[#333333] bg-white"
 									style={shadowStyles.standard}
@@ -429,11 +429,9 @@ export default function HomePage() {
 												<LocationCard
 													key={location.id}
 													location={location}
-													isBookmarked={
-														bookmarkedLocations.includes(
-															location.id
-														)
-													}
+													isBookmarked={bookmarkedLocations.includes(
+														location.id
+													)}
 													onToggleBookmark={
 														handleToggleBookmark
 													}
@@ -449,11 +447,9 @@ export default function HomePage() {
 											key={location.id}
 											location={location}
 											listView={true}
-											isBookmarked={
-												bookmarkedLocations.includes(
-													location.id
-												)
-											}
+											isBookmarked={bookmarkedLocations.includes(
+												location.id
+											)}
 											onToggleBookmark={
 												handleToggleBookmark
 											}
@@ -463,8 +459,8 @@ export default function HomePage() {
 							)}
 					</View>
 				</ScrollView>
-				<BottomTabBar 
-					activeTab="home" 
+				<BottomTabBar
+					activeTab="home"
 					onHomePress={() => setShowingBookmarksOnly(false)}
 					onBookmarksPress={toggleBookmarksView}
 				/>
