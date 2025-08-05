@@ -21,7 +21,6 @@ export default function OTPScreen() {
 	const inputRef = useRef<TextInput>(null);
 	const { verifyOtp, signIn, signUp } = useAuth();
 
-	// Get the email and flow type (login or signup) from route params
 	const { email, type } = useLocalSearchParams<{
 		email: string;
 		type: "login" | "signup";
@@ -38,14 +37,12 @@ export default function OTPScreen() {
 		}
 	};
 
-	// Focus the input when component mounts
 	useEffect(() => {
 		setTimeout(() => {
 			inputRef.current?.focus();
 		}, 100);
 	}, []);
 
-	// Create blinking cursor effect
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setCursorVisible((prev) => !prev);
@@ -54,12 +51,10 @@ export default function OTPScreen() {
 		return () => clearInterval(interval);
 	}, []);
 
-	// When user taps on the digit boxes, focus the hidden input
 	const focusInput = () => {
 		inputRef.current?.focus();
 	};
 
-	// Re-focus input if it loses focus
 	const handleBlur = () => {
 		setTimeout(() => {
 			inputRef.current?.focus();
@@ -67,7 +62,6 @@ export default function OTPScreen() {
 	};
 
 	const handleVerify = async () => {
-		// Don't need to use replace here since we're already handling digits in handleOtpChange
 		if (otp.length !== 6) {
 			setError("Please enter a valid 6-digit code");
 			return;
@@ -104,9 +98,7 @@ export default function OTPScreen() {
 		}
 	};
 
-	// Calculate the current position where the cursor should appear
 	const cursorPosition = otp.length;
-	// Check if we've reached the maximum number of digits
 	const isComplete = cursorPosition >= 6;
 
 	return (

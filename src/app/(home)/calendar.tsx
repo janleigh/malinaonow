@@ -1,10 +1,10 @@
+import { BottomTabBar } from "@/components/common";
 import { Event } from "@/components/home";
 import { useTranslation } from "@/context/TranslationContext";
 import { formatDate, isToday } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { EventService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
 	ActivityIndicator,
@@ -231,33 +231,7 @@ export default function CalendarPage() {
 						)}
 					</View>
 				</ScrollView>
-				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity
-						className="items-center"
-						onPress={() => router.replace("/(home)")}
-					>
-						<AntDesign name="home" size={24} color="#999" />
-					</TouchableOpacity>
-					<TouchableOpacity className="items-center">
-						<AntDesign
-							name="calendar"
-							size={24}
-							color="#333"
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						className="items-center"
-						onPress={() => router.push("/(home)/bookmarks")}
-					>
-						<AntDesign name="heart" size={24} color="#999" />
-					</TouchableOpacity>
-				</View>
-				{/* {selectedEvent && (
-					<EventCard 
-						event={selectedEvent} 
-						onPress={() => setSelectedEvent(null)} 
-					/>
-				)} */}
+				<BottomTabBar activeTab="calendar" />
 			</SafeAreaView>
 		</View>
 	);

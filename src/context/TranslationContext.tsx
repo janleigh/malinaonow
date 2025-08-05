@@ -4,17 +4,13 @@ import fil from '@/translations/fil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// Storage key for language preference
 export const LANGUAGE_STORAGE_KEY = 'app_language_preference';
-
-// Available languages
 export const LANGUAGES = [
 	{ id: 'en', name: 'English' },
 	{ id: 'fil', name: 'Filipino' },
 	{ id: 'akl', name: 'Aklanon' }
 ];
 
-// Translations dictionary
 const translations = {
 	en,
 	fil,
@@ -22,9 +18,9 @@ const translations = {
 };
 
 type TranslationContextType = {
-  language: string;
-  setLanguage: (lang: string) => Promise<void>;
-  t: (key: string) => string;
+	language: string;
+	setLanguage: (lang: string) => Promise<void>;
+	t: (key: string) => string;
 };
 
 const TranslationContext = createContext<TranslationContextType>({
@@ -37,7 +33,6 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 	const [language, setLanguageState] = useState('en');
 
 	useEffect(() => {
-		// Load saved language on startup
 		const loadLanguage = async () => {
 			try {
 				const savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -68,10 +63,9 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
 		for (const nestedKey of nestedKeys) {
 			if (result && typeof result === 'object' && nestedKey in result) {
-				// @ts-ignore - We're checking the property exists
+				// @ts-ignore
 				result = result[nestedKey];
 			} else {
-				// Fallback to the key if translation not found
 				return key;
 			}
 		}

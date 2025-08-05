@@ -1,3 +1,4 @@
+import { BottomTabBar } from "@/components/common";
 import {
 	Event,
 	EventCard,
@@ -288,10 +289,8 @@ export default function HomePage() {
 					<View className="mt-2 px-4 py-2">
 						<View className="flex-row justify-between items-center mb-4">
 							<View className="flex-row items-center">
-								<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
-									{showingBookmarksOnly
-										? t("home.bookmarkedLocations")
-										: t("home.featuredLocations")}
+								<Text className="text-lg font-lexend-extrabold tracking-tighter-lexend text-black">
+									{t("home.featuredLocations")}
 								</Text>
 							</View>
 							<TouchableOpacity
@@ -464,40 +463,11 @@ export default function HomePage() {
 							)}
 					</View>
 				</ScrollView>
-				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity
-						className="items-center"
-						onPress={() => setShowingBookmarksOnly(false)}
-					>
-						<AntDesign
-							name="home"
-							size={24}
-							color={!showingBookmarksOnly ? "#333" : "#999"}
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						className="items-center"
-						onPress={() => router.push("/(home)/calendar")}
-					>
-						<AntDesign
-							name="calendar"
-							size={24}
-							color="#999"
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity
-						className="items-center"
-						onPress={toggleBookmarksView}
-					>
-						<AntDesign
-							name="heart"
-							size={24}
-							color={
-								showingBookmarksOnly ? "#FE5B62" : "#999"
-							}
-						/>
-					</TouchableOpacity>
-				</View>
+				<BottomTabBar 
+					activeTab="home" 
+					onHomePress={() => setShowingBookmarksOnly(false)}
+					onBookmarksPress={toggleBookmarksView}
+				/>
 				<UserSidebar
 					visible={sidebarVisible}
 					onClose={closeSidebar}

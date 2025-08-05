@@ -49,7 +49,7 @@ export const LocationCard = ({
 		location.review_count || 0
 	);
 	const { isSignedIn, user } = useAuth();
-	const { t } = useTranslation();
+	const { language, t } = useTranslation();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -287,6 +287,17 @@ export const LocationCard = ({
         </html>
     `;
 
+	// Get the appropriate description based on the current language
+	const getLocalizedDescription = (loc: Location): string => {
+		if (language === 'fil' && loc.description_fil) {
+			return loc.description_fil;
+		} else if (language === 'akl' && loc.description_akl) {
+			return loc.description_akl;
+		}
+		
+		return loc.description;
+	};
+
 	return (
 		<>
 			<TouchableOpacity
@@ -501,7 +512,7 @@ export const LocationCard = ({
 								>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
-											{location.description}
+											{getLocalizedDescription(location)}
 										</Text>
 									</View>
 								</View>

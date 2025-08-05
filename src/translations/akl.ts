@@ -71,7 +71,12 @@ export default {
 		location: 'Lugar',
 		addToCalendar: 'Idugang sa Calendar',
 		eventDetails: 'Mga Detalye it Hitabo',
-		submit: 'I-submit ang Review',
-		noReviews: "Wala pa sang mga review. Mag-una sa pagbilin sang review!"
+	},
+	review: {
+		writeReview: 'Maghimo it Review',
+		rating: 'Rating',
+		commentPlaceholder: 'Isulat ro imo nga review diri...',
+		submit: 'I-submit',
+		noReviews: 'Wara it mga Review',
 	}
 };

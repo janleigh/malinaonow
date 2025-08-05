@@ -73,5 +73,12 @@ export default {
 		eventDetails: 'Mga Detalye ng Kaganapan',
 		submit: 'I-submit ang Review',
 		noReviews: "Wala pang mga review. Mag-una sa pag-iwan ng review!"
+	},
+	review: {
+		writeReview: 'Susulat ng Review',
+		rating: 'Rating',
+		commentPlaceholder: 'Mag-iwan ng iyong komento dito...',
+		submit: 'I-submit',
+		noReviews: 'Wala pang mga Review',
 	}
 };

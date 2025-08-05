@@ -70,7 +70,11 @@ export const LocationService = {
 				360: location.image["360"] || ""
 			},
 			coordinates: location.coordinates,
-			description: location.description
+			description: location.description,
+			description_fil: location.description_fil || "",
+			description_akl: location.description_akl || "",
+			rating: location.rating || 0,
+			review_count: location.review_count || 0
 		};
 	}
 };

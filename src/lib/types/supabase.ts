@@ -24,6 +24,8 @@ export interface Location {
 		longitude: number;
 	};
 	description: string;
+	description_fil?: string;
+	description_akl?: string;
 	rating?: number;
 	review_count?: number;
 }

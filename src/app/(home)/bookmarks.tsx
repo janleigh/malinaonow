@@ -1,3 +1,4 @@
+import { BottomTabBar } from "@/components/common";
 import { LocationCard } from "@/components/home";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "@/context/TranslationContext";
@@ -253,27 +254,7 @@ export default function BookmarksPage() {
 						)}
 					</View>
 				</ScrollView>
-				<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
-					<TouchableOpacity
-						className="items-center"
-						onPress={() => router.replace("/(home)")}
-					>
-						<AntDesign name="home" size={24} color="#999" />
-					</TouchableOpacity>
-					<TouchableOpacity
-						className="items-center"
-						onPress={() => router.push("/(home)/calendar")}
-					>
-						<AntDesign
-							name="calendar"
-							size={24}
-							color="#999"
-						/>
-					</TouchableOpacity>
-					<TouchableOpacity className="items-center">
-						<AntDesign name="heart" size={24} color="#333" />
-					</TouchableOpacity>
-				</View>
+				<BottomTabBar activeTab="bookmarks" />
 			</SafeAreaView>
 		</View>
 	);
