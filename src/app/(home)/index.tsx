@@ -462,6 +462,7 @@ export default function HomePage() {
 				<BottomTabBar
 					activeTab="home"
 					onHomePress={() => setShowingBookmarksOnly(false)}
+					onProductsPress={() => router.push("/(home)/products" as any)}
 					onBookmarksPress={toggleBookmarksView}
 				/>
 				<UserSidebar

@@ -20,6 +20,12 @@ export default function AdminDashboard() {
 			description: "Create and manage upcoming events"
 		},
 		{
+			title: "Manage Products",
+			icon: "package",
+			route: "/(admin)/products",
+			description: "Add, edit, or remove products"
+		},
+		{
 			title: "Moderate Reviews",
 			icon: "message-square",
 			route: "/(admin)/reviews",

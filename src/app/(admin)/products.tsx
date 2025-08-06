@@ -1,0 +1,298 @@
+import { Product } from "@/lib/types/product";
+import { shadowStyles } from "@/lib/utils/styles";
+import { ProductService } from "@/services";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+	ActivityIndicator,
+	Alert,
+	Image,
+	Modal,
+	ScrollView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+export default function ManageProductsScreen() {
+	const [products, setProducts] = useState<Product[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+	const [modalVisible, setModalVisible] = useState(false);
+	const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+	const [formData, setFormData] = useState({
+		name: "",
+		description: "",
+		image: "",
+		barangay: "",
+		price: "",
+		is_available: true
+	});
+
+	const fetchProducts = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+			const data = await ProductService.getAllProducts();
+			setProducts(data);
+		} catch (err) {
+			console.error("Failed to fetch products:", err);
+			setError("Failed to load products. Please try again.");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
+
+	const resetForm = () => {
+		setFormData({
+			name: "",
+			description: "",
+			image: "",
+			barangay: "",
+			price: "",
+			is_available: true
+		});
+	};
+
+	const openAddModal = () => {
+		resetForm();
+		setEditingProduct(null);
+		setModalVisible(true);
+	};
+
+	const openEditModal = (product: Product) => {
+		setEditingProduct(product);
+		setFormData({
+			name: product.name,
+			description: product.description,
+			image: product.image,
+			barangay: product.barangay,
+			price: String(product.price),
+			is_available: product.is_available
+		});
+		setModalVisible(true);
+	};
+
+	const handleSave = async () => {
+		try {
+			setLoading(true);
+			const productData = {
+				name: formData.name,
+				description: formData.description,
+				image: formData.image,
+				barangay: formData.barangay,
+				price: formData.price ? parseFloat(formData.price) : 0,
+				is_available: formData.is_available
+			};
+			if (editingProduct) {
+				await ProductService.updateProduct(editingProduct.id, productData);
+			} else {
+				await ProductService.createProduct(productData);
+			}
+			await fetchProducts();
+			setModalVisible(false);
+			resetForm();
+		} catch (err) {
+			console.error("Error saving product:", err);
+			Alert.alert("Error", "Failed to save product. Please try again.");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleDelete = async (productId: string) => {
+		Alert.alert(
+			"Confirm Delete",
+			"Are you sure you want to delete this product? This action cannot be undone.",
+			[
+				{ text: "Cancel", style: "cancel" },
+				{
+					text: "Delete",
+					style: "destructive",
+					onPress: async () => {
+						try {
+							setLoading(true);
+							await ProductService.deleteProduct(productId);
+							await fetchProducts();
+						} catch (err) {
+							console.error("Error deleting product:", err);
+							Alert.alert("Error", "Failed to delete product. Please try again.");
+						} finally {
+							setLoading(false);
+						}
+					}
+				}
+			]
+		);
+	};
+
+	return (
+		<View className="flex-1 bg-[#faf4f0]">
+			<SafeAreaView className="flex-1">
+				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
+					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+						Manage Products
+					</Text>
+					<TouchableOpacity onPress={() => router.back()}>
+						<Feather name="x" size={24} color="black" />
+					</TouchableOpacity>
+				</View>
+				<View className="p-4">
+					<TouchableOpacity
+						className="bg-[#fed787] p-4 mb-4 flex-row items-center justify-center border border-[#333333]"
+						style={shadowStyles.standard}
+						onPress={openAddModal}
+					>
+						<AntDesign name="plus" size={20} color="black" />
+						<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
+							Add New Product
+						</Text>
+					</TouchableOpacity>
+					{loading && products.length === 0 ? (
+						<View className="items-center justify-center py-8">
+							<ActivityIndicator size="large" color="#fed787" />
+							<Text className="mt-4 font-lexend text-[#666666]">Loading products...</Text>
+						</View>
+					) : error ? (
+						<View className="items-center justify-center py-8">
+							<AntDesign name="exclamationcircle" size={40} color="#fed787" />
+							<Text className="mt-4 font-lexend text-[#666666]">{error}</Text>
+							<TouchableOpacity className="mt-4 bg-[#fed787] px-4 py-2 border border-[#333333]" onPress={fetchProducts}>
+								<Text className="font-lexend-medium text-black">Retry</Text>
+							</TouchableOpacity>
+						</View>
+					) : (
+						<ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+							{products.map((product) => (
+								<View key={product.id} className="bg-white mb-4 border border-[#333333]" style={shadowStyles.standard}>
+									<View className="flex-row">
+										<Image source={{ uri: product.image }} className="w-24 h-24" resizeMode="cover" />
+										<View className="flex-1 p-3">
+											<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black">{product.name}</Text>
+											<Text numberOfLines={2} className="text-sm font-lexend tracking-tighter-lexend text-[#666666] mt-1">{product.description}</Text>
+											<Text className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1">Barangay: {product.barangay}</Text>
+											<Text className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1">
+												{product.price > 0 ? `₱${product.price.toFixed(2)}` : "No Price"} | {product.is_available ? "Available" : "Unavailable"}
+											</Text>
+										</View>
+									</View>
+									<View className="flex-row border-t border-[#eee] p-2">
+										<TouchableOpacity className="flex-1 items-center py-2" onPress={() => openEditModal(product)}>
+											<Text className="font-lexend-medium text-[#333333]">
+												<Feather name="edit" size={16} /> Edit
+											</Text>
+										</TouchableOpacity>
+										<View className="border-r border-[#eee] mx-2" />
+										<TouchableOpacity className="flex-1 items-center py-2" onPress={() => handleDelete(product.id)}>
+											<Text className="font-lexend-medium text-[#fe5b62]">
+												<Feather name="trash-2" size={16} /> Delete
+											</Text>
+										</TouchableOpacity>
+									</View>
+								</View>
+							))}
+						</ScrollView>
+					)}
+				</View>
+			</SafeAreaView>
+			<Modal visible={modalVisible} animationType="slide">
+				<SafeAreaView className="flex-1 bg-[#faf4f0]">
+					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
+						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+							{editingProduct ? "Edit Product" : "Add Product"}
+						</Text>
+						<TouchableOpacity onPress={() => setModalVisible(false)}>
+							<Feather name="x" size={24} color="black" />
+						</TouchableOpacity>
+					</View>
+					<ScrollView className="p-4">
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">NAME</Text>
+							<TextInput
+								value={formData.name}
+								onChangeText={(text) => setFormData({ ...formData, name: text })}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Product name"
+								placeholderTextColor="#666666"
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">DESCRIPTION</Text>
+							<TextInput
+								value={formData.description}
+								onChangeText={(text) => setFormData({ ...formData, description: text })}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Product description"
+								placeholderTextColor="#666666"
+								multiline
+								numberOfLines={4}
+								textAlignVertical="top"
+								style={{ height: 100 }}
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">IMAGE URL</Text>
+							<TextInput
+								value={formData.image}
+								onChangeText={(text) => setFormData({ ...formData, image: text })}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Image URL"
+								placeholderTextColor="#666666"
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">BARANGAY</Text>
+							<TextInput
+								value={formData.barangay}
+								onChangeText={(text) => setFormData({ ...formData, barangay: text })}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Barangay"
+								placeholderTextColor="#666666"
+							/>
+						</View>
+
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">PRICE (₱) - Optional</Text>
+							<TextInput
+								value={formData.price}
+								onChangeText={(text) => setFormData({ ...formData, price: text })}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Price (leave empty if not applicable)"
+								placeholderTextColor="#666666"
+								keyboardType="numeric"
+							/>
+						</View>
+						<View className="mb-4 flex-row items-center">
+							<Text className="text-sm font-lexend-medium text-[#666666] mr-4">AVAILABLE</Text>
+							<TouchableOpacity
+								onPress={() => setFormData({ ...formData, is_available: !formData.is_available })}
+								className={`w-10 h-6 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#fed787]" : "bg-white"} items-center justify-center`}
+							>
+								<View className={`w-4 h-4 rounded-full ${formData.is_available ? "bg-black ml-4" : "bg-[#eee] ml-0"}`} />
+							</TouchableOpacity>
+						</View>
+						<TouchableOpacity
+							className="bg-[#fed787] p-4 mb-4 items-center justify-center border border-[#333333]"
+							style={shadowStyles.standard}
+							onPress={handleSave}
+							disabled={loading}
+						>
+							{loading ? (
+								<ActivityIndicator size="small" color="#333333" />
+							) : (
+								<Text className="font-lexend-medium tracking-tighter-lexend text-black">Save Product</Text>
+							)}
+						</TouchableOpacity>
+					</ScrollView>
+				</SafeAreaView>
+			</Modal>
+		</View>
+	);
+} 

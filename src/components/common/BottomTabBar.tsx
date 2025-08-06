@@ -1,28 +1,40 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 
-export type TabName = "home" | "calendar" | "bookmarks";
+export type TabName = "home" | "products" | "calendar" | "bookmarks";
 
 interface BottomTabBarProps {
 	activeTab: TabName;
 	onHomePress?: () => void;
+	onProductsPress?: () => void;
 	onCalendarPress?: () => void;
 	onBookmarksPress?: () => void;
+	cartItemCount?: number;
 }
 
 export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 	activeTab,
 	onHomePress,
+	onProductsPress,
 	onCalendarPress,
-	onBookmarksPress
+	onBookmarksPress,
+	cartItemCount = 0
 }) => {
 	const handleHomePress = () => {
 		if (onHomePress) {
 			onHomePress();
 		} else {
 			router.replace("/(home)");
+		}
+	};
+
+	const handleProductsPress = () => {
+		if (onProductsPress) {
+			onProductsPress();
+		} else {
+			router.push("/(home)/products");
 		}
 	};
 
@@ -54,12 +66,25 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 					color={activeTab === "home" ? "#333" : "#999"}
 				/>
 			</TouchableOpacity>
-			<TouchableOpacity
-				className="items-center"
-				onPress={() => router.push("/+not-found")}
-			>
-				<AntDesign name="appstore-o" size={24} color="#999" />
-			</TouchableOpacity>
+			<View className="items-center">
+				<TouchableOpacity
+					onPress={handleProductsPress}
+					className="relative"
+				>
+					<AntDesign
+						name="appstore-o"
+						size={24}
+						color={activeTab === "products" ? "#333" : "#999"}
+					/>
+					{cartItemCount > 0 && (
+						<View className="absolute -top-2 -right-2 bg-red-500 rounded-full w-5 h-5 items-center justify-center">
+							<Text className="text-white text-xs font-bold">
+								{cartItemCount > 9 ? '9+' : cartItemCount}
+							</Text>
+						</View>
+					)}
+				</TouchableOpacity>
+			</View>
 			<TouchableOpacity
 				className="items-center"
 				onPress={handleCalendarPress}
