@@ -3,7 +3,8 @@ import { router } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 
-export type TabName = "home" | "calendar" | "bookmarks";
+// Added "products" tab to support the new Products screen
+export type TabName = "home" | "products" | "calendar" | "bookmarks";
 
 interface BottomTabBarProps {
 	activeTab: TabName;
@@ -24,6 +25,10 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 		} else {
 			router.replace("/(home)");
 		}
+	};
+
+	const handleProductsPress = () => {
+		router.push("/(home)/products");
 	};
 
 	const handleCalendarPress = () => {
@@ -54,11 +59,16 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 					color={activeTab === "home" ? "#333" : "#999"}
 				/>
 			</TouchableOpacity>
+			{/* Products Tab */}
 			<TouchableOpacity
 				className="items-center"
-				onPress={() => router.push("/+not-found")}
+				onPress={handleProductsPress}
 			>
-				<AntDesign name="appstore-o" size={24} color="#999" />
+				<AntDesign
+					name="shoppingcart"
+					size={24}
+					color={activeTab === "products" ? "#333" : "#999"}
+				/>
 			</TouchableOpacity>
 			<TouchableOpacity
 				className="items-center"
