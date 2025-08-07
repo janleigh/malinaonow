@@ -5,15 +5,15 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-	ActivityIndicator,
-	Alert,
-	Image,
-	Modal,
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View
+    ActivityIndicator,
+    Alert,
+    Image,
+    Modal,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -26,9 +26,8 @@ export default function ManageProductsScreen() {
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
-		image: "",
+		image_url: "",
 		barangay: "",
-		price: "",
 		is_available: true
 	});
 
@@ -54,9 +53,8 @@ export default function ManageProductsScreen() {
 		setFormData({
 			name: "",
 			description: "",
-			image: "",
+			image_url: "",
 			barangay: "",
-			price: "",
 			is_available: true
 		});
 	};
@@ -72,29 +70,34 @@ export default function ManageProductsScreen() {
 		setFormData({
 			name: product.name,
 			description: product.description,
-			image: product.image,
+			image_url: product.image_url,
 			barangay: product.barangay,
-			price: String(product.price),
 			is_available: product.is_available
 		});
 		setModalVisible(true);
 	};
 
 	const handleSave = async () => {
+		// Validate required fields
+		if (!formData.name.trim() || !formData.description.trim() || !formData.barangay.trim()) {
+			Alert.alert("Missing Information", "Please fill in all required fields (name, description, barangay).");
+			return;
+		}
 		try {
 			setLoading(true);
 			const productData = {
 				name: formData.name,
 				description: formData.description,
-				image: formData.image,
+				image_url: formData.image_url,
 				barangay: formData.barangay,
-				price: formData.price ? parseFloat(formData.price) : 0,
 				is_available: formData.is_available
 			};
 			if (editingProduct) {
 				await ProductService.updateProduct(editingProduct.id, productData);
+				Alert.alert("Success", "Product updated successfully.");
 			} else {
 				await ProductService.createProduct(productData);
+				Alert.alert("Success", "Product added successfully.");
 			}
 			await fetchProducts();
 			setModalVisible(false);
@@ -121,6 +124,7 @@ export default function ManageProductsScreen() {
 							setLoading(true);
 							await ProductService.deleteProduct(productId);
 							await fetchProducts();
+							Alert.alert("Success", "Product deleted successfully.");
 						} catch (err) {
 							console.error("Error deleting product:", err);
 							Alert.alert("Error", "Failed to delete product. Please try again.");
@@ -173,13 +177,13 @@ export default function ManageProductsScreen() {
 							{products.map((product) => (
 								<View key={product.id} className="bg-white mb-4 border border-[#333333]" style={shadowStyles.standard}>
 									<View className="flex-row">
-										<Image source={{ uri: product.image }} className="w-24 h-24" resizeMode="cover" />
+										<Image source={{ uri: product.image_url }} className="w-24 h-24" resizeMode="cover" />
 										<View className="flex-1 p-3">
 											<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black">{product.name}</Text>
 											<Text numberOfLines={2} className="text-sm font-lexend tracking-tighter-lexend text-[#666666] mt-1">{product.description}</Text>
 											<Text className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1">Barangay: {product.barangay}</Text>
 											<Text className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1">
-												{product.price > 0 ? `₱${product.price.toFixed(2)}` : "No Price"} | {product.is_available ? "Available" : "Unavailable"}
+												{product.is_available ? "Available" : "Unavailable"}
 											</Text>
 										</View>
 									</View>
@@ -240,8 +244,8 @@ export default function ManageProductsScreen() {
 						<View className="mb-4">
 							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">IMAGE URL</Text>
 							<TextInput
-								value={formData.image}
-								onChangeText={(text) => setFormData({ ...formData, image: text })}
+								value={formData.image_url}
+								onChangeText={(text) => setFormData({ ...formData, image_url: text })}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
 								placeholder="Image URL"
 								placeholderTextColor="#666666"
@@ -258,17 +262,6 @@ export default function ManageProductsScreen() {
 							/>
 						</View>
 
-						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">PRICE (₱) - Optional</Text>
-							<TextInput
-								value={formData.price}
-								onChangeText={(text) => setFormData({ ...formData, price: text })}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
-								placeholder="Price (leave empty if not applicable)"
-								placeholderTextColor="#666666"
-								keyboardType="numeric"
-							/>
-						</View>
 						<View className="mb-4 flex-row items-center">
 							<Text className="text-sm font-lexend-medium text-[#666666] mr-4">AVAILABLE</Text>
 							<TouchableOpacity

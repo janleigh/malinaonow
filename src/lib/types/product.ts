@@ -6,9 +6,8 @@ export interface Product {
   description: string;
   description_fil?: string;
   description_akl?: string;
-  image: string;
+  image_url: string;
   barangay: string;
-  price: number;
   is_available: boolean;
   created_at: string;
   updated_at?: string;

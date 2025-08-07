@@ -1,13 +1,12 @@
 import { BottomTabBar } from "@/components/common";
+import ProductCard from "@/components/home/ProductCard";
 import { Product } from "@/lib/types/product";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-	ActivityIndicator,
-	FlatList,
-	Image,
 	ScrollView,
 	Text,
 	TextInput,
@@ -22,6 +21,7 @@ export default function ProductsScreen() {
 	const [error, setError] = useState<string | null>(null);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedBarangay, setSelectedBarangay] = useState<string>("All");
+	const [isGridView, setIsGridView] = useState(true);
 
 	const fetchProducts = async () => {
 		try {
@@ -41,89 +41,22 @@ export default function ProductsScreen() {
 		fetchProducts();
 	}, []);
 
-	// Get unique barangays for filters
+	useFocusEffect(
+		React.useCallback(() => {
+			fetchProducts();
+		}, [])
+	);
+
 	const barangays = ["All", ...Array.from(new Set(products.map(p => p.barangay)))];
 
-	// Filter products based on search and filters
 	const filteredProducts = products.filter(product => {
 		const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			product.description.toLowerCase().includes(searchQuery.toLowerCase());
 		const matchesBarangay = selectedBarangay === "All" || product.barangay === selectedBarangay;
-		
 		return matchesSearch && matchesBarangay;
 	});
 
-	const renderProductCard = ({ item }: { item: Product }) => (
-		<TouchableOpacity 
-			className="bg-white mb-4 mx-2 border border-[#333333] flex-1" 
-			style={shadowStyles.standard}
-		>
-			{item.image ? (
-				<Image 
-					source={{ uri: item.image }} 
-					className="w-full h-32" 
-					resizeMode="cover" 
-				/>
-			) : (
-				<View className="w-full h-32 bg-gray-100 items-center justify-center">
-					<Feather name="package" size={40} color="#999" />
-				</View>
-			)}
-			<View className="p-3">
-				<Text className="text-sm font-lexend-bold tracking-tighter-lexend text-black mb-1" numberOfLines={1}>
-					{item.name}
-				</Text>
-				{item.description ? (
-					<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666666] mb-2" numberOfLines={2}>
-						{item.description}
-					</Text>
-				) : null}
-				<View className="flex-row justify-between items-center">
-					<Text className="text-sm font-lexend-bold tracking-tighter-lexend text-[#fed787]">
-						{item.price > 0 ? `₱${item.price.toFixed(2)}` : "No Price"}
-					</Text>
-					<View className={`px-2 py-1 rounded ${item.is_available ? "bg-green-100" : "bg-red-100"}`}>
-						<Text className={`text-xs font-lexend-medium ${item.is_available ? "text-green-800" : "text-red-800"}`}>
-							{item.is_available ? "Available" : "Unavailable"}
-						</Text>
-					</View>
-				</View>
-				<View className="flex-row items-center mt-1">
-					{item.barangay && (
-						<Text className="text-xs font-lexend tracking-tighter-lexend text-[#999999] mt-1">
-							{item.barangay}
-						</Text>
-					)}
-				</View>
-			</View>
-		</TouchableOpacity>
-	);
-
-	if (loading) {
-		return (
-			<View className="flex-1 bg-[#faf4f0] justify-center items-center">
-				<ActivityIndicator size="large" color="#fed787" />
-				<Text className="mt-4 font-lexend text-[#666666]">Loading products...</Text>
-			</View>
-		);
-	}
-
-	if (error) {
-		return (
-			<View className="flex-1 bg-[#faf4f0] justify-center items-center p-4">
-				<Text className="text-[#333333] mb-4 text-center font-lexend tracking-tighter-lexend">
-					{error}
-				</Text>
-				<TouchableOpacity
-					className="bg-[#fed787] px-6 py-2 border border-[#333333]"
-					style={shadowStyles.standard}
-					onPress={fetchProducts}
-				>
-					<Text className="font-lexend-medium tracking-tighter-lexend text-black">Retry</Text>
-				</TouchableOpacity>
-			</View>
-		);
-	}
+	const toggleView = () => setIsGridView((prev) => !prev);
 
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
@@ -134,7 +67,6 @@ export default function ProductsScreen() {
 							Products
 						</Text>
 					</View>
-					
 					{/* Search Bar */}
 					<View className="flex-row items-center bg-white border border-[#333333] px-3 py-2 mb-3">
 						<Feather name="search" size={18} color="#666" />
@@ -146,7 +78,6 @@ export default function ProductsScreen() {
 							placeholderTextColor="#666666"
 						/>
 					</View>
-
 					{/* Barangay Filter */}
 					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 						{barangays.map((barangay) => (
@@ -162,18 +93,45 @@ export default function ProductsScreen() {
 							</TouchableOpacity>
 						))}
 					</ScrollView>
+					{/* Grid/List Toggle Section Header */}
+					<View className="flex-row justify-between items-center mb-4 mt-4">
+						<Text className="text-lg font-lexend-extrabold tracking-tighter-lexend text-black">
+							Featured Products
+						</Text>
+						<TouchableOpacity className="flex-row items-center" onPress={toggleView}>
+							<Text className="mr-1 font-lexend tracking-tighter-lexend text-black">
+								{isGridView ? "List View" : "Grid View"}
+							</Text>
+							<Feather name={isGridView ? "list" : "grid"} size={18} color="black" />
+						</TouchableOpacity>
+					</View>
 				</View>
-
 				<View className="flex-1 p-2">
 					{filteredProducts.length > 0 ? (
-						<FlatList
-							data={filteredProducts}
-							renderItem={renderProductCard}
-							keyExtractor={(item) => item.id}
-							numColumns={2}
-							contentContainerStyle={{ paddingBottom: 20 }}
-							showsVerticalScrollIndicator={false}
-						/>
+						isGridView ? (
+							<View className="flex-row justify-between">
+								<View className="w-[48%] space-y-4">
+									{filteredProducts
+										.slice(0, Math.ceil(filteredProducts.length / 2))
+										.map((product) => (
+											<ProductCard key={product.id} product={product} listView={false} />
+										))}
+								</View>
+								<View className="w-[48%] space-y-4">
+									{filteredProducts
+										.slice(Math.ceil(filteredProducts.length / 2))
+										.map((product) => (
+											<ProductCard key={product.id} product={product} listView={false} />
+										))}
+								</View>
+							</View>
+						) : (
+							<View className="space-y-4">
+								{filteredProducts.map((product) => (
+									<ProductCard key={product.id} product={product} listView={true} />
+								))}
+							</View>
+						)
 					) : (
 						<View className="flex-1 justify-center items-center">
 							<AntDesign name="inbox" size={60} color="#fed787" />
