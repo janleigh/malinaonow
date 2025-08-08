@@ -1,11 +1,39 @@
+import { useAuth } from "@/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
-import { Link, Stack } from "expo-router";
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Link, Stack, useRouter } from "expo-router";
+import React, { useEffect } from "react";
+import {
+	ActivityIndicator,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function InDevelopmentScreen() {
+	const { isSignedIn, isLoaded } = useAuth();
+	const router = useRouter();
+
+	// If user is signed in, redirect to home immediately
+	// This prevents the not-found screen from showing during auth transitions
+	useEffect(() => {
+		if (isLoaded && isSignedIn) {
+			router.replace("/(home)");
+		} else if (isLoaded && isSignedIn === false) {
+			router.replace("/");
+		}
+	}, [isLoaded, isSignedIn, router]);
+
+	// Show loading screen while auth state is being determined
+	// This prevents the "Coming Soon" message from appearing during auth flow
+	if (!isLoaded) {
+		return (
+			<View className="flex-1 bg-[#faf4f0] items-center justify-center">
+				<ActivityIndicator size="large" color="#fed787" />
+			</View>
+		);
+	}
 	return (
 		<>
 			<Stack.Screen options={{ title: "Coming Soon" }} />

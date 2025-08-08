@@ -4,11 +4,18 @@ import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Link, router, useFocusEffect } from "expo-router";
 import React, { useCallback, useLayoutEffect, useState } from "react";
-import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Image,
+	Modal,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LandingPage() {
-	const { isSignedIn, signOut } = useAuth();
+	const { isSignedIn, isLoaded, signOut } = useAuth();
 	const [showDialog, setShowDialog] = useState(false);
 
 	useFocusEffect(
@@ -20,11 +27,17 @@ export default function LandingPage() {
 	);
 
 	useLayoutEffect(() => {
-		if (isSignedIn === true) {
-			// Automatically redirect to home page if already signed in
-			handleGoToHome();
+		// Only redirect if auth is fully loaded and user is definitely signed in
+		// This prevents race conditions during OAuth flow
+		if (isLoaded && isSignedIn === true) {
+			// Add a small delay to ensure auth state is stable
+			const timer = setTimeout(() => {
+				handleGoToHome();
+			}, 100);
+
+			return () => clearTimeout(timer);
 		}
-	}, [isSignedIn]);
+	}, [isLoaded, isSignedIn]);
 
 	const handleGoToHome = () => {
 		setShowDialog(false);
@@ -39,6 +52,15 @@ export default function LandingPage() {
 			console.error("Sign out error:", error);
 		}
 	};
+
+	// Show loading screen while auth state is being determined
+	if (!isLoaded) {
+		return (
+			<View className="flex-1 bg-[#faf4f0] items-center justify-center">
+				<ActivityIndicator size="large" color="#fed787" />
+			</View>
+		);
+	}
 
 	return (
 		<View className="flex-1 bg-[#faf4f0]">

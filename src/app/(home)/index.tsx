@@ -371,7 +371,7 @@ export default function HomePage() {
 								</View>
 							</View>
 						) : showingBookmarksOnly &&
-						  displayedLocations.length === 0 ? (
+							displayedLocations.length === 0 ? (
 								<View
 									className="p-4 my-4 border border-[#333333] bg-white"
 									style={shadowStyles.standard}
