@@ -8,6 +8,7 @@ export default function AdminLayout() {
 			<Stack.Screen name="locations" />
 			<Stack.Screen name="events" />
 			<Stack.Screen name="reviews" />
+			<Stack.Screen name="products" />
 		</Stack>
 	);
 }
