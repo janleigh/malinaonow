@@ -79,7 +79,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 					{cartItemCount > 0 && (
 						<View className="absolute -top-2 -right-2 bg-red-500 rounded-full w-5 h-5 items-center justify-center">
 							<Text className="text-white text-xs font-bold">
-								{cartItemCount > 9 ? '9+' : cartItemCount}
+								{cartItemCount > 9 ? "9+" : cartItemCount}
 							</Text>
 						</View>
 					)}
