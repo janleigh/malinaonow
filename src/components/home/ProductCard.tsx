@@ -68,10 +68,19 @@ export const ProductCard = ({
   };
 
   return (
-    <>
+    <View className="mb-2">
+      <View className="flex-row items-center mb-1 px-1">
+        <AntDesign name="enviromento" size={10} color="#555" />
+        <Text 
+          className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]"
+          numberOfLines={1}
+        >
+          {product.barangay}
+        </Text>
+      </View>
       <TouchableOpacity
         key={product.id}
-        className={`bg-white border border-[#333333] my-2 overflow-hidden ${listView ? "" : ""}`}
+        className="bg-white border border-[#333333] overflow-hidden"
         style={shadowStyles.standard}
         onPress={toggleExpand}
       >
@@ -133,45 +142,61 @@ export const ProductCard = ({
           }}
         >
           <View className="flex-1">
-            <View className="flex-row justify-between items-center p-4 border-b border-[#333333]">
-              <Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">{product.name}</Text>
-              <TouchableOpacity onPress={toggleExpand}>
-                <Feather name="x" size={24} color="black" />
-              </TouchableOpacity>
+            <View className="border-b border-[#333333] p-4">
+              <View className="flex-row justify-between items-center mb-2">
+                <Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">{product.name}</Text>
+                <TouchableOpacity onPress={toggleExpand}>
+                  <Feather name="x" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+              <View className="flex-row items-center">
+                <AntDesign name="enviromento" size={12} color="#555" />
+                <Text className="ml-1 text-sm font-lexend tracking-tighter-lexend text-[#555]">
+                  {product.barangay}
+                </Text>
+              </View>
             </View>
             <ScrollView className="flex-1">
-              {product.image_url ? (
-                <Image source={{ uri: product.image_url }} className="w-full h-52" resizeMode="cover" />
-              ) : (
-                <View className="w-full h-52 bg-gray-100 items-center justify-center">
-                  <Feather name="package" size={40} color="#999" />
-                </View>
-              )}
+              <View className="w-full h-64">
+                {product.images && product.images.length > 0 ? (
+                  <ScrollView 
+                    horizontal 
+                    pagingEnabled 
+                    showsHorizontalScrollIndicator={false} 
+                    className="w-full h-full"
+                  >
+                    {product.images.map((img: string, index: number) => (
+                      <View key={index} className="w-full h-full" style={{ width: '100%' }}>
+                        <Image 
+                          source={{ uri: img }} 
+                          className="w-full h-full" 
+                          resizeMode="cover" 
+                        />
+                      </View>
+                    ))}
+                  </ScrollView>
+                ) : product.image_url ? (
+                  <Image 
+                    source={{ uri: product.image_url }} 
+                    className="w-full h-full" 
+                    resizeMode="cover" 
+                  />
+                ) : (
+                  <View className="w-full h-full bg-gray-100 items-center justify-center">
+                    <Feather name="package" size={40} color="#999" />
+                  </View>
+                )}
+              </View>
               <View className="p-4">
-                <View className="flex-row space-x-2 mt-4">
-                  <TouchableOpacity
-                    className="flex-1 bg-[#fed787] h-12 items-center justify-center border border-[#333333] rounded-full"
-                    style={shadowStyles.standard}
-                    onPress={handleToggleBookmark}
-                  >
-                    <AntDesign name={bookmarked ? "heart" : "hearto"} size={20} color={bookmarked ? "#FE5B62" : "#333"} />
-                    <Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">Bookmark</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    className="flex-1 bg-white h-12 items-center justify-center border border-[#333333] rounded-full"
-                    style={shadowStyles.standard}
-                    onPress={handleAddToCart}
-                  >
-                    <Feather name="shopping-cart" size={20} color="#333" />
-                    <Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">Add to Cart</Text>
-                  </TouchableOpacity>
-                </View>
+                <Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333333]">
+                  {product.description || 'No description available'}
+                </Text>
               </View>
             </ScrollView>
           </View>
         </Animated.View>
       </Modal>
-    </>
+    </View>
   );
 };
 

@@ -5,58 +5,97 @@ import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-	ScrollView,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 export default function ProductsScreen() {
-	const [products, setProducts] = useState<Product[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [searchQuery, setSearchQuery] = useState("");
-	const [selectedBarangay, setSelectedBarangay] = useState<string>("All");
-	const [isGridView, setIsGridView] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [selectedBarangay, setSelectedBarangay] = useState<string>("All");
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const flatListRef = useRef<FlatList>(null);
 
-	const fetchProducts = async () => {
-		try {
-			setLoading(true);
-			setError(null);
-			const data = await ProductService.getAllProducts();
-			setProducts(data);
-		} catch (err) {
-			console.error("Failed to fetch products:", err);
-			setError("Failed to load products. Please try again.");
-		} finally {
-			setLoading(false);
-		}
-	};
+  const fetchProducts = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await ProductService.getAllProducts();
+      setProducts(data);
+    } catch (err) {
+      console.error("Failed to fetch products:", err);
+      setError("Failed to load products. Please try again.");
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
 
-	useEffect(() => {
-		fetchProducts();
-	}, []);
+  useEffect(() => {
+    fetchProducts();
+    
+    // Set up real-time subscription
+    const unsubscribe = ProductService.subscribeToProducts((payload: any) => {
+      console.log('Product change detected:', payload);
+      fetchProducts();
+    });
 
-	useFocusEffect(
-		React.useCallback(() => {
-			fetchProducts();
-		}, [])
-	);
+    // Cleanup subscription on unmount
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchProducts]);
 
-	const barangays = ["All", ...Array.from(new Set(products.map(p => p.barangay)))];
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchProducts();
+  }, [fetchProducts]);
 
-	const filteredProducts = products.filter(product => {
-		const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			product.description.toLowerCase().includes(searchQuery.toLowerCase());
-		const matchesBarangay = selectedBarangay === "All" || product.barangay === selectedBarangay;
-		return matchesSearch && matchesBarangay;
-	});
+  // Normalize barangay names for consistent comparison
+  const normalizeBarangay = (name: string) => name.trim().toLowerCase();
 
-	const toggleView = () => setIsGridView((prev) => !prev);
+  // Get unique barangays from all products (case-insensitive, trimmed)
+  const barangays = ["All", ...Array.from(new Set(products
+    .map(p => p.barangay?.trim() || '') // Trim whitespace and handle undefined
+    .filter(barangay => barangay) // Remove empty strings
+    .map(normalizeBarangay) // Normalize for comparison
+  ))].sort((a, b) => a.localeCompare(b)); // Sort alphabetically
+
+  // Apply filters to products
+  const filteredProducts = products.filter(product => {
+    const searchLower = searchQuery.toLowerCase().trim();
+    const name = product.name.toLowerCase();
+    const description = product.description.toLowerCase();
+    const productBarangay = normalizeBarangay(product.barangay || '');
+    const selectedBarangayNormalized = normalizeBarangay(selectedBarangay);
+    
+    const matchesSearch = searchLower === '' || 
+                         name.includes(searchLower) || 
+                         description.includes(searchLower);
+    const matchesBarangay = selectedBarangay === "All" || 
+                           productBarangay === selectedBarangayNormalized;
+    
+    return matchesSearch && matchesBarangay;
+  });
+
+  const toggleView = () => setViewMode(prev => prev === "grid" ? "list" : "grid");
+
+
 
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
@@ -100,15 +139,15 @@ export default function ProductsScreen() {
 						</Text>
 						<TouchableOpacity className="flex-row items-center" onPress={toggleView}>
 							<Text className="mr-1 font-lexend tracking-tighter-lexend text-black">
-								{isGridView ? "List View" : "Grid View"}
+								{viewMode === "grid" ? "List View" : "Grid View"}
 							</Text>
-							<Feather name={isGridView ? "list" : "grid"} size={18} color="black" />
+							<Feather name={viewMode === "grid" ? "list" : "grid"} size={18} color="black" />
 						</TouchableOpacity>
 					</View>
 				</View>
 				<View className="flex-1 p-2">
 					{filteredProducts.length > 0 ? (
-						isGridView ? (
+						viewMode === "grid" ? (
 							<View className="flex-row justify-between">
 								<View className="w-[48%] space-y-4">
 									{filteredProducts

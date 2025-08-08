@@ -18,18 +18,18 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageProductsScreen() {
-	const [products, setProducts] = useState<Product[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [modalVisible, setModalVisible] = useState(false);
-	const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-	const [formData, setFormData] = useState({
-		name: "",
-		description: "",
-		image_url: "",
-		barangay: "",
-		is_available: true
-	});
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    image_url: "",
+    barangay: "",
+    is_available: true
+  });
 
 	const fetchProducts = async () => {
 		try {
@@ -168,23 +168,42 @@ export default function ManageProductsScreen() {
 						<View className="items-center justify-center py-8">
 							<AntDesign name="exclamationcircle" size={40} color="#fed787" />
 							<Text className="mt-4 font-lexend text-[#666666]">{error}</Text>
-							<TouchableOpacity className="mt-4 bg-[#fed787] px-4 py-2 border border-[#333333]" onPress={fetchProducts}>
+							<TouchableOpacity 
+								className="mt-4 bg-[#fed787] px-4 py-2 border border-[#333333]" 
+								onPress={fetchProducts}
+							>
 								<Text className="font-lexend-medium text-black">Retry</Text>
 							</TouchableOpacity>
 						</View>
 					) : (
-						<ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+						<ScrollView className="space-y-4">
 							{products.map((product) => (
-								<View key={product.id} className="bg-white mb-4 border border-[#333333]" style={shadowStyles.standard}>
+								<View key={product.id} className="bg-white border border-[#eee] rounded-lg overflow-hidden">
 									<View className="flex-row">
-										<Image source={{ uri: product.image_url }} className="w-24 h-24" resizeMode="cover" />
+										<View className="w-24 h-24 bg-gray-100 items-center justify-center">
+											{product.image_url ? (
+												<Image 
+													source={{ uri: product.image_url }} 
+													className="w-full h-full" 
+													resizeMode="cover"
+												/>
+											) : (
+												<Feather name="package" size={32} color="#999" />
+											)}
+										</View>
 										<View className="flex-1 p-3">
-											<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black">{product.name}</Text>
-											<Text numberOfLines={2} className="text-sm font-lexend tracking-tighter-lexend text-[#666666] mt-1">{product.description}</Text>
-											<Text className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1">Barangay: {product.barangay}</Text>
-											<Text className="text-xs font-lexend tracking-tighter-lexend text-[#555] mt-1">
-												{product.is_available ? "Available" : "Unavailable"}
+											<Text className="text-base font-lexend-bold text-black" numberOfLines={1}>
+												{product.name}
 											</Text>
+											<Text className="text-sm text-gray-600 mt-1" numberOfLines={1}>
+												{product.barangay}
+											</Text>
+											<View className="flex-row items-center mt-1">
+												<View className={`w-3 h-3 rounded-full mr-1 ${product.is_available ? 'bg-green-500' : 'bg-red-500'}`} />
+												<Text className="text-xs text-gray-500">
+													{product.is_available ? 'Available' : 'Not Available'}
+												</Text>
+											</View>
 										</View>
 									</View>
 									<View className="flex-row border-t border-[#eee] p-2">
@@ -206,6 +225,7 @@ export default function ManageProductsScreen() {
 					)}
 				</View>
 			</SafeAreaView>
+
 			<Modal visible={modalVisible} animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#faf4f0]">
 					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
@@ -262,30 +282,30 @@ export default function ManageProductsScreen() {
 							/>
 						</View>
 
-						<View className="mb-4 flex-row items-center">
-							<Text className="text-sm font-lexend-medium text-[#666666] mr-4">AVAILABLE</Text>
-							<TouchableOpacity
-								onPress={() => setFormData({ ...formData, is_available: !formData.is_available })}
-								className={`w-10 h-6 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#fed787]" : "bg-white"} items-center justify-center`}
-							>
-								<View className={`w-4 h-4 rounded-full ${formData.is_available ? "bg-black ml-4" : "bg-[#eee] ml-0"}`} />
-							</TouchableOpacity>
-						</View>
-						<TouchableOpacity
-							className="bg-[#fed787] p-4 mb-4 items-center justify-center border border-[#333333]"
-							style={shadowStyles.standard}
-							onPress={handleSave}
-							disabled={loading}
-						>
-							{loading ? (
-								<ActivityIndicator size="small" color="#333333" />
-							) : (
-								<Text className="font-lexend-medium tracking-tighter-lexend text-black">Save Product</Text>
-							)}
-						</TouchableOpacity>
-					</ScrollView>
-				</SafeAreaView>
-			</Modal>
-		</View>
-	);
-} 
+                        <View className="mb-4 flex-row items-center">
+                            <Text className="text-sm font-lexend-medium text-[#666666] mr-4">AVAILABLE</Text>
+                            <TouchableOpacity
+                                onPress={() => setFormData({ ...formData, is_available: !formData.is_available })}
+                                className={`w-10 h-6 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#fed787]" : "bg-white"} items-center justify-center`}
+                            >
+                                <View className={`w-4 h-4 rounded-full ${formData.is_available ? "bg-black ml-4" : "bg-[#eee] ml-0"}`} />
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity
+                            className="bg-[#fed787] p-4 mb-4 items-center justify-center border border-[#333333]"
+                            style={shadowStyles.standard}
+                            onPress={handleSave}
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <ActivityIndicator size="small" color="#333333" />
+                            ) : (
+                                <Text className="font-lexend-medium tracking-tighter-lexend text-black">Save Product</Text>
+                            )}
+                        </TouchableOpacity>
+                    </ScrollView>
+                </SafeAreaView>
+            </Modal>
+        </View>
+    );
+}

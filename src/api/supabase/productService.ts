@@ -125,5 +125,33 @@ export const ProductService = {
       console.error("Exception deleting product:", error);
       throw error;
     }
+  },
+
+  /**
+   * Subscribe to product changes
+   * @param callback - Function to call when products change
+   * @returns {() => void} - Function to unsubscribe
+   */
+  subscribeToProducts(callback: (payload: any) => void) {
+    const subscription = supabase
+      .channel('products')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'products'
+        },
+        (payload) => {
+          console.log('Product change received:', payload);
+          callback(payload);
+        }
+      )
+      .subscribe();
+
+    // Return unsubscribe function
+    return () => {
+      supabase.removeChannel(subscription);
+    };
   }
 };
