@@ -4,7 +4,6 @@ import { Product } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services/ProductService";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
 import React, {
 	useCallback,
 	useEffect,
@@ -13,18 +12,16 @@ import React, {
 	useState
 } from "react";
 import {
-	View,
+	ActivityIndicator,
+	FlatList,
+	ListRenderItem,
+	ScrollView,
+	StyleSheet,
 	Text,
 	TextInput,
 	TouchableOpacity,
-	FlatList,
-	RefreshControl,
-	ScrollView,
-	StyleSheet,
-	ListRenderItem,
-	ViewToken,
-	Platform,
-	ActivityIndicator
+	View,
+	ViewToken
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -179,7 +176,7 @@ const ProductsScreen = () => {
 		[viewMode]
 	);
 
-	// Render grid columns
+	// Render grid columns (no ScrollView here)
 	const renderGridColumns = useCallback(() => {
 		const halfLength = Math.ceil(filteredProducts.length / 2);
 		const firstColumn = filteredProducts.slice(0, halfLength);
@@ -273,63 +270,65 @@ const ProductsScreen = () => {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View className="flex-1 p-2">
-					{loading ? (
-						<View className="flex-1 justify-center items-center">
-							<ActivityIndicator
-								size="large"
-								color="#fed787"
-							/>
-						</View>
-					) : error ? (
-						<View className="flex-1 justify-center items-center p-4">
-							<Text className="text-red-500 text-center font-lexend mb-2">
-								{error}
-							</Text>
-							<TouchableOpacity
-								onPress={fetchProducts}
-								className="bg-[#fed787] px-4 py-2 rounded-md"
-							>
-								<Text className="font-lexend">Retry</Text>
-							</TouchableOpacity>
-						</View>
-					) : filteredProducts.length > 0 ? (
-						viewMode === "grid" ? (
-							renderGridColumns()
-						) : (
-							<FlatList
-								ref={flatListRef}
-								data={filteredProducts}
-								renderItem={renderProductItem}
-								keyExtractor={(item) => item.id}
-								initialNumToRender={4}
-								maxToRenderPerBatch={6}
-								updateCellsBatchingPeriod={50}
-								windowSize={5}
-								getItemLayout={getItemLayout}
-								viewabilityConfig={viewabilityConfig}
-								viewabilityConfigCallbackPairs={
-									viewabilityConfigCallbackPairs.current
-								}
-								contentContainerStyle={styles.listContent}
-								showsVerticalScrollIndicator={false}
-							/>
-						)
-					) : (
-						<View className="flex-1 justify-center items-center">
-							<AntDesign
-								name="inbox"
-								size={60}
-								color="#fed787"
-							/>
-							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center mt-4">
-								{products.length === 0
-									? "No Products Found"
-									: "No Matching Products"}
-							</Text>
-						</View>
-					)}
-				</View>
+				   <View className="flex-1 px-2">
+					   {loading ? (
+						   <View className="flex-1 justify-center items-center">
+							   <ActivityIndicator
+								   size="large"
+								   color="#fed787"
+							   />
+						   </View>
+					   ) : error ? (
+						   <View className="flex-1 justify-center items-center p-4">
+							   <Text className="text-red-500 text-center font-lexend mb-2">
+								   {error}
+							   </Text>
+							   <TouchableOpacity
+								   onPress={fetchProducts}
+								   className="bg-[#fed787] px-4 py-2 rounded-md"
+							   >
+								   <Text className="font-lexend">Retry</Text>
+							   </TouchableOpacity>
+						   </View>
+					   ) : filteredProducts.length > 0 ? (
+						   viewMode === "grid" ? (
+							   <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 80 }}>
+								   {renderGridColumns()}
+							   </ScrollView>
+						   ) : (
+							   <FlatList
+								   ref={flatListRef}
+								   data={filteredProducts}
+								   renderItem={renderProductItem}
+								   keyExtractor={(item) => item.id}
+								   initialNumToRender={4}
+								   maxToRenderPerBatch={6}
+								   updateCellsBatchingPeriod={50}
+								   windowSize={5}
+								   getItemLayout={getItemLayout}
+								   viewabilityConfig={viewabilityConfig}
+								   viewabilityConfigCallbackPairs={
+									   viewabilityConfigCallbackPairs.current
+								   }
+								   contentContainerStyle={[styles.listContent, { paddingBottom: 80 }]}
+								   showsVerticalScrollIndicator={false}
+							   />
+						   )
+					   ) : (
+						   <View className="flex-1 justify-center items-center">
+							   <AntDesign
+								   name="inbox"
+								   size={60}
+								   color="#fed787"
+							   />
+							   <Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center mt-4">
+								   {products.length === 0
+									   ? "No Products Found"
+									   : "No Matching Products"}
+							   </Text>
+						   </View>
+					   )}
+				   </View>
 				<BottomTabBar activeTab="products" />
 			</SafeAreaView>
 		</View>
