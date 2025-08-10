@@ -68,6 +68,15 @@ export default {
 		view360Title: "360° View",
 		writeReview: "Write a Review"
 	},
+	products: {
+		title: "Products",
+		featuredProducts: "Featured Products",
+		noProducts: "No products available",
+		searchPlaceholder: "Search products...",
+		seeMore: "See more",
+		seeLess: "See less",
+		location: "Location"
+	},
 	event: {
 		date: "Date",
 		time: "Time",

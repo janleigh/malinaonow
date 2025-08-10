@@ -70,6 +70,15 @@ export default {
 		view360Title: "Panirong sa 360°",
 		writeReview: "Maghimo it Review"
 	},
+	products: {
+		title: "Mga Produkto",
+		featuredProducts: "Mga Featured nga Produkto",
+		noProducts: "Wara it Available nga mga Produkto",
+		searchPlaceholder: "Mangita it produkto...",
+		seeMore: "Kita pa...",
+		seeLess: "Diri e",
+		location: "Lugar"
+	},
 	event: {
 		date: "Petsa",
 		time: "Oras",

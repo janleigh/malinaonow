@@ -70,6 +70,15 @@ export default {
 		view360Title: "Tingin sa 360°",
 		writeReview: "Sumulat ng Review"
 	},
+	products: {
+		title: "Mga Produkto",
+		featuredProducts: "Mga Featured na Produkto",
+		noProducts: "Walang Available na mga Produkto",
+		searchPlaceholder: "Maghanap ng produkto...",
+		seeMore: "Tingnan pa...",
+		seeLess: "Magbawas",
+		location: "Lokasyon"
+	},
 	event: {
 		date: "Petsa",
 		time: "Oras",
