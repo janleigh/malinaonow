@@ -64,7 +64,7 @@ export default {
 		address: "Address",
 		reviews: "Mga Review",
 		showMore: "Ipakita pa ↓",
-		showLess: "Ipakita it diutay ↑",
+		showLess: "Ipakita it sangkiri ↑",
 		viewOnMap: "Tan-awa sa Mapa",
 		view360: "Tan-awa sa 360°",
 		mapView: "Panirong sa Mapa",

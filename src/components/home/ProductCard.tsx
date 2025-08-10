@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
 	Animated,
 	Image,
+	LayoutChangeEvent,
 	Modal,
 	ScrollView,
 	Text,
@@ -20,20 +21,33 @@ export const ProductCard = ({
 	onToggleBookmark,
 	onAddToCart
 }: {
-	product: Product;
-	listView?: boolean;
-	isBookmarked?: boolean;
-	onToggleBookmark?: (productId: string, newStatus: boolean) => void;
-	onAddToCart?: (productId: string) => void;
+    product: Product;
+    listView?: boolean;
+    isBookmarked?: boolean;
+    onToggleBookmark?: (productId: string, newStatus: boolean) => void;
+    onAddToCart?: (productId: string) => void;
 }) => {
 	const [expanded, setExpanded] = useState(false);
 	const [bookmarked, setBookmarked] = useState(isBookmarked);
+	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+	const [descriptionHeight, setDescriptionHeight] = useState(0);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
 	const scrollViewRef = useRef<ScrollView>(null);
-	const { language } = useTranslation();
+	const { language, t } = useTranslation();
 
-	// Reset scroll position when modal opens
+	const shouldShowToggle = true;
+
+	const onDescriptionLayout = (event: LayoutChangeEvent) => {
+		const { height } = event.nativeEvent.layout;
+		setDescriptionHeight(height);
+	};
+
+	const toggleDescription = () => {
+		setIsDescriptionExpanded(!isDescriptionExpanded);
+	};
+
+	// Reset scroll position and description state when modal opens/closes
 	useEffect(() => {
 		if (expanded && scrollViewRef.current) {
 			scrollViewRef.current.scrollTo({
@@ -41,6 +55,11 @@ export const ProductCard = ({
 				y: 0,
 				animated: false
 			});
+		}
+        
+		// Reset description to collapsed state when modal closes
+		if (!expanded) {
+			setIsDescriptionExpanded(false);
 		}
 	}, [expanded]);
 
@@ -252,10 +271,10 @@ export const ProductCard = ({
 								</Text>
 							</View>
 						</View>
-						<View className="flex-1">
+						<ScrollView ref={scrollViewRef} className="flex-1">
 							<View className="w-full h-64">
 								{product.images &&
-								product.images.length > 0 ? (
+                                product.images.length > 0 ? (
 										<ScrollView
 											horizontal
 											pagingEnabled
@@ -303,23 +322,41 @@ export const ProductCard = ({
 										</View>
 									)}
 							</View>
-							<View style={{ flex: 1, maxHeight: 600 }}>
-								<ScrollView
-									ref={scrollViewRef}
-									className="m-4 border-l-2 border-[#fed787] pl-2"
-									showsVerticalScrollIndicator={true}
-									contentContainerStyle={{
-										paddingBottom: 20
+							<View className="p-4">
+								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
+                                    Description
+								</Text>
+								<View
+									className="border-l-2 border-[#fed787] pl-2"
+									style={{
+										maxHeight: isDescriptionExpanded
+											? undefined
+											: 80
 									}}
 								>
-									<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333] leading-6">
-										{getLocalizedDescription(
-											product
-										) || "No description available"}
-									</Text>
-								</ScrollView>
+									<View onLayout={onDescriptionLayout}>
+										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
+											{getLocalizedDescription(
+												product
+											) || "No description available"}
+										</Text>
+									</View>
+								</View>
+								{shouldShowToggle && (
+									<TouchableOpacity
+										onPress={toggleDescription}
+										className="mt-2 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
+										style={shadowStyles.small}
+									>
+										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black">
+											{isDescriptionExpanded
+												? t("location.showLess")
+												: t("location.showMore")}
+										</Text>
+									</TouchableOpacity>
+								)}
 							</View>
-						</View>
+						</ScrollView>
 					</View>
 				</Animated.View>
 			</Modal>
