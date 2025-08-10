@@ -16,6 +16,7 @@ export default {
 		title: "MalinaoNow",
 		upcomingEvents: "Mga Paparating na Kaganapan",
 		featuredLocations: "Mga Featured na Lokasyon",
+		exploreLocations: "Mag-explore it mga Lokasyon",
 		bookmarkedLocations: "Mga Naka-bookmark na Lokasyon",
 		noEvents: "Walang Paparating na Kaganapan",
 		noEventsDesc:
@@ -77,6 +78,7 @@ export default {
 		searchPlaceholder: "Maghanap ng produkto...",
 		seeMore: "Tingnan pa...",
 		seeLess: "Magbawas",
+		noMatchingProducts: "Wala pang mga Produkto",
 		location: "Lokasyon"
 	},
 	event: {

@@ -16,6 +16,7 @@ export default {
 		title: "MalinaoNow",
 		upcomingEvents: "Upcoming Events",
 		featuredLocations: "Featured Locations",
+		exploreLocations: "Explore Locations",
 		bookmarkedLocations: "Bookmarked Locations",
 		noEvents: "No Upcoming Events",
 		noEventsDesc:
@@ -75,6 +76,7 @@ export default {
 		searchPlaceholder: "Search products...",
 		seeMore: "See more",
 		seeLess: "See less",
+		noMatchingProducts: "No matching products",
 		location: "Location"
 	},
 	event: {

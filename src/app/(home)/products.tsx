@@ -1,5 +1,6 @@
 import { BottomTabBar } from "@/components/common";
 import ProductCard from "@/components/home/ProductCard";
+import { useTranslation } from "@/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services/ProductService";
@@ -72,6 +73,7 @@ const ProductsScreen = () => {
 		itemVisiblePercentThreshold: 50,
 		minimumViewTime: 300
 	}).current;
+	const { t } = useTranslation();
 
 	const fetchProducts = useCallback(async () => {
 		if (!refreshing) setLoading(true);
@@ -212,7 +214,7 @@ const ProductsScreen = () => {
 				<View className="p-4 border-b border-[#eee]">
 					<View className="mb-4">
 						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-							Products
+							{t("products.title")}
 						</Text>
 					</View>
 					{/* Search Bar */}
@@ -220,7 +222,7 @@ const ProductsScreen = () => {
 						<Feather name="search" size={18} color="#666" />
 						<TextInput
 							className="flex-1 ml-2 text-base font-lexend text-black"
-							placeholder="Search products..."
+							placeholder={t("products.searchPlaceholder")}
 							value={searchQuery}
 							onChangeText={setSearchQuery}
 							placeholderTextColor="#666666"
@@ -249,7 +251,7 @@ const ProductsScreen = () => {
 					{/* Grid/List Toggle Section Header */}
 					<View className="flex-row justify-between items-center mb-4 mt-4">
 						<Text className="text-lg font-lexend-extrabold tracking-tighter-lexend text-black">
-							Featured Products
+							{t("products.featuredProducts")}
 						</Text>
 						<TouchableOpacity
 							className="flex-row items-center"
@@ -323,8 +325,8 @@ const ProductsScreen = () => {
 							   />
 							   <Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center mt-4">
 								   {products.length === 0
-									   ? "No Products Found"
-									   : "No Matching Products"}
+									   ? t("products.noProducts")
+									   : t("products.noMatchingProducts")}
 							   </Text>
 						   </View>
 					   )}

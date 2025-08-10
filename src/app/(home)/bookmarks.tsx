@@ -194,7 +194,7 @@ export default function BookmarksPage() {
 										}
 									>
 										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-											Explore Locations
+											{t("home.exploreLocations")}
 										</Text>
 									</TouchableOpacity>
 								</View>

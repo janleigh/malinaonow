@@ -1,3 +1,4 @@
+import { useTranslation } from "@/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -29,6 +30,7 @@ export const ProductCard = ({
 	const [bookmarked, setBookmarked] = useState(isBookmarked);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
+	const { language } = useTranslation();
 
 	const toggleExpand = () => {
 		if (!expanded) {
@@ -70,10 +72,17 @@ export const ProductCard = ({
 		if (onToggleBookmark) onToggleBookmark(product.id, newStatus);
 	};
 
-	const handleAddToCart = (e: any) => {
-		e.stopPropagation && e.stopPropagation();
-		if (onAddToCart) onAddToCart(product.id);
+
+	const getLocalizedDescription = (prod: Product): string => {
+		if (language === "fil" && prod.description_fil) {
+			return prod.description_fil;
+		} else if (language === "akl" && prod.description_akl) {
+			return prod.description_akl;
+		}
+
+		return prod.description;
 	};
+
 
 	return (
 		<View className="mb-2">
@@ -111,7 +120,7 @@ export const ProductCard = ({
 								</View>
 							)}
 						</View>
-						<View className="p-3 flex-1">
+						<ScrollView className="p-3 flex-1">
 							<Text
 								className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
 								numberOfLines={1}
@@ -122,7 +131,7 @@ export const ProductCard = ({
 								className="text-xs font-lexend tracking-tighter-lexend text-[#666666] mt-1"
 								numberOfLines={2}
 							>
-								{product.description}
+								{getLocalizedDescription(product)}
 							</Text>
 							<View className="flex-row items-center mt-1">
 								<View
@@ -137,7 +146,7 @@ export const ProductCard = ({
 									</Text>
 								</View>
 							</View>
-						</View>
+						</ScrollView>
 					</View>
 				) : (
 					<View>
@@ -158,7 +167,7 @@ export const ProductCard = ({
 								</View>
 							)}
 						</View>
-						<View className="p-3">
+						<ScrollView className="p-3">
 							<Text
 								className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
 								numberOfLines={2}
@@ -169,7 +178,7 @@ export const ProductCard = ({
 								className="text-xs font-lexend tracking-tighter-lexend text-[#666666] mt-1"
 								numberOfLines={2}
 							>
-								{product.description}
+								{getLocalizedDescription(product)}
 							</Text>
 							<View className="flex-row items-center mt-1">
 								<View
@@ -184,7 +193,7 @@ export const ProductCard = ({
 									</Text>
 								</View>
 							</View>
-						</View>
+						</ScrollView>
 					</View>
 				)}
 			</TouchableOpacity>
@@ -284,12 +293,12 @@ export const ProductCard = ({
 									</View>
 								)}
 							</View>
-							<View className="p-4">
-								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333333]">
-									{product.description ||
+							<ScrollView className="m-4 px-4 py-2 border-l-2 border-[#fed787] pl-2">
+								<Text className="text-base text-lg text-bold font-lexend tracking-tighter-lexend text-[#333333]">
+									{getLocalizedDescription(product) ||
 										"No description available"}
 								</Text>
-							</View>
+							</ScrollView>
 						</ScrollView>
 					</View>
 				</Animated.View>

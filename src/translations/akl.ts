@@ -16,6 +16,7 @@ export default {
 		title: "MalinaoNow",
 		upcomingEvents: "Maabot nga mga Hitabo",
 		featuredLocations: "Featured nga mga Lugar",
+		exploreLocations: "Mag-explore it mga Lugar",
 		bookmarkedLocations: "Mga Naka-bookmark nga Lugar",
 		noEvents: "Wara it Maabot nga mga Hitabo",
 		noEventsDesc:
@@ -24,7 +25,7 @@ export default {
 		noLocationsDesc:
 			"Ginabuslan pa namon para darhon sa inyo ro pinakamaayo nga mga lugar sa Malinao. Balik nalang sa pila ka adlaw!",
 		myBookmarks: "Akong mga Bookmark",
-		noBookmarks: "Wara it Naka-bookmark nga mga Lugar",
+		noBookmarks: "Owa it Naka-bookmark nga mga Lugar",
 		noBookmarksDesc:
 			"Wara ka pa it naka-bookmark nga mga lugar. I-tap ro heart icon sa isa ka lugar para i-bookmark kini!",
 		loadingEvents: "Nagakarga it mga hitabo...",
@@ -77,6 +78,7 @@ export default {
 		searchPlaceholder: "Mangita it produkto...",
 		seeMore: "Kita pa...",
 		seeLess: "Diri e",
+		noMatchingProducts: "Wara it mga Produkto",
 		location: "Lugar"
 	},
 	event: {
