@@ -293,12 +293,20 @@ export const ProductCard = ({
 									</View>
 								)}
 							</View>
-							<ScrollView className="m-4 px-4 py-2 border-l-2 border-[#fed787] pl-2">
-								<Text className="text-base text-lg text-bold font-lexend tracking-tighter-lexend text-[#333333]">
-									{getLocalizedDescription(product) ||
-										"No description available"}
-								</Text>
-							</ScrollView>
+							<View className="m-4 border-l-2 border-[#fed787] pl-2">
+								<View className="h-full">
+									<ScrollView 
+										showsVerticalScrollIndicator={true}
+										overScrollMode="always"
+										className="pr-2"
+									>
+										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333] leading-6">
+											{getLocalizedDescription(product) ||
+												"No description available"}
+										</Text>
+									</ScrollView>
+								</View>
+							</View>
 						</ScrollView>
 					</View>
 				</Animated.View>
