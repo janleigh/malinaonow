@@ -32,12 +32,7 @@ export const OAuthButton = ({
 					session: createdSessionId
 				});
 
-				// Wait a bit longer for auth state to fully propagate
-				// This prevents race conditions that cause the not-found screen to appear
 				await new Promise((resolve) => setTimeout(resolve, 200));
-
-				// Don't navigate immediately - let the auth context handle navigation
-				// The landing page will automatically redirect once isSignedIn becomes true
 			}
 		} catch (err) {
 			console.error(`Error during ${strategy} authentication:`, err);

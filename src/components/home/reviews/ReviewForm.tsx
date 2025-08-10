@@ -1,13 +1,13 @@
-import { useAuth } from "@/context/AuthContext";
-import { useTranslation } from "@/context/TranslationContext";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import React, { useState } from "react";
 import {
-	ActivityIndicator,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View
+    ActivityIndicator,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from "react-native";
 
 interface ReviewFormProps {

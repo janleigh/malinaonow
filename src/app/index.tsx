@@ -1,5 +1,5 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/lib/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Link, router, useFocusEffect } from "expo-router";
@@ -27,10 +27,7 @@ export default function LandingPage() {
 	);
 
 	useLayoutEffect(() => {
-		// Only redirect if auth is fully loaded and user is definitely signed in
-		// This prevents race conditions during OAuth flow
 		if (isLoaded && isSignedIn === true) {
-			// Add a small delay to ensure auth state is stable
 			const timer = setTimeout(() => {
 				handleGoToHome();
 			}, 100);
@@ -53,7 +50,6 @@ export default function LandingPage() {
 		}
 	};
 
-	// Show loading screen while auth state is being determined
 	if (!isLoaded) {
 		return (
 			<View className="flex-1 bg-[#faf4f0] items-center justify-center">

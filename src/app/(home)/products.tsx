@@ -1,6 +1,6 @@
 import { BottomTabBar } from "@/components/common";
 import { ProductCard } from "@/components/home";
-import { useTranslation } from "@/context/TranslationContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services/ProductService";
@@ -28,7 +28,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 type ViewMode = "grid" | "list";
 
-// Memoize the filter function to prevent unnecessary recalculations
 const filterProducts = (
 	products: Product[],
 	searchQuery: string,
@@ -47,7 +46,6 @@ const filterProducts = (
 			product.name.toLowerCase().includes(searchLower) ||
 			product.description.toLowerCase().includes(searchLower);
 
-		// Normalize barangay names by trimming and converting to lowercase for comparison
 		const productBarangay =
 			product.barangay?.trim().toLowerCase() || "";
 		const matchesBarangay =
@@ -94,7 +92,6 @@ const ProductsScreen = () => {
 	useEffect(() => {
 		fetchProducts();
 
-		// Set up real-time subscription
 		const unsubscribe = ProductService.subscribeToProducts(
 			(payload: any) => {
 				console.log("Product change detected:", payload);
@@ -102,7 +99,6 @@ const ProductsScreen = () => {
 			}
 		);
 
-		// Cleanup subscription on unmount
 		return () => {
 			if (unsubscribe) {
 				unsubscribe();
@@ -115,7 +111,6 @@ const ProductsScreen = () => {
 		fetchProducts();
 	}, [fetchProducts]);
 
-	// Memoize barangays to prevent recalculation on every render
 	const barangays = useMemo(() => {
 		const uniqueBarangays = new Set<string>();
 		products.forEach((product) => {
@@ -131,7 +126,6 @@ const ProductsScreen = () => {
 		];
 	}, [products]);
 
-	// Memoize filtered products to prevent recalculation on every render
 	const filteredProducts = useMemo(
 		() => filterProducts(products, searchQuery, selectedBarangay),
 		[products, searchQuery, selectedBarangay]
@@ -142,7 +136,6 @@ const ProductsScreen = () => {
 		[]
 	);
 
-	// Optimize list rendering with windowing
 	const getItemLayout = useCallback(
 		(data: any, index: number) => ({
 			length: ITEM_HEIGHT,
@@ -152,10 +145,8 @@ const ProductsScreen = () => {
 		[]
 	);
 
-	// Only re-render visible items
 	const onViewableItemsChanged = useRef(
 		({ viewableItems }: { viewableItems: ViewToken[] }) => {
-			// You can add viewability tracking here if needed
 		}
 	).current;
 
@@ -166,7 +157,6 @@ const ProductsScreen = () => {
 		}
 	]);
 
-	// Render list item optimized for performance
 	const renderProductItem = useCallback<ListRenderItem<Product>>(
 		({ item }) => (
 			<ProductCard
@@ -178,7 +168,6 @@ const ProductsScreen = () => {
 		[viewMode]
 	);
 
-	// Render grid columns (no ScrollView here)
 	const renderGridColumns = useCallback(() => {
 		const halfLength = Math.ceil(filteredProducts.length / 2);
 		const firstColumn = filteredProducts.slice(0, halfLength);
@@ -217,7 +206,6 @@ const ProductsScreen = () => {
 							{t("products.title")}
 						</Text>
 					</View>
-					{/* Search Bar */}
 					<View className="flex-row items-center bg-white border border-[#333333] px-3 py-2 mb-3">
 						<Feather name="search" size={18} color="#666" />
 						<TextInput
@@ -228,7 +216,6 @@ const ProductsScreen = () => {
 							placeholderTextColor="#666666"
 						/>
 					</View>
-					{/* Barangay Filter */}
 					<ScrollView
 						horizontal
 						showsHorizontalScrollIndicator={false}
@@ -248,8 +235,7 @@ const ProductsScreen = () => {
 							</TouchableOpacity>
 						))}
 					</ScrollView>
-					{/* Grid/List Toggle Section Header */}
-					<View className="flex-row justify-between items-center mb-4 mt-4">
+					<View className="flex-row justify-between items-center mt-4">
 						<Text className="text-lg font-lexend-extrabold tracking-tighter-lexend text-black">
 							{t("products.featuredProducts")}
 						</Text>

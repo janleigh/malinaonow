@@ -1,16 +1,16 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/lib/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
-	ActivityIndicator,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View
+    ActivityIndicator,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

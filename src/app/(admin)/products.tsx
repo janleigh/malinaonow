@@ -28,6 +28,8 @@ export default function ManageProductsScreen() {
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
+		description_fil: "",
+		description_akl: "",
 		image_url: "",
 		barangay: "",
 		is_available: true
@@ -55,6 +57,8 @@ export default function ManageProductsScreen() {
 		setFormData({
 			name: "",
 			description: "",
+			description_fil: "",
+			description_akl: "",
 			image_url: "",
 			barangay: "",
 			is_available: true
@@ -72,6 +76,8 @@ export default function ManageProductsScreen() {
 		setFormData({
 			name: product.name,
 			description: product.description,
+			description_fil: product.description_fil || "",
+			description_akl: product.description_akl || "",
 			image_url: product.image_url,
 			barangay: product.barangay,
 			is_available: product.is_available
@@ -80,7 +86,6 @@ export default function ManageProductsScreen() {
 	};
 
 	const handleSave = async () => {
-		// Validate required fields
 		if (
 			!formData.name.trim() ||
 			!formData.description.trim() ||
@@ -97,6 +102,8 @@ export default function ManageProductsScreen() {
 			const productData = {
 				name: formData.name,
 				description: formData.description,
+				description_fil: formData.description_fil,
+				description_akl: formData.description_akl,
 				image_url: formData.image_url,
 				barangay: formData.barangay,
 				is_available: formData.is_available
@@ -210,39 +217,35 @@ export default function ManageProductsScreen() {
 							</TouchableOpacity>
 						</View>
 					) : (
-						<ScrollView className="space-y-4">
+						<ScrollView>
 							{products.map((product) => (
 								<View
 									key={product.id}
-									className="bg-white border border-[#eee] rounded-lg overflow-hidden"
+									className="bg-white mb-4 border border-[#333333]"
+									style={shadowStyles.standard}
 								>
 									<View className="flex-row">
-										<View className="w-24 h-24 bg-gray-100 items-center justify-center">
-											{product.image_url ? (
-												<Image
-													source={{
-														uri: product.image_url
-													}}
-													className="w-full h-full"
-													resizeMode="cover"
-												/>
-											) : (
-												<Feather
-													name="package"
-													size={32}
-													color="#999"
-												/>
-											)}
-										</View>
+										{product.image_url ? (
+											<Image
+												source={{ uri: product.image_url }}
+												className="w-24 h-24"
+												resizeMode="cover"
+											/>
+										) : (
+											<View className="w-24 h-24 bg-gray-100 items-center justify-center">
+												<Feather name="package" size={32} color="#999" />
+											</View>
+										)}
+
 										<View className="flex-1 p-3">
 											<Text
-												className="text-base font-lexend-bold text-black"
+												className="text-base font-lexend-bold tracking-tighter-lexend text-black"
 												numberOfLines={1}
 											>
 												{product.name}
 											</Text>
 											<Text
-												className="text-sm text-gray-600 mt-1"
+												className="text-sm font-lexend tracking-tighter-lexend text-[#555555] mt-1"
 												numberOfLines={1}
 											>
 												{product.barangay}
@@ -251,10 +254,8 @@ export default function ManageProductsScreen() {
 												<View
 													className={`w-3 h-3 rounded-full mr-1 ${product.is_available ? "bg-green-500" : "bg-red-500"}`}
 												/>
-												<Text className="text-xs text-gray-500">
-													{product.is_available
-														? "Available"
-														: "Not Available"}
+												<Text className="text-xs font-lexend text-[#555555]">
+													{product.is_available ? "Available" : "Not Available"}
 												</Text>
 											</View>
 										</View>
@@ -262,31 +263,19 @@ export default function ManageProductsScreen() {
 									<View className="flex-row border-t border-[#eee] p-2">
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
-											onPress={() =>
-												openEditModal(product)
-											}
+											onPress={() => openEditModal(product)}
 										>
 											<Text className="font-lexend-medium text-[#333333]">
-												<Feather
-													name="edit"
-													size={16}
-												/>{" "}
-												Edit
+												<Feather name="edit" size={16} /> Edit
 											</Text>
 										</TouchableOpacity>
 										<View className="border-r border-[#eee] mx-2" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
-											onPress={() =>
-												handleDelete(product.id)
-											}
+											onPress={() => handleDelete(product.id)}
 										>
 											<Text className="font-lexend-medium text-[#fe5b62]">
-												<Feather
-													name="trash-2"
-													size={16}
-												/>{" "}
-												Delete
+												<Feather name="trash-2" size={16} /> Delete
 											</Text>
 										</TouchableOpacity>
 									</View>
@@ -296,7 +285,6 @@ export default function ManageProductsScreen() {
 					)}
 				</View>
 			</SafeAreaView>
-
 			<Modal visible={modalVisible} animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#faf4f0]">
 					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
@@ -343,6 +331,48 @@ export default function ManageProductsScreen() {
 								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
 								placeholder="Product description"
+								placeholderTextColor="#666666"
+								multiline
+								numberOfLines={4}
+								textAlignVertical="top"
+								style={{ height: 100 }}
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								DESCRIPTION (FIL)
+							</Text>
+							<TextInput
+								value={formData.description_fil}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										description_fil: text
+									})
+								}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Filipino description (optional)"
+								placeholderTextColor="#666666"
+								multiline
+								numberOfLines={4}
+								textAlignVertical="top"
+								style={{ height: 100 }}
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								DESCRIPTION (AKL)
+							</Text>
+							<TextInput
+								value={formData.description_akl}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										description_akl: text
+									})
+								}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Aklanon description (optional)"
 								placeholderTextColor="#666666"
 								multiline
 								numberOfLines={4}

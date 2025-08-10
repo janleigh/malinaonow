@@ -260,7 +260,7 @@ export default function ManageEventsScreen() {
 										/>
 										<View className="flex-1 p-3">
 											<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black">
-												{event.name}
+												{event.name} in {event.location}
 											</Text>
 											<View className="flex-row items-center mt-1">
 												<AntDesign
@@ -284,16 +284,6 @@ export default function ManageEventsScreen() {
 													{formatTime(
 														event.time
 													)}
-												</Text>
-											</View>
-											<View className="flex-row items-center mt-1">
-												<AntDesign
-													name="enviromento"
-													size={12}
-													color="#555"
-												/>
-												<Text className="ml-1 text-sm font-lexend text-[#555555]">
-													{event.location}
 												</Text>
 											</View>
 										</View>
@@ -347,7 +337,6 @@ export default function ManageEventsScreen() {
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
 					</View>
-
 					<ScrollView className="p-4">
 						<View className="mb-4">
 							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
@@ -366,7 +355,6 @@ export default function ManageEventsScreen() {
 								placeholderTextColor="#666666"
 							/>
 						</View>
-
 						<View className="mb-4">
 							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
 								DATE
@@ -399,7 +387,6 @@ export default function ManageEventsScreen() {
 								onCancel={hideDatePicker}
 							/>
 						</View>
-
 						<View className="mb-4">
 							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
 								TIME
@@ -432,7 +419,6 @@ export default function ManageEventsScreen() {
 								onCancel={hideTimePicker}
 							/>
 						</View>
-
 						<View className="mb-4">
 							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
 								LOCATION
@@ -450,7 +436,6 @@ export default function ManageEventsScreen() {
 								placeholderTextColor="#666666"
 							/>
 						</View>
-
 						<View className="mb-4">
 							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
 								BANNER IMAGE
@@ -468,7 +453,6 @@ export default function ManageEventsScreen() {
 								placeholderTextColor="#666666"
 							/>
 						</View>
-
 						<TouchableOpacity
 							className="bg-[#fed787] p-4 mb-4 items-center justify-center border border-[#333333]"
 							style={shadowStyles.standard}

@@ -28,6 +28,8 @@ export default function ManageLocationsScreen() {
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
+		description_fil: "",
+		description_akl: "",
 		street: "",
 		barangay: "",
 		town: "",
@@ -59,6 +61,8 @@ export default function ManageLocationsScreen() {
 		setFormData({
 			name: "",
 			description: "",
+			description_fil: "",
+			description_akl: "",
 			street: "",
 			barangay: "",
 			town: "",
@@ -80,6 +84,8 @@ export default function ManageLocationsScreen() {
 		setFormData({
 			name: location.name,
 			description: location.description,
+			description_fil: location.description_fil || "",
+			description_akl: location.description_akl || "",
 			street: location.address.street || "",
 			barangay: location.address.barangay || "",
 			town: location.address.town || "",
@@ -98,6 +104,8 @@ export default function ManageLocationsScreen() {
 			const locationData = {
 				name: formData.name,
 				description: formData.description,
+				description_fil: formData.description_fil,
+				description_akl: formData.description_akl,
 				address: {
 					street: formData.street,
 					barangay: formData.barangay,
@@ -343,6 +351,48 @@ export default function ManageLocationsScreen() {
 								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
 								placeholder="Location description"
+								placeholderTextColor="#666666"
+								multiline
+								numberOfLines={4}
+								textAlignVertical="top"
+								style={{ height: 100 }}
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								DESCRIPTION (FIL)
+							</Text>
+							<TextInput
+								value={formData.description_fil}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										description_fil: text
+									})
+								}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Filipino description (optional)"
+								placeholderTextColor="#666666"
+								multiline
+								numberOfLines={4}
+								textAlignVertical="top"
+								style={{ height: 100 }}
+							/>
+						</View>
+						<View className="mb-4">
+							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+								DESCRIPTION (AKL)
+							</Text>
+							<TextInput
+								value={formData.description_akl}
+								onChangeText={(text) =>
+									setFormData({
+										...formData,
+										description_akl: text
+									})
+								}
+								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								placeholder="Aklanon description (optional)"
 								placeholderTextColor="#666666"
 								multiline
 								numberOfLines={4}

@@ -1,4 +1,4 @@
-import { useTranslation } from "@/context/TranslationContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -47,7 +47,6 @@ export const ProductCard = ({
 		setIsDescriptionExpanded(!isDescriptionExpanded);
 	};
 
-	// Reset scroll position and description state when modal opens/closes
 	useEffect(() => {
 		if (expanded && scrollViewRef.current) {
 			scrollViewRef.current.scrollTo({
@@ -57,7 +56,6 @@ export const ProductCard = ({
 			});
 		}
         
-		// Reset description to collapsed state when modal closes
 		if (!expanded) {
 			setIsDescriptionExpanded(false);
 		}
@@ -115,15 +113,6 @@ export const ProductCard = ({
 
 	return (
 		<View className="mb-2">
-			<View className="flex-row items-center mb-1 px-1">
-				<AntDesign name="enviromento" size={10} color="#555" />
-				<Text
-					className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]"
-					numberOfLines={1}
-				>
-					{product.barangay}
-				</Text>
-			</View>
 			<TouchableOpacity
 				key={product.id}
 				className="bg-white border border-[#333333] overflow-hidden"
@@ -150,24 +139,18 @@ export const ProductCard = ({
 							)}
 						</View>
 						<ScrollView className="p-3 flex-1">
-							<Text
-								className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
-								numberOfLines={1}
-							>
-								{product.name}
-							</Text>
-							<Text
-								className="text-xs font-lexend tracking-tighter-lexend text-[#666666] mt-1"
-								numberOfLines={2}
-							>
-								{getLocalizedDescription(product)}
-							</Text>
-							<View className="flex-row items-center mt-1">
+							<View className="flex-row items-center">
+								<Text
+									className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
+									numberOfLines={1}
+								>
+									{product.name}
+								</Text>
 								<View
 									className={`px-2 py-1 rounded ${product.is_available ? "bg-green-100" : "bg-red-100"} ml-2`}
 								>
 									<Text
-										className={`text-xs font-lexend-medium ${product.is_available ? "text-green-800" : "text-red-800"}`}
+										className={`text-xs font-lexend-medium tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
 									>
 										{product.is_available
 											? "Available"
@@ -175,6 +158,21 @@ export const ProductCard = ({
 									</Text>
 								</View>
 							</View>
+							<View className="flex-row items-center mb-1 px-1">
+								<AntDesign name="enviromento" size={10} color="#555" />
+								<Text
+									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]"
+									numberOfLines={1}
+								>
+									{product.barangay}
+								</Text>
+							</View>
+							<Text
+								className="text-xs font-lexend tracking-tighter-lexend text-[#666666] mt-1"
+								numberOfLines={1}
+							>
+								{getLocalizedDescription(product)}
+							</Text>
 						</ScrollView>
 					</View>
 				) : (
@@ -197,6 +195,19 @@ export const ProductCard = ({
 							)}
 						</View>
 						<ScrollView className="p-3">
+							<View className="flex-row items-start mb-1">
+								<View
+									className={`px-2 py-1 rounded ${product.is_available ? "bg-green-100" : "bg-red-100"}`}
+								>
+									<Text
+										className={`text-xs font-lexend-medium tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
+									>
+										{product.is_available
+											? "Available"
+											: "Unavailable"}
+									</Text>
+								</View>
+							</View>
 							<Text
 								className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
 								numberOfLines={2}
@@ -209,19 +220,6 @@ export const ProductCard = ({
 							>
 								{getLocalizedDescription(product)}
 							</Text>
-							<View className="flex-row items-center mt-1">
-								<View
-									className={`px-2 py-1 rounded ${product.is_available ? "bg-green-100" : "bg-red-100"} ml-2`}
-								>
-									<Text
-										className={`text-xs font-lexend-medium ${product.is_available ? "text-green-800" : "text-red-800"}`}
-									>
-										{product.is_available
-											? "Available"
-											: "Unavailable"}
-									</Text>
-								</View>
-							</View>
 						</ScrollView>
 					</View>
 				)}
@@ -331,7 +329,7 @@ export const ProductCard = ({
 									style={{
 										maxHeight: isDescriptionExpanded
 											? undefined
-											: 80
+											: 300
 									}}
 								>
 									<View onLayout={onDescriptionLayout}>

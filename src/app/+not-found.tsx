@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/lib/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
 import { Link, Stack, useRouter } from "expo-router";
@@ -15,8 +15,6 @@ export default function InDevelopmentScreen() {
 	const { isSignedIn, isLoaded } = useAuth();
 	const router = useRouter();
 
-	// If user is signed in, redirect to home immediately
-	// This prevents the not-found screen from showing during auth transitions
 	useEffect(() => {
 		if (isLoaded && isSignedIn) {
 			router.replace("/(home)");
@@ -25,8 +23,6 @@ export default function InDevelopmentScreen() {
 		}
 	}, [isLoaded, isSignedIn, router]);
 
-	// Show loading screen while auth state is being determined
-	// This prevents the "Coming Soon" message from appearing during auth flow
 	if (!isLoaded) {
 		return (
 			<View className="flex-1 bg-[#faf4f0] items-center justify-center">

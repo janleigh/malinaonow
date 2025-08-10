@@ -1,5 +1,5 @@
-import { useAuth } from "@/context/AuthContext";
-import { LANGUAGES, useTranslation } from "@/context/TranslationContext";
+import { useAuth } from "@/lib/context/AuthContext";
+import { LANGUAGES, useTranslation } from "@/lib/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -18,13 +18,11 @@ export default function SettingsScreen() {
 	const [isLoading, setIsLoading] = useState(false);
 	const { user } = useAuth();
 
-	// Handle language change
 	const changeLanguage = async (languageId: string) => {
 		try {
 			setIsLoading(true);
 			await setLanguage(languageId);
 
-			// Show confirmation
 			Alert.alert(
 				t("settings.languageChanged"),
 				t("settings.languageChangedDesc"),

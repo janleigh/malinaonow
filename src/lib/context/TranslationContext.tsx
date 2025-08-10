@@ -1,6 +1,6 @@
-import akl from "@/translations/akl";
-import en from "@/translations/en";
-import fil from "@/translations/fil";
+import akl from "@/lib/translations/akl";
+import en from "@/lib/translations/en";
+import fil from "@/lib/translations/fil";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {
 	createContext,

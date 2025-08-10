@@ -1,4 +1,4 @@
-import { useTranslation } from "@/context/TranslationContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { Review } from "@/lib/types/supabase";
 import { formatDate } from "@/lib/utils/date";
 import React from "react";

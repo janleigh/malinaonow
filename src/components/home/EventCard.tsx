@@ -1,15 +1,15 @@
-import { useTranslation } from "@/context/TranslationContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { formatDate, formatTime } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import {
-	Animated,
-	Image,
-	Modal,
-	Text,
-	TouchableOpacity,
-	View
+    Animated,
+    Image,
+    Modal,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

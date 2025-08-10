@@ -1,6 +1,6 @@
 import { API_KEYS } from "@/config";
-import { AuthProvider } from "@/context/AuthContext";
-import { TranslationProvider } from "@/context/TranslationContext";
+import { AuthProvider } from "@/lib/context/AuthContext";
+import { TranslationProvider } from "@/lib/context/TranslationContext";
 import "@/lib/styles/globals.css";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
@@ -46,8 +46,6 @@ export default function RootLayout() {
 		}
 	}, [fontsLoaded, fontError]);
 
-	// Don't render anything until fonts are loaded
-	// This prevents any fallback screens from appearing
 	if (!fontsLoaded && !fontError) {
 		return null;
 	}

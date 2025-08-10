@@ -5,8 +5,8 @@ import {
 	LocationCard,
 	UserSidebar
 } from "@/components/home";
-import { useAuth } from "@/context/AuthContext";
-import { useTranslation } from "@/context/TranslationContext";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { Location } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import {

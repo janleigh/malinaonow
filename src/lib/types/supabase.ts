@@ -30,17 +30,6 @@ export interface Location {
 	review_count?: number;
 }
 
-export interface Review {
-	id: string;
-	location_id: string;
-	user_id: string; // Courtesy of Clerk User IDs
-	user_name?: string; // User's display name
-	rating: number;
-	comment: string;
-	created_at: string;
-	flagged?: boolean;
-}
-
 export interface Product {
 	id: string;
 	name: string;
@@ -56,6 +45,28 @@ export interface Product {
 	updated_at?: string;
 }
 
+export interface Review {
+	id: string;
+	location_id: string;
+	user_id: string; // Courtesy of Clerk User IDs
+	user_name?: string; // User's display name
+	rating: number;
+	comment: string;
+	created_at: string;
+	flagged?: boolean;
+}
+
 export type CreateProductDTO = Omit<Product, "id" | "created_at" | "updated_at">
 
 export type UpdateProductDTO = Partial<CreateProductDTO>
+
+export interface UserProfile {
+    id: string; // Clerk user ID
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    image_url?: string;
+    is_admin: boolean;
+    created_at?: string;
+    updated_at?: string;
+}

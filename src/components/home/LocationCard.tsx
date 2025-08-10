@@ -1,7 +1,7 @@
 import { supabase } from "@/api/supabase";
 import { API_KEYS } from "@/config";
-import { useAuth } from "@/context/AuthContext";
-import { useTranslation } from "@/context/TranslationContext";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { Location, Review } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { ReviewService } from "@/services/ReviewService";
@@ -70,7 +70,6 @@ export const LocationCard = ({
 		setIsDescriptionExpanded(!isDescriptionExpanded);
 	};
 
-	// Use local state for rating and review count that can be updated after initial load
 	const rating = avgRating || 0;
 	const reviewCount = totalReviews;
 
@@ -138,14 +137,12 @@ export const LocationCard = ({
 					.eq("location_id", location.id);
 
 				if (reviewStats && reviewStats.length > 0) {
-					// Convert to Review type before calculating average
 					const reviews = reviewStats as Review[];
 					const avg =
 						ReviewService.calculateAverageRating(reviews);
 					setAvgRating(avg);
 					setTotalReviews(reviewStats.length);
 
-					// Only load full reviews if we're expanding the card
 					if (loadFullReviews) {
 						setIsLoadingReviews(true);
 						const fetchedReviews =
@@ -165,12 +162,10 @@ export const LocationCard = ({
 		[location.id]
 	);
 
-	// Load review stats on initial mount
 	useEffect(() => {
 		loadReviews(false);
 	}, [loadReviews]);
 
-	// Load full reviews when expanded
 	useEffect(() => {
 		if (expanded) {
 			loadReviews(true);
@@ -207,11 +202,9 @@ export const LocationCard = ({
 
 			const newReview = await ReviewService.addReview(reviewData);
 			if (newReview) {
-				// Update local state immediately for instant feedback
 				setReviews((prev) => [newReview, ...prev]);
 				setShowReviewForm(false);
 
-				// Update the average rating and review count
 				const updatedReviews = [newReview, ...reviews];
 				const newAvgRating =
 					ReviewService.calculateAverageRating(updatedReviews);
@@ -431,7 +424,6 @@ export const LocationCard = ({
 				longitude: location.coords.longitude
 			});
 
-			// Pass the location to the WebView via injected JavaScript
 			if (webViewRef.current) {
 				const jsCode = `
 					const userLocation = [${location.coords.longitude}, ${location.coords.latitude}];

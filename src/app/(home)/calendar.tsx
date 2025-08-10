@@ -1,17 +1,17 @@
 import { BottomTabBar } from "@/components/common";
 import { Event } from "@/components/home";
-import { useTranslation } from "@/context/TranslationContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { formatDate, isToday } from "@/lib/utils/date";
 import { shadowStyles } from "@/lib/utils/styles";
 import { EventService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
-	ActivityIndicator,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View
+    ActivityIndicator,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

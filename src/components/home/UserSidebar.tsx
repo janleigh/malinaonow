@@ -1,5 +1,5 @@
-import { useAuth } from "@/context/AuthContext";
-import { useTranslation } from "@/context/TranslationContext";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useTranslation } from "@/lib/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -33,7 +33,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 	profileImage,
 	onShowBookmarks
 }) => {
-	const { signOut, user } = useAuth();
+	const { signOut, user, isAdmin } = useAuth();
 	const { t } = useTranslation();
 	const slideAnim = useRef(
 		new Animated.Value(Dimensions.get("window").width)
@@ -54,7 +54,6 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 
 	useEffect(() => {
 		if (visible && modalVisible) {
-			// Reset animation values
 			slideAnim.setValue(Dimensions.get("window").width);
 			fadeAnim.setValue(0);
 			contentFadeAnim.setValue(0);
@@ -210,22 +209,24 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 								</Text>
 							</View>
 							<View className="flex-1 p-4 space-y-1">
-								<TouchableOpacity
-									className="flex-row items-center py-4"
-									onPress={() => {
-										onClose();
-										router.push("/(admin)");
-									}}
-								>
-									<Feather
-										name="shield"
-										size={20}
-										color="#333"
-									/>
-									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
-										{t("userSidebar.adminPanel")}
-									</Text>
-								</TouchableOpacity>
+								{isAdmin && (
+									<TouchableOpacity
+										className="flex-row items-center py-4"
+										onPress={() => {
+											onClose();
+											router.push("/(admin)");
+										}}
+									>
+										<Feather
+											name="shield"
+											size={20}
+											color="#333"
+										/>
+										<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
+											{t("userSidebar.adminPanel")}
+										</Text>
+									</TouchableOpacity>
+								)}
 								<TouchableOpacity
 									className="flex-row items-center py-4"
 									onPress={() => {
