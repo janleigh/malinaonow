@@ -56,7 +56,6 @@ export interface Product {
 	updated_at?: string;
 }
 
-export interface CreateProductDTO
-	extends Omit<Product, "id" | "created_at" | "updated_at"> {}
+export type CreateProductDTO = Omit<Product, "id" | "created_at" | "updated_at">
 
-export interface UpdateProductDTO extends Partial<CreateProductDTO> {}
+export type UpdateProductDTO = Partial<CreateProductDTO>

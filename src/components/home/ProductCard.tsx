@@ -2,7 +2,7 @@ import { useTranslation } from "@/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
 import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	Animated,
 	Image,
@@ -30,7 +30,19 @@ export const ProductCard = ({
 	const [bookmarked, setBookmarked] = useState(isBookmarked);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
+	const scrollViewRef = useRef<ScrollView>(null);
 	const { language } = useTranslation();
+
+	// Reset scroll position when modal opens
+	useEffect(() => {
+		if (expanded && scrollViewRef.current) {
+			scrollViewRef.current.scrollTo({
+				x: 0,
+				y: 0,
+				animated: false
+			});
+		}
+	}, [expanded]);
 
 	const toggleExpand = () => {
 		if (!expanded) {
@@ -72,7 +84,6 @@ export const ProductCard = ({
 		if (onToggleBookmark) onToggleBookmark(product.id, newStatus);
 	};
 
-
 	const getLocalizedDescription = (prod: Product): string => {
 		if (language === "fil" && prod.description_fil) {
 			return prod.description_fil;
@@ -82,7 +93,6 @@ export const ProductCard = ({
 
 		return prod.description;
 	};
-
 
 	return (
 		<View className="mb-2">
@@ -242,72 +252,74 @@ export const ProductCard = ({
 								</Text>
 							</View>
 						</View>
-						<ScrollView className="flex-1">
+						<View className="flex-1">
 							<View className="w-full h-64">
 								{product.images &&
 								product.images.length > 0 ? (
-									<ScrollView
-										horizontal
-										pagingEnabled
-										showsHorizontalScrollIndicator={
-											false
-										}
-										className="w-full h-full"
-									>
-										{product.images.map(
-											(
-												img: string,
-												index: number
-											) => (
-												<View
-													key={index}
-													className="w-full h-full"
-													style={{
-														width: "100%"
-													}}
-												>
-													<Image
-														source={{
-															uri: img
-														}}
+										<ScrollView
+											horizontal
+											pagingEnabled
+											showsHorizontalScrollIndicator={
+												false
+											}
+											className="w-full h-full"
+										>
+											{product.images.map(
+												(
+													img: string,
+													index: number
+												) => (
+													<View
+														key={index}
 														className="w-full h-full"
-														resizeMode="cover"
-													/>
-												</View>
-											)
-										)}
-									</ScrollView>
-								) : product.image_url ? (
-									<Image
-										source={{ uri: product.image_url }}
-										className="w-full h-full"
-										resizeMode="cover"
-									/>
-								) : (
-									<View className="w-full h-full bg-gray-100 items-center justify-center">
-										<Feather
-											name="package"
-											size={40}
-											color="#999"
+														style={{
+															width: "100%"
+														}}
+													>
+														<Image
+															source={{
+																uri: img
+															}}
+															className="w-full h-full"
+															resizeMode="cover"
+														/>
+													</View>
+												)
+											)}
+										</ScrollView>
+									) : product.image_url ? (
+										<Image
+											source={{ uri: product.image_url }}
+											className="w-full h-full"
+											resizeMode="cover"
 										/>
-									</View>
-								)}
+									) : (
+										<View className="w-full h-full bg-gray-100 items-center justify-center">
+											<Feather
+												name="package"
+												size={40}
+												color="#999"
+											/>
+										</View>
+									)}
 							</View>
-							<View className="m-4 border-l-2 border-[#fed787] pl-2">
-								<View className="h-full">
-									<ScrollView 
-										showsVerticalScrollIndicator={true}
-										overScrollMode="always"
-										className="pr-2"
-									>
-										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333] leading-6">
-											{getLocalizedDescription(product) ||
-												"No description available"}
-										</Text>
-									</ScrollView>
-								</View>
+							<View style={{ flex: 1, maxHeight: 600 }}>
+								<ScrollView
+									ref={scrollViewRef}
+									className="m-4 border-l-2 border-[#fed787] pl-2"
+									showsVerticalScrollIndicator={true}
+									contentContainerStyle={{
+										paddingBottom: 20
+									}}
+								>
+									<Text className="text-base font-lexend tracking-tighter-lexend text-[#333333] leading-6">
+										{getLocalizedDescription(
+											product
+										) || "No description available"}
+									</Text>
+								</ScrollView>
 							</View>
-						</ScrollView>
+						</View>
 					</View>
 				</Animated.View>
 			</Modal>
