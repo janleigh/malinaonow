@@ -1,36 +1,36 @@
 export default {
 	common: {
-		loading: "Nagakarga...",
-		retry: "Sulayon Liwat",
+		loading: "Nagaload",
+		retry: "Mag-uman",
 		signOut: "Mag-sign Out",
 		cancel: "Kanselahon",
 		save: "I-save",
-		delete: "Tanggatangga",
+		delete: "Bue-on",
 		edit: "I-edit",
 		back: "Balik",
 		confirm: "Kompirmahon",
-		error: "May Sala",
-		success: "Madinalag-on"
+		error: "May Saea",
+		success: "Madinaeag-on"
 	},
 	home: {
 		title: "MalinaoNow",
-		upcomingEvents: "Maabot nga mga Hitabo",
+		upcomingEvents: "Maabot nga mga Gakaeatabo",
 		featuredLocations: "Featured nga mga Lugar",
 		exploreLocations: "Mag-explore it mga Lugar",
 		bookmarkedLocations: "Mga Naka-bookmark nga Lugar",
-		noEvents: "Wara it Maabot nga mga Hitabo",
+		noEvents: "Uwa it Maabot nga mga Gakaeatabo",
 		noEventsDesc:
-			"Wara it maabot nga mga hitabo sa sini nga oras. Balik nalang sa pila ka adlaw!",
-		noLocations: "Ginabuslan pa",
+			"Uwa it maabot nga mga Gakaeatabo sa makara nga oras. Balik lang sa pilang adlaw!",
+		noLocations: "Ginaubra pa",
 		noLocationsDesc:
-			"Ginabuslan pa namon para darhon sa inyo ro pinakamaayo nga mga lugar sa Malinao. Balik nalang sa pila ka adlaw!",
+			"Ginaubra pa namon para daehon sa inyo ro pinakamaayo nga mga lugar sa Malinao. Balik lang sa pilang adlaw!",
 		myBookmarks: "Akong mga Bookmark",
-		noBookmarks: "Owa it Naka-bookmark nga mga Lugar",
+		noBookmarks: "Uwa it Naka-bookmark nga mga Lugar",
 		noBookmarksDesc:
-			"Wara ka pa it naka-bookmark nga mga lugar. I-tap ro heart icon sa isa ka lugar para i-bookmark kini!",
-		loadingEvents: "Nagakarga it mga hitabo...",
-		loadingLocations: "Nagakarga it mga lugar...",
-		errorLoading: "May Sala sa Pagkarga it Data",
+			"Uwa ka pa it naka-bookmark nga mga lugar. I-tap ro heart icon sa isa ka lugar para i-bookmark raya!",
+		loadingEvents: "Nagaload it mga Gakaeatabo...",
+		loadingLocations: "Nagaload it mga lugar...",
+		errorLoading: "May Saea sa Pagload it Data",
 		gridView: "Grid View",
 		listView: "List View"
 	},
@@ -43,21 +43,21 @@ export default {
 	},
 	settings: {
 		title: "Mga Setting",
-		language: "Hambal",
-		selectLanguage: "Magpili it gusto mo nga hambal",
-		languageChanged: "Nagbag-o ro Hambal",
+		language: "Linggwahe",
+		selectLanguage: "Magpili it gusto mo nga linggwahe",
+		languageChanged: "Nagbag-o ro linggwahe",
 		languageChangedDesc:
 			"Nag-update na ro imo nga language preference."
 	},
 	admin: {
 		title: "Admin Panel",
-		manageLocations: "Dumara ro mga Lugar",
+		manageLocations: "Magpamahala it mga Lugar",
 		manageLocationsDesc:
-			"Magdugang, mag-edit, o magtanggal it mga tourist location",
-		manageEvents: "Dumara ro mga Hitabo",
-		manageEventsDesc: "Maghimo kag dumara ro mga maabot nga hitabo",
+			"Magdugang, mag-edit, o magbu-oe it mga tourist location",
+		manageEvents: "Magpamahala it mga Gakaeatabo",
+		manageEventsDesc: "Maghimo ag magpamahala mga maabot nga Gakaeatabo",
 		moderateReviews: "I-moderate ro mga Review",
-		moderateReviewsDesc: "Tan-awa kag i-moderate ro mga review it user"
+		moderateReviewsDesc: "Tan-awa ag i-moderate ro mga review it user"
 	},
 	location: {
 		description: "Deskripsyon",
@@ -67,32 +67,32 @@ export default {
 		showLess: "Ipakita it sangkiri ↑",
 		viewOnMap: "Tan-awa sa Mapa",
 		view360: "Tan-awa sa 360°",
-		mapView: "Panirong sa Mapa",
-		view360Title: "Panirong sa 360°",
+		mapView: "Tan-awa sa Mapa",
+		view360Title: "Tan-awa sa 360°",
 		writeReview: "Maghimo it Review"
 	},
 	products: {
 		title: "Mga Produkto",
 		featuredProducts: "Mga Featured nga Produkto",
-		noProducts: "Wara it Available nga mga Produkto",
-		searchPlaceholder: "Mangita it produkto...",
+		noProducts: "Uwa it Available nga mga Produkto",
+		searchPlaceholder: "Mag-usoy it produkto...",
 		seeMore: "Kita pa...",
-		seeLess: "Diri e",
-		noMatchingProducts: "Wara it mga Produkto",
+		seeLess: "Kita it sangkiri",
+		noMatchingProducts: "Uwa it mga Produkto",
 		location: "Lugar"
 	},
 	event: {
 		date: "Petsa",
 		time: "Oras",
 		location: "Lugar",
-		addToCalendar: "Idugang sa Calendar",
-		eventDetails: "Mga Detalye it Hitabo"
+		addToCalendar: "Idugang sa Kalendaryo",
+		eventDetails: "Mga Detalye it Gakaeatabo"
 	},
 	review: {
 		writeReview: "Maghimo it Review",
 		rating: "Rating",
-		commentPlaceholder: "Isulat ro imo nga review diri...",
+		commentPlaceholder: "Isueat ro imo nga review iya...",
 		submit: "I-submit",
-		noReviews: "Wara it mga Review"
+		noReviews: "Uwa it mga Review"
 	}
 };
