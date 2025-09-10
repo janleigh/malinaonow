@@ -15,21 +15,21 @@ export default {
 	home: {
 		title: "MalinaoNow",
 		upcomingEvents: "Mga Paparating na Kaganapan",
-		featuredLocations: "Mga Featured na Lokasyon",
-		exploreLocations: "Mag-explore it mga Lokasyon",
-		bookmarkedLocations: "Mga Naka-bookmark na Lokasyon",
+		featuredLocations: "Mga Featured na Pook-pasyalan",
+		exploreLocations: "Mag-explore it mga Pook-pasyalan",
+		bookmarkedLocations: "Mga Naka-bookmark na Pook-pasyalan",
 		noEvents: "Walang Paparating na Kaganapan",
 		noEventsDesc:
 			"Wala pang paparating na mga kaganapan sa ngayon. Bumalik na lang sa ibang pagkakataon!",
 		noLocations: "Kasalukuyang Ginagawa",
 		noLocationsDesc:
-			"Kasalukuyan kaming nagtatrabaho para dalhin sa inyo ang mga pinakamahusay na lokasyon sa Malinao. Bumalik na lang sa ibang pagkakataon!",
+			"Kasalukuyan kaming nagtatrabaho para dalhin sa inyo ang mga pinakamahusay na pook-pasyalan sa Malinao. Bumalik na lang sa ibang pagkakataon!",
 		myBookmarks: "Aking Mga Bookmark",
-		noBookmarks: "Walang Naka-bookmark na Lokasyon",
+		noBookmarks: "Walang Naka-bookmark na Pook-pasyalan",
 		noBookmarksDesc:
-			"Wala ka pang naka-bookmark na lokasyon. I-tap ang heart icon sa isang lokasyon para i-bookmark ito!",
+			"Wala ka pang naka-bookmark na pook-pasyalan. I-tap ang heart icon sa isang pook-pasyalan para i-bookmark ito!",
 		loadingEvents: "Naglo-load ng mga kaganapan...",
-		loadingLocations: "Naglo-load ng mga lokasyon...",
+		loadingLocations: "Naglo-load ng mga Pook-pasyalan...",
 		errorLoading: "May Error sa Pag-load ng Data",
 		gridView: "Grid View",
 		listView: "List View"
@@ -50,9 +50,9 @@ export default {
 	},
 	admin: {
 		title: "Admin Panel",
-		manageLocations: "Pamahalaan ang mga Lokasyon",
+		manageLocations: "Pamahalaan ang mga Pook-pasyalan",
 		manageLocationsDesc:
-			"Magdagdag, mag-edit, o magtanggal ng mga tourist location",
+			"Magdagdag, mag-edit, o magtanggal ng mga Pook-pasyalan",
 		manageEvents: "Pamahalaan ang mga Kaganapan",
 		manageEventsDesc:
 			"Lumikha at pamahalaan ang mga paparating na kaganapan",

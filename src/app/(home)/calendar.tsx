@@ -7,11 +7,11 @@ import { EventService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View
+	ActivityIndicator,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -65,7 +65,7 @@ export default function CalendarPage() {
 	}, []);
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
@@ -146,7 +146,7 @@ export default function CalendarPage() {
 										className="mb-6"
 									>
 										<View className="flex-row items-center mb-2">
-											<View className="w-10 h-10 rounded-full bg-[#fed787] items-center justify-center mr-3 border border-[#333333]">
+											<View className="w-10 h-10 rounded-full bg-[#FFBB38] items-center justify-center mr-3 border border-[#333333]">
 												<AntDesign
 													name="calendar"
 													size={20}
@@ -168,14 +168,12 @@ export default function CalendarPage() {
 												)}
 											</View>
 										</View>
-										<View className="border-l-2 border-[#fed787] ml-5 pl-4">
+										<View className="border-l-4 border-[#FFBB38] ml-5 pl-4">
 											{group.events.map((event) => (
 												<TouchableOpacity
 													key={event.id}
-													className="bg-white p-4 mb-3 border border-[#333333]"
-													style={
-														shadowStyles.standard
-													}
+													className="bg-white p-4 mb-3 border border-[#333333] rounded-xl"
+												
 													onPress={() =>
 														setSelectedEvent(
 															event

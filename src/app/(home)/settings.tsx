@@ -1,6 +1,5 @@
 import { useAuth } from "@/lib/context/AuthContext";
 import { LANGUAGES, useTranslation } from "@/lib/context/TranslationContext";
-import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -40,7 +39,7 @@ export default function SettingsScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
@@ -64,12 +63,12 @@ export default function SettingsScreen() {
 							{LANGUAGES.map((lang) => (
 								<TouchableOpacity
 									key={lang.id}
-									className={`flex-row items-center justify-between p-4 border ${
+									className={`flex-row items-center justify-between p-4 border rounded-3xl ${
 										language === lang.id
-											? "border-black bg-[#fed787]"
+											? "border-black bg-[#FFBB38]"
 											: "border-gray-300 bg-white"
 									}`}
-									style={shadowStyles.small}
+									
 									onPress={() => changeLanguage(lang.id)}
 									disabled={isLoading}
 								>

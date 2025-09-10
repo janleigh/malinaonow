@@ -1,6 +1,5 @@
 import { supabase } from "@/api/supabase";
 import { Location } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
 import { LocationService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -46,8 +45,8 @@ export default function ManageLocationsScreen() {
 			const data = await LocationService.getLocations();
 			setLocations(data);
 		} catch (err) {
-			console.error("Failed to fetch locations:", err);
-			setError("Failed to load locations. Please try again.");
+			console.error("Failed to fetch Tourist spots:", err);
+			setError("Failed to load tourist spots. Please try again.");
 		} finally {
 			setLoading(false);
 		}
@@ -153,7 +152,7 @@ export default function ManageLocationsScreen() {
 	const handleDelete = async (locationId: string) => {
 		Alert.alert(
 			"Confirm Delete",
-			"Are you sure you want to delete this location? This action cannot be undone.",
+			"Are you sure you want to delete this tourist spot? This action cannot be undone.",
 			[
 				{ text: "Cancel", style: "cancel" },
 				{
@@ -171,10 +170,10 @@ export default function ManageLocationsScreen() {
 
 							await fetchLocations();
 						} catch (err) {
-							console.error("Error deleting location:", err);
+							console.error("Error deleting tourist spot:", err);
 							Alert.alert(
 								"Error",
-								"Failed to delete location. Please try again."
+								"Failed to delete tourist spot. Please try again."
 							);
 						} finally {
 							setLoading(false);
@@ -186,11 +185,11 @@ export default function ManageLocationsScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 pb-6 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
-						Manage Locations
+						Manage Tourist Spots
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
 						<Feather name="x" size={24} color="black" />
@@ -198,13 +197,13 @@ export default function ManageLocationsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="bg-[#fed787] p-4 mb-4 flex-row items-center justify-center border border-[#333333]"
-						style={shadowStyles.standard}
+						className="bg-[#FFBB38] p-4 mb-4 flex-row items-center justify-center border border-[#333333] rounded-xl"
+						
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
-							Add New Location
+							Add New Tourist Spot
 						</Text>
 					</TouchableOpacity>
 					{loading && locations.length === 0 ? (
@@ -214,7 +213,7 @@ export default function ManageLocationsScreen() {
 								color="#fed787"
 							/>
 							<Text className="mt-4 font-lexend text-[#666666]">
-								Loading locations...
+								Loading Tourist Spot...
 							</Text>
 						</View>
 					) : error ? (
@@ -245,8 +244,8 @@ export default function ManageLocationsScreen() {
 							{locations.map((location) => (
 								<View
 									key={location.id}
-									className="bg-white mb-4 border border-[#333333]"
-									style={shadowStyles.standard}
+									className="bg-white mb-4 border border-[#333333] rounded-xl"
+									
 								>
 									<View className="flex-row">
 										<Image
@@ -306,12 +305,12 @@ export default function ManageLocationsScreen() {
 				</View>
 			</SafeAreaView>
 			<Modal visible={modalVisible} animationType="slide">
-				<SafeAreaView className="flex-1 bg-[#faf4f0]">
+				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
 					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 							{editingLocation
-								? "Edit Location"
-								: "Add Location"}
+								? "Edit tourist spot"
+								: "Add new tourist spot"}
 						</Text>
 						<TouchableOpacity
 							onPress={() => setModalVisible(false)}
@@ -333,7 +332,7 @@ export default function ManageLocationsScreen() {
 									})
 								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
-								placeholder="Location name"
+								placeholder="Tourist spot name"
 								placeholderTextColor="#666666"
 							/>
 						</View>
@@ -350,7 +349,7 @@ export default function ManageLocationsScreen() {
 									})
 								}
 								className="bg-white text-black p-3 border border-[#333333] font-lexend"
-								placeholder="Location description"
+								placeholder="Tourist spot description"
 								placeholderTextColor="#666666"
 								multiline
 								numberOfLines={4}
@@ -506,8 +505,8 @@ export default function ManageLocationsScreen() {
 							</View>
 						</View>
 						<TouchableOpacity
-							className="bg-[#fed787] p-4 mb-4 items-center justify-center border border-[#333333]"
-							style={shadowStyles.standard}
+							className="bg-[#FFBB38] p-4 mb-4 items-center justify-center border border-[#333333] rounded-3xl"
+							
 							onPress={handleSave}
 							disabled={loading}
 						>
@@ -518,7 +517,7 @@ export default function ManageLocationsScreen() {
 								/>
 							) : (
 								<Text className="font-lexend-medium tracking-tighter-lexend text-black">
-									Save Location
+									Save Tourist Spot
 								</Text>
 							)}
 						</TouchableOpacity>

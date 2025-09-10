@@ -94,7 +94,7 @@ export default function BookmarksPage() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<View className="flex-row items-center">
@@ -170,7 +170,7 @@ export default function BookmarksPage() {
 						) : locations.length === 0 ? (
 							<View
 								className="p-4 my-4 border border-[#333333] bg-white"
-								style={shadowStyles.standard}
+							
 							>
 								<View className="items-center">
 									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
@@ -188,7 +188,7 @@ export default function BookmarksPage() {
 									</Text>
 									<TouchableOpacity
 										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"
-										style={shadowStyles.standard}
+									
 										onPress={() =>
 											router.push("/(home)")
 										}

@@ -1,15 +1,14 @@
 import { useTranslation } from "@/lib/context/TranslationContext";
 import { formatDate, formatTime } from "@/lib/utils/date";
-import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import {
-    Animated,
-    Image,
-    Modal,
-    Text,
-    TouchableOpacity,
-    View
+	Animated,
+	Image,
+	Modal,
+	Text,
+	TouchableOpacity,
+	View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -79,8 +78,8 @@ export const EventCard = ({
 		<>
 			<TouchableOpacity
 				key={event.id}
-				className="bg-white border border-[#333333] my-2 overflow-hidden"
-				style={shadowStyles.standard}
+				className="bg-white border border-[#333333] my-2 overflow-hidden rounded-xl"
+				
 				onPress={handlePress}
 			>
 				<View>
@@ -145,7 +144,7 @@ export const EventCard = ({
 				<Animated.View
 					style={{
 						flex: 1,
-						backgroundColor: "#faf4f0",
+						backgroundColor: "#C6E3D3",
 						opacity: opacityAnim,
 						transform: [
 							{
@@ -184,7 +183,7 @@ export const EventCard = ({
 								</Text>
 								<View className="space-y-3 mb-6">
 									<View className="flex-row items-center">
-										<View className="w-10 h-10 rounded-full bg-[#fed787] items-center justify-center border border-[#333333]">
+										<View className="w-10 h-10 rounded-full bg-[#FFBB38] items-center justify-center border border-[#333333]">
 											<AntDesign
 												name="calendar"
 												size={20}
@@ -203,7 +202,7 @@ export const EventCard = ({
 										</View>
 									</View>
 									<View className="flex-row items-center">
-										<View className="w-10 h-10 mt-2 rounded-full bg-[#fed787] items-center justify-center border border-[#333333]">
+										<View className="w-10 h-10 mt-2 rounded-full bg-[#FFBB38] items-center justify-center border border-[#333333]">
 											<AntDesign
 												name="clockcircleo"
 												size={20}
@@ -222,7 +221,7 @@ export const EventCard = ({
 										</View>
 									</View>
 									<View className="flex-row items-center">
-										<View className="w-10 h-10 mt-2 rounded-full bg-[#fed787] items-center justify-center border border-[#333333]">
+										<View className="w-10 h-10 mt-2 rounded-full bg-[#FFBB38] items-center justify-center border border-[#333333]">
 											<AntDesign
 												name="enviromento"
 												size={20}
@@ -243,8 +242,8 @@ export const EventCard = ({
 								</View>
 								<View className="mt-6">
 									<TouchableOpacity
-										className="bg-[#fed787] h-12 w-full items-center justify-center border border-[#333333]"
-										style={shadowStyles.standard}
+										className="bg-[#FFBB38] h-12 w-full items-center justify-center border border-[#333333] rounded-xl"
+										
 										onPress={toggleExpand}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
