@@ -168,10 +168,7 @@ export default function BookmarksPage() {
 								</View>
 							</View>
 						) : locations.length === 0 ? (
-							<View
-								className="p-4 my-4 border border-[#333333] bg-white"
-							
-							>
+							<View className="p-4 my-4 border border-[#333333] bg-white">
 								<View className="items-center">
 									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
 										<AntDesign
@@ -188,7 +185,6 @@ export default function BookmarksPage() {
 									</Text>
 									<TouchableOpacity
 										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"
-									
 										onPress={() =>
 											router.push("/(home)")
 										}

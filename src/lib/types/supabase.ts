@@ -56,17 +56,20 @@ export interface Review {
 	flagged?: boolean;
 }
 
-export type CreateProductDTO = Omit<Product, "id" | "created_at" | "updated_at">
+export type CreateProductDTO = Omit<
+	Product,
+	"id" | "created_at" | "updated_at"
+>;
 
-export type UpdateProductDTO = Partial<CreateProductDTO>
+export type UpdateProductDTO = Partial<CreateProductDTO>;
 
 export interface UserProfile {
-    id: string; // Clerk user ID
-    email?: string;
-    first_name?: string;
-    last_name?: string;
-    image_url?: string;
-    is_admin: boolean;
-    created_at?: string;
-    updated_at?: string;
+	id: string; // Clerk user ID
+	email?: string;
+	first_name?: string;
+	last_name?: string;
+	image_url?: string;
+	is_admin: boolean;
+	created_at?: string;
+	updated_at?: string;
 }

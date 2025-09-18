@@ -79,7 +79,6 @@ export const EventCard = ({
 			<TouchableOpacity
 				key={event.id}
 				className="bg-white border border-[#333333] my-2 overflow-hidden rounded-xl"
-				
 				onPress={handlePress}
 			>
 				<View>
@@ -243,7 +242,6 @@ export const EventCard = ({
 								<View className="mt-6">
 									<TouchableOpacity
 										className="bg-[#FFBB38] h-12 w-full items-center justify-center border border-[#333333] rounded-xl"
-										
 										onPress={toggleExpand}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">

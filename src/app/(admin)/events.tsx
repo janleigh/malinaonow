@@ -204,7 +204,6 @@ export default function ManageEventsScreen() {
 				<View className="p-4">
 					<TouchableOpacity
 						className="bg-[#FFBB38] p-4 mb-4 flex-row items-center justify-center border border-[#333333] rounded-xl"
-						
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
@@ -247,7 +246,6 @@ export default function ManageEventsScreen() {
 								<View
 									key={event.id}
 									className="bg-white mb-4 border border-[#333333] rounded-xl"
-									
 								>
 									<View className="flex-row">
 										<Image
@@ -259,7 +257,8 @@ export default function ManageEventsScreen() {
 										/>
 										<View className="flex-1 p-3">
 											<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black">
-												{event.name} in {event.location}
+												{event.name} in{" "}
+												{event.location}
 											</Text>
 											<View className="flex-row items-center mt-1">
 												<AntDesign
@@ -454,7 +453,6 @@ export default function ManageEventsScreen() {
 						</View>
 						<TouchableOpacity
 							className="bg-[#FFBB38] p-4 mb-4 items-center justify-center border border-[#333333] rounded-3xl"
-							
 							onPress={handleSave}
 							disabled={loading}
 						>

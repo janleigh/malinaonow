@@ -88,10 +88,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 						))}
 					</View>
 				</View>
-				<View
-					className="bg-white p-4 border border-[#333333]"
-					
-				>
+				<View className="bg-white p-4 border border-[#333333]">
 					<TextInput
 						value={comment}
 						onChangeText={setComment}
@@ -111,7 +108,6 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 				) : null}
 				<TouchableOpacity
 					className="h-12 mt-2 w-full items-center justify-center bg-[#FFBB38] border border-[#333333] rounded-xl"
-				
 					onPress={handleSubmit}
 					disabled={isSubmitting}
 				>

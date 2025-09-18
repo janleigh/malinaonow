@@ -173,7 +173,6 @@ export default function CalendarPage() {
 												<TouchableOpacity
 													key={event.id}
 													className="bg-white p-4 mb-3 border border-[#333333] rounded-xl"
-												
 													onPress={() =>
 														setSelectedEvent(
 															event

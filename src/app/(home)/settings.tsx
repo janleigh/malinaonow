@@ -1,5 +1,8 @@
 import { useAuth } from "@/lib/context/AuthContext";
-import { LANGUAGES, useTranslation } from "@/lib/context/TranslationContext";
+import {
+	LANGUAGES,
+	useTranslation
+} from "@/lib/context/TranslationContext";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -68,7 +71,6 @@ export default function SettingsScreen() {
 											? "border-black bg-[#FFBB38]"
 											: "border-gray-300 bg-white"
 									}`}
-									
 									onPress={() => changeLanguage(lang.id)}
 									disabled={isLoading}
 								>

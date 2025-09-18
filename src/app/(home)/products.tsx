@@ -145,8 +145,7 @@ const ProductsScreen = () => {
 	);
 
 	const onViewableItemsChanged = useRef(
-		({ viewableItems }: { viewableItems: ViewToken[] }) => {
-		}
+		({ viewableItems }: { viewableItems: ViewToken[] }) => {}
 	).current;
 
 	const viewabilityConfigCallbackPairs = useRef([
@@ -223,7 +222,6 @@ const ProductsScreen = () => {
 							<TouchableOpacity
 								key={barangay}
 								className={`px-3 py-1 mr-2 border border-[#333333] rounded-2xl ${selectedBarangay === barangay ? "bg-[#FFFD87]" : "bg-white"}`}
-							
 								onPress={() =>
 									setSelectedBarangay(barangay)
 								}

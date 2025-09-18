@@ -20,15 +20,16 @@ export const ProductCard = ({
 	onToggleBookmark,
 	onAddToCart
 }: {
-    product: Product;
-    listView?: boolean;
-    isBookmarked?: boolean;
-    onToggleBookmark?: (productId: string, newStatus: boolean) => void;
-    onAddToCart?: (productId: string) => void;
+	product: Product;
+	listView?: boolean;
+	isBookmarked?: boolean;
+	onToggleBookmark?: (productId: string, newStatus: boolean) => void;
+	onAddToCart?: (productId: string) => void;
 }) => {
 	const [expanded, setExpanded] = useState(false);
 	const [bookmarked, setBookmarked] = useState(isBookmarked);
-	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+	const [isDescriptionExpanded, setIsDescriptionExpanded] =
+		useState(false);
 	const [descriptionHeight, setDescriptionHeight] = useState(0);
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -54,7 +55,7 @@ export const ProductCard = ({
 				animated: false
 			});
 		}
-        
+
 		if (!expanded) {
 			setIsDescriptionExpanded(false);
 		}
@@ -115,7 +116,6 @@ export const ProductCard = ({
 			<TouchableOpacity
 				key={product.id}
 				className="bg-white border border-[#333333] rounded-xl overflow-hidden"
-			
 				onPress={toggleExpand}
 			>
 				{listView ? (
@@ -158,7 +158,11 @@ export const ProductCard = ({
 								</View>
 							</View>
 							<View className="flex-row items-center mb-1 px-1">
-								<AntDesign name="enviromento" size={10} color="#555" />
+								<AntDesign
+									name="enviromento"
+									size={10}
+									color="#555"
+								/>
 								<Text
 									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555]"
 									numberOfLines={1}
@@ -271,7 +275,7 @@ export const ProductCard = ({
 						<ScrollView ref={scrollViewRef} className="flex-1">
 							<View className="w-full h-64">
 								{product.images &&
-                                product.images.length > 0 ? (
+								product.images.length > 0 ? (
 										<ScrollView
 											horizontal
 											pagingEnabled
@@ -321,7 +325,7 @@ export const ProductCard = ({
 							</View>
 							<View className="p-4">
 								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
-                                    Description
+									Description
 								</Text>
 								<View
 									className="border-l-4 border-[#FFBB38] pl-2"
@@ -335,7 +339,8 @@ export const ProductCard = ({
 										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
 											{getLocalizedDescription(
 												product
-											) || "No description available"}
+											) ||
+												"No description available"}
 										</Text>
 									</View>
 								</View>
@@ -343,7 +348,6 @@ export const ProductCard = ({
 									<TouchableOpacity
 										onPress={toggleDescription}
 										className="mt-2 px-4 py-2"
-										
 									>
 										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black underline">
 											{isDescriptionExpanded

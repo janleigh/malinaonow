@@ -2,14 +2,16 @@ import type { UserProfile } from "@/lib/types/supabase";
 import { supabase } from "./supabase";
 
 type MinimalClerkUser = {
-    id: string;
-    email?: string;
-    firstName?: string | null;
-    lastName?: string | null;
-    imageUrl?: string | null;
+	id: string;
+	email?: string;
+	firstName?: string | null;
+	lastName?: string | null;
+	imageUrl?: string | null;
 };
 
-export async function upsertUserFromClerk(u: MinimalClerkUser): Promise<UserProfile> {
+export async function upsertUserFromClerk(
+	u: MinimalClerkUser
+): Promise<UserProfile> {
 	const payload = {
 		id: u.id,
 		email: u.email ?? null,
@@ -31,7 +33,9 @@ export async function upsertUserFromClerk(u: MinimalClerkUser): Promise<UserProf
 	return data as UserProfile;
 }
 
-export async function getUserProfile(userId: string): Promise<UserProfile | null> {
+export async function getUserProfile(
+	userId: string
+): Promise<UserProfile | null> {
 	const { data, error } = await supabase
 		.from("users")
 		.select("*")

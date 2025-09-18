@@ -247,7 +247,6 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 							<View className="p-4">
 								<TouchableOpacity
 									className="flex-row items-center justify-center py-3 bg-[#FFBB38] border border-[#333333] rounded-xl"
-									
 									onPress={handleSignOut}
 								>
 									<Feather

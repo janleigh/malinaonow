@@ -12,6 +12,7 @@ module.exports = defineConfig([
 		},
 		rules: {
 			"indent": ["error", "tab"],
+			"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
 			"no-unused-vars": "off",
 			"@typescript-eslint/no-unused-vars": "off",
 			"@stylistic/max-len": ["error", {

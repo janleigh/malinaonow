@@ -1,5 +1,8 @@
 import { useClerkAuth } from "@/api/clerk";
-import { getUserProfile, upsertUserFromClerk } from "@/api/supabase/userSync";
+import {
+	getUserProfile,
+	upsertUserFromClerk
+} from "@/api/supabase/userSync";
 import { useUser } from "@clerk/clerk-expo";
 import React, {
 	createContext,
@@ -55,7 +58,9 @@ const useAuthValue = () => {
 			try {
 				await upsertUserFromClerk({
 					id: user.id,
-					email: user.primaryEmailAddress?.emailAddress ?? undefined,
+					email:
+						user.primaryEmailAddress?.emailAddress ??
+						undefined,
 					firstName: user.firstName ?? undefined,
 					lastName: user.lastName ?? undefined,
 					imageUrl: user.imageUrl ?? undefined
@@ -94,5 +99,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	children
 }) => {
 	const value = useAuthValue();
-	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={value}>
+			{children}
+		</AuthContext.Provider>
+	);
 };

@@ -443,7 +443,6 @@ export const LocationCard = ({
 			<TouchableOpacity
 				key={location.id}
 				className={`bg-white border border-[#333333] rounded-xl my-2 overflow-hidden ${listView ? "" : ""}`}
-				
 				onPress={toggleExpand}
 			>
 				{listView ? (
@@ -623,7 +622,6 @@ export const LocationCard = ({
 								</View>
 								<TouchableOpacity
 									className="absolute top-6 right-8 p-2 z-10 px-4 py-2"
-									
 									onPress={(e) => {
 										e.stopPropagation();
 										handleToggleBookmark(e);
@@ -662,7 +660,6 @@ export const LocationCard = ({
 									<TouchableOpacity
 										onPress={toggleDescription}
 										className="mt-2 px-4 py-2 self-start"
-									
 									>
 										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black underline">
 											{isDescriptionExpanded
@@ -674,7 +671,6 @@ export const LocationCard = ({
 								<View className="mt-6 flex-row space-x-2">
 									<TouchableOpacity
 										className="flex-1 bg-[#FFFE96] h-12 mr-1 items-center justify-center border border-[#333333] rounded-xl"
-										
 										onPress={handleViewMap}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
@@ -684,7 +680,6 @@ export const LocationCard = ({
 									{location.image[360] ? (
 										<TouchableOpacity
 											className="flex-1 bg-[#FFFDA6] h-12 ml-1 items-center justify-center border border-[#333333] rounded-xl"
-											
 											onPress={handleView360}
 										>
 											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
@@ -704,7 +699,6 @@ export const LocationCard = ({
 													setShowReviewForm(true)
 												}
 												className="bg-[#FFBB38] px-4 py-2 border border-[#333333] rounded-xl"
-												
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
 													{t(

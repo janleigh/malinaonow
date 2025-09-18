@@ -55,7 +55,8 @@ export default {
 		manageLocationsDesc:
 			"Magdugang, mag-edit, o magbu-oe it mga tourist location",
 		manageEvents: "Magpamahala it mga Gakaeatabo",
-		manageEventsDesc: "Maghimo ag magpamahala mga maabot nga Gakaeatabo",
+		manageEventsDesc:
+			"Maghimo ag magpamahala mga maabot nga Gakaeatabo",
 		moderateReviews: "I-moderate ro mga Review",
 		moderateReviewsDesc: "Tan-awa ag i-moderate ro mga review it user"
 	},

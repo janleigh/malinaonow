@@ -51,7 +51,8 @@ export default {
 	admin: {
 		title: "Admin Panel",
 		manageLocations: "Manage Tourist spots",
-		manageLocationsDesc: "Add, edit, or remove Tourist spots locations",
+		manageLocationsDesc:
+			"Add, edit, or remove Tourist spots locations",
 		manageEvents: "Manage Events",
 		manageEventsDesc: "Create and manage upcoming events",
 		moderateReviews: "Moderate Reviews",

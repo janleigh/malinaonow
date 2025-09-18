@@ -178,7 +178,6 @@ export default function ManageProductsScreen() {
 				<View className="p-4">
 					<TouchableOpacity
 						className="bg-[#FFBB38] p-4 mb-4 flex-row items-center justify-center border border-[#333333] rounded-xl"
-						
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
@@ -221,18 +220,23 @@ export default function ManageProductsScreen() {
 								<View
 									key={product.id}
 									className="bg-white mb-4 border border-[#333333] rounded-xl"
-									
 								>
 									<View className="flex-row">
 										{product.image_url ? (
 											<Image
-												source={{ uri: product.image_url }}
+												source={{
+													uri: product.image_url
+												}}
 												className="w-24 h-24"
 												resizeMode="cover"
 											/>
 										) : (
 											<View className="w-24 h-24 bg-gray-100 items-center justify-center">
-												<Feather name="package" size={32} color="#999" />
+												<Feather
+													name="package"
+													size={32}
+													color="#999"
+												/>
 											</View>
 										)}
 
@@ -254,7 +258,9 @@ export default function ManageProductsScreen() {
 													className={`w-3 h-3 rounded-full mr-1 ${product.is_available ? "bg-green-500" : "bg-red-500"}`}
 												/>
 												<Text className="text-xs font-lexend text-[#555555]">
-													{product.is_available ? "Available" : "Not Available"}
+													{product.is_available
+														? "Available"
+														: "Not Available"}
 												</Text>
 											</View>
 										</View>
@@ -262,19 +268,31 @@ export default function ManageProductsScreen() {
 									<View className="flex-row border-t border-[#eee] p-2">
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
-											onPress={() => openEditModal(product)}
+											onPress={() =>
+												openEditModal(product)
+											}
 										>
 											<Text className="font-lexend-medium text-[#333333]">
-												<Feather name="edit" size={16} /> Edit
+												<Feather
+													name="edit"
+													size={16}
+												/>{" "}
+												Edit
 											</Text>
 										</TouchableOpacity>
 										<View className="border-r border-[#eee] mx-2" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
-											onPress={() => handleDelete(product.id)}
+											onPress={() =>
+												handleDelete(product.id)
+											}
 										>
 											<Text className="font-lexend-medium text-[#fe5b62]">
-												<Feather name="trash-2" size={16} /> Delete
+												<Feather
+													name="trash-2"
+													size={16}
+												/>{" "}
+												Delete
 											</Text>
 										</TouchableOpacity>
 									</View>
@@ -435,7 +453,6 @@ export default function ManageProductsScreen() {
 						</View>
 						<TouchableOpacity
 							className="bg-[#FFBB38] p-4 mb-4 items-center justify-center border border-[#333333] rounded-3xl"
-							
 							onPress={handleSave}
 							disabled={loading}
 						>

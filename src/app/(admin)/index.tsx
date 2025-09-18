@@ -55,7 +55,6 @@ export default function AdminDashboard() {
 							<TouchableOpacity
 								key={index}
 								className="bg-white p-4 mt-2 border border-[#333333] rounded-xl"
-								
 								// @ts-expect-error
 								onPress={() => router.push(option.route)}
 							>

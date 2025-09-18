@@ -148,10 +148,7 @@ export default function ModerateReviewsScreen() {
 	};
 
 	const renderReviewItem = ({ item }: { item: ReviewWithLocation }) => (
-		<View
-			className="mb-4 p-4 bg-white border border-[#333333]"
-			
-		>
+		<View className="mb-4 p-4 bg-white border border-[#333333]">
 			<View className="flex-row justify-between items-start mb-2">
 				<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black">
 					{item.user_name || "Anonymous"}
@@ -183,7 +180,6 @@ export default function ModerateReviewsScreen() {
 			<View className="flex-row mt-3 space-x-2">
 				<TouchableOpacity
 					className={`flex-1 py-2 mr-2 items-center border border-[#333333] rounded-xl ${item.flagged ? "bg-[#FFBB38]" : "bg-white"}`}
-				
 					onPress={() => handleFlagReview(item.id)}
 				>
 					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
@@ -192,7 +188,6 @@ export default function ModerateReviewsScreen() {
 				</TouchableOpacity>
 				<TouchableOpacity
 					className="flex-1 py-2 bg-white border border-[#333333] rounded-xl items-center"
-					
 					onPress={() => handleDeleteReview(item.id)}
 				>
 					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
@@ -222,7 +217,6 @@ export default function ModerateReviewsScreen() {
 				</Text>
 				<TouchableOpacity
 					className="bg-[#fed787] px-6 py-2 border border-[#333333]"
-					
 					onPress={fetchReviews}
 				>
 					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
@@ -264,7 +258,6 @@ export default function ModerateReviewsScreen() {
 							<View className="flex-row space-x-2">
 								<TouchableOpacity
 									className={`px-3 py-1 mr-1 border border-[#333333] rounded-2xl ${filterRating === 0 ? "bg-[#FFBB38]" : "bg-white"}`}
-									
 									onPress={() => setFilterRating(0)}
 								>
 									<Text className="font-lexend-medium tracking-tighter-lexend text-black">
@@ -275,7 +268,6 @@ export default function ModerateReviewsScreen() {
 									<TouchableOpacity
 										key={rating}
 										className={`px-3 py-1 mr-1 border border-[#333333] rounded-xl ${filterRating === rating ? "bg-[#FFBB38]" : "bg-white"}`}
-										
 										onPress={() =>
 											setFilterRating(rating)
 										}
@@ -289,7 +281,6 @@ export default function ModerateReviewsScreen() {
 						</ScrollView>
 						<TouchableOpacity
 							className={`px-3 py-1 border border-[#333333] rounded-xl ${showFlagged ? "bg-[#FFBB38]" : "bg-white"}`}
-							
 							onPress={() => setShowFlagged(!showFlagged)}
 						>
 							<Text className="font-lexend-medium tracking-tighter-lexend text-black">
