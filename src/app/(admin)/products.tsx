@@ -1,5 +1,4 @@
 import { Product } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -166,7 +165,7 @@ export default function ManageProductsScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
@@ -178,8 +177,8 @@ export default function ManageProductsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="bg-[#fed787] p-4 mb-4 flex-row items-center justify-center border border-[#333333]"
-						style={shadowStyles.standard}
+						className="bg-[#FFBB38] p-4 mb-4 flex-row items-center justify-center border border-[#333333] rounded-xl"
+						
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
@@ -221,8 +220,8 @@ export default function ManageProductsScreen() {
 							{products.map((product) => (
 								<View
 									key={product.id}
-									className="bg-white mb-4 border border-[#333333]"
-									style={shadowStyles.standard}
+									className="bg-white mb-4 border border-[#333333] rounded-xl"
+									
 								>
 									<View className="flex-row">
 										{product.image_url ? (
@@ -286,7 +285,7 @@ export default function ManageProductsScreen() {
 				</View>
 			</SafeAreaView>
 			<Modal visible={modalVisible} animationType="slide">
-				<SafeAreaView className="flex-1 bg-[#faf4f0]">
+				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
 					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
 							{editingProduct
@@ -427,7 +426,7 @@ export default function ManageProductsScreen() {
 											!formData.is_available
 									})
 								}
-								className={`w-10 h-6 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#fed787]" : "bg-white"} items-center justify-center`}
+								className={`w-10 h-6 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#FFBB38]" : "bg-white"} items-center justify-center`}
 							>
 								<View
 									className={`w-4 h-4 rounded-full ${formData.is_available ? "bg-black ml-4" : "bg-[#eee] ml-0"}`}
@@ -435,8 +434,8 @@ export default function ManageProductsScreen() {
 							</TouchableOpacity>
 						</View>
 						<TouchableOpacity
-							className="bg-[#fed787] p-4 mb-4 items-center justify-center border border-[#333333]"
-							style={shadowStyles.standard}
+							className="bg-[#FFBB38] p-4 mb-4 items-center justify-center border border-[#333333] rounded-3xl"
+							
 							onPress={handleSave}
 							disabled={loading}
 						>

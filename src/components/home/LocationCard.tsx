@@ -3,7 +3,6 @@ import { API_KEYS } from "@/config";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useTranslation } from "@/lib/context/TranslationContext";
 import { Location, Review } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
 import { ReviewService } from "@/services/ReviewService";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import * as ELocation from "expo-location";
@@ -443,8 +442,8 @@ export const LocationCard = ({
 		<>
 			<TouchableOpacity
 				key={location.id}
-				className={`bg-white border border-[#333333] my-2 overflow-hidden ${listView ? "" : ""}`}
-				style={shadowStyles.standard}
+				className={`bg-white border border-[#333333] rounded-xl my-2 overflow-hidden ${listView ? "" : ""}`}
+				
 				onPress={toggleExpand}
 			>
 				{listView ? (
@@ -559,7 +558,7 @@ export const LocationCard = ({
 				<Animated.View
 					style={{
 						flex: 1,
-						backgroundColor: "#faf4f0",
+						backgroundColor: "#C6E3D3",
 						opacity: opacityAnim,
 						transform: [
 							{
@@ -594,7 +593,7 @@ export const LocationCard = ({
 							/>
 							<View className="p-4">
 								<View className="flex-row items-center mb-2">
-									<Text className="text-[#fed787] text-2xl mr-1">
+									<Text className="text-[#FFBB38] text-2xl mr-1">
 										★
 									</Text>
 									<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
@@ -623,8 +622,8 @@ export const LocationCard = ({
 									</Text>
 								</View>
 								<TouchableOpacity
-									className="absolute top-6 right-8 p-2 z-10 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
-									style={shadowStyles.standard}
+									className="absolute top-6 right-8 p-2 z-10 px-4 py-2"
+									
 									onPress={(e) => {
 										e.stopPropagation();
 										handleToggleBookmark(e);
@@ -634,7 +633,7 @@ export const LocationCard = ({
 										name={
 											bookmarked ? "heart" : "hearto"
 										}
-										size={24}
+										size={28}
 										color={
 											bookmarked ? "#FE5B62" : "#333"
 										}
@@ -644,7 +643,7 @@ export const LocationCard = ({
 									Description
 								</Text>
 								<View
-									className="border-l-2 border-[#fed787] pl-2"
+									className="border-l-4 border-[#FFBB38] pl-2"
 									style={{
 										maxHeight: isDescriptionExpanded
 											? undefined
@@ -662,10 +661,10 @@ export const LocationCard = ({
 								{shouldShowToggle && (
 									<TouchableOpacity
 										onPress={toggleDescription}
-										className="mt-2 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
-										style={shadowStyles.small}
+										className="mt-2 px-4 py-2 self-start"
+									
 									>
-										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black">
+										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black underline">
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}
@@ -674,8 +673,8 @@ export const LocationCard = ({
 								)}
 								<View className="mt-6 flex-row space-x-2">
 									<TouchableOpacity
-										className="flex-1 bg-[#fed787] h-12 mr-1 items-center justify-center border border-[#333333]"
-										style={shadowStyles.standard}
+										className="flex-1 bg-[#FFFE96] h-12 mr-1 items-center justify-center border border-[#333333] rounded-xl"
+										
 										onPress={handleViewMap}
 									>
 										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
@@ -684,8 +683,8 @@ export const LocationCard = ({
 									</TouchableOpacity>
 									{location.image[360] ? (
 										<TouchableOpacity
-											className="flex-1 bg-white h-12 ml-1 items-center justify-center border border-[#333333]"
-											style={shadowStyles.standard}
+											className="flex-1 bg-[#FFFDA6] h-12 ml-1 items-center justify-center border border-[#333333] rounded-xl"
+											
 											onPress={handleView360}
 										>
 											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
@@ -704,8 +703,8 @@ export const LocationCard = ({
 												onPress={() =>
 													setShowReviewForm(true)
 												}
-												className="bg-[#fed787] px-4 py-2 border border-[#333333]"
-												style={shadowStyles.small}
+												className="bg-[#FFBB38] px-4 py-2 border border-[#333333] rounded-xl"
+												
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
 													{t(

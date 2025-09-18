@@ -15,21 +15,21 @@ export default {
 	home: {
 		title: "MalinaoNow",
 		upcomingEvents: "Upcoming Events",
-		featuredLocations: "Featured Locations",
-		exploreLocations: "Explore Locations",
-		bookmarkedLocations: "Bookmarked Locations",
+		featuredLocations: "Featured Tourist Spots",
+		exploreLocations: "Explore Tourist Spots",
+		bookmarkedLocations: "Bookmarked Tourist Spots",
 		noEvents: "No Upcoming Events",
 		noEventsDesc:
 			"There are no upcoming events at the moment. Check back soon!",
 		noLocations: "Under Construction",
 		noLocationsDesc:
-			"We're currently working on bringing you the best locations in Malinao. Check back soon!",
+			"We're currently working on bringing you the best Tourist spots in Malinao. Check back soon!",
 		myBookmarks: "My Bookmarks",
-		noBookmarks: "No Bookmarked Locations",
+		noBookmarks: "No Bookmarked Tourist Spots",
 		noBookmarksDesc:
-			"You haven't bookmarked any locations yet. Tap the heart icon on a location to bookmark it!",
+			"You haven't bookmarked any Tourist spots yet. Tap the heart icon on a Tourist spots to bookmark it!",
 		loadingEvents: "Loading events...",
-		loadingLocations: "Loading locations...",
+		loadingLocations: "Loading Tourist spots...",
 		errorLoading: "Error Loading Data",
 		gridView: "Grid View",
 		listView: "List View"
@@ -50,8 +50,8 @@ export default {
 	},
 	admin: {
 		title: "Admin Panel",
-		manageLocations: "Manage Locations",
-		manageLocationsDesc: "Add, edit, or remove tourist locations",
+		manageLocations: "Manage Tourist spots",
+		manageLocationsDesc: "Add, edit, or remove Tourist spots locations",
 		manageEvents: "Manage Events",
 		manageEventsDesc: "Create and manage upcoming events",
 		moderateReviews: "Moderate Reviews",

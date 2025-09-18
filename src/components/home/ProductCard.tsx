@@ -1,6 +1,5 @@
 import { useTranslation } from "@/lib/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -115,8 +114,8 @@ export const ProductCard = ({
 		<View className="mb-2">
 			<TouchableOpacity
 				key={product.id}
-				className="bg-white border border-[#333333] overflow-hidden"
-				style={shadowStyles.standard}
+				className="bg-white border border-[#333333] rounded-xl overflow-hidden"
+			
 				onPress={toggleExpand}
 			>
 				{listView ? (
@@ -232,7 +231,7 @@ export const ProductCard = ({
 				<Animated.View
 					style={{
 						flex: 1,
-						backgroundColor: "#faf4f0",
+						backgroundColor: "#C6E3D3",
 						opacity: opacityAnim,
 						transform: [
 							{
@@ -325,7 +324,7 @@ export const ProductCard = ({
                                     Description
 								</Text>
 								<View
-									className="border-l-2 border-[#fed787] pl-2"
+									className="border-l-4 border-[#FFBB38] pl-2"
 									style={{
 										maxHeight: isDescriptionExpanded
 											? undefined
@@ -343,10 +342,10 @@ export const ProductCard = ({
 								{shouldShowToggle && (
 									<TouchableOpacity
 										onPress={toggleDescription}
-										className="mt-2 bg-[#fed787] px-4 py-2 self-start border border-[#333333]"
-										style={shadowStyles.small}
+										className="mt-2 px-4 py-2"
+										
 									>
-										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black">
+										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black underline">
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}

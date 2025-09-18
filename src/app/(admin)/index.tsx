@@ -1,4 +1,3 @@
-import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -8,10 +7,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function AdminDashboard() {
 	const adminOptions = [
 		{
-			title: "Manage Locations",
+			title: "Manage Tourist spots",
 			icon: "map-pin",
 			route: "/(admin)/locations",
-			description: "Add, edit, or remove tourist locations"
+			description: "Add, edit, or remove tourist spots"
 		},
 		{
 			title: "Manage Events",
@@ -34,7 +33,7 @@ export default function AdminDashboard() {
 	];
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
 					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
@@ -48,20 +47,20 @@ export default function AdminDashboard() {
 				</View>
 				<View className="p-4">
 					<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] mb-6">
-						Manage locations, events, and moderate user
+						Manage tourist spots, events, and moderate user
 						reviews.
 					</Text>
 					<View className="space-y-4">
 						{adminOptions.map((option, index) => (
 							<TouchableOpacity
 								key={index}
-								className="bg-white p-4 mt-2 border border-[#333333]"
-								style={shadowStyles.standard}
+								className="bg-white p-4 mt-2 border border-[#333333] rounded-xl"
+								
 								// @ts-expect-error
 								onPress={() => router.push(option.route)}
 							>
 								<View className="flex-row items-center">
-									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mr-4 border border-[#333333]">
+									<View className="w-12 h-12 rounded-full bg-[#FFBB38] items-center justify-center mr-4 border border-[#333333]">
 										<Feather
 											// @ts-expect-error
 											name={option.icon}

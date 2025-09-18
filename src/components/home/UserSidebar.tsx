@@ -160,7 +160,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 							bottom: 0,
 							right: 0,
 							width: 288,
-							backgroundColor: "#faf4f0",
+							backgroundColor: "#C6E3D3",
 							borderLeftWidth: 1,
 							borderLeftColor: "#333333",
 							transform: [{ translateX: slideAnim }]
@@ -246,8 +246,8 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 							</View>
 							<View className="p-4">
 								<TouchableOpacity
-									className="flex-row items-center justify-center py-3 bg-[#fed787] border border-[#333333] rounded-none"
-									style={shadowStyles.standard}
+									className="flex-row items-center justify-center py-3 bg-[#FFBB38] border border-[#333333] rounded-xl"
+									
 									onPress={handleSignOut}
 								>
 									<Feather

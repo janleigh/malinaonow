@@ -1,13 +1,12 @@
 import { useAuth } from "@/lib/context/AuthContext";
 import { useTranslation } from "@/lib/context/TranslationContext";
-import { shadowStyles } from "@/lib/utils/styles";
 import React, { useState } from "react";
 import {
-    ActivityIndicator,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+	ActivityIndicator,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
 } from "react-native";
 
 interface ReviewFormProps {
@@ -91,7 +90,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 				</View>
 				<View
 					className="bg-white p-4 border border-[#333333]"
-					style={shadowStyles.small}
+					
 				>
 					<TextInput
 						value={comment}
@@ -111,8 +110,8 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 					</Text>
 				) : null}
 				<TouchableOpacity
-					className="h-12 mt-2 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
-					style={shadowStyles.standard}
+					className="h-12 mt-2 w-full items-center justify-center bg-[#FFBB38] border border-[#333333] rounded-xl"
+				
 					onPress={handleSubmit}
 					disabled={isSubmitting}
 				>

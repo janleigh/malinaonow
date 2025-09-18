@@ -2,7 +2,6 @@ import { BottomTabBar } from "@/components/common";
 import { ProductCard } from "@/components/home";
 import { useTranslation } from "@/lib/context/TranslationContext";
 import { Product } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
 import { ProductService } from "@/services/ProductService";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import React, {
@@ -198,7 +197,7 @@ const ProductsScreen = () => {
 	}, [filteredProducts]);
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="p-4 border-b border-[#eee]">
 					<View className="mb-4">
@@ -206,7 +205,7 @@ const ProductsScreen = () => {
 							{t("products.title")}
 						</Text>
 					</View>
-					<View className="flex-row items-center bg-white border border-[#333333] px-3 py-2 mb-3">
+					<View className="flex-row items-center bg-white border border-[#333333] rounded-xl px-3 py-2 mb-3">
 						<Feather name="search" size={18} color="#666" />
 						<TextInput
 							className="flex-1 ml-2 text-base font-lexend text-black"
@@ -223,8 +222,8 @@ const ProductsScreen = () => {
 						{barangays.map((barangay) => (
 							<TouchableOpacity
 								key={barangay}
-								className={`px-3 py-1 mr-2 border border-[#333333] ${selectedBarangay === barangay ? "bg-[#fed787]" : "bg-white"}`}
-								style={shadowStyles.small}
+								className={`px-3 py-1 mr-2 border border-[#333333] rounded-2xl ${selectedBarangay === barangay ? "bg-[#FFFD87]" : "bg-white"}`}
+							
 								onPress={() =>
 									setSelectedBarangay(barangay)
 								}
