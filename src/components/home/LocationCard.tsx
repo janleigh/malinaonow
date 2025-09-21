@@ -1,4 +1,6 @@
 import { supabase } from "@/api/supabase";
+import { BaseText as Text } from "@/components/BaseText";
+import { ReviewForm, ReviewList } from "@/components/home/reviews";
 import { API_KEYS } from "@/config";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useTranslation } from "@/lib/context/TranslationContext";
@@ -15,13 +17,11 @@ import {
 	LayoutChangeEvent,
 	Modal,
 	ScrollView,
-	Text,
 	TouchableOpacity,
 	View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
-import { ReviewForm, ReviewList } from "./reviews";
 
 export const LocationCard = ({
 	location,
@@ -442,36 +442,36 @@ export const LocationCard = ({
 		<>
 			<TouchableOpacity
 				key={location.id}
-				className={`bg-white border border-[#333333] rounded-xl my-2 overflow-hidden ${listView ? "" : ""}`}
+				className={`my-2 overflow-hidden rounded-xl border border-[#333333] bg-white ${listView ? "" : ""}`}
 				onPress={toggleExpand}
 			>
 				{listView ? (
 					// List view layout
 					<View className="flex-row">
-						<View className="w-1/3 h-24">
+						<View className="h-24 w-1/3">
 							<Image
 								source={{
 									uri: location.image.banner
 								}}
-								className="w-full h-full"
+								className="h-full w-full"
 								resizeMode="cover"
 							/>
 						</View>
-						<View className="p-3 flex-1">
+						<View className="flex-1 p-3">
 							<Text
-								className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
+								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={1}
 							>
 								{location.name}
 							</Text>
-							<View className="flex-row items-center mt-1">
-								<Text className="text-[#fed787] mr-1">
+							<View className="mt-1 flex-row items-center">
+								<Text className="mr-1 text-[#fed787]">
 									★
 								</Text>
 								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
 									{rating.toFixed(1)}
 								</Text>
-								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
+								<Text className="text-xs tracking-tighter-lexend text-[#666]">
 									{" "}
 									({reviewCount}{" "}
 									{reviewCount === 1
@@ -480,7 +480,7 @@ export const LocationCard = ({
 									)
 								</Text>
 							</View>
-							<View className="flex-row items-start mt-1">
+							<View className="mt-1 flex-row items-start">
 								<AntDesign
 									name="enviromento"
 									size={10}
@@ -488,7 +488,7 @@ export const LocationCard = ({
 									style={{ marginTop: 2 }}
 								/>
 								<Text
-									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555] flex-1"
+									className="ml-1 flex-1 text-xs tracking-tighter-lexend text-[#555]"
 									numberOfLines={2}
 								>
 									{getFormattedAddress(location)}
@@ -499,30 +499,30 @@ export const LocationCard = ({
 				) : (
 					// Grid view layout (original)
 					<View>
-						<View className="w-full h-32">
+						<View className="h-32 w-full">
 							<Image
 								source={{
 									uri: location.image.banner
 								}}
-								className="w-full h-full"
+								className="h-full w-full"
 								resizeMode="cover"
 							/>
 						</View>
 						<View className="p-3">
 							<Text
-								className="text-sm font-lexend-extrabold tracking-tighter-lexend text-black"
+								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={2}
 							>
 								{location.name}
 							</Text>
-							<View className="flex-row items-center mt-1">
-								<Text className="text-[#fed787] mr-1">
+							<View className="mt-1 flex-row items-center">
+								<Text className="mr-1 text-[#fed787]">
 									★
 								</Text>
 								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
 									{rating.toFixed(1)}
 								</Text>
-								<Text className="text-xs font-lexend tracking-tighter-lexend text-[#666]">
+								<Text className="text-xs tracking-tighter-lexend text-[#666]">
 									{" "}
 									({reviewCount}{" "}
 									{reviewCount === 1
@@ -531,7 +531,7 @@ export const LocationCard = ({
 									)
 								</Text>
 							</View>
-							<View className="flex-row items-start mt-1">
+							<View className="mt-1 flex-row items-start">
 								<AntDesign
 									name="enviromento"
 									size={10}
@@ -539,7 +539,7 @@ export const LocationCard = ({
 									style={{ marginTop: 2 }}
 								/>
 								<Text
-									className="ml-1 text-xs font-lexend tracking-tighter-lexend text-[#555] flex-1"
+									className="ml-1 flex-1 text-xs tracking-tighter-lexend text-[#555]"
 									numberOfLines={2}
 								>
 									{getFormattedAddress(location)}
@@ -570,8 +570,8 @@ export const LocationCard = ({
 					}}
 				>
 					<SafeAreaView className="flex-1">
-						<View className="flex-row justify-between items-center p-4 border-b border-[#333333]">
-							<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+						<View className="flex-row items-center justify-between border-b border-[#333333] p-4">
+							<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
 								{location.name}
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
@@ -587,18 +587,18 @@ export const LocationCard = ({
 								source={{
 									uri: location.image.banner
 								}}
-								className="w-full h-52"
+								className="h-52 w-full"
 								resizeMode="cover"
 							/>
 							<View className="p-4">
-								<View className="flex-row items-center mb-2">
-									<Text className="text-[#FFBB38] text-2xl mr-1">
+								<View className="mb-2 flex-row items-center">
+									<Text className="mr-1 text-2xl text-[#FFBB38]">
 										★
 									</Text>
-									<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+									<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
 										{rating.toFixed(1)}
 									</Text>
-									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666]">
+									<Text className="text-base tracking-tighter-lexend text-[#666]">
 										{" "}
 										({reviewCount}{" "}
 										{reviewCount === 1
@@ -607,7 +607,7 @@ export const LocationCard = ({
 										)
 									</Text>
 								</View>
-								<View className="flex-row items-start mb-4">
+								<View className="mb-4 flex-row items-start">
 									<AntDesign
 										name="enviromento"
 										size={16}
@@ -616,12 +616,12 @@ export const LocationCard = ({
 											marginTop: 2
 										}}
 									/>
-									<Text className="ml-2 text-base font-lexend tracking-tighter-lexend text-[#333] flex-1">
+									<Text className="ml-2 flex-1 text-base tracking-tighter-lexend text-[#333]">
 										{getFormattedAddress(location)}
 									</Text>
 								</View>
 								<TouchableOpacity
-									className="absolute top-6 right-8 p-2 z-10 px-4 py-2"
+									className="absolute right-8 top-6 z-10 p-2 px-4 py-2"
 									onPress={(e) => {
 										e.stopPropagation();
 										handleToggleBookmark(e);
@@ -637,7 +637,7 @@ export const LocationCard = ({
 										}
 									/>
 								</TouchableOpacity>
-								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-[#333] mb-2">
+								<Text className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]">
 									Description
 								</Text>
 								<View
@@ -649,7 +649,7 @@ export const LocationCard = ({
 									}}
 								>
 									<View onLayout={onDescriptionLayout}>
-										<Text className="text-base font-lexend tracking-tighter-lexend text-[#333]">
+										<Text className="text-base tracking-tighter-lexend text-[#333]">
 											{getLocalizedDescription(
 												location
 											)}
@@ -659,9 +659,9 @@ export const LocationCard = ({
 								{shouldShowToggle && (
 									<TouchableOpacity
 										onPress={toggleDescription}
-										className="mt-2 px-4 py-2 self-start"
+										className="mt-2 self-start px-4 py-2"
 									>
-										<Text className="text-sm font-lexend-medium tracking-tighter-lexend text-black underline">
+										<Text className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline">
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}
@@ -670,27 +670,27 @@ export const LocationCard = ({
 								)}
 								<View className="mt-6 flex-row space-x-2">
 									<TouchableOpacity
-										className="flex-1 bg-[#FFFE96] h-12 mr-1 items-center justify-center border border-[#333333] rounded-xl"
+										className="mr-1 h-12 flex-1 items-center justify-center rounded-xl border border-[#333333] bg-[#FFFE96]"
 										onPress={handleViewMap}
 									>
-										<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+										<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
 											{t("location.viewOnMap")}
 										</Text>
 									</TouchableOpacity>
 									{location.image[360] ? (
 										<TouchableOpacity
-											className="flex-1 bg-[#FFFDA6] h-12 ml-1 items-center justify-center border border-[#333333] rounded-xl"
+											className="ml-1 h-12 flex-1 items-center justify-center rounded-xl border border-[#333333] bg-[#FFFDA6]"
 											onPress={handleView360}
 										>
-											<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+											<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
 												{t("location.view360")}
 											</Text>
 										</TouchableOpacity>
 									) : null}
 								</View>
 								<View className="mt-8">
-									<View className="flex-row justify-between items-center">
-										<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+									<View className="flex-row items-center justify-between">
+										<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
 											Reviews
 										</Text>
 										{isSignedIn && !showReviewForm && (
@@ -698,7 +698,7 @@ export const LocationCard = ({
 												onPress={() =>
 													setShowReviewForm(true)
 												}
-												className="bg-[#FFBB38] px-4 py-2 border border-[#333333] rounded-xl"
+												className="rounded-xl border border-[#333333] bg-[#FFBB38] px-4 py-2"
 											>
 												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
 													{t(
@@ -724,19 +724,19 @@ export const LocationCard = ({
 													)
 												}
 											>
-												<Text className="text-sm font-lexend text-[#666] text-center">
+												<Text className="text-center text-sm text-[#666]">
 													Cancel
 												</Text>
 											</TouchableOpacity>
 										</View>
 									)}
 									{isLoadingReviews ? (
-										<View className="py-8 items-center">
+										<View className="items-center py-8">
 											<ActivityIndicator
 												size="small"
 												color="#fed787"
 											/>
-											<Text className="mt-2 font-lexend text-[#666]">
+											<Text className="mt-2 text-[#666]">
 												{t("common.loading")}
 											</Text>
 										</View>
@@ -759,8 +759,8 @@ export const LocationCard = ({
 				animationType="slide"
 			>
 				<SafeAreaView className="flex-1 bg-[#faf4f0]">
-					<View className="flex-row justify-between items-center p-4 bg-[#faf4f0] border-b border-[#333333]">
-						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
+						<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
 							Map View
 						</Text>
 						<TouchableOpacity onPress={closeMapView}>
@@ -802,7 +802,7 @@ export const LocationCard = ({
 										size="large"
 										color="#fed787"
 									/>
-									<Text className="mt-2 font-lexend text-[#666666]">
+									<Text className="mt-2 text-[#666666]">
 										{t("common.loading")}
 									</Text>
 								</View>
@@ -826,8 +826,8 @@ export const LocationCard = ({
 				animationType="slide"
 			>
 				<SafeAreaView className="flex-1 bg-black">
-					<View className="flex-row justify-between items-center p-4 bg-[#faf4f0] border-b border-[#333333]">
-						<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
+						<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
 							360° View
 						</Text>
 						<TouchableOpacity onPress={close360View}>

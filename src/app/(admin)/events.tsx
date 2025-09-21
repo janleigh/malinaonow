@@ -1,4 +1,5 @@
 import { supabase } from "@/api/supabase";
+import { BaseText as Text } from "@/components/BaseText";
 import { Event } from "@/lib/types/supabase";
 import { formatDate, formatTime } from "@/lib/utils/date";
 import { EventService } from "@/services";
@@ -11,7 +12,6 @@ import {
 	Image,
 	Modal,
 	ScrollView,
-	Text,
 	TextInput,
 	TouchableOpacity,
 	View
@@ -193,8 +193,8 @@ export default function ManageEventsScreen() {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
-					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+					<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
 						Manage Events
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -203,7 +203,7 @@ export default function ManageEventsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="bg-[#FFBB38] p-4 mb-4 flex-row items-center justify-center border border-[#333333] rounded-xl"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
@@ -217,7 +217,7 @@ export default function ManageEventsScreen() {
 								size="large"
 								color="#fed787"
 							/>
-							<Text className="mt-4 font-lexend text-[#666666]">
+							<Text className="mt-4 text-[#666666]">
 								Loading events...
 							</Text>
 						</View>
@@ -228,11 +228,11 @@ export default function ManageEventsScreen() {
 								size={40}
 								color="#fed787"
 							/>
-							<Text className="mt-4 font-lexend text-[#666666]">
+							<Text className="mt-4 text-[#666666]">
 								{error}
 							</Text>
 							<TouchableOpacity
-								className="mt-4 bg-[#fed787] px-4 py-2 border border-[#333333]"
+								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
 								onPress={fetchEvents}
 							>
 								<Text className="font-lexend-medium text-black">
@@ -245,40 +245,40 @@ export default function ManageEventsScreen() {
 							{events.map((event) => (
 								<View
 									key={event.id}
-									className="bg-white mb-4 border border-[#333333] rounded-xl"
+									className="mb-4 rounded-xl border border-[#333333] bg-white"
 								>
 									<View className="flex-row">
 										<Image
 											source={{
 												uri: event.banner_image
 											}}
-											className="w-24 h-24"
+											className="h-24 w-24"
 											resizeMode="cover"
 										/>
 										<View className="flex-1 p-3">
-											<Text className="text-base font-lexend-bold tracking-tighter-lexend text-black">
+											<Text className="font-lexend-bold text-base tracking-tighter-lexend text-black">
 												{event.name} in{" "}
 												{event.location}
 											</Text>
-											<View className="flex-row items-center mt-1">
+											<View className="mt-1 flex-row items-center">
 												<AntDesign
 													name="calendar"
 													size={12}
 													color="#555"
 												/>
-												<Text className="ml-1 text-sm font-lexend text-[#555555]">
+												<Text className="ml-1 text-sm text-[#555555]">
 													{formatDate(
 														event.date
 													)}
 												</Text>
 											</View>
-											<View className="flex-row items-center mt-1">
+											<View className="mt-1 flex-row items-center">
 												<AntDesign
 													name="clockcircleo"
 													size={12}
 													color="#555"
 												/>
-												<Text className="ml-1 text-sm font-lexend text-[#555555]">
+												<Text className="ml-1 text-sm text-[#555555]">
 													{formatTime(
 														event.time
 													)}
@@ -301,7 +301,7 @@ export default function ManageEventsScreen() {
 												Edit
 											</Text>
 										</TouchableOpacity>
-										<View className="border-r border-[#eee] mx-2" />
+										<View className="mx-2 border-r border-[#eee]" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
 											onPress={() =>
@@ -325,8 +325,8 @@ export default function ManageEventsScreen() {
 			</SafeAreaView>
 			<Modal visible={modalVisible} animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
-					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
-						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
 							{editingEvent ? "Edit Event" : "Add Event"}
 						</Text>
 						<TouchableOpacity
@@ -337,7 +337,7 @@ export default function ManageEventsScreen() {
 					</View>
 					<ScrollView className="p-4">
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								EVENT NAME
 							</Text>
 							<TextInput
@@ -348,24 +348,24 @@ export default function ManageEventsScreen() {
 										name: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Event name"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								DATE
 							</Text>
 							<TouchableOpacity
 								onPress={showDatePicker}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend flex-row justify-between items-center"
+								className="flex-row items-center justify-between border border-[#333333] bg-white p-3 text-black"
 							>
 								<Text
 									className={
 										formData.date
-											? "text-black font-lexend"
-											: "text-[#999999] font-lexend"
+											? "text-black"
+											: "text-[#999999]"
 									}
 								>
 									{formData.date
@@ -386,18 +386,18 @@ export default function ManageEventsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								TIME
 							</Text>
 							<TouchableOpacity
 								onPress={showTimePicker}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend flex-row justify-between items-center"
+								className="flex-row items-center justify-between border border-[#333333] bg-white p-3 text-black"
 							>
 								<Text
 									className={
 										formData.time
-											? "text-black font-lexend"
-											: "text-[#999999] font-lexend"
+											? "text-black"
+											: "text-[#999999]"
 									}
 								>
 									{formData.time
@@ -418,7 +418,7 @@ export default function ManageEventsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								LOCATION
 							</Text>
 							<TextInput
@@ -429,13 +429,13 @@ export default function ManageEventsScreen() {
 										location: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Event location"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								BANNER IMAGE
 							</Text>
 							<TextInput
@@ -446,13 +446,13 @@ export default function ManageEventsScreen() {
 										bannerImage: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Banner image URL"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<TouchableOpacity
-							className="bg-[#FFBB38] p-4 mb-4 items-center justify-center border border-[#333333] rounded-3xl"
+							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
 							onPress={handleSave}
 							disabled={loading}
 						>

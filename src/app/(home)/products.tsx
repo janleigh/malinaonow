@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { ProductCard } from "@/components/home";
 import { useTranslation } from "@/lib/context/TranslationContext";
@@ -17,7 +18,6 @@ import {
 	ListRenderItem,
 	ScrollView,
 	StyleSheet,
-	Text,
 	TextInput,
 	TouchableOpacity,
 	View,
@@ -198,16 +198,16 @@ const ProductsScreen = () => {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
-				<View className="p-4 border-b border-[#eee]">
+				<View className="border-b border-[#eee] p-4">
 					<View className="mb-4">
-						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
 							{t("products.title")}
 						</Text>
 					</View>
-					<View className="flex-row items-center bg-white border border-[#333333] rounded-xl px-3 py-2 mb-3">
+					<View className="mb-3 flex-row items-center rounded-xl border border-[#333333] bg-white px-3 py-2">
 						<Feather name="search" size={18} color="#666" />
 						<TextInput
-							className="flex-1 ml-2 text-base font-lexend text-black"
+							className="ml-2 flex-1 font-lexend-medium text-base tracking-tighter-lexend text-black"
 							placeholder={t("products.searchPlaceholder")}
 							value={searchQuery}
 							onChangeText={setSearchQuery}
@@ -221,26 +221,26 @@ const ProductsScreen = () => {
 						{barangays.map((barangay) => (
 							<TouchableOpacity
 								key={barangay}
-								className={`px-3 py-1 mr-2 border border-[#333333] rounded-2xl ${selectedBarangay === barangay ? "bg-[#FFFD87]" : "bg-white"}`}
+								className={`mr-2 rounded-2xl border border-[#333333] px-3 py-1 ${selectedBarangay === barangay ? "bg-[#FFFD87]" : "bg-white"}`}
 								onPress={() =>
 									setSelectedBarangay(barangay)
 								}
 							>
-								<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+								<Text className="tracking-tighter-lexend text-black">
 									{barangay}
 								</Text>
 							</TouchableOpacity>
 						))}
 					</ScrollView>
-					<View className="flex-row justify-between items-center mt-4">
-						<Text className="text-lg font-lexend-extrabold tracking-tighter-lexend text-black">
+					<View className="mt-4 flex-row items-center justify-between">
+						<Text className="text-lg tracking-tighter-lexend text-black">
 							{t("products.featuredProducts")}
 						</Text>
 						<TouchableOpacity
 							className="flex-row items-center"
 							onPress={toggleView}
 						>
-							<Text className="mr-1 font-lexend tracking-tighter-lexend text-black">
+							<Text className="mr-1 tracking-tighter-lexend text-black">
 								{viewMode === "grid"
 									? "List View"
 									: "Grid View"}
@@ -257,20 +257,20 @@ const ProductsScreen = () => {
 				</View>
 				<View className="flex-1 px-2">
 					{loading ? (
-						<View className="flex-1 justify-center items-center">
+						<View className="flex-1 items-center justify-center">
 							<ActivityIndicator
 								size="large"
 								color="#fed787"
 							/>
 						</View>
 					) : error ? (
-						<View className="flex-1 justify-center items-center p-4">
-							<Text className="text-red-500 text-center font-lexend mb-2">
+						<View className="flex-1 items-center justify-center p-4">
+							<Text className="mb-2 text-center text-red-500">
 								{error}
 							</Text>
 							<TouchableOpacity
 								onPress={fetchProducts}
-								className="bg-[#fed787] px-4 py-2 rounded-md"
+								className="rounded-md bg-[#fed787] px-4 py-2"
 							>
 								<Text className="font-lexend">Retry</Text>
 							</TouchableOpacity>
@@ -308,13 +308,13 @@ const ProductsScreen = () => {
 							/>
 						)
 					) : (
-						<View className="flex-1 justify-center items-center">
+						<View className="flex-1 items-center justify-center">
 							<AntDesign
 								name="inbox"
 								size={60}
 								color="#fed787"
 							/>
-							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center mt-4">
+							<Text className="mb-2 mt-4 text-center text-xl tracking-tighter-lexend text-black">
 								{products.length === 0
 									? t("products.noProducts")
 									: t("products.noMatchingProducts")}
@@ -379,7 +379,7 @@ class ErrorBoundary extends React.Component<
 						size={48}
 						color="#ff4d4f"
 					/>
-					<Text className="text-lg font-lexend text-center text-red-500 mt-4">
+					<Text className="mt-4 text-center text-lg text-red-500">
 						Something went wrong. Please try again.
 					</Text>
 				</View>

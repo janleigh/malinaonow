@@ -2,9 +2,9 @@ import { shadowStyles } from "@/lib/utils/styles";
 import { useOAuth } from "@clerk/clerk-expo";
 import { OAuthStrategy } from "@clerk/types";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { router } from "expo-router";
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { BaseText as Text } from "../BaseText";
 
 interface OAuthButtonProps {
 	strategy: OAuthStrategy;
@@ -43,7 +43,7 @@ export const OAuthButton = ({
 
 	return (
 		<TouchableOpacity
-			className={`h-12 w-full flex-row items-center justify-center bg-[#9ee3ae] px-4 border border-[#333333] ${className || ""}`}
+			className={`h-12 w-full flex-row items-center justify-center border border-[#333333] bg-[#9ee3ae] px-4 ${className || ""}`}
 			style={shadowStyles.standard}
 			onPress={handlePress}
 			disabled={loading}
@@ -60,7 +60,7 @@ export const OAuthButton = ({
 							color="black"
 						/>
 					)}
-					<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
+					<Text className="android:font-normal font-lexend-medium text-base font-extrabold tracking-tighter-lexend text-black">
 						{text}
 					</Text>
 				</>

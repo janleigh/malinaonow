@@ -1,7 +1,8 @@
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import { BaseText as Text } from "../BaseText";
 
 export type TabName = "home" | "products" | "calendar" | "bookmarks";
 
@@ -55,7 +56,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 	};
 
 	return (
-		<View className="flex-row justify-around p-4 bg-transparent border-t-2 border-[#333]">
+		<View className="flex-row justify-around border-t-2 border-[#333] bg-transparent p-4">
 			<TouchableOpacity
 				className="items-center"
 				onPress={handleHomePress}
@@ -77,8 +78,8 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 						color={activeTab === "products" ? "#333" : "#999"}
 					/>
 					{cartItemCount > 0 && (
-						<View className="absolute -top-2 -right-2 bg-red-500 rounded-full w-5 h-5 items-center justify-center">
-							<Text className="text-white text-xs font-bold">
+						<View className="absolute -right-2 -top-2 h-5 w-5 items-center justify-center rounded-full bg-red-500">
+							<Text className="text-xs font-bold text-white">
 								{cartItemCount > 9 ? "9+" : cartItemCount}
 							</Text>
 						</View>

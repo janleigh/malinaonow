@@ -19,7 +19,7 @@ export default function HomeLayout() {
 
 	if (!isLoaded || isSignedIn === undefined) {
 		return (
-			<View className="flex-1 bg-[#faf4f0] items-center justify-center">
+			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
 				<ActivityIndicator size="large" color="#fed787" />
 			</View>
 		);

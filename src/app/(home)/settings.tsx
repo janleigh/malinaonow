@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { useAuth } from "@/lib/context/AuthContext";
 import {
 	LANGUAGES,
@@ -6,13 +7,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import {
-	Alert,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View
-} from "react-native";
+import { Alert, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SettingsScreen() {
@@ -44,8 +39,8 @@ export default function SettingsScreen() {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
-					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+					<Text className="android:font-normal text-2xl tracking-tighter-lexend text-black">
 						{t("settings.title")}
 					</Text>
 					<TouchableOpacity
@@ -56,17 +51,17 @@ export default function SettingsScreen() {
 				</View>
 				<ScrollView className="flex-1 p-4">
 					<View className="mb-6">
-						<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">
+						<Text className="mb-2 text-lg tracking-tighter-lexend text-black">
 							{t("settings.language")}
 						</Text>
-						<Text className="text-sm text-gray-600 font-lexend tracking-tighter-lexend mb-4">
+						<Text className="mb-4 text-sm tracking-tighter-lexend text-gray-600">
 							{t("settings.selectLanguage")}
 						</Text>
 						<View className="space-y-3">
 							{LANGUAGES.map((lang) => (
 								<TouchableOpacity
 									key={lang.id}
-									className={`flex-row items-center justify-between p-4 border rounded-3xl ${
+									className={`flex-row items-center justify-between rounded-3xl border p-4 ${
 										language === lang.id
 											? "border-black bg-[#FFBB38]"
 											: "border-gray-300 bg-white"
@@ -74,7 +69,7 @@ export default function SettingsScreen() {
 									onPress={() => changeLanguage(lang.id)}
 									disabled={isLoading}
 								>
-									<Text className="font-lexend tracking-tighter-lexend text-black">
+									<Text className="tracking-tighter-lexend text-black">
 										{lang.name}
 									</Text>
 									{language === lang.id && (

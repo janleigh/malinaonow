@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { Product } from "@/lib/types/supabase";
 import { ProductService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -9,7 +10,6 @@ import {
 	Image,
 	Modal,
 	ScrollView,
-	Text,
 	TextInput,
 	TouchableOpacity,
 	View
@@ -167,8 +167,8 @@ export default function ManageProductsScreen() {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
-					<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+					<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
 						Manage Products
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -177,7 +177,7 @@ export default function ManageProductsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="bg-[#FFBB38] p-4 mb-4 flex-row items-center justify-center border border-[#333333] rounded-xl"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
@@ -191,7 +191,7 @@ export default function ManageProductsScreen() {
 								size="large"
 								color="#fed787"
 							/>
-							<Text className="mt-4 font-lexend text-[#666666]">
+							<Text className="mt-4 text-[#666666]">
 								Loading products...
 							</Text>
 						</View>
@@ -202,11 +202,11 @@ export default function ManageProductsScreen() {
 								size={40}
 								color="#fed787"
 							/>
-							<Text className="mt-4 font-lexend text-[#666666]">
+							<Text className="mt-4 text-[#666666]">
 								{error}
 							</Text>
 							<TouchableOpacity
-								className="mt-4 bg-[#fed787] px-4 py-2 border border-[#333333]"
+								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
 								onPress={fetchProducts}
 							>
 								<Text className="font-lexend-medium text-black">
@@ -219,7 +219,7 @@ export default function ManageProductsScreen() {
 							{products.map((product) => (
 								<View
 									key={product.id}
-									className="bg-white mb-4 border border-[#333333] rounded-xl"
+									className="mb-4 rounded-xl border border-[#333333] bg-white"
 								>
 									<View className="flex-row">
 										{product.image_url ? (
@@ -227,11 +227,11 @@ export default function ManageProductsScreen() {
 												source={{
 													uri: product.image_url
 												}}
-												className="w-24 h-24"
+												className="h-24 w-24"
 												resizeMode="cover"
 											/>
 										) : (
-											<View className="w-24 h-24 bg-gray-100 items-center justify-center">
+											<View className="h-24 w-24 items-center justify-center bg-gray-100">
 												<Feather
 													name="package"
 													size={32}
@@ -242,22 +242,22 @@ export default function ManageProductsScreen() {
 
 										<View className="flex-1 p-3">
 											<Text
-												className="text-base font-lexend-bold tracking-tighter-lexend text-black"
+												className="font-lexend-bold text-base tracking-tighter-lexend text-black"
 												numberOfLines={1}
 											>
 												{product.name}
 											</Text>
 											<Text
-												className="text-sm font-lexend tracking-tighter-lexend text-[#555555] mt-1"
+												className="mt-1 text-sm tracking-tighter-lexend text-[#555555]"
 												numberOfLines={1}
 											>
 												{product.barangay}
 											</Text>
-											<View className="flex-row items-center mt-1">
+											<View className="mt-1 flex-row items-center">
 												<View
-													className={`w-3 h-3 rounded-full mr-1 ${product.is_available ? "bg-green-500" : "bg-red-500"}`}
+													className={`mr-1 h-3 w-3 rounded-full ${product.is_available ? "bg-green-500" : "bg-red-500"}`}
 												/>
-												<Text className="text-xs font-lexend text-[#555555]">
+												<Text className="text-xs text-[#555555]">
 													{product.is_available
 														? "Available"
 														: "Not Available"}
@@ -280,7 +280,7 @@ export default function ManageProductsScreen() {
 												Edit
 											</Text>
 										</TouchableOpacity>
-										<View className="border-r border-[#eee] mx-2" />
+										<View className="mx-2 border-r border-[#eee]" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
 											onPress={() =>
@@ -304,8 +304,8 @@ export default function ManageProductsScreen() {
 			</SafeAreaView>
 			<Modal visible={modalVisible} animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
-					<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
-						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
 							{editingProduct
 								? "Edit Product"
 								: "Add Product"}
@@ -318,7 +318,7 @@ export default function ManageProductsScreen() {
 					</View>
 					<ScrollView className="p-4">
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								NAME
 							</Text>
 							<TextInput
@@ -329,13 +329,13 @@ export default function ManageProductsScreen() {
 										name: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Product name"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								DESCRIPTION
 							</Text>
 							<TextInput
@@ -346,7 +346,7 @@ export default function ManageProductsScreen() {
 										description: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Product description"
 								placeholderTextColor="#666666"
 								multiline
@@ -356,7 +356,7 @@ export default function ManageProductsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								DESCRIPTION (FIL)
 							</Text>
 							<TextInput
@@ -367,7 +367,7 @@ export default function ManageProductsScreen() {
 										description_fil: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Filipino description (optional)"
 								placeholderTextColor="#666666"
 								multiline
@@ -377,7 +377,7 @@ export default function ManageProductsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								DESCRIPTION (AKL)
 							</Text>
 							<TextInput
@@ -388,7 +388,7 @@ export default function ManageProductsScreen() {
 										description_akl: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Aklanon description (optional)"
 								placeholderTextColor="#666666"
 								multiline
@@ -398,7 +398,7 @@ export default function ManageProductsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								IMAGE URL
 							</Text>
 							<TextInput
@@ -409,13 +409,13 @@ export default function ManageProductsScreen() {
 										image_url: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Image URL"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 text-sm font-lexend-medium text-[#666666]">
+							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
 								BARANGAY
 							</Text>
 							<TextInput
@@ -426,14 +426,14 @@ export default function ManageProductsScreen() {
 										barangay: text
 									})
 								}
-								className="bg-white text-black p-3 border border-[#333333] font-lexend"
+								className="border border-[#333333] bg-white p-3 text-black"
 								placeholder="Barangay"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 
 						<View className="mb-4 flex-row items-center">
-							<Text className="text-sm font-lexend-medium text-[#666666] mr-4">
+							<Text className="mr-4 font-lexend-medium text-sm text-[#666666]">
 								AVAILABLE
 							</Text>
 							<TouchableOpacity
@@ -444,15 +444,15 @@ export default function ManageProductsScreen() {
 											!formData.is_available
 									})
 								}
-								className={`w-10 h-6 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#FFBB38]" : "bg-white"} items-center justify-center`}
+								className={`h-6 w-10 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#FFBB38]" : "bg-white"} items-center justify-center`}
 							>
 								<View
-									className={`w-4 h-4 rounded-full ${formData.is_available ? "bg-black ml-4" : "bg-[#eee] ml-0"}`}
+									className={`h-4 w-4 rounded-full ${formData.is_available ? "ml-4 bg-black" : "ml-0 bg-[#eee]"}`}
 								/>
 							</TouchableOpacity>
 						</View>
 						<TouchableOpacity
-							className="bg-[#FFBB38] p-4 mb-4 items-center justify-center border border-[#333333] rounded-3xl"
+							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
 							onPress={handleSave}
 							disabled={loading}
 						>

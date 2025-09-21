@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { LocationCard } from "@/components/home";
 import { useAuth } from "@/lib/context/AuthContext";
@@ -11,7 +12,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
 	ActivityIndicator,
 	ScrollView,
-	Text,
 	TouchableOpacity,
 	View
 } from "react-native";
@@ -96,25 +96,24 @@ export default function BookmarksPage() {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row justify-between items-center p-4 border-b border-[#eee]">
+				<View className="flex-row items-center justify-between border-b border-[#000] p-4">
 					<View className="flex-row items-center">
-						<Text className="text-2xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+						<Text className="android:font-normal text-2xl tracking-tighter-lexend text-black">
 							{t("home.bookmarkedLocations")}
 						</Text>
 					</View>
 				</View>
-
 				<ScrollView className="flex-1">
 					<View className="mt-2 px-4 py-2">
-						<View className="flex-row justify-between items-center mb-4">
-							<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black">
+						<View className="mb-4 flex-row items-center justify-between">
+							<Text className="text-xl tracking-tighter-lexend text-black">
 								{t("home.myBookmarks")}
 							</Text>
 							<TouchableOpacity
 								className="flex-row items-center"
 								onPress={toggleView}
 							>
-								<Text className="mr-1 font-lexend tracking-tighter-lexend text-black">
+								<Text className="mr-1 tracking-tighter-lexend text-black">
 									{isGridView
 										? "List View"
 										: "Grid View"}
@@ -126,70 +125,69 @@ export default function BookmarksPage() {
 								/>
 							</TouchableOpacity>
 						</View>
-
 						{loading ? (
-							<View className="p-4 items-center justify-center">
+							<View className="items-center justify-center p-4">
 								<ActivityIndicator
 									size="large"
 									color="#fed787"
 								/>
-								<Text className="mt-2 font-lexend text-[#666666]">
+								<Text className="mt-2 text-[#666666]">
 									Loading bookmarked locations...
 								</Text>
 							</View>
 						) : error ? (
 							<View
-								className="p-4 my-4 border border-[#333333] bg-white"
+								className="my-4 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}
 							>
 								<View className="items-center">
-									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<Feather
 											name="alert-triangle"
 											size={24}
 											color="#333"
 										/>
 									</View>
-									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
+									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
 										Error Loading Bookmarks
 									</Text>
-									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
+									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
 										{error}
 									</Text>
 									<TouchableOpacity
-										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"
+										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 										style={shadowStyles.small}
 										onPress={fetchBookmarkedLocations}
 									>
-										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+										<Text className="tracking-tighter-lexend text-black">
 											Retry
 										</Text>
 									</TouchableOpacity>
 								</View>
 							</View>
 						) : locations.length === 0 ? (
-							<View className="p-4 my-4 border border-[#333333] bg-white">
+							<View className="my-4 rounded-lg border border-[#333333] bg-white p-4">
 								<View className="items-center">
-									<View className="w-12 h-12 rounded-full bg-[#fed787] items-center justify-center mb-4 border border-[#333333]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<AntDesign
 											name="heart"
 											size={24}
 											color="#333"
 										/>
 									</View>
-									<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-2 text-center">
+									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
 										{t("home.noBookmarks")}
 									</Text>
-									<Text className="text-base font-lexend tracking-tighter-lexend text-[#666666] text-center mb-4">
+									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
 										{t("home.noBookmarksDesc")}
 									</Text>
 									<TouchableOpacity
-										className="flex-row items-center justify-center py-2 px-4 bg-[#fed787] border border-[#333333]"
+										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 										onPress={() =>
 											router.push("/(home)")
 										}
 									>
-										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+										<Text className="tracking-tighter-lexend text-black">
 											{t("home.exploreLocations")}
 										</Text>
 									</TouchableOpacity>

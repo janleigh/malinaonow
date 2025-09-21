@@ -1,4 +1,5 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
+import { BaseText as Text } from "@/components/BaseText";
 import { useAuth } from "@/lib/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -8,7 +9,6 @@ import {
 	ActivityIndicator,
 	Image,
 	Modal,
-	Text,
 	TouchableOpacity,
 	View
 } from "react-native";
@@ -52,7 +52,7 @@ export default function LandingPage() {
 
 	if (!isLoaded) {
 		return (
-			<View className="flex-1 bg-[#faf4f0] items-center justify-center">
+			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
 				<ActivityIndicator size="large" color="#fed787" />
 			</View>
 		);
@@ -65,21 +65,21 @@ export default function LandingPage() {
 					<View className="flex-col items-center">
 						<Image
 							source={require("../assets/images/icon.png")}
-							className="w-6 h-6 android:w-32 android:h-32 mb-4"
+							className="android:w-32 android:h-32 mb-4 h-6 w-6"
 							resizeMode="cover"
 						/>
-						<Text className="text-3xl font-extrabold android:text-4xl android:font-normal text-black font-lexend tracking-tighter-lexend">
+						<Text className="android:text-4xl android:font-normal text-3xl font-extrabold tracking-tighter-lexend text-black">
 							MalinaoNow
 						</Text>
 					</View>
 				</View>
-				<View className="w-full px-5 pb-10 space-y-3">
+				<View className="w-full space-y-3 px-5 pb-10">
 					<Link href="/(auth)/signup" asChild>
 						<TouchableOpacity
-							className="h-12 w-full flex-row items-center justify-center bg-white px-4 border border-[#333333]"
+							className="h-12 w-full flex-row items-center justify-center border border-[#333333] bg-white px-4"
 							style={shadowStyles.standard}
 						>
-							<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
+							<Text className="android:font-normal font-lexend-medium text-base font-extrabold tracking-tighter-lexend text-black">
 								Sign up with email
 							</Text>
 						</TouchableOpacity>
@@ -98,10 +98,10 @@ export default function LandingPage() {
 						className="android:mt-2"
 					/>
 					<View className="mt-6 items-center">
-						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
+						<Text className="text-center tracking-tighter-lexend text-[#333333]">
 							Already have an account?{" "}
 							<Text
-								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
+								className="android:font-normal font-extrabold tracking-tighter-lexend text-black"
 								onPress={() =>
 									router.push("/(auth)/login")
 								}
@@ -117,34 +117,34 @@ export default function LandingPage() {
 				transparent={true}
 				animationType="fade"
 			>
-				<View className="flex-1 justify-center items-center bg-black/30">
+				<View className="flex-1 items-center justify-center bg-black/30">
 					<View
-						className="w-[80%] bg-white p-5 border-2 border-[#333333]"
+						className="w-[80%] border-2 border-[#333333] bg-white p-5"
 						style={shadowStyles.standard}
 					>
-						<Text className="text-xl font-lexend-extrabold tracking-tighter-lexend text-black mb-4 text-center">
+						<Text className="mb-4 text-center font-lexend-extrabold text-xl tracking-tighter-lexend text-black">
 							You&apos;re already signed in
 						</Text>
-						<Text className="mb-6 font-lexend tracking-tighter-lexend text-[#333333] text-center">
+						<Text className="mb-6 text-center tracking-tighter-lexend text-[#333333]">
 							Would you like to continue to the app or sign
 							out?
 						</Text>
 						<View className="space-y-3">
 							<TouchableOpacity
-								className="h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
+								className="h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
 								style={shadowStyles.standard}
 								onPress={handleGoToHome}
 							>
-								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+								<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
 									Go to home page
 								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								className="h-12 w-full mt-2 items-center justify-center bg-white border border-[#333333]"
+								className="mt-2 h-12 w-full items-center justify-center border border-[#333333] bg-white"
 								style={shadowStyles.standard}
 								onPress={handleSignOut}
 							>
-								<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+								<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
 									Sign out
 								</Text>
 							</TouchableOpacity>

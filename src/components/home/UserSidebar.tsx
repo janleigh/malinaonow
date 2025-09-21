@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useTranslation } from "@/lib/context/TranslationContext";
 import { shadowStyles } from "@/lib/utils/styles";
@@ -9,7 +10,6 @@ import {
 	Dimensions,
 	Image,
 	Modal,
-	Text,
 	TouchableOpacity,
 	View
 } from "react-native";
@@ -22,7 +22,7 @@ interface UserSidebarProps {
 	email?: string;
 	username?: string;
 	profileImage?: string;
-	onShowBookmarks?: () => void; // Add this line
+	onShowBookmarks?: () => void;
 }
 
 export const UserSidebar: React.FC<UserSidebarProps> = ({
@@ -174,8 +174,8 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						}}
 					>
 						<SafeAreaView className="flex-1">
-							<View className="flex-row justify-between items-center p-4">
-								<Text className="text-xl font-lexend-bold tracking-tighter-lexend text-black">
+							<View className="flex-row items-center justify-between p-4">
+								<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
 									{t("userSidebar.profile")}
 								</Text>
 								<TouchableOpacity onPress={onClose}>
@@ -186,29 +186,29 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									/>
 								</TouchableOpacity>
 							</View>
-							<View className="items-center py-6 border-b border-gray-200">
+							<View className="items-center border-b border-gray-200 py-6">
 								{userProfileImage ? (
 									<Image
 										source={{
 											uri: userProfileImage
 										}}
-										className="w-20 h-20 rounded-full border border-[#333333]"
+										className="h-20 w-20 rounded-full border border-[#333333]"
 									/>
 								) : (
-									<View className="w-20 h-20 rounded-full bg-[#8ED1DC] items-center justify-center border border-[#333333]">
-										<Text className="text-xl font-extrabold text-black font-lexend tracking-tighter-lexend">
+									<View className="h-20 w-20 items-center justify-center rounded-full border border-[#333333] bg-[#8ED1DC]">
+										<Text className="text-xl font-extrabold tracking-tighter-lexend text-black">
 											{getInitials(userName)}
 										</Text>
 									</View>
 								)}
-								<Text className="mt-3 text-lg font-lexend-bold tracking-tighter-lexend text-black">
+								<Text className="mt-3 font-lexend-bold text-lg tracking-tighter-lexend text-black">
 									{userName}
 								</Text>
-								<Text className="text-sm text-[#666] font-lexend tracking-tighter-lexend">
+								<Text className="text-sm tracking-tighter-lexend text-[#666]">
 									{userEmail}
 								</Text>
 							</View>
-							<View className="flex-1 p-4 space-y-1">
+							<View className="flex-1 space-y-1 p-4">
 								{isAdmin && (
 									<TouchableOpacity
 										className="flex-row items-center py-4"
@@ -222,7 +222,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 											size={20}
 											color="#333"
 										/>
-										<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
+										<Text className="ml-4 tracking-tighter-lexend text-black">
 											{t("userSidebar.adminPanel")}
 										</Text>
 									</TouchableOpacity>
@@ -239,14 +239,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										size={20}
 										color="#333"
 									/>
-									<Text className="ml-4 font-lexend tracking-tighter-lexend text-black">
+									<Text className="ml-4 tracking-tighter-lexend text-black">
 										{t("userSidebar.settings")}
 									</Text>
 								</TouchableOpacity>
 							</View>
 							<View className="p-4">
 								<TouchableOpacity
-									className="flex-row items-center justify-center py-3 bg-[#FFBB38] border border-[#333333] rounded-xl"
+									className="flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] py-3"
 									onPress={handleSignOut}
 								>
 									<Feather

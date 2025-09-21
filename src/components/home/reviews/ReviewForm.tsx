@@ -3,11 +3,11 @@ import { useTranslation } from "@/lib/context/TranslationContext";
 import React, { useState } from "react";
 import {
 	ActivityIndicator,
-	Text,
 	TextInput,
 	TouchableOpacity,
 	View
 } from "react-native";
+import { BaseText as Text } from "../../BaseText";
 
 interface ReviewFormProps {
 	locationId: string;
@@ -58,15 +58,15 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
 	return (
 		<View className="mt-4">
-			<Text className="text-lg font-lexend-bold tracking-tighter-lexend text-black mb-2">
+			<Text className="mb-2 font-lexend-bold text-lg tracking-tighter-lexend text-black">
 				{t("review.writeReview")}
 			</Text>
 			<View className="space-y-4">
 				<View>
-					<Text className="mb-1 text-sm font-lexend tracking-tighter-lexend text-[#666666]">
+					<Text className="mb-1 font-lexend text-sm tracking-tighter-lexend text-[#666666]">
 						{t("review.rating")}
 					</Text>
-					<View className="flex-row mb-2">
+					<View className="mb-2 flex-row">
 						{[1, 2, 3, 4, 5].map((star) => (
 							<TouchableOpacity
 								key={star}
@@ -88,13 +88,13 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 						))}
 					</View>
 				</View>
-				<View className="bg-white p-4 border border-[#333333]">
+				<View className="border border-[#333333] bg-white p-4">
 					<TextInput
 						value={comment}
 						onChangeText={setComment}
 						placeholder={t("review.commentPlaceholder")}
 						placeholderTextColor="#666666"
-						className="text-base font-lexend text-black"
+						className="font-lexend text-base text-black"
 						multiline
 						numberOfLines={4}
 						textAlignVertical="top"
@@ -102,19 +102,19 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 					/>
 				</View>
 				{error ? (
-					<Text className="text-red-500 font-lexend tracking-tighter-lexend">
+					<Text className="font-lexend tracking-tighter-lexend text-red-500">
 						{error}
 					</Text>
 				) : null}
 				<TouchableOpacity
-					className="h-12 mt-2 w-full items-center justify-center bg-[#FFBB38] border border-[#333333] rounded-xl"
+					className="mt-2 h-12 w-full items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38]"
 					onPress={handleSubmit}
 					disabled={isSubmitting}
 				>
 					{isSubmitting ? (
 						<ActivityIndicator color="#000" />
 					) : (
-						<Text className="text-base font-lexend-medium tracking-tighter-lexend text-black">
+						<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
 							{t("review.submit")}
 						</Text>
 					)}

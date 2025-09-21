@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { useAuth } from "@/lib/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { router } from "expo-router";
@@ -5,7 +6,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
 	ActivityIndicator,
-	Text,
 	TextInput,
 	TouchableOpacity,
 	View
@@ -53,20 +53,20 @@ export default function SignupScreen() {
 		<View className="flex-1 bg-[#faf4f0]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
-				<View className="flex-1 p-6 flex-col justify-between">
+				<View className="flex-1 flex-col justify-between p-6">
 					<View>
-						<Text className="mb-2 text-3xl font-extrabold android:text-4xl android:font-normal text-black font-lexend tracking-tighter-lexend">
+						<Text className="android:text-4xl android:font-normal mb-2 text-3xl tracking-tighter-lexend text-black">
 							Create Account
 						</Text>
-						<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
+						<Text className="mb-8 tracking-tighter-lexend text-[#333333]">
 							Sign up to get started with MalinaoNow
 						</Text>
 						<View className="mt-1 space-y-4">
 							<View
-								className="bg-white p-4 my-2 border border-[#333333]"
+								className="my-2 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}
 							>
-								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
+								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									FIRST NAME
 								</Text>
 								<TextInput
@@ -77,15 +77,15 @@ export default function SignupScreen() {
 									}}
 									placeholder="John"
 									placeholderTextColor="#666666"
-									className="text-base font-lexend text-black"
+									className="text-base text-black"
 									autoCapitalize="words"
 								/>
 							</View>
 							<View
-								className="bg-white p-4 my-2 border border-[#333333]"
+								className="my-2 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}
 							>
-								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
+								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									LAST NAME
 								</Text>
 								<TextInput
@@ -96,15 +96,15 @@ export default function SignupScreen() {
 									}}
 									placeholder="Doe"
 									placeholderTextColor="#666666"
-									className="text-base font-lexend text-black"
+									className="text-base text-black"
 									autoCapitalize="words"
 								/>
 							</View>
 							<View
-								className="bg-white p-4 my-2 border border-[#333333]"
+								className="my-2 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}
 							>
-								<Text className="mb-1 text-xs font-lexend tracking-tighter-lexend text-[#666666]">
+								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									EMAIL
 								</Text>
 								<TextInput
@@ -115,19 +115,19 @@ export default function SignupScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="text-base font-lexend text-black"
+									className="text-base text-black"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
 							</View>
 							{error ? (
-								<Text className="text-red-500 font-lexend tracking-tighter-lexend">
+								<Text className="tracking-tighter-lexend text-red-500">
 									{error}
 								</Text>
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-8 h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
+							className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
 							style={shadowStyles.standard}
 							onPress={handleSignup}
 							disabled={isLoading}
@@ -135,18 +135,17 @@ export default function SignupScreen() {
 							{isLoading ? (
 								<ActivityIndicator color="#000" />
 							) : (
-								<Text className="text-base text-black font-extrabold android:font-normal font-lexend-medium tracking-tighter-lexend">
+								<Text className="android:font-normal font-lexend-medium text-base tracking-tighter-lexend text-black">
 									Create Account
 								</Text>
 							)}
 						</TouchableOpacity>
 					</View>
-
 					<View className="items-center pb-4">
-						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
+						<Text className="text-center tracking-tighter-lexend text-[#333333]">
 							Already have an account?{" "}
 							<Text
-								className="text-black font-extrabold android:font-normal font-lexend tracking-tighter-lexend"
+								className="android:font-normal tracking-tighter-lexend text-black"
 								onPress={() => router.replace("/login")}
 							>
 								Log in

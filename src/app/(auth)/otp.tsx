@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { useAuth } from "@/lib/context/AuthContext";
 import { shadowStyles } from "@/lib/utils/styles";
 import { useLocalSearchParams } from "expo-router";
@@ -5,7 +6,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
 import {
 	ActivityIndicator,
-	Text,
 	TextInput,
 	TouchableOpacity,
 	View
@@ -105,12 +105,12 @@ export default function OTPScreen() {
 		<View className="flex-1 bg-[#faf4f0]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
-				<View className="flex-1 p-6 flex-col justify-between">
+				<View className="flex-1 flex-col justify-between p-6">
 					<View>
-						<Text className="mb-2 text-3xl font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend">
+						<Text className="android:font-normal mb-2 text-3xl tracking-tighter-lexend text-black">
 							Verification Code
 						</Text>
-						<Text className="mb-8 font-lexend tracking-tighter-lexend text-[#333333]">
+						<Text className="mb-8 tracking-tighter-lexend text-[#333333]">
 							{`We've sent a 6-digit code to ${email || "your email"}`}
 						</Text>
 						<View className="items-center">
@@ -132,7 +132,7 @@ export default function OTPScreen() {
 							<TouchableOpacity
 								onPress={focusInput}
 								activeOpacity={0.9}
-								className="flex-row justify-center w-full mt-4 mb-2"
+								className="mb-2 mt-4 w-full flex-row justify-center"
 							>
 								{[0, 1, 2, 3, 4, 5].map((index) => {
 									const digit = otp[index];
@@ -148,9 +148,9 @@ export default function OTPScreen() {
 											style={shadowStyles.standard}
 										>
 											{showCursor ? (
-												<View className="h-5 w-0.5 bg-black animate-pulse" />
+												<View className="h-5 w-0.5 animate-pulse bg-black" />
 											) : (
-												<Text className="text-xl font-bold font-lexend text-black">
+												<Text className="text-xl font-bold text-black">
 													{digit || ""}
 												</Text>
 											)}
@@ -159,12 +159,12 @@ export default function OTPScreen() {
 								})}
 							</TouchableOpacity>
 							{error ? (
-								<Text className="mt-4 text-red-500 font-lexend tracking-tighter-lexend">
+								<Text className="mt-4 tracking-tighter-lexend text-red-500">
 									{error}
 								</Text>
 							) : null}
 							<TouchableOpacity
-								className="mt-8 h-12 w-full items-center justify-center bg-[#fed787] border border-[#333333]"
+								className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
 								style={shadowStyles.standard}
 								onPress={handleVerify}
 								disabled={isLoading || otp.length !== 6}
@@ -172,19 +172,18 @@ export default function OTPScreen() {
 								{isLoading ? (
 									<ActivityIndicator color="#000" />
 								) : (
-									<Text className="text-base font-extrabold android:font-normal text-black font-lexend-medium tracking-tighter-lexend">
+									<Text className="android:font-normal font-lexend-medium text-base tracking-tighter-lexend text-black">
 										Verify
 									</Text>
 								)}
 							</TouchableOpacity>
 						</View>
 					</View>
-
 					<View className="items-center pb-4">
-						<Text className="text-center font-lexend tracking-tighter-lexend text-[#333333]">
+						<Text className="text-center tracking-tighter-lexend text-[#333333]">
 							Didn&apos;t receive code?{" "}
 							<Text
-								className="font-extrabold android:font-normal text-black font-lexend tracking-tighter-lexend"
+								className="android:font-normal tracking-tighter-lexend text-black"
 								onPress={handleResendCode}
 							>
 								{isResending ? "Sending..." : "Resend"}
