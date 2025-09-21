@@ -1,1 +1,1 @@
-export { useClerkAuth } from "./auth";
+export { useClerkAuth } from "./clerk";

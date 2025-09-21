@@ -151,8 +151,8 @@ export default function HomePage() {
 
 	const displayedLocations = showingBookmarksOnly
 		? locations.filter((location) =>
-				bookmarkedLocations.includes(location.id)
-			)
+			bookmarkedLocations.includes(location.id)
+		)
 		: locations;
 
 	return (
@@ -372,91 +372,91 @@ export default function HomePage() {
 							</View>
 						) : showingBookmarksOnly &&
 						  displayedLocations.length === 0 ? (
-							<View
-								className="my-4 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
-							>
-								<View className="items-center">
-									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
-										<AntDesign
-											name="heart"
-											size={24}
-											color="#333"
-										/>
+								<View
+									className="my-4 border border-[#333333] bg-white p-4"
+									style={shadowStyles.standard}
+								>
+									<View className="items-center">
+										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+											<AntDesign
+												name="heart"
+												size={24}
+												color="#333"
+											/>
+										</View>
+										<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+											{t("home.noBookmarks")}
+										</Text>
+										<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+											{t("home.noBookmarksDesc")}
+										</Text>
 									</View>
-									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
-										{t("home.noBookmarks")}
-									</Text>
-									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
-										{t("home.noBookmarksDesc")}
-									</Text>
 								</View>
-							</View>
-						) : isGridView ? (
+							) : isGridView ? (
 							// Grid View
-							<View className="flex-row justify-between">
-								<View className="w-[48%] space-y-4">
-									{displayedLocations
-										.slice(
-											0,
-											Math.ceil(
-												displayedLocations.length /
+								<View className="flex-row justify-between">
+									<View className="w-[48%] space-y-4">
+										{displayedLocations
+											.slice(
+												0,
+												Math.ceil(
+													displayedLocations.length /
 													2
+												)
 											)
-										)
-										.map((location) => (
-											<LocationCard
-												key={location.id}
-												location={location}
-												isBookmarked={bookmarkedLocations.includes(
-													location.id
-												)}
-												onToggleBookmark={
-													handleToggleBookmark
-												}
-											/>
-										))}
-								</View>
-								<View className="w-[48%] space-y-4">
-									{displayedLocations
-										.slice(
-											Math.ceil(
-												displayedLocations.length /
+											.map((location) => (
+												<LocationCard
+													key={location.id}
+													location={location}
+													isBookmarked={bookmarkedLocations.includes(
+														location.id
+													)}
+													onToggleBookmark={
+														handleToggleBookmark
+													}
+												/>
+											))}
+									</View>
+									<View className="w-[48%] space-y-4">
+										{displayedLocations
+											.slice(
+												Math.ceil(
+													displayedLocations.length /
 													2
+												)
 											)
-										)
-										.map((location) => (
-											<LocationCard
-												key={location.id}
-												location={location}
-												isBookmarked={bookmarkedLocations.includes(
-													location.id
-												)}
-												onToggleBookmark={
-													handleToggleBookmark
-												}
-											/>
-										))}
+											.map((location) => (
+												<LocationCard
+													key={location.id}
+													location={location}
+													isBookmarked={bookmarkedLocations.includes(
+														location.id
+													)}
+													onToggleBookmark={
+														handleToggleBookmark
+													}
+												/>
+											))}
+									</View>
 								</View>
-							</View>
-						) : (
+							) : (
 							// List View
-							<View className="space-y-4">
-								{displayedLocations.map((location) => (
-									<LocationCard
-										key={location.id}
-										location={location}
-										listView={true}
-										isBookmarked={bookmarkedLocations.includes(
-											location.id
-										)}
-										onToggleBookmark={
-											handleToggleBookmark
-										}
-									/>
-								))}
-							</View>
-						)}
+								<View className="space-y-4">
+									{displayedLocations.map((location) => (
+										<LocationCard
+											key={location.id}
+											location={location}
+											listView={true}
+											isBookmarked={bookmarkedLocations.includes(
+												location.id
+											)}
+											onToggleBookmark={
+												handleToggleBookmark
+											}
+										/>
+									))}
+								</View>
+							)}
 					</View>
 				</ScrollView>
 				<BottomTabBar

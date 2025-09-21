@@ -262,52 +262,52 @@ export const ProductCard = ({
 							<View className="h-64 w-full">
 								{product.images &&
 								product.images.length > 0 ? (
-									<ScrollView
-										horizontal
-										pagingEnabled
-										showsHorizontalScrollIndicator={
-											false
-										}
-										className="h-full w-full"
-									>
-										{product.images.map(
-											(
-												img: string,
-												index: number
-											) => (
-												<View
-													key={index}
-													className="h-full w-full"
-													style={{
-														width: "100%"
-													}}
-												>
-													<Image
-														source={{
-															uri: img
-														}}
+										<ScrollView
+											horizontal
+											pagingEnabled
+											showsHorizontalScrollIndicator={
+												false
+											}
+											className="h-full w-full"
+										>
+											{product.images.map(
+												(
+													img: string,
+													index: number
+												) => (
+													<View
+														key={index}
 														className="h-full w-full"
-														resizeMode="cover"
-													/>
-												</View>
-											)
-										)}
-									</ScrollView>
-								) : product.image_url ? (
-									<Image
-										source={{ uri: product.image_url }}
-										className="h-full w-full"
-										resizeMode="cover"
-									/>
-								) : (
-									<View className="h-full w-full items-center justify-center bg-gray-100">
-										<Feather
-											name="package"
-											size={40}
-											color="#999"
+														style={{
+															width: "100%"
+														}}
+													>
+														<Image
+															source={{
+																uri: img
+															}}
+															className="h-full w-full"
+															resizeMode="cover"
+														/>
+													</View>
+												)
+											)}
+										</ScrollView>
+									) : product.image_url ? (
+										<Image
+											source={{ uri: product.image_url }}
+											className="h-full w-full"
+											resizeMode="cover"
 										/>
-									</View>
-								)}
+									) : (
+										<View className="h-full w-full items-center justify-center bg-gray-100">
+											<Feather
+												name="package"
+												size={40}
+												color="#999"
+											/>
+										</View>
+									)}
 							</View>
 							<View className="p-4">
 								<Text className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]">
