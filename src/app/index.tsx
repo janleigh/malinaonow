@@ -68,7 +68,10 @@ export default function LandingPage() {
 							className="android:w-32 android:h-32 mb-4 h-6 w-6"
 							resizeMode="cover"
 						/>
-						<Text className="android:text-4xl android:font-normal text-3xl font-extrabold tracking-tighter-lexend text-black">
+						<Text
+							className="android:text-4xl android:font-normal text-3xl tracking-tighter-lexend text-black"
+							fontStyle="extrabold"
+						>
 							MalinaoNow
 						</Text>
 					</View>
@@ -79,7 +82,10 @@ export default function LandingPage() {
 							className="h-12 w-full flex-row items-center justify-center border border-[#333333] bg-white px-4"
 							style={shadowStyles.standard}
 						>
-							<Text className="android:font-normal font-lexend-medium text-base font-extrabold tracking-tighter-lexend text-black">
+							<Text
+								className="android:font-normal text-base font-extrabold tracking-tighter-lexend text-black"
+								fontStyle="medium"
+							>
 								Sign up with email
 							</Text>
 						</TouchableOpacity>
@@ -122,7 +128,10 @@ export default function LandingPage() {
 						className="w-[80%] border-2 border-[#333333] bg-white p-5"
 						style={shadowStyles.standard}
 					>
-						<Text className="mb-4 text-center font-lexend-extrabold text-xl tracking-tighter-lexend text-black">
+						<Text
+							className="mb-4 text-center text-xl tracking-tighter-lexend text-black"
+							fontStyle="extrabold"
+						>
 							You&apos;re already signed in
 						</Text>
 						<Text className="mb-6 text-center tracking-tighter-lexend text-[#333333]">
@@ -135,7 +144,10 @@ export default function LandingPage() {
 								style={shadowStyles.standard}
 								onPress={handleGoToHome}
 							>
-								<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+								<Text
+									className="text-base tracking-tighter-lexend text-black"
+									fontStyle="medium"
+								>
 									Go to home page
 								</Text>
 							</TouchableOpacity>
@@ -144,7 +156,10 @@ export default function LandingPage() {
 								style={shadowStyles.standard}
 								onPress={handleSignOut}
 							>
-								<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+								<Text
+									className="text-base tracking-tighter-lexend text-black"
+									fontStyle="medium"
+								>
 									Sign out
 								</Text>
 							</TouchableOpacity>

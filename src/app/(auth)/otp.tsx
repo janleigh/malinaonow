@@ -172,7 +172,10 @@ export default function OTPScreen() {
 								{isLoading ? (
 									<ActivityIndicator color="#000" />
 								) : (
-									<Text className="android:font-normal font-lexend-medium text-base tracking-tighter-lexend text-black">
+									<Text
+										className="android:font-normal text-base tracking-tighter-lexend text-black"
+										fontStyle="medium"
+									>
 										Verify
 									</Text>
 								)}

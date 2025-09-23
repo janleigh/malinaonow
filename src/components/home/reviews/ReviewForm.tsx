@@ -58,7 +58,10 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
 	return (
 		<View className="mt-4">
-			<Text className="mb-2 font-lexend-bold text-lg tracking-tighter-lexend text-black">
+			<Text
+				className="mb-2 font-lexend-bold text-lg tracking-tighter-lexend text-black"
+				fontStyle="bold"
+			>
 				{t("review.writeReview")}
 			</Text>
 			<View className="space-y-4">
@@ -114,7 +117,10 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 					{isSubmitting ? (
 						<ActivityIndicator color="#000" />
 					) : (
-						<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+						<Text
+							className="font-lexend-medium text-base tracking-tighter-lexend text-black"
+							fontStyle="medium"
+						>
 							{t("review.submit")}
 						</Text>
 					)}

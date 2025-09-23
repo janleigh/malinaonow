@@ -194,7 +194,10 @@ export default function ManageEventsScreen() {
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
-					<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+					<Text
+						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+						fontStyle="extrabold"
+					>
 						Manage Events
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -207,7 +210,10 @@ export default function ManageEventsScreen() {
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
-						<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
+						<Text
+							className="ml-2 tracking-tighter-lexend text-black"
+							fontStyle="medium"
+						>
 							Add New Event
 						</Text>
 					</TouchableOpacity>
@@ -256,7 +262,10 @@ export default function ManageEventsScreen() {
 											resizeMode="cover"
 										/>
 										<View className="flex-1 p-3">
-											<Text className="font-lexend-bold text-base tracking-tighter-lexend text-black">
+											<Text
+												className="text-base tracking-tighter-lexend text-black"
+												fontStyle="bold"
+											>
 												{event.name} in{" "}
 												{event.location}
 											</Text>
@@ -293,7 +302,10 @@ export default function ManageEventsScreen() {
 												openEditModal(event)
 											}
 										>
-											<Text className="font-lexend-medium text-[#333333]">
+											<Text
+												className="text-[#333333]"
+												fontStyle="medium"
+											>
 												<Feather
 													name="edit"
 													size={16}
@@ -308,7 +320,10 @@ export default function ManageEventsScreen() {
 												handleDelete(event.id)
 											}
 										>
-											<Text className="font-lexend-medium text-[#fe5b62]">
+											<Text
+												className="text-[#fe5b62]"
+												fontStyle="medium"
+											>
 												<Feather
 													name="trash-2"
 													size={16}
@@ -326,7 +341,10 @@ export default function ManageEventsScreen() {
 			<Modal visible={modalVisible} animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
 					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
-						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+						<Text
+							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+							fontStyle="extrabold"
+						>
 							{editingEvent ? "Edit Event" : "Add Event"}
 						</Text>
 						<TouchableOpacity
@@ -354,7 +372,10 @@ export default function ManageEventsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								DATE
 							</Text>
 							<TouchableOpacity
@@ -386,7 +407,10 @@ export default function ManageEventsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								TIME
 							</Text>
 							<TouchableOpacity
@@ -418,7 +442,10 @@ export default function ManageEventsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								LOCATION
 							</Text>
 							<TextInput
@@ -435,7 +462,10 @@ export default function ManageEventsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								BANNER IMAGE
 							</Text>
 							<TextInput
@@ -462,7 +492,10 @@ export default function ManageEventsScreen() {
 									color="#333333"
 								/>
 							) : (
-								<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+								<Text
+									className="tracking-tighter-lexend text-black"
+									fontStyle="medium"
+								>
 									Save Event
 								</Text>
 							)}

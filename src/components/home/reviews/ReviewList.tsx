@@ -30,7 +30,10 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 					className="border-b border-[#eee] pb-4"
 				>
 					<View className="flex-row items-center justify-between">
-						<Text className="font-lexend-bold text-lg tracking-tighter-lexend text-black">
+						<Text
+							className="font-lexend-bold text-lg tracking-tighter-lexend text-black"
+							fontStyle="bold"
+						>
 							{review.user_name || "Anonymous"}
 						</Text>
 						<Text className="font-lexend text-sm tracking-tighter-lexend text-[#999]">

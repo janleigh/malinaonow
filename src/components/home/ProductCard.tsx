@@ -128,6 +128,7 @@ export const ProductCard = ({
 								<Text
 									className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 									numberOfLines={1}
+									fontStyle="extrabold"
 								>
 									{product.name}
 								</Text>
@@ -136,6 +137,7 @@ export const ProductCard = ({
 								>
 									<Text
 										className={`font-lexend-medium text-xs tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
+										fontStyle="medium"
 									>
 										{product.is_available
 											? "Available"
@@ -190,6 +192,7 @@ export const ProductCard = ({
 								>
 									<Text
 										className={`font-lexend-medium text-xs tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
+										fontStyle="medium"
 									>
 										{product.is_available
 											? "Available"
@@ -200,6 +203,7 @@ export const ProductCard = ({
 							<Text
 								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={2}
+								fontStyle="extrabold"
 							>
 								{product.name}
 							</Text>
@@ -236,7 +240,10 @@ export const ProductCard = ({
 					<View className="flex-1">
 						<View className="border-b border-[#333333] p-4">
 							<View className="mb-2 flex-row items-center justify-between">
-								<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+								<Text
+									className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+									fontStyle="bold"
+								>
 									{product.name}
 								</Text>
 								<TouchableOpacity onPress={toggleExpand}>
@@ -310,7 +317,10 @@ export const ProductCard = ({
 									)}
 							</View>
 							<View className="p-4">
-								<Text className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]">
+								<Text
+									className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]"
+									fontStyle="medium"
+								>
 									Description
 								</Text>
 								<View
@@ -335,7 +345,10 @@ export const ProductCard = ({
 										onPress={toggleDescription}
 										className="mt-2 px-4 py-2"
 									>
-										<Text className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline">
+										<Text
+											className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline"
+											fontStyle="medium"
+										>
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}

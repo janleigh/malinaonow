@@ -35,7 +35,7 @@ export default function InDevelopmentScreen() {
 						<View className="mb-6 h-16 w-16 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 							<Feather name="tool" size={32} color="#333" />
 						</View>
-						<Text className="mb-4 font-lexend-extrabold text-3xl tracking-tighter-lexend text-black">
+						<Text className="mb-4 text-3xl tracking-tighter-lexend text-black">
 							Coming Soon
 						</Text>
 						<Text className="mb-2 text-center text-lg tracking-tighter-lexend text-[#333333]">
@@ -45,13 +45,15 @@ export default function InDevelopmentScreen() {
 							This part of MalinaoNow is still under
 							development. Check back soon for updates.
 						</Text>
-
 						<Link href="/" asChild>
 							<TouchableOpacity
 								className="h-12 flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-6"
 								style={shadowStyles.standard}
 							>
-								<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+								<Text
+									className="text-base tracking-tighter-lexend text-black"
+									fontStyle="medium"
+								>
 									Return to landing page
 								</Text>
 							</TouchableOpacity>

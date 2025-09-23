@@ -157,7 +157,10 @@ export const EventCard = ({
 				>
 					<SafeAreaView className="flex-1">
 						<View className="flex-row items-center justify-between border-b border-[#333333] p-4">
-							<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+							<Text
+								className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+								fontStyle="bold"
+							>
 								{t("event.eventDetails")}
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
@@ -190,7 +193,10 @@ export const EventCard = ({
 											/>
 										</View>
 										<View className="ml-3">
-											<Text className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]">
+											<Text
+												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
+												fontStyle="medium"
+											>
 												{t(
 													"event.date"
 												).toUpperCase()}
@@ -209,7 +215,10 @@ export const EventCard = ({
 											/>
 										</View>
 										<View className="ml-3">
-											<Text className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]">
+											<Text
+												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
+												fontStyle="medium"
+											>
 												{t(
 													"event.time"
 												).toUpperCase()}
@@ -228,7 +237,10 @@ export const EventCard = ({
 											/>
 										</View>
 										<View className="ml-3">
-											<Text className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]">
+											<Text
+												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
+												fontStyle="medium"
+											>
 												{t(
 													"event.location"
 												).toUpperCase()}
@@ -244,7 +256,10 @@ export const EventCard = ({
 										className="h-12 w-full items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38]"
 										onPress={toggleExpand}
 									>
-										<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+										<Text
+											className="font-lexend-medium text-base tracking-tighter-lexend text-black"
+											fontStyle="medium"
+										>
 											{t("event.addToCalendar")}
 										</Text>
 									</TouchableOpacity>

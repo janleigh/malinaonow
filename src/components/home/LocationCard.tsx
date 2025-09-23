@@ -461,6 +461,7 @@ export const LocationCard = ({
 							<Text
 								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={1}
+								fontStyle="extrabold"
 							>
 								{location.name}
 							</Text>
@@ -468,7 +469,10 @@ export const LocationCard = ({
 								<Text className="mr-1 text-[#fed787]">
 									★
 								</Text>
-								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
+								<Text
+									className="font-lexend-bold tracking-tighter-lexend text-black"
+									fontStyle="bold"
+								>
 									{rating.toFixed(1)}
 								</Text>
 								<Text className="text-xs tracking-tighter-lexend text-[#666]">
@@ -512,6 +516,7 @@ export const LocationCard = ({
 							<Text
 								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={2}
+								fontStyle="extrabold"
 							>
 								{location.name}
 							</Text>
@@ -519,7 +524,10 @@ export const LocationCard = ({
 								<Text className="mr-1 text-[#fed787]">
 									★
 								</Text>
-								<Text className="font-lexend-bold tracking-tighter-lexend text-black">
+								<Text
+									className="font-lexend-bold tracking-tighter-lexend text-black"
+									fontStyle="bold"
+								>
 									{rating.toFixed(1)}
 								</Text>
 								<Text className="text-xs tracking-tighter-lexend text-[#666]">
@@ -595,7 +603,10 @@ export const LocationCard = ({
 									<Text className="mr-1 text-2xl text-[#FFBB38]">
 										★
 									</Text>
-									<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+									<Text
+										className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+										fontStyle="bold"
+									>
 										{rating.toFixed(1)}
 									</Text>
 									<Text className="text-base tracking-tighter-lexend text-[#666]">
@@ -637,7 +648,10 @@ export const LocationCard = ({
 										}
 									/>
 								</TouchableOpacity>
-								<Text className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]">
+								<Text
+									className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]"
+									fontStyle="medium"
+								>
 									Description
 								</Text>
 								<View
@@ -661,7 +675,10 @@ export const LocationCard = ({
 										onPress={toggleDescription}
 										className="mt-2 self-start px-4 py-2"
 									>
-										<Text className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline">
+										<Text
+											className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline"
+											fontStyle="medium"
+										>
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}
@@ -673,7 +690,10 @@ export const LocationCard = ({
 										className="mr-1 h-12 flex-1 items-center justify-center rounded-xl border border-[#333333] bg-[#FFFE96]"
 										onPress={handleViewMap}
 									>
-										<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+										<Text
+											className="font-lexend-medium text-base tracking-tighter-lexend text-black"
+											fontStyle="medium"
+										>
 											{t("location.viewOnMap")}
 										</Text>
 									</TouchableOpacity>
@@ -682,7 +702,10 @@ export const LocationCard = ({
 											className="ml-1 h-12 flex-1 items-center justify-center rounded-xl border border-[#333333] bg-[#FFFDA6]"
 											onPress={handleView360}
 										>
-											<Text className="font-lexend-medium text-base tracking-tighter-lexend text-black">
+											<Text
+												className="font-lexend-medium text-base tracking-tighter-lexend text-black"
+												fontStyle="medium"
+											>
 												{t("location.view360")}
 											</Text>
 										</TouchableOpacity>
@@ -690,7 +713,10 @@ export const LocationCard = ({
 								</View>
 								<View className="mt-8">
 									<View className="flex-row items-center justify-between">
-										<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+										<Text
+											className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+											fontStyle="bold"
+										>
 											Reviews
 										</Text>
 										{isSignedIn && !showReviewForm && (
@@ -700,7 +726,10 @@ export const LocationCard = ({
 												}
 												className="rounded-xl border border-[#333333] bg-[#FFBB38] px-4 py-2"
 											>
-												<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+												<Text
+													className="font-lexend-medium tracking-tighter-lexend text-black"
+													fontStyle="medium"
+												>
 													{t(
 														"location.writeReview"
 													)}
@@ -760,7 +789,10 @@ export const LocationCard = ({
 			>
 				<SafeAreaView className="flex-1 bg-[#faf4f0]">
 					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
-						<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+						<Text
+							className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+							fontStyle="bold"
+						>
 							Map View
 						</Text>
 						<TouchableOpacity onPress={closeMapView}>
@@ -827,7 +859,10 @@ export const LocationCard = ({
 			>
 				<SafeAreaView className="flex-1 bg-black">
 					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
-						<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+						<Text
+							className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+							fontStyle="bold"
+						>
 							360° View
 						</Text>
 						<TouchableOpacity onPress={close360View}>

@@ -68,7 +68,10 @@ export default function CalendarPage() {
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
-					<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+					<Text
+						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+						fontStyle="extrabold"
+					>
 						Calendar
 					</Text>
 				</View>
@@ -154,7 +157,10 @@ export default function CalendarPage() {
 												/>
 											</View>
 											<View>
-												<Text className="font-lexend-bold text-lg tracking-tighter-lexend text-black">
+												<Text
+													className="text-lg tracking-tighter-lexend text-black"
+													fontStyle="bold"
+												>
 													{formatDate(
 														group.date
 													)}

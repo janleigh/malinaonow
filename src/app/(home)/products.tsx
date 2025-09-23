@@ -200,7 +200,10 @@ const ProductsScreen = () => {
 			<SafeAreaView className="flex-1">
 				<View className="border-b border-[#eee] p-4">
 					<View className="mb-4">
-						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+						<Text
+							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+							fontStyle="extrabold"
+						>
 							{t("products.title")}
 						</Text>
 					</View>

@@ -175,7 +175,10 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 					>
 						<SafeAreaView className="flex-1">
 							<View className="flex-row items-center justify-between p-4">
-								<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
+								<Text
+									className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+									fontStyle="bold"
+								>
 									{t("userSidebar.profile")}
 								</Text>
 								<TouchableOpacity onPress={onClose}>
@@ -196,12 +199,18 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									/>
 								) : (
 									<View className="h-20 w-20 items-center justify-center rounded-full border border-[#333333] bg-[#8ED1DC]">
-										<Text className="text-xl font-extrabold tracking-tighter-lexend text-black">
+										<Text
+											className="text-xl font-extrabold tracking-tighter-lexend text-black"
+											fontStyle="extrabold"
+										>
 											{getInitials(userName)}
 										</Text>
 									</View>
 								)}
-								<Text className="mt-3 font-lexend-bold text-lg tracking-tighter-lexend text-black">
+								<Text
+									className="mt-3 font-lexend-bold text-lg tracking-tighter-lexend text-black"
+									fontStyle="bold"
+								>
 									{userName}
 								</Text>
 								<Text className="text-sm tracking-tighter-lexend text-[#666]">
@@ -254,7 +263,10 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										size={18}
 										color="#333"
 									/>
-									<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
+									<Text
+										className="ml-2 font-lexend-medium tracking-tighter-lexend text-black"
+										fontStyle="medium"
+									>
 										{t("userSidebar.signOut")}
 									</Text>
 								</TouchableOpacity>

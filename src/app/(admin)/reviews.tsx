@@ -150,12 +150,15 @@ export default function ModerateReviewsScreen() {
 	const renderReviewItem = ({ item }: { item: ReviewWithLocation }) => (
 		<View className="mb-4 border border-[#333333] bg-white p-4">
 			<View className="mb-2 flex-row items-start justify-between">
-				<Text className="font-lexend-bold text-lg tracking-tighter-lexend text-black">
+				<Text
+					className="font-lexend-bold text-lg tracking-tighter-lexend text-black"
+					fontStyle="bold"
+				>
 					{item.user_name || "Anonymous"}
 				</Text>
 				<View className="flex-row items-center">
 					<RatingStars rating={item.rating} />
-					<Text className="ml-2 font-lexend-medium text-black">
+					<Text className="ml-2 text-black" fontStyle="medium">
 						{item.rating}/5
 					</Text>
 				</View>
@@ -182,7 +185,10 @@ export default function ModerateReviewsScreen() {
 					className={`mr-2 flex-1 items-center rounded-xl border border-[#333333] py-2 ${item.flagged ? "bg-[#FFBB38]" : "bg-white"}`}
 					onPress={() => handleFlagReview(item.id)}
 				>
-					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+					<Text
+						className="font-lexend-medium tracking-tighter-lexend text-black"
+						fontStyle="medium"
+					>
 						{item.flagged ? "Flagged" : "Flag"}
 					</Text>
 				</TouchableOpacity>
@@ -190,7 +196,10 @@ export default function ModerateReviewsScreen() {
 					className="flex-1 items-center rounded-xl border border-[#333333] bg-white py-2"
 					onPress={() => handleDeleteReview(item.id)}
 				>
-					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+					<Text
+						className="font-lexend-medium tracking-tighter-lexend text-black"
+						fontStyle="medium"
+					>
 						Delete
 					</Text>
 				</TouchableOpacity>
@@ -219,7 +228,10 @@ export default function ModerateReviewsScreen() {
 					className="border border-[#333333] bg-[#fed787] px-6 py-2"
 					onPress={fetchReviews}
 				>
-					<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+					<Text
+						className="font-lexend-medium tracking-tighter-lexend text-black"
+						fontStyle="medium"
+					>
 						Retry
 					</Text>
 				</TouchableOpacity>
@@ -232,7 +244,10 @@ export default function ModerateReviewsScreen() {
 			<SafeAreaView className="flex-1">
 				<View className="border-b border-[#eee] bg-[#E1F2E9] p-4">
 					<View className="mb-4 flex-row items-center justify-between">
-						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+						<Text
+							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+							fontStyle="extrabold"
+						>
 							Moderate Reviews
 						</Text>
 						<TouchableOpacity onPress={() => router.back()}>
@@ -260,7 +275,10 @@ export default function ModerateReviewsScreen() {
 									className={`mr-1 rounded-2xl border border-[#333333] px-3 py-1 ${filterRating === 0 ? "bg-[#FFBB38]" : "bg-white"}`}
 									onPress={() => setFilterRating(0)}
 								>
-									<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+									<Text
+										className="font-lexend-medium tracking-tighter-lexend text-black"
+										fontStyle="medium"
+									>
 										All
 									</Text>
 								</TouchableOpacity>
@@ -272,7 +290,10 @@ export default function ModerateReviewsScreen() {
 											setFilterRating(rating)
 										}
 									>
-										<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+										<Text
+											className="font-lexend-medium tracking-tighter-lexend text-black"
+											fontStyle="medium"
+										>
 											{rating}★
 										</Text>
 									</TouchableOpacity>
@@ -283,7 +304,10 @@ export default function ModerateReviewsScreen() {
 							className={`rounded-xl border border-[#333333] px-3 py-1 ${showFlagged ? "bg-[#FFBB38]" : "bg-white"}`}
 							onPress={() => setShowFlagged(!showFlagged)}
 						>
-							<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+							<Text
+								className="font-lexend-medium tracking-tighter-lexend text-black"
+								fontStyle="medium"
+							>
 								Flagged
 							</Text>
 						</TouchableOpacity>
@@ -302,7 +326,10 @@ export default function ModerateReviewsScreen() {
 						/>
 					) : (
 						<View className="flex-1 items-center justify-center">
-							<Text className="mb-2 text-center font-lexend-extrabold text-xl tracking-tighter-lexend text-black">
+							<Text
+								className="mb-2 text-center text-xl tracking-tighter-lexend text-black"
+								fontStyle="extrabold"
+							>
 								{reviews.length === 0
 									? "No Reviews Found"
 									: "No Matching Reviews"}

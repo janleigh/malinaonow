@@ -191,7 +191,10 @@ export default function ManageLocationsScreen() {
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4 pb-6">
-					<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+					<Text
+						className="android:font-normal racking-tighter-lexend text-2xl text-black"
+						fontStyle="extrabold"
+					>
 						Manage Tourist Spots
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -204,7 +207,10 @@ export default function ManageLocationsScreen() {
 						onPress={openAddModal}
 					>
 						<AntDesign name="plus" size={20} color="black" />
-						<Text className="ml-2 font-lexend-medium tracking-tighter-lexend text-black">
+						<Text
+							className="ml-2 tracking-tighter-lexend text-black"
+							fontStyle="medium"
+						>
 							Add New Tourist Spot
 						</Text>
 					</TouchableOpacity>
@@ -232,7 +238,10 @@ export default function ManageLocationsScreen() {
 								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
 								onPress={fetchLocations}
 							>
-								<Text className="font-lexend-medium text-black">
+								<Text
+									className="text-black"
+									fontStyle="medium"
+								>
 									Retry
 								</Text>
 							</TouchableOpacity>
@@ -257,7 +266,10 @@ export default function ManageLocationsScreen() {
 											resizeMode="cover"
 										/>
 										<View className="flex-1 p-3">
-											<Text className="font-lexend-bold text-base tracking-tighter-lexend text-black">
+											<Text
+												className="text-base tracking-tighter-lexend text-black"
+												fontStyle="bold"
+											>
 												{location.name}
 											</Text>
 											<Text
@@ -275,7 +287,10 @@ export default function ManageLocationsScreen() {
 												openEditModal(location)
 											}
 										>
-											<Text className="font-lexend-medium text-[#333333]">
+											<Text
+												className="text-[#333333]"
+												fontStyle="medium"
+											>
 												<Feather
 													name="edit"
 													size={16}
@@ -290,7 +305,10 @@ export default function ManageLocationsScreen() {
 												handleDelete(location.id)
 											}
 										>
-											<Text className="font-lexend-medium text-[#fe5b62]">
+											<Text
+												className="text-[#fe5b62]"
+												fontStyle="medium"
+											>
 												<Feather
 													name="trash-2"
 													size={16}
@@ -308,7 +326,10 @@ export default function ManageLocationsScreen() {
 			<Modal visible={modalVisible} animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
 					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
-						<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+						<Text
+							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+							fontStyle="extrabold"
+						>
 							{editingLocation
 								? "Edit tourist spot"
 								: "Add new tourist spot"}
@@ -321,7 +342,10 @@ export default function ManageLocationsScreen() {
 					</View>
 					<ScrollView className="p-4">
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								NAME
 							</Text>
 							<TextInput
@@ -338,7 +362,10 @@ export default function ManageLocationsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								DESCRIPTION
 							</Text>
 							<TextInput
@@ -359,7 +386,10 @@ export default function ManageLocationsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								DESCRIPTION (FIL)
 							</Text>
 							<TextInput
@@ -380,7 +410,10 @@ export default function ManageLocationsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								DESCRIPTION (AKL)
 							</Text>
 							<TextInput
@@ -401,7 +434,10 @@ export default function ManageLocationsScreen() {
 							/>
 						</View>
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								ADDRESS
 							</Text>
 							<TextInput
@@ -441,9 +477,11 @@ export default function ManageLocationsScreen() {
 								placeholderTextColor="#666666"
 							/>
 						</View>
-
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								IMAGES
 							</Text>
 							<TextInput
@@ -471,9 +509,11 @@ export default function ManageLocationsScreen() {
 								placeholderTextColor="#666666"
 							/>
 						</View>
-
 						<View className="mb-4">
-							<Text className="mb-1 font-lexend-medium text-sm text-[#666666]">
+							<Text
+								className="mb-1 text-sm text-[#666666]"
+								fontStyle="medium"
+							>
 								COORDINATES
 							</Text>
 							<View className="flex-row space-x-2">
@@ -516,7 +556,10 @@ export default function ManageLocationsScreen() {
 									color="#333333"
 								/>
 							) : (
-								<Text className="font-lexend-medium tracking-tighter-lexend text-black">
+								<Text
+									className="tracking-tighter-lexend text-black"
+									fontStyle="medium"
+								>
 									Save Tourist Spot
 								</Text>
 							)}

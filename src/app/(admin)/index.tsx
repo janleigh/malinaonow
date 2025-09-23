@@ -37,7 +37,10 @@ export default function AdminDashboard() {
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
-					<Text className="android:font-normal text-2xl font-extrabold tracking-tighter-lexend text-black">
+					<Text
+						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
+						fontStyle="extrabold"
+					>
 						Admin Panel
 					</Text>
 					<TouchableOpacity
@@ -56,20 +59,23 @@ export default function AdminDashboard() {
 							<TouchableOpacity
 								key={index}
 								className="mt-2 rounded-xl border border-[#333333] bg-white p-4"
-								// @ts-expect-error
-								onPress={() => router.push(option.route)}
+								onPress={() =>
+									router.push(option.route as any)
+								}
 							>
 								<View className="flex-row items-center">
 									<View className="mr-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
 										<Feather
-											// @ts-expect-error
-											name={option.icon}
+											name={option.icon as any}
 											size={24}
 											color="#333"
 										/>
 									</View>
 									<View className="flex-1">
-										<Text className="font-lexend-bold text-lg tracking-tighter-lexend text-black">
+										<Text
+											className="text-lg tracking-tighter-lexend text-black"
+											fontStyle="bold"
+										>
 											{option.title}
 										</Text>
 										<Text className="text-sm tracking-tighter-lexend text-[#666666]">

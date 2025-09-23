@@ -19,7 +19,7 @@ export const BaseText = ({
 	const weightClass = fontStyle ? `-${fontStyle}` : "";
 	return (
 		<Text
-			className={`font-lexend${weightClass} ${className}`.trim()}
+			className={`font-lexend${weightClass} font-${weightClass} ${className}`.trim()}
 			numberOfLines={numberOfLines}
 			{...rest}
 		>
