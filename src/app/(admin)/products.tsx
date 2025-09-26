@@ -1,7 +1,7 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { Product } from "@/lib/types/supabase";
-import { ProductService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { ProductService } from "@shared/services";
+import { Product } from "@shared/types/supabase";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {

@@ -1,12 +1,12 @@
-import { supabase } from "@/api/supabase";
 import { BaseText as Text } from "@/components/BaseText";
 import { ReviewForm, ReviewList } from "@/components/home/reviews";
 import { API_KEYS } from "@/config";
-import { useAuth } from "@/lib/context/AuthContext";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { Location, Review } from "@/lib/types/supabase";
-import { ReviewService } from "@/services/ReviewService";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { supabase } from "@shared/api/supabase";
+import { useAuth } from "@shared/context/AuthContext";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { ReviewService } from "@shared/services/ReviewService";
+import { Location, Review } from "@shared/types/supabase";
 import * as ELocation from "expo-location";
 import React, { useEffect, useRef, useState } from "react";
 import {

@@ -1,9 +1,9 @@
-import { supabase } from "@/api/supabase";
 import { BaseText as Text } from "@/components/BaseText";
-import { Event } from "@/lib/types/supabase";
-import { formatDate, formatTime } from "@/lib/utils/date";
-import { EventService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { supabase } from "@shared/api/supabase";
+import { EventService } from "@shared/services";
+import { Event } from "@shared/types/supabase";
+import { formatDate, formatTime } from "@shared/utils/date";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {

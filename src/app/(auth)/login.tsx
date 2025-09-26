@@ -1,8 +1,8 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
 import { BaseText as Text } from "@/components/BaseText";
-import { useAuth } from "@/lib/context/AuthContext";
-import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useAuth } from "@shared/context/AuthContext";
+import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";

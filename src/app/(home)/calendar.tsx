@@ -1,11 +1,11 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { Event } from "@/components/home";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { formatDate, isToday } from "@/lib/utils/date";
-import { shadowStyles } from "@/lib/utils/styles";
-import { EventService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { EventService } from "@shared/services";
+import { formatDate, isToday } from "@shared/utils/date";
+import { shadowStyles } from "@shared/utils/styles";
 import React, { useEffect, useState } from "react";
 import {
 	ActivityIndicator,

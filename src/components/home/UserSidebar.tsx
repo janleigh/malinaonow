@@ -1,8 +1,8 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { useAuth } from "@/lib/context/AuthContext";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { shadowStyles } from "@/lib/utils/styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useAuth } from "@shared/context/AuthContext";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {

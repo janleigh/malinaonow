@@ -1,8 +1,8 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
 import { BaseText as Text } from "@/components/BaseText";
-import { useAuth } from "@/lib/context/AuthContext";
-import { shadowStyles } from "@/lib/utils/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useAuth } from "@shared/context/AuthContext";
+import { shadowStyles } from "@shared/utils/styles";
 import { Link, router, useFocusEffect } from "expo-router";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import {
@@ -64,7 +64,7 @@ export default function LandingPage() {
 				<View className="flex-1 items-center justify-center">
 					<View className="flex-col items-center">
 						<Image
-							source={require("../assets/images/icon.png")}
+							source={require("../shared/assets/images/icon.png")}
 							className="android:w-32 android:h-32 mb-4 h-6 w-6"
 							resizeMode="cover"
 						/>

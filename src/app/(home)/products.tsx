@@ -1,10 +1,10 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { ProductCard } from "@/components/home";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { Product } from "@/lib/types/supabase";
-import { ProductService } from "@/services/ProductService";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { ProductService } from "@shared/services/ProductService";
+import { Product } from "@shared/types/supabase";
 import React, {
 	useCallback,
 	useEffect,

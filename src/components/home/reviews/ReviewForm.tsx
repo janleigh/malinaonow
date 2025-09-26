@@ -1,5 +1,5 @@
-import { useAuth } from "@/lib/context/AuthContext";
-import { useTranslation } from "@/lib/context/TranslationContext";
+import { useAuth } from "@shared/context/AuthContext";
+import { useTranslation } from "@shared/context/TranslationContext";
 import React, { useState } from "react";
 import {
 	ActivityIndicator,

@@ -1,6 +1,6 @@
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { Review } from "@/lib/types/supabase";
-import { formatDate } from "@/lib/utils/date";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { Review } from "@shared/types/supabase";
+import { formatDate } from "@shared/utils/date";
 import React from "react";
 import { View } from "react-native";
 import { BaseText as Text } from "../../BaseText";

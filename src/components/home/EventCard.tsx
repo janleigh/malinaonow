@@ -1,7 +1,7 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { formatDate, formatTime } from "@/lib/utils/date";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { formatDate, formatTime } from "@shared/utils/date";
 import React, { useRef, useState } from "react";
 import {
 	Animated,

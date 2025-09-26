@@ -1,12 +1,12 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { LocationCard } from "@/components/home";
-import { useAuth } from "@/lib/context/AuthContext";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { Location } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
-import { BookmarkService, LocationService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useAuth } from "@shared/context/AuthContext";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { BookmarkService, LocationService } from "@shared/services";
+import { Location } from "@shared/types/supabase";
+import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {

@@ -1,10 +1,10 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { useAuth } from "@/lib/context/AuthContext";
+import { Feather } from "@expo/vector-icons";
+import { useAuth } from "@shared/context/AuthContext";
 import {
 	LANGUAGES,
 	useTranslation
-} from "@/lib/context/TranslationContext";
-import { Feather } from "@expo/vector-icons";
+} from "@shared/context/TranslationContext";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, ScrollView, TouchableOpacity, View } from "react-native";

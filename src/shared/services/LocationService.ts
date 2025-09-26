@@ -1,8 +1,8 @@
-import { supabase } from "@/api/supabase";
+import { supabase } from "@shared/api/supabase";
 import {
 	Location as CardLocation,
 	Location as SupabaseLocation
-} from "@/lib/types/supabase";
+} from "@shared/types/supabase";
 
 export const LocationService = {
 	/**

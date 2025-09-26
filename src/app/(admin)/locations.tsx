@@ -1,8 +1,8 @@
-import { supabase } from "@/api/supabase";
 import { BaseText as Text } from "@/components/BaseText";
-import { Location } from "@/lib/types/supabase";
-import { LocationService } from "@/services";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { supabase } from "@shared/api/supabase";
+import { LocationService } from "@shared/services";
+import { Location } from "@shared/types/supabase";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {

@@ -1,10 +1,10 @@
-import { supabase } from "@/api/supabase";
 import { BaseText as Text } from "@/components/BaseText";
 import { RatingStars } from "@/components/home/reviews";
-import { Review } from "@/lib/types/supabase";
-import { formatDate } from "@/lib/utils/date";
-import { LocationService, ReviewService } from "@/services";
 import { Feather } from "@expo/vector-icons";
+import { supabase } from "@shared/api/supabase";
+import { LocationService, ReviewService } from "@shared/services";
+import { Review } from "@shared/types/supabase";
+import { formatDate } from "@shared/utils/date";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {

@@ -6,16 +6,16 @@ import {
 	LocationCard,
 	UserSidebar
 } from "@/components/home";
-import { useAuth } from "@/lib/context/AuthContext";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { Location } from "@/lib/types/supabase";
-import { shadowStyles } from "@/lib/utils/styles";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import { useAuth } from "@shared/context/AuthContext";
+import { useTranslation } from "@shared/context/TranslationContext";
 import {
 	BookmarkService,
 	EventService,
 	LocationService
-} from "@/services";
-import { AntDesign, Feather } from "@expo/vector-icons";
+} from "@shared/services";
+import { Location } from "@shared/types/supabase";
+import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {

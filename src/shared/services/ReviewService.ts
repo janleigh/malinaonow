@@ -1,5 +1,5 @@
-import { supabase } from "@/api/supabase";
-import { Review } from "@/lib/types/supabase";
+import { supabase } from "@shared/api/supabase";
+import { Review } from "@shared/types/supabase";
 
 export const ReviewService = {
 	/**

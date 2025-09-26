@@ -1,4 +1,4 @@
-import type { UserProfile } from "@/lib/types/supabase";
+import type { UserProfile } from "@shared/types/supabase";
 import { supabase } from "./supabase";
 
 type MinimalClerkUser = {

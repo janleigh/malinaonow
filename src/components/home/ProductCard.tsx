@@ -1,7 +1,7 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { useTranslation } from "@/lib/context/TranslationContext";
-import { Product } from "@/lib/types/supabase";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useTranslation } from "@shared/context/TranslationContext";
+import { Product } from "@shared/types/supabase";
 import React, { useEffect, useRef, useState } from "react";
 import {
 	Animated,

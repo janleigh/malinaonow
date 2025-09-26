@@ -1,9 +1,9 @@
-import { supabase } from "@/api/supabase/supabase";
+import { supabase } from "@shared/api/supabase";
 import {
 	CreateProductDTO,
 	Product,
 	UpdateProductDTO
-} from "@/lib/types/supabase";
+} from "@shared/types/supabase";
 
 export const ProductService = {
 	/**

@@ -1,7 +1,7 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { useAuth } from "@/lib/context/AuthContext";
-import { shadowStyles } from "@/lib/utils/styles";
 import { Feather } from "@expo/vector-icons";
+import { useAuth } from "@shared/context/AuthContext";
+import { shadowStyles } from "@shared/utils/styles";
 import { Link, Stack, useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";

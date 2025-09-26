@@ -1,6 +1,6 @@
-import { supabase } from "@/api/supabase";
 import { Event as ComponentEvent } from "@/components/home";
-import { Event as SupabaseEvent } from "@/lib/types/supabase";
+import { supabase } from "@shared/api/supabase";
+import { Event as SupabaseEvent } from "@shared/types/supabase";
 
 export const EventService = {
 	/**

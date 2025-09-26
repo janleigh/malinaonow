@@ -1,8 +1,8 @@
 import { API_KEYS } from "@/config";
-import { AuthProvider } from "@/lib/context/AuthContext";
-import { TranslationProvider } from "@/lib/context/TranslationContext";
-import "@/lib/styles/globals.css";
 import { ClerkProvider } from "@clerk/clerk-expo";
+import { AuthProvider } from "@shared/context/AuthContext";
+import { TranslationProvider } from "@shared/context/TranslationContext";
+import "@shared/styles/globals.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SecureStore from "expo-secure-store";
@@ -33,11 +33,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const [fontsLoaded, fontError] = useFonts({
-		"LexendMega-Bold": require("../assets/fonts/LexendMega-Bold.ttf"),
-		"LexendMega-ExtraBold": require("../assets/fonts/LexendMega-ExtraBold.ttf"),
-		"LexendMega-Medium": require("../assets/fonts/LexendMega-Medium.ttf"),
-		"LexendMega-Regular": require("../assets/fonts/LexendMega-Regular.ttf"),
-		"LexendMega-SemiBold": require("../assets/fonts/LexendMega-SemiBold.ttf")
+		"LexendMega-Bold": require("../shared/assets/fonts/LexendMega-Bold.ttf"),
+		"LexendMega-ExtraBold": require("../shared/assets/fonts/LexendMega-ExtraBold.ttf"),
+		"LexendMega-Medium": require("../shared/assets/fonts/LexendMega-Medium.ttf"),
+		"LexendMega-Regular": require("../shared/assets/fonts/LexendMega-Regular.ttf"),
+		"LexendMega-SemiBold": require("../shared/assets/fonts/LexendMega-SemiBold.ttf")
 	});
 
 	useEffect(() => {

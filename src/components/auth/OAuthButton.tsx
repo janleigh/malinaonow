@@ -1,7 +1,7 @@
-import { shadowStyles } from "@/lib/utils/styles";
 import { useOAuth } from "@clerk/clerk-expo";
 import { OAuthStrategy } from "@clerk/types";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { shadowStyles } from "@shared/utils/styles";
 import React from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { BaseText as Text } from "../BaseText";

@@ -1,9 +1,9 @@
-import { useClerkAuth } from "@/api/clerk";
+import { useUser } from "@clerk/clerk-expo";
+import { useClerkAuth } from "@shared/api/clerk";
 import {
 	getUserProfile,
 	upsertUserFromClerk
-} from "@/api/supabase/userSync";
-import { useUser } from "@clerk/clerk-expo";
+} from "@shared/api/supabase/userSync";
 import React, {
 	createContext,
 	useContext,
