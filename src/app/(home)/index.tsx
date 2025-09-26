@@ -6,6 +6,7 @@ import {
 	LocationCard,
 	UserSidebar
 } from "@/components/home";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useAuth } from "@shared/context/AuthContext";
 import { useTranslation } from "@shared/context/TranslationContext";
@@ -49,6 +50,7 @@ export default function HomePage() {
 		useState(false);
 	const { user, isSignedIn } = useAuth();
 	const { t } = useTranslation();
+	const { isOnline } = useNetworkStatus();
 
 	const openSidebar = () => {
 		setSidebarVisible(true);
@@ -72,19 +74,31 @@ export default function HomePage() {
 		}
 	};
 
-	const fetchLocations = async () => {
+	const fetchLocations = useCallback(async () => {
 		try {
 			setLoading(true);
 			setError(null);
+
+			if (!isOnline) {
+				const cached = await LocationService.getCachedLocations?.();
+				if (cached?.length) {
+					setLocations(cached);
+				}
+				setLoading(false);
+				return;
+			}
+
 			const data = await LocationService.getLocations();
 			setLocations(data);
 		} catch (err) {
 			console.error("Failed to fetch locations:", err);
-			setError("Failed to load locations. Please try again.");
+			if (!locations.length) {
+				setError("Failed to load locations. Please try again.");
+			}
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [isOnline, locations.length]);
 
 	const fetchEvents = async () => {
 		try {
@@ -118,7 +132,7 @@ export default function HomePage() {
 		fetchLocations();
 		fetchEvents();
 		fetchBookmarks();
-	}, [user?.id, isSignedIn, fetchBookmarks]);
+	}, [user?.id, isSignedIn, fetchBookmarks, fetchLocations]);
 
 	const toggleView = () => {
 		setIsGridView(!isGridView);
@@ -158,6 +172,14 @@ export default function HomePage() {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
+				{!isOnline && (
+					<View className="mx-4 mb-1 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
+						<Text className="text-xs tracking-tighter-lexend text-black">
+							You are currently offline. Some features may be
+							unavailable.
+						</Text>
+					</View>
+				)}
 				<View className="flex-row items-center justify-between p-4">
 					<Text className="android:font-normal text-2xl tracking-tighter-lexend text-black">
 						MalinaoNow

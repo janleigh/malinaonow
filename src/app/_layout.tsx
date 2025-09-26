@@ -1,4 +1,5 @@
 import { API_KEYS } from "@/config";
+import { LocationService, ProductService } from "@/shared/services";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { AuthProvider } from "@shared/context/AuthContext";
 import { TranslationProvider } from "@shared/context/TranslationContext";
@@ -43,6 +44,9 @@ export default function RootLayout() {
 	useEffect(() => {
 		if (fontsLoaded || fontError) {
 			SplashScreen.hideAsync();
+			// CacheService.prefetch();
+			LocationService.getLocations();
+			ProductService.getAllProducts();
 		}
 	}, [fontsLoaded, fontError]);
 

@@ -4,6 +4,7 @@ import {
 	Product,
 	UpdateProductDTO
 } from "@shared/types/supabase";
+import { CacheService } from ".";
 
 export const ProductService = {
 	/**
@@ -19,14 +20,26 @@ export const ProductService = {
 
 			if (error) {
 				console.error("Error fetching products:", error);
-				return [];
+				const cached = await CacheService.getItem<Product[]>("products_all");
+				return cached || [];
 			}
 
-			return (data || []) as Product[];
+			const list = (data || []) as Product[];
+			CacheService.setItem("products_all", list);
+			return list;
 		} catch (error) {
 			console.error("Exception fetching products:", error);
-			return [];
+			const cached =
+				await CacheService.getItem<Product[]>("products_all");
+			return cached || [];
 		}
+	},
+
+	/**
+	 * what do you think it does again?
+	 */
+	async getCachedProducts(): Promise<Product[]> {
+		return (await CacheService.getItem<Product[]>("products_all")) || [];
 	},
 
 	/**

@@ -1,6 +1,7 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { Event } from "@/components/home";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useTranslation } from "@shared/context/TranslationContext";
 import { EventService } from "@shared/services";
@@ -44,6 +45,7 @@ export default function CalendarPage() {
 	const [error, setError] = useState<string | null>(null);
 	const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 	const { t } = useTranslation();
+	const { isOnline } = useNetworkStatus();
 
 	const fetchEvents = async () => {
 		try {
@@ -67,6 +69,14 @@ export default function CalendarPage() {
 	return (
 		<View className="flex-1 bg-[#C6E3D3]">
 			<SafeAreaView className="flex-1">
+				{!isOnline && (
+					<View className="mx-4 mb-1 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
+						<Text className="text-xs tracking-tighter-lexend text-black">
+							You are currently offline. Some features may be
+							unavailable.
+						</Text>
+					</View>
+				)}
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 					<Text
 						className="android:font-normal text-2xl tracking-tighter-lexend text-black"

@@ -1,5 +1,6 @@
 import { OAuthButton } from "@/components/auth/OAuthButton";
 import { BaseText as Text } from "@/components/BaseText";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useAuth } from "@shared/context/AuthContext";
 import { shadowStyles } from "@shared/utils/styles";
@@ -17,6 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function LandingPage() {
 	const { isSignedIn, isLoaded, signOut } = useAuth();
 	const [showDialog, setShowDialog] = useState(false);
+	const { isOnline } = useNetworkStatus();
 
 	useFocusEffect(
 		useCallback(() => {
@@ -60,6 +62,14 @@ export default function LandingPage() {
 
 	return (
 		<View className="flex-1 bg-[#faf4f0]">
+			{!isOnline && (
+				<View className="mx-4 mt-2 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
+					<Text className="text-xs tracking-tighter-lexend text-black">
+						You are currently offline. Some features may be
+						unavailable.
+					</Text>
+				</View>
+			)}
 			<SafeAreaView className="flex-1 items-center justify-center">
 				<View className="flex-1 items-center justify-center">
 					<View className="flex-col items-center">

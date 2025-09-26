@@ -1,4 +1,6 @@
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import { useUser } from "@clerk/clerk-expo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useClerkAuth } from "@shared/api/clerk";
 import {
 	getUserProfile,
@@ -18,6 +20,7 @@ interface AuthContextProps {
 	userId?: string;
 	user?: ReturnType<typeof useUser>["user"];
 	isAdmin: boolean;
+	offlineMode: boolean;
 	signUp: ReturnType<typeof useClerkAuth>["signUp"];
 	signIn: ReturnType<typeof useClerkAuth>["signIn"];
 	verifyOtp: ReturnType<typeof useClerkAuth>["verifyOtp"];
@@ -29,6 +32,9 @@ const AuthContext = createContext<AuthContextProps | null>(null);
 const useAuthValue = () => {
 	const { isLoaded: clerkLoaded, isSignedIn, user } = useUser();
 	const { signUp, signIn, verifyOtp, signOut } = useClerkAuth();
+	const { isOnline } = useNetworkStatus();
+	const [offlineMode, setOfflineMode] = useState(false);
+	const [offlineUser, setOfflineUser] = useState<any>(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [authStateStable, setAuthStateStable] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
@@ -76,12 +82,55 @@ const useAuthValue = () => {
 		run();
 	}, [authStateStable, isSignedIn, user, user?.id]);
 
+	useEffect(() => {
+		(async () => {
+			if (clerkLoaded && isSignedIn && user) {
+				try {
+					const snapshot = {
+						id: user.id,
+						fullName: user.fullName,
+						imageUrl: user.imageUrl,
+						isAdmin
+					};
+					await AsyncStorage.setItem(
+						"offline_user",
+						JSON.stringify(snapshot)
+					);
+				} catch {}
+			}
+		})();
+	}, [clerkLoaded, isSignedIn, user, isAdmin]);
+
+	useEffect(() => {
+		if (!clerkLoaded && !isOnline && !offlineUser) {
+			(async () => {
+				try {
+					const raw = await AsyncStorage.getItem("offline_user");
+					if (raw) {
+						const cached = JSON.parse(raw);
+						setOfflineUser(cached);
+						setIsAdmin(!!cached.isAdmin);
+						setOfflineMode(true);
+						setIsLoaded(true);
+					}
+				} catch {}
+			})();
+		}
+	}, [clerkLoaded, isOnline, offlineUser]);
+
+	useEffect(() => {
+		if (clerkLoaded && offlineMode) {
+			setOfflineMode(false);
+		}
+	}, [clerkLoaded, offlineMode]);
+
 	return {
 		isLoaded,
-		isSignedIn,
+		isSignedIn: isSignedIn || !!offlineUser,
 		userId: user?.id,
-		user,
+		user: user || offlineUser,
 		isAdmin,
+		offlineMode,
 		signUp,
 		signIn,
 		verifyOtp,

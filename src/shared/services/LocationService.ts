@@ -3,6 +3,7 @@ import {
 	Location as CardLocation,
 	Location as SupabaseLocation
 } from "@shared/types/supabase";
+import { CacheService } from ".";
 
 export const LocationService = {
 	/**
@@ -18,16 +19,31 @@ export const LocationService = {
 
 			if (error) {
 				console.error("Error fetching locations:", error);
-				return [];
+				const cached = await CacheService.getItem<CardLocation[]>("locations_all");
+				return cached || [];
 			}
 
-			return (data || []).map((location) =>
+			// return (data || []).map((location) =>
+			// 	this.mapToCardLocation(location)
+			// );
+			const map = (data || []).map((location) =>
 				this.mapToCardLocation(location)
 			);
+			CacheService.setItem("locations_all", map);
+			return map;
 		} catch (error) {
 			console.error("Exception fetching locations:", error);
-			return [];
+			const cached =
+				await CacheService.getItem<CardLocation[]>("locations_all");
+			return cached || [];
 		}
+	},
+
+	/**
+	 * what do you think it does?
+	 */
+	async getCachedLocations(): Promise<CardLocation[]> {
+		return (await CacheService.getItem<CardLocation[]>("locations_all")) || [];
 	},
 
 	/**

@@ -4,20 +4,19 @@ import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 export default function HomeLayout() {
-	const { isSignedIn, isLoaded } = useAuth();
+	const { isSignedIn, isLoaded, offlineMode } = useAuth();
 	const router = useRouter();
 
 	useEffect(() => {
-		if (isLoaded && isSignedIn === false) {
+		if (isLoaded && !offlineMode && isSignedIn === false) {
 			const timer = setTimeout(() => {
 				router.replace("/");
 			}, 50);
-
 			return () => clearTimeout(timer);
 		}
-	}, [isSignedIn, isLoaded, router]);
+	}, [isSignedIn, isLoaded, offlineMode, router]);
 
-	if (!isLoaded || isSignedIn === undefined) {
+	if (!isLoaded && !offlineMode) {
 		return (
 			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
 				<ActivityIndicator size="large" color="#fed787" />
@@ -25,7 +24,7 @@ export default function HomeLayout() {
 		);
 	}
 
-	if (!isSignedIn) {
+	if (!isSignedIn && !offlineMode) {
 		return null;
 	}
 
