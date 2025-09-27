@@ -5,6 +5,8 @@ import { LocationService } from "@shared/services";
 import { Location } from "@shared/types/supabase";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { ImageUploader } from "@/components/common/ImageUploader";
+import { UploadResult } from "@shared/api/supabase/storage";
 import {
 	ActivityIndicator,
 	Alert,
@@ -18,6 +20,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageLocationsScreen() {
+	const [bannerImageFile, setBannerImageFile] = useState<any>(null);
+	const [image360File, setImage360File] = useState<any>(null);
 	const [locations, setLocations] = useState<Location[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -70,6 +74,8 @@ export default function ManageLocationsScreen() {
 			latitude: "",
 			longitude: ""
 		});
+		setBannerImageFile(null);
+		setImage360File(null);
 	};
 
 	const openAddModal = () => {
@@ -121,18 +127,20 @@ export default function ManageLocationsScreen() {
 			};
 
 			if (editingLocation) {
-				const { error } = await supabase
-					.from("locations")
-					.update(locationData)
-					.eq("id", editingLocation.id);
-
-				if (error) throw error;
+				// Update existing location with image uploads
+				await LocationService.updateLocation(
+					editingLocation.id,
+					locationData,
+					bannerImageFile,
+					image360File
+				);
 			} else {
-				const { error } = await supabase
-					.from("locations")
-					.insert([locationData]);
-
-				if (error) throw error;
+				// Create new location with image uploads
+				await LocationService.createLocation(
+					locationData,
+					bannerImageFile,
+					image360File
+				);
 			}
 
 			await fetchLocations();
@@ -161,13 +169,7 @@ export default function ManageLocationsScreen() {
 					onPress: async () => {
 						try {
 							setLoading(true);
-							const { error } = await supabase
-								.from("locations")
-								.delete()
-								.eq("id", locationId);
-
-							if (error) throw error;
-
+							await LocationService.deleteLocation(locationId);
 							await fetchLocations();
 						} catch (err) {
 							console.error(
@@ -484,29 +486,36 @@ export default function ManageLocationsScreen() {
 							>
 								IMAGES
 							</Text>
-							<TextInput
-								value={formData.bannerImage}
-								onChangeText={(text) =>
-									setFormData({
-										...formData,
-										bannerImage: text
-									})
-								}
-								className="mb-2 border border-[#333333] bg-white p-3 text-black"
-								placeholder="Banner image URL"
-								placeholderTextColor="#666666"
+							{/* Banner Image Uploader */}
+							<ImageUploader
+								entityType="locations"
+								entityId={editingLocation?.id || "new"}
+								fileType="banner"
+								currentImageUrl={formData.bannerImage}
+								onImageUploaded={(result) => {
+									setFormData({ ...formData, bannerImage: result.url! });
+								}}
+								onImageDeleted={() => {
+									setFormData({ ...formData, bannerImage: "" });
+								}}
+								aspect={[4, 3]}
+								placeholder="Upload banner image (4:3 ratio)"
 							/>
-							<TextInput
-								value={formData.image360}
-								onChangeText={(text) =>
-									setFormData({
-										...formData,
-										image360: text
-									})
-								}
-								className="border border-[#333333] bg-white p-3 text-black"
-								placeholder="360° image URL"
-								placeholderTextColor="#666666"
+
+							{/* 360° Image Uploader */}
+							<ImageUploader
+								entityType="locations"
+								entityId={editingLocation?.id || "new"}
+								fileType="360"
+								currentImageUrl={formData.image360}
+								onImageUploaded={(result) => {
+									setFormData({ ...formData, image360: result.url! });
+								}}
+								onImageDeleted={() => {
+									setFormData({ ...formData, image360: "" });
+								}}
+								aspect={[16, 9]}
+								placeholder="Upload 360° image (16:9 ratio)"
 							/>
 						</View>
 						<View className="mb-4">

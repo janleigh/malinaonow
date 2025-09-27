@@ -4,6 +4,8 @@ import { ProductService } from "@shared/services";
 import { Product } from "@shared/types/supabase";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { ImageUploader } from "@/components/common/ImageUploader";
+import { UploadResult } from "@shared/api/supabase/storage";
 import {
 	ActivityIndicator,
 	Alert,
@@ -17,6 +19,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageProductsScreen() {
+	const [mainImageFile, setMainImageFile] = useState<any>(null);
+	const [additionalImageFiles, setAdditionalImageFiles] = useState<any[]>([]);
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -62,6 +66,8 @@ export default function ManageProductsScreen() {
 			barangay: "",
 			is_available: true
 		});
+		setMainImageFile(null);
+		setAdditionalImageFiles([]);
 	};
 
 	const openAddModal = () => {
@@ -81,6 +87,8 @@ export default function ManageProductsScreen() {
 			barangay: product.barangay,
 			is_available: product.is_available
 		});
+		setMainImageFile(null);
+		setAdditionalImageFiles([]);
 		setModalVisible(true);
 	};
 
@@ -110,11 +118,17 @@ export default function ManageProductsScreen() {
 			if (editingProduct) {
 				await ProductService.updateProduct(
 					editingProduct.id,
-					productData
+					productData,
+					mainImageFile,
+					additionalImageFiles.length > 0 ? additionalImageFiles : undefined
 				);
 				Alert.alert("Success", "Product updated successfully.");
 			} else {
-				await ProductService.createProduct(productData);
+				await ProductService.createProduct(
+					productData,
+					mainImageFile,
+					additionalImageFiles.length > 0 ? additionalImageFiles : undefined
+				);
 				Alert.alert("Success", "Product added successfully.");
 			}
 			await fetchProducts();
@@ -430,19 +444,22 @@ export default function ManageProductsScreen() {
 								className="mb-1 text-sm text-[#666666]"
 								fontStyle="medium"
 							>
-								IMAGE URL
+								PRODUCT IMAGES
 							</Text>
-							<TextInput
-								value={formData.image_url}
-								onChangeText={(text) =>
-									setFormData({
-										...formData,
-										image_url: text
-									})
-								}
-								className="border border-[#333333] bg-white p-3 text-black"
-								placeholder="Image URL"
-								placeholderTextColor="#666666"
+							{/* Main Product Image Uploader */}
+							<ImageUploader
+								entityType="products"
+								entityId={editingProduct?.id || "new"}
+								fileType="main"
+								currentImageUrl={formData.image_url}
+								onImageUploaded={(result) => {
+									setFormData({ ...formData, image_url: result.url! });
+								}}
+								onImageDeleted={() => {
+									setFormData({ ...formData, image_url: "" });
+								}}
+								aspect={[4, 3]}
+								placeholder="Upload main product image (4:3 ratio)"
 							/>
 						</View>
 						<View className="mb-4">
