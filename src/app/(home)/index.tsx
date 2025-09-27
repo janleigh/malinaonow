@@ -7,9 +7,9 @@ import {
 	UserSidebar
 } from "@/components/home";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useAuth } from "@shared/context/AuthContext";
-import { useTranslation } from "@shared/context/TranslationContext";
 import {
 	BookmarkService,
 	EventService,
@@ -80,7 +80,8 @@ export default function HomePage() {
 			setError(null);
 
 			if (!isOnline) {
-				const cached = await LocationService.getCachedLocations?.();
+				const cached =
+					await LocationService.getCachedLocations?.();
 				if (cached?.length) {
 					setLocations(cached);
 				}

@@ -1,10 +1,10 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { ReviewForm, ReviewList } from "@/components/home/reviews";
 import { API_KEYS } from "@/config";
+import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { supabase } from "@shared/api/supabase";
 import { useAuth } from "@shared/context/AuthContext";
-import { useTranslation } from "@shared/context/TranslationContext";
 import { ReviewService } from "@shared/services/ReviewService";
 import { Location, Review } from "@shared/types/supabase";
 import * as ELocation from "expo-location";
@@ -134,6 +134,8 @@ export const LocationCard = ({
 					.from("reviews")
 					.select("*")
 					.eq("location_id", location.id);
+
+				// TODO! Cache reviews.
 
 				if (reviewStats && reviewStats.length > 0) {
 					const reviews = reviewStats as Review[];

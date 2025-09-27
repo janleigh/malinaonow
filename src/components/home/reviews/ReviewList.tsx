@@ -1,4 +1,4 @@
-import { useTranslation } from "@shared/context/TranslationContext";
+import { useTranslation } from "@/hooks/useTranslation";
 import { Review } from "@shared/types/supabase";
 import { formatDate } from "@shared/utils/date";
 import React from "react";

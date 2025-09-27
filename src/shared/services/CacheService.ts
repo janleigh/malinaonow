@@ -29,7 +29,7 @@ export const CacheService = {
 		} catch (err) {
 			console.error("Error (CacheService.setItem)", err);
 		}
-	},
+	}
 	// async prefetch() {
 	// 	try {
 	// 		LocationService.getLocations();

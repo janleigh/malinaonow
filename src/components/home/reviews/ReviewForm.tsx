@@ -1,5 +1,5 @@
+import { useTranslation } from "@/hooks/useTranslation";
 import { useAuth } from "@shared/context/AuthContext";
-import { useTranslation } from "@shared/context/TranslationContext";
 import React, { useState } from "react";
 import {
 	ActivityIndicator,

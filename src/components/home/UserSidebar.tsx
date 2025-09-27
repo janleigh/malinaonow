@@ -1,7 +1,7 @@
 import { BaseText as Text } from "@/components/BaseText";
+import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useAuth } from "@shared/context/AuthContext";
-import { useTranslation } from "@shared/context/TranslationContext";
 import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
@@ -30,8 +30,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 	onClose,
 	email,
 	username,
-	profileImage,
-	onShowBookmarks
+	profileImage
 }) => {
 	const { signOut, user, isAdmin } = useAuth();
 	const { t } = useTranslation();

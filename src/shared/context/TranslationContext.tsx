@@ -28,7 +28,7 @@ type TranslationContextType = {
 	t: (key: string) => string;
 };
 
-const TranslationContext = createContext<TranslationContextType>({
+export const TranslationContext = createContext<TranslationContextType>({
 	language: "en",
 	setLanguage: async () => {},
 	t: (key) => key

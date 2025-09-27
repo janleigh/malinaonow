@@ -2,8 +2,8 @@ import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import { ProductCard } from "@/components/home";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { useTranslation } from "@shared/context/TranslationContext";
 import { ProductService } from "@shared/services/ProductService";
 import { Product } from "@shared/types/supabase";
 import React, {
