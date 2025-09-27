@@ -1,15 +1,15 @@
-import { Feather } from "@expo/vector-icons";
-import { StorageService, UploadResult } from "@shared/api/supabase/storage";
-import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    Image,
-    Text,
-    TouchableOpacity,
-    View,
+	View,
+	TouchableOpacity,
+	Text,
+	Image,
+	Alert,
+	ActivityIndicator,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { StorageService, UploadResult } from "@shared/api/supabase/storage";
+import { Feather } from "@expo/vector-icons";
 
 interface ImageUploaderProps {
 	entityType: string;
@@ -55,17 +55,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				quality: 0.8,
 			});
 
-			if (result && !result.canceled && result.assets && result.assets[0]) {
+			if (!result.canceled && result.assets[0]) {
 				const selectedImage = result.assets[0];
 				setImageUri(selectedImage.uri);
 				await uploadImage(selectedImage);
-			} else if (result && result.canceled) {
-				// User cancelled the gallery picker - this is not an error
-				console.log("Gallery picker cancelled by user");
-			} else {
-				// Handle unexpected errors or null result
-				console.error("Error selecting image:", result);
-				Alert.alert("Error", "Failed to select image. Please try again.");
 			}
 		} catch (error) {
 			console.error("Error picking image:", error);
@@ -92,17 +85,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				quality: 0.8,
 			});
 
-			if (result && !result.canceled && result.assets && result.assets[0]) {
+			if (!result.canceled && result.assets[0]) {
 				const capturedImage = result.assets[0];
 				setImageUri(capturedImage.uri);
 				await uploadImage(capturedImage);
-			} else if (result && result.canceled) {
-				// User cancelled the camera - this is not an error
-				console.log("Camera cancelled by user");
-			} else {
-				// Handle unexpected errors or null result
-				console.error("Error taking photo:", result);
-				Alert.alert("Error", "Failed to take photo. Please try again.");
 			}
 		} catch (error) {
 			console.error("Error taking photo:", error);
@@ -150,7 +136,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		}
 	};
 
-	const handleDeleteImage = async () => {
+	const handleDeleteImage = () => {
 		Alert.alert(
 			"Delete Image",
 			"Are you sure you want to delete this image?",
@@ -159,26 +145,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				{
 					text: "Delete",
 					style: "destructive",
-					onPress: async () => {
-						try {
-							// Delete from Supabase Storage if we have a current image URL
-							if (currentImageUrl) {
-								// Extract file path from the public URL
-								const publicIndex = currentImageUrl.indexOf('/public/');
-								if (publicIndex !== -1) {
-									const filePath = currentImageUrl.substring(publicIndex + 8);
-									const cleanFilePath = filePath.split('?')[0];
-									await StorageService.deleteFile(cleanFilePath);
-								}
-							}
-
-							// Update the parent component and clear local state
-							onImageDeleted();
-							setImageUri(null);
-						} catch (error) {
-							console.error("Error deleting image:", error);
-							Alert.alert("Error", "Failed to delete image. Please try again.");
-						}
+					onPress: () => {
+						onImageDeleted();
+						setImageUri(null);
 					}
 				}
 			]
