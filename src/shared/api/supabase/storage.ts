@@ -36,18 +36,31 @@ export const StorageService: StorageService = {
 			// Generate unique filename with timestamp and random ID
 			const timestamp = Date.now();
 			const randomId = Math.random().toString(36).substring(2, 8);
-			const fileExtension = file.uri ? file.uri.split('.').pop() : 'jpg';
+			const fileExtension = file.name ? file.name.split('.').pop() : (file.uri ? file.uri.split('.').pop() : 'jpg');
 			const fileName = `${fileType}-${timestamp}-${randomId}.${fileExtension}`;
 
 			// Create file path: assets/{entityType}/{entityId}/{fileName}
 			const filePath = `assets/${entityType}/${entityId}/${fileName}`;
 
-			// Upload to Supabase Storage
+			// Determine content type
+			let contentType = 'image/jpeg'; // default
+			if (file.type) {
+				contentType = file.type;
+			} else if (fileExtension.toLowerCase() === 'png') {
+				contentType = 'image/png';
+			} else if (fileExtension.toLowerCase() === 'gif') {
+				contentType = 'image/gif';
+			} else if (fileExtension.toLowerCase() === 'webp') {
+				contentType = 'image/webp';
+			}
+
+			// Upload to Supabase Storage with proper content type
 			const { data, error } = await supabase.storage
 				.from('assets')
 				.upload(filePath, file, {
 					cacheControl: '3600',
-					upsert: false
+					upsert: false,
+					contentType: contentType
 				});
 
 			if (error) {
