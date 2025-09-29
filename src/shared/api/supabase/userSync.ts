@@ -1,4 +1,4 @@
-import type { UserProfile } from "@shared/types/supabase";
+import { supabase as s } from "@shared/types";
 import { supabase } from "./supabase";
 
 type MinimalClerkUser = {
@@ -11,7 +11,7 @@ type MinimalClerkUser = {
 
 export async function upsertUserFromClerk(
 	u: MinimalClerkUser
-): Promise<UserProfile> {
+): Promise<s.UserProfile> {
 	const payload = {
 		id: u.id,
 		email: u.email ?? null,
@@ -30,12 +30,12 @@ export async function upsertUserFromClerk(
 		console.error("upsertUserFromClerk error:", error);
 		throw error;
 	}
-	return data as UserProfile;
+	return data as s.UserProfile;
 }
 
 export async function getUserProfile(
 	userId: string
-): Promise<UserProfile | null> {
+): Promise<s.UserProfile | null> {
 	const { data, error } = await supabase
 		.from("users")
 		.select("*")
@@ -43,10 +43,9 @@ export async function getUserProfile(
 		.single();
 
 	if (error) {
-		// If no row yet, return null; otherwise bubble the error
 		if (error.code === "PGRST116") return null;
 		console.error("getUserProfile error:", error);
 		throw error;
 	}
-	return data as UserProfile;
+	return data as s.UserProfile;
 }

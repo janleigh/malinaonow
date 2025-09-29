@@ -74,7 +74,7 @@ export default function LandingPage() {
 				<View className="flex-1 items-center justify-center">
 					<View className="flex-col items-center">
 						<Image
-							source={require("../shared/assets/images/icon.png")}
+							source={require("@shared/assets/images/icon.png")}
 							className="android:w-32 android:h-32 mb-4 h-6 w-6"
 							resizeMode="cover"
 						/>

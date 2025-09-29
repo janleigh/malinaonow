@@ -20,13 +20,13 @@ export const LocationService = {
 
 			if (error) {
 				console.error("Error fetching locations:", error);
-				const cached = await CacheService.getItem<CardLocation[]>("locations_all");
+				const cached =
+					await CacheService.getItem<CardLocation[]>(
+						"locations_all"
+					);
 				return cached || [];
 			}
 
-			// return (data || []).map((location) =>
-			// 	this.mapToCardLocation(location)
-			// );
 			const map = (data || []).map((location) =>
 				this.mapToCardLocation(location)
 			);
@@ -35,7 +35,9 @@ export const LocationService = {
 		} catch (error) {
 			console.error("Exception fetching locations:", error);
 			const cached =
-				await CacheService.getItem<CardLocation[]>("locations_all");
+				await CacheService.getItem<CardLocation[]>(
+					"locations_all"
+				);
 			return cached || [];
 		}
 	},
@@ -44,7 +46,11 @@ export const LocationService = {
 	 * what do you think it does?
 	 */
 	async getCachedLocations(): Promise<CardLocation[]> {
-		return (await CacheService.getItem<CardLocation[]>("locations_all")) || [];
+		return (
+			(await CacheService.getItem<CardLocation[]>(
+				"locations_all"
+			)) || []
+		);
 	},
 
 	/**

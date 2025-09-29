@@ -21,7 +21,8 @@ export const ProductService = {
 
 			if (error) {
 				console.error("Error fetching products:", error);
-				const cached = await CacheService.getItem<Product[]>("products_all");
+				const cached =
+					await CacheService.getItem<Product[]>("products_all");
 				return cached || [];
 			}
 
@@ -40,7 +41,9 @@ export const ProductService = {
 	 * what do you think it does again?
 	 */
 	async getCachedProducts(): Promise<Product[]> {
-		return (await CacheService.getItem<Product[]>("products_all")) || [];
+		return (
+			(await CacheService.getItem<Product[]>("products_all")) || []
+		);
 	},
 
 	/**

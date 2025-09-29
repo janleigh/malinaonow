@@ -1,8 +1,8 @@
 import { API_KEYS } from "@/config";
+import { TranslationProvider } from "@/shared/context/TranslationContext";
 import { LocationService, ProductService } from "@/shared/services";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { AuthProvider } from "@shared/context/AuthContext";
-import { TranslationProvider } from "@shared/context/TranslationContext";
 import "@shared/styles/globals.css";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
