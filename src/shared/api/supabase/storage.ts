@@ -6,7 +6,7 @@ export interface UploadResult {
 	error?: string;
 }
 
-export interface StorageService {
+export interface IStorageService {
 	uploadFile(
 		file: any,
 		entityType: string,
@@ -17,7 +17,7 @@ export interface StorageService {
 	listFiles(entityType: string, entityId: string): Promise<string[]>;
 }
 
-export const StorageService: StorageService = {
+export const StorageService: IStorageService = {
 	/**
 	 * Upload a file to Supabase Storage
 	 * @param file - The file to upload
@@ -36,35 +36,39 @@ export const StorageService: StorageService = {
 			// Generate unique filename with timestamp and random ID
 			const timestamp = Date.now();
 			const randomId = Math.random().toString(36).substring(2, 8);
-			const fileExtension = file.name ? file.name.split('.').pop() : (file.uri ? file.uri.split('.').pop() : 'jpg');
+			const fileExtension = file.name
+				? file.name.split(".").pop()
+				: file.uri
+					? file.uri.split(".").pop()
+					: "jpg";
 			const fileName = `${fileType}-${timestamp}-${randomId}.${fileExtension}`;
 
 			// Create file path: assets/{entityType}/{entityId}/{fileName}
 			const filePath = `assets/${entityType}/${entityId}/${fileName}`;
 
 			// Determine content type
-			let contentType = 'image/jpeg'; // default
+			let contentType = "image/jpeg"; // default
 			if (file.type) {
 				contentType = file.type;
-			} else if (fileExtension.toLowerCase() === 'png') {
-				contentType = 'image/png';
-			} else if (fileExtension.toLowerCase() === 'gif') {
-				contentType = 'image/gif';
-			} else if (fileExtension.toLowerCase() === 'webp') {
-				contentType = 'image/webp';
+			} else if (fileExtension.toLowerCase() === "png") {
+				contentType = "image/png";
+			} else if (fileExtension.toLowerCase() === "gif") {
+				contentType = "image/gif";
+			} else if (fileExtension.toLowerCase() === "webp") {
+				contentType = "image/webp";
 			}
 
 			// Upload to Supabase Storage with proper content type
 			const { data, error } = await supabase.storage
-				.from('assets')
+				.from("assets")
 				.upload(filePath, file, {
-					cacheControl: '3600',
+					cacheControl: "3600",
 					upsert: false,
 					contentType: contentType
 				});
 
 			if (error) {
-				console.error('Upload error:', error);
+				console.error("Upload error:", error);
 				return {
 					success: false,
 					error: error.message
@@ -73,7 +77,7 @@ export const StorageService: StorageService = {
 
 			// Get public URL
 			const { data: urlData } = supabase.storage
-				.from('assets')
+				.from("assets")
 				.getPublicUrl(filePath);
 
 			return {
@@ -81,10 +85,13 @@ export const StorageService: StorageService = {
 				url: urlData.publicUrl
 			};
 		} catch (error) {
-			console.error('Upload exception:', error);
+			console.error("Upload exception:", error);
 			return {
 				success: false,
-				error: error instanceof Error ? error.message : 'Unknown error'
+				error:
+					error instanceof Error
+						? error.message
+						: "Unknown error"
 			};
 		}
 	},
@@ -96,15 +103,15 @@ export const StorageService: StorageService = {
 	async deleteFile(filePath: string): Promise<void> {
 		try {
 			const { error } = await supabase.storage
-				.from('assets')
+				.from("assets")
 				.remove([filePath]);
 
 			if (error) {
-				console.error('Delete error:', error);
+				console.error("Delete error:", error);
 				throw error;
 			}
 		} catch (error) {
-			console.error('Delete exception:', error);
+			console.error("Delete exception:", error);
 			throw error;
 		}
 	},
@@ -115,30 +122,35 @@ export const StorageService: StorageService = {
 	 * @param entityId - ID of the entity
 	 * @returns Array of file URLs
 	 */
-	async listFiles(entityType: string, entityId: string): Promise<string[]> {
+	async listFiles(
+		entityType: string,
+		entityId: string
+	): Promise<string[]> {
 		try {
 			const { data, error } = await supabase.storage
-				.from('assets')
+				.from("assets")
 				.list(`${entityType}/${entityId}`, {
 					limit: 100,
-					sortBy: { column: 'created_at', order: 'desc' }
+					sortBy: { column: "created_at", order: "desc" }
 				});
 
 			if (error) {
-				console.error('List error:', error);
+				console.error("List error:", error);
 				return [];
 			}
 
-			const urls = data.map(file => {
+			const urls = data.map((file) => {
 				const { data: urlData } = supabase.storage
-					.from('assets')
-					.getPublicUrl(`${entityType}/${entityId}/${file.name}`);
+					.from("assets")
+					.getPublicUrl(
+						`${entityType}/${entityId}/${file.name}`
+					);
 				return urlData.publicUrl;
 			});
 
 			return urls;
 		} catch (error) {
-			console.error('List exception:', error);
+			console.error("List exception:", error);
 			return [];
 		}
 	}

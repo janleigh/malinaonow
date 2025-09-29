@@ -1,11 +1,10 @@
 import { BaseText as Text } from "@/components/BaseText";
+import { ImageUploader } from "@/components/common/ImageUploader";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { ProductService } from "@shared/services";
 import { Product } from "@shared/types/supabase";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ImageUploader } from "@/components/common/ImageUploader";
-import { UploadResult } from "@shared/api/supabase/storage";
 import {
 	ActivityIndicator,
 	Alert,
@@ -20,7 +19,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageProductsScreen() {
 	const [mainImageFile, setMainImageFile] = useState<any>(null);
-	const [additionalImageFiles, setAdditionalImageFiles] = useState<any[]>([]);
+	const [additionalImageFiles, setAdditionalImageFiles] = useState<
+		any[]
+	>([]);
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -120,14 +121,18 @@ export default function ManageProductsScreen() {
 					editingProduct.id,
 					productData,
 					mainImageFile,
-					additionalImageFiles.length > 0 ? additionalImageFiles : undefined
+					additionalImageFiles.length > 0
+						? additionalImageFiles
+						: undefined
 				);
 				Alert.alert("Success", "Product updated successfully.");
 			} else {
 				await ProductService.createProduct(
 					productData,
 					mainImageFile,
-					additionalImageFiles.length > 0 ? additionalImageFiles : undefined
+					additionalImageFiles.length > 0
+						? additionalImageFiles
+						: undefined
 				);
 				Alert.alert("Success", "Product added successfully.");
 			}
@@ -453,10 +458,16 @@ export default function ManageProductsScreen() {
 								fileType="main"
 								currentImageUrl={formData.image_url}
 								onImageUploaded={(result) => {
-									setFormData({ ...formData, image_url: result.url! });
+									setFormData({
+										...formData,
+										image_url: result.url!
+									});
 								}}
 								onImageDeleted={() => {
-									setFormData({ ...formData, image_url: "" });
+									setFormData({
+										...formData,
+										image_url: ""
+									});
 								}}
 								aspect={[4, 3]}
 								placeholder="Upload main product image (4:3 ratio)"

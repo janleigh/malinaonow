@@ -1,12 +1,10 @@
 import { BaseText as Text } from "@/components/BaseText";
+import { ImageUploader } from "@/components/common/ImageUploader";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { supabase } from "@shared/api/supabase";
 import { LocationService } from "@shared/services";
 import { Location } from "@shared/types/supabase";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ImageUploader } from "@/components/common/ImageUploader";
-import { UploadResult } from "@shared/api/supabase/storage";
 import {
 	ActivityIndicator,
 	Alert,
@@ -169,7 +167,9 @@ export default function ManageLocationsScreen() {
 					onPress: async () => {
 						try {
 							setLoading(true);
-							await LocationService.deleteLocation(locationId);
+							await LocationService.deleteLocation(
+								locationId
+							);
 							await fetchLocations();
 						} catch (err) {
 							console.error(
@@ -493,10 +493,16 @@ export default function ManageLocationsScreen() {
 								fileType="banner"
 								currentImageUrl={formData.bannerImage}
 								onImageUploaded={(result) => {
-									setFormData({ ...formData, bannerImage: result.url! });
+									setFormData({
+										...formData,
+										bannerImage: result.url!
+									});
 								}}
 								onImageDeleted={() => {
-									setFormData({ ...formData, bannerImage: "" });
+									setFormData({
+										...formData,
+										bannerImage: ""
+									});
 								}}
 								aspect={[4, 3]}
 								placeholder="Upload banner image (4:3 ratio)"
@@ -509,10 +515,16 @@ export default function ManageLocationsScreen() {
 								fileType="360"
 								currentImageUrl={formData.image360}
 								onImageUploaded={(result) => {
-									setFormData({ ...formData, image360: result.url! });
+									setFormData({
+										...formData,
+										image360: result.url!
+									});
 								}}
 								onImageDeleted={() => {
-									setFormData({ ...formData, image360: "" });
+									setFormData({
+										...formData,
+										image360: ""
+									});
 								}}
 								aspect={[16, 9]}
 								placeholder="Upload 360° image (16:9 ratio)"

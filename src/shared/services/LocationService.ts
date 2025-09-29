@@ -1,10 +1,10 @@
 import { supabase } from "@shared/api/supabase";
+import { StorageService } from "@shared/api/supabase/storage";
 import {
 	Location as CardLocation,
 	Location as SupabaseLocation
 } from "@shared/types/supabase";
-import { CacheService } from ".";
-import { StorageService } from "@shared/api/supabase/storage";
+import { CacheService } from "./CacheService";
 
 export const LocationService = {
 	/**
@@ -130,12 +130,13 @@ export const LocationService = {
 			}
 
 			// Update location with image URLs
-			const { data: updatedLocation, error: updateError } = await supabase
-				.from("locations")
-				.update({ image: updatedImageData })
-				.eq("id", locationId)
-				.select()
-				.single();
+			const { data: updatedLocation, error: updateError } =
+				await supabase
+					.from("locations")
+					.update({ image: updatedImageData })
+					.eq("id", locationId)
+					.select()
+					.single();
 
 			if (updateError) throw updateError;
 
@@ -164,7 +165,10 @@ export const LocationService = {
 		image360?: any
 	): Promise<CardLocation> {
 		try {
-			let updatedImageData = updates.image || { banner: "", "360": "" };
+			let updatedImageData = updates.image || {
+				"banner": "",
+				"360": ""
+			};
 
 			// Upload new images if provided
 			if (bannerImage) {
@@ -198,7 +202,9 @@ export const LocationService = {
 			}
 
 			// Update location with new data
-			const finalUpdates = updatedImageData ? { ...updates, image: updatedImageData } : updates;
+			const finalUpdates = updatedImageData
+				? { ...updates, image: updatedImageData }
+				: updates;
 
 			const { data: location, error } = await supabase
 				.from("locations")
@@ -234,8 +240,8 @@ export const LocationService = {
 			if (location.image.banner) {
 				try {
 					const url = new URL(location.image.banner);
-					const pathParts = url.pathname.split('/');
-					const filePath = pathParts.slice(-3).join('/');
+					const pathParts = url.pathname.split("/");
+					const filePath = pathParts.slice(-3).join("/");
 					await StorageService.deleteFile(filePath);
 				} catch (error) {
 					console.warn("Failed to delete banner image:", error);
@@ -245,8 +251,8 @@ export const LocationService = {
 			if (location.image[360]) {
 				try {
 					const url = new URL(location.image[360]);
-					const pathParts = url.pathname.split('/');
-					const filePath = pathParts.slice(-3).join('/');
+					const pathParts = url.pathname.split("/");
+					const filePath = pathParts.slice(-3).join("/");
 					await StorageService.deleteFile(filePath);
 				} catch (error) {
 					console.warn("Failed to delete 360 image:", error);

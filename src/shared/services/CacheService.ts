@@ -36,7 +36,7 @@ export const CacheService = {
 		} catch (err) {
 			console.error("Error (CacheService.removeItem)", err);
 		}
-	},
+	}
 	// async prefetch() {
 	// 	try {
 	// 		LocationService.getLocations();

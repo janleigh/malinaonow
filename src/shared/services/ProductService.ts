@@ -1,11 +1,11 @@
 import { supabase } from "@shared/api/supabase";
+import { StorageService } from "@shared/api/supabase/storage";
 import {
 	CreateProductDTO,
 	Product,
 	UpdateProductDTO
 } from "@shared/types/supabase";
-import { CacheService } from ".";
-import { StorageService } from "@shared/api/supabase/storage";
+import { CacheService } from "./CacheService";
 
 export const ProductService = {
 	/**
@@ -129,12 +129,13 @@ export const ProductService = {
 			}
 
 			// Update product with image URLs
-			const { data: updatedProduct, error: updateError } = await supabase
-				.from("products")
-				.update(updatedProductData)
-				.eq("id", productId)
-				.select()
-				.single();
+			const { data: updatedProduct, error: updateError } =
+				await supabase
+					.from("products")
+					.update(updatedProductData)
+					.eq("id", productId)
+					.select()
+					.single();
 
 			if (updateError) throw updateError;
 
@@ -201,9 +202,11 @@ export const ProductService = {
 			}
 
 			// Update product with new data
-			const finalUpdates = updatedImageData.image_url || updatedImageData.images.length > 0
-				? { ...updates, ...updatedImageData }
-				: updates;
+			const finalUpdates =
+				updatedImageData.image_url ||
+				updatedImageData.images.length > 0
+					? { ...updates, ...updatedImageData }
+					: updates;
 
 			const { data: product, error } = await supabase
 				.from("products")
@@ -242,11 +245,14 @@ export const ProductService = {
 			if (product.image_url) {
 				try {
 					const url = new URL(product.image_url);
-					const pathParts = url.pathname.split('/');
-					const filePath = pathParts.slice(-3).join('/');
+					const pathParts = url.pathname.split("/");
+					const filePath = pathParts.slice(-3).join("/");
 					await StorageService.deleteFile(filePath);
 				} catch (error) {
-					console.warn("Failed to delete main product image:", error);
+					console.warn(
+						"Failed to delete main product image:",
+						error
+					);
 				}
 			}
 

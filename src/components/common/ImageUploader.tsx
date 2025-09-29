@@ -5,10 +5,13 @@ import {
 	Text,
 	Image,
 	Alert,
-	ActivityIndicator,
+	ActivityIndicator
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { StorageService, UploadResult } from "@shared/api/supabase/storage";
+import {
+	StorageService,
+	UploadResult
+} from "@shared/api/supabase/storage";
 import { Feather } from "@expo/vector-icons";
 
 interface ImageUploaderProps {
@@ -30,7 +33,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	onImageUploaded,
 	onImageDeleted,
 	aspect,
-	placeholder,
+	placeholder
 }) => {
 	const [isUploading, setIsUploading] = useState(false);
 	const [imageUri, setImageUri] = useState<string | null>(null);
@@ -38,7 +41,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	const pickImage = async () => {
 		try {
 			// Request permissions
-			const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+			const { status } =
+				await ImagePicker.requestMediaLibraryPermissionsAsync();
 			if (status !== "granted") {
 				Alert.alert(
 					"Permission needed",
@@ -52,7 +56,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images,
 				allowsEditing: true,
 				aspect: aspect,
-				quality: 0.8,
+				quality: 0.8
 			});
 
 			if (!result.canceled && result.assets[0]) {
@@ -69,7 +73,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	const takePhoto = async () => {
 		try {
 			// Request permissions
-			const { status } = await ImagePicker.requestCameraPermissionsAsync();
+			const { status } =
+				await ImagePicker.requestCameraPermissionsAsync();
 			if (status !== "granted") {
 				Alert.alert(
 					"Permission needed",
@@ -82,7 +87,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 			const result = await ImagePicker.launchCameraAsync({
 				allowsEditing: true,
 				aspect: aspect,
-				quality: 0.8,
+				quality: 0.8
 			});
 
 			if (!result.canceled && result.assets[0]) {
@@ -96,7 +101,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		}
 	};
 
-	const uploadImage = async (imageAsset: ImagePicker.ImagePickerAsset) => {
+	const uploadImage = async (
+		imageAsset: ImagePicker.ImagePickerAsset
+	) => {
 		try {
 			setIsUploading(true);
 
@@ -107,9 +114,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 			// Convert blob to the format expected by StorageService
 			const file = {
 				uri: imageAsset.uri,
-				type: blob.type || 'image/jpeg',
+				type: blob.type || "image/jpeg",
 				name: `${fileType}-${Date.now()}.jpg`,
-				size: blob.size,
+				size: blob.size
 			} as any;
 
 			// Upload to storage
@@ -124,7 +131,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				onImageUploaded(uploadResult);
 				setImageUri(null); // Clear temporary URI
 			} else {
-				Alert.alert("Upload Failed", uploadResult.error || "Unknown error");
+				Alert.alert(
+					"Upload Failed",
+					uploadResult.error || "Unknown error"
+				);
 				setImageUri(null);
 			}
 		} catch (error) {
@@ -158,7 +168,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
 	return (
 		<View className="mb-4">
-			<Text className="mb-2 text-sm text-[#666666]" style={{ fontWeight: "500" }}>
+			<Text
+				className="mb-2 text-sm text-[#666666]"
+				style={{ fontWeight: "500" }}
+			>
 				{placeholder.toUpperCase()}
 			</Text>
 
@@ -181,12 +194,21 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				<View className="h-48 w-full items-center justify-center rounded-lg border-2 border-dashed border-[#333333] bg-gray-50">
 					{isUploading ? (
 						<View className="items-center">
-							<ActivityIndicator size="large" color="#FFBB38" />
-							<Text className="mt-2 text-[#666666]">Uploading...</Text>
+							<ActivityIndicator
+								size="large"
+								color="#FFBB38"
+							/>
+							<Text className="mt-2 text-[#666666]">
+								Uploading...
+							</Text>
 						</View>
 					) : (
 						<View className="items-center">
-							<Feather name="image" size={40} color="#666666" />
+							<Feather
+								name="image"
+								size={40}
+								color="#666666"
+							/>
 							<Text className="mt-2 text-center text-[#666666]">
 								{placeholder}
 							</Text>
@@ -202,7 +224,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 						onPress={pickImage}
 					>
 						<Feather name="image" size={16} color="black" />
-						<Text className="ml-2 text-black" style={{ fontWeight: "500" }}>
+						<Text
+							className="ml-2 text-black"
+							style={{ fontWeight: "500" }}
+						>
 							Gallery
 						</Text>
 					</TouchableOpacity>
@@ -212,7 +237,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 						onPress={takePhoto}
 					>
 						<Feather name="camera" size={16} color="black" />
-						<Text className="ml-2 text-black" style={{ fontWeight: "500" }}>
+						<Text
+							className="ml-2 text-black"
+							style={{ fontWeight: "500" }}
+						>
 							Camera
 						</Text>
 					</TouchableOpacity>
