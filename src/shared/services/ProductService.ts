@@ -4,7 +4,8 @@ import {
 	Product,
 	UpdateProductDTO
 } from "@shared/types/supabase";
-import { CacheService } from "./CacheService";
+import { CacheService } from ".";
+import { StorageService } from "@shared/api/supabase/storage";
 
 export const ProductService = {
 	/**
@@ -71,81 +72,196 @@ export const ProductService = {
 	},
 
 	/**
-	 * Create a new product
-	 * @param {CreateProductDTO} product - The product data to create
-	 * @return {Promise<Product>} - A promise that resolves to the created Product
+	 * Create a new product with image uploads
+	 * @param {CreateProductDTO} productData - Product data without ID
+	 * @param {File} mainImage - Main product image file
+	 * @param {File[]} additionalImages - Additional product image files (optional)
+	 * @returns {Promise<Product>} - Created product
 	 */
-	async createProduct(product: CreateProductDTO): Promise<Product> {
+	async createProduct(
+		productData: CreateProductDTO,
+		mainImage?: any,
+		additionalImages?: any[]
+	): Promise<Product> {
 		try {
-			const { data, error } = await supabase
+			// First create the product record
+			const { data: product, error: productError } = await supabase
 				.from("products")
-				.insert([product])
+				.insert([productData])
 				.select()
 				.single();
 
-			if (error) {
-				console.error("Error creating product:", error);
-				throw error;
+			if (productError) throw productError;
+
+			const productId = product.id;
+			let updatedProductData = { ...productData };
+
+			// Upload main image if provided
+			if (mainImage) {
+				const uploadResult = await StorageService.uploadFile(
+					mainImage,
+					"products",
+					productId,
+					"main"
+				);
+				if (uploadResult.success) {
+					updatedProductData.image_url = uploadResult.url!;
+				}
 			}
 
-			return data as Product;
+			// Upload additional images if provided
+			if (additionalImages && additionalImages.length > 0) {
+				const additionalImageUrls: string[] = [];
+
+				for (let i = 0; i < additionalImages.length; i++) {
+					const uploadResult = await StorageService.uploadFile(
+						additionalImages[i],
+						"products",
+						productId,
+						`additional-${i + 1}`
+					);
+					if (uploadResult.success) {
+						additionalImageUrls.push(uploadResult.url!);
+					}
+				}
+
+				updatedProductData.images = additionalImageUrls;
+			}
+
+			// Update product with image URLs
+			const { data: updatedProduct, error: updateError } = await supabase
+				.from("products")
+				.update(updatedProductData)
+				.eq("id", productId)
+				.select()
+				.single();
+
+			if (updateError) throw updateError;
+
+			// Clear cache to force refresh
+			await CacheService.removeItem("products_all");
+
+			return updatedProduct as Product;
 		} catch (error) {
-			console.error("Exception creating product:", error);
+			console.error("Error creating product:", error);
 			throw error;
 		}
 	},
 
 	/**
-	 * Update an existing product
-	 * @param {string} id - The ID of the product to update
-	 * @param {UpdateProductDTO} updates - The fields to update
-	 * @return {Promise<Product>} - A promise that resolves to the updated Product
+	 * Update a product with optional image uploads
+	 * @param {string} id - Product ID
+	 * @param {UpdateProductDTO} updates - Product updates
+	 * @param {File} mainImage - New main image (optional)
+	 * @param {File[]} additionalImages - New additional images (optional)
+	 * @returns {Promise<Product>} - Updated product
 	 */
 	async updateProduct(
 		id: string,
-		updates: UpdateProductDTO
+		updates: UpdateProductDTO,
+		mainImage?: any,
+		additionalImages?: any[]
 	): Promise<Product> {
 		try {
-			const { data, error } = await supabase
+			let updatedImageData = {
+				image_url: updates.image_url || "",
+				images: updates.images || []
+			};
+
+			// Upload new main image if provided
+			if (mainImage) {
+				const uploadResult = await StorageService.uploadFile(
+					mainImage,
+					"products",
+					id,
+					"main"
+				);
+				if (uploadResult.success) {
+					updatedImageData.image_url = uploadResult.url!;
+				}
+			}
+
+			// Upload new additional images if provided
+			if (additionalImages && additionalImages.length > 0) {
+				const additionalImageUrls: string[] = [];
+
+				for (let i = 0; i < additionalImages.length; i++) {
+					const uploadResult = await StorageService.uploadFile(
+						additionalImages[i],
+						"products",
+						id,
+						`additional-${i + 1}`
+					);
+					if (uploadResult.success) {
+						additionalImageUrls.push(uploadResult.url!);
+					}
+				}
+
+				updatedImageData.images = additionalImageUrls;
+			}
+
+			// Update product with new data
+			const finalUpdates = updatedImageData.image_url || updatedImageData.images.length > 0
+				? { ...updates, ...updatedImageData }
+				: updates;
+
+			const { data: product, error } = await supabase
 				.from("products")
 				.update({
-					...updates,
+					...finalUpdates,
 					updated_at: new Date().toISOString()
 				})
 				.eq("id", id)
 				.select()
 				.single();
 
-			if (error) {
-				console.error("Error updating product:", error);
-				throw error;
-			}
+			if (error) throw error;
 
-			return data as Product;
+			// Clear cache to force refresh
+			await CacheService.removeItem("products_all");
+
+			return product as Product;
 		} catch (error) {
-			console.error("Exception updating product:", error);
+			console.error("Error updating product:", error);
 			throw error;
 		}
 	},
 
 	/**
-	 * Delete a product
-	 * @param {string} id - The ID of the product to delete
-	 * @return {Promise<void>}
+	 * Delete a product and its associated images
+	 * @param {string} id - Product ID
+	 * @returns {Promise<void>}
 	 */
 	async deleteProduct(id: string): Promise<void> {
 		try {
+			// First get the product to find associated images
+			const product = await this.getProductById(id);
+			if (!product) throw new Error("Product not found");
+
+			// Delete main image from storage
+			if (product.image_url) {
+				try {
+					const url = new URL(product.image_url);
+					const pathParts = url.pathname.split('/');
+					const filePath = pathParts.slice(-3).join('/');
+					await StorageService.deleteFile(filePath);
+				} catch (error) {
+					console.warn("Failed to delete main product image:", error);
+				}
+			}
+
+			// Delete the product record
 			const { error } = await supabase
 				.from("products")
 				.delete()
 				.eq("id", id);
 
-			if (error) {
-				console.error("Error deleting product:", error);
-				throw error;
-			}
+			if (error) throw error;
+
+			// Clear cache
+			await CacheService.removeItem("products_all");
 		} catch (error) {
-			console.error("Exception deleting product:", error);
+			console.error("Error deleting product:", error);
 			throw error;
 		}
 	},

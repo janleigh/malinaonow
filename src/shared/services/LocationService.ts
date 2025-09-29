@@ -3,7 +3,8 @@ import {
 	Location as CardLocation,
 	Location as SupabaseLocation
 } from "@shared/types/supabase";
-import { CacheService } from "./CacheService";
+import { CacheService } from ".";
+import { StorageService } from "@shared/api/supabase/storage";
 
 export const LocationService = {
 	/**
@@ -74,6 +75,197 @@ export const LocationService = {
 		} catch (error) {
 			console.error("Exception fetching location:", error);
 			return null;
+		}
+	},
+
+	/**
+	 * Create a new location with image uploads
+	 * @param {Omit<SupabaseLocation, 'id'>} locationData - Location data without ID
+	 * @param {File} bannerImage - Banner image file
+	 * @param {File} image360 - 360° image file (optional)
+	 * @returns {Promise<CardLocation>} - Created location
+	 */
+	async createLocation(
+		locationData: Omit<SupabaseLocation, "id">,
+		bannerImage?: any,
+		image360?: any
+	): Promise<CardLocation> {
+		try {
+			// First create the location record
+			const { data: location, error: locationError } = await supabase
+				.from("locations")
+				.insert([locationData])
+				.select()
+				.single();
+
+			if (locationError) throw locationError;
+
+			const locationId = location.id;
+
+			// Upload images if provided
+			const updatedImageData: any = { ...locationData.image };
+
+			if (bannerImage) {
+				const uploadResult = await StorageService.uploadFile(
+					bannerImage,
+					"locations",
+					locationId,
+					"banner"
+				);
+				if (uploadResult.success) {
+					updatedImageData.banner = uploadResult.url!;
+				}
+			}
+
+			if (image360) {
+				const uploadResult = await StorageService.uploadFile(
+					image360,
+					"locations",
+					locationId,
+					"360"
+				);
+				if (uploadResult.success) {
+					updatedImageData["360"] = uploadResult.url!;
+				}
+			}
+
+			// Update location with image URLs
+			const { data: updatedLocation, error: updateError } = await supabase
+				.from("locations")
+				.update({ image: updatedImageData })
+				.eq("id", locationId)
+				.select()
+				.single();
+
+			if (updateError) throw updateError;
+
+			// Clear cache to force refresh
+			await CacheService.removeItem("locations_all");
+
+			return this.mapToCardLocation(updatedLocation);
+		} catch (error) {
+			console.error("Error creating location:", error);
+			throw error;
+		}
+	},
+
+	/**
+	 * Update a location with optional image uploads
+	 * @param {string} id - Location ID
+	 * @param {Partial<SupabaseLocation>} updates - Location updates
+	 * @param {File} bannerImage - New banner image (optional)
+	 * @param {File} image360 - New 360° image (optional)
+	 * @returns {Promise<CardLocation>} - Updated location
+	 */
+	async updateLocation(
+		id: string,
+		updates: Partial<SupabaseLocation>,
+		bannerImage?: any,
+		image360?: any
+	): Promise<CardLocation> {
+		try {
+			let updatedImageData = updates.image || { banner: "", "360": "" };
+
+			// Upload new images if provided
+			if (bannerImage) {
+				const uploadResult = await StorageService.uploadFile(
+					bannerImage,
+					"locations",
+					id,
+					"banner"
+				);
+				if (uploadResult.success) {
+					updatedImageData = {
+						...updatedImageData,
+						banner: uploadResult.url!
+					};
+				}
+			}
+
+			if (image360) {
+				const uploadResult = await StorageService.uploadFile(
+					image360,
+					"locations",
+					id,
+					"360"
+				);
+				if (uploadResult.success) {
+					updatedImageData = {
+						...updatedImageData,
+						"360": uploadResult.url!
+					};
+				}
+			}
+
+			// Update location with new data
+			const finalUpdates = updatedImageData ? { ...updates, image: updatedImageData } : updates;
+
+			const { data: location, error } = await supabase
+				.from("locations")
+				.update(finalUpdates)
+				.eq("id", id)
+				.select()
+				.single();
+
+			if (error) throw error;
+
+			// Clear cache to force refresh
+			await CacheService.removeItem("locations_all");
+
+			return this.mapToCardLocation(location);
+		} catch (error) {
+			console.error("Error updating location:", error);
+			throw error;
+		}
+	},
+
+	/**
+	 * Delete a location and its associated images
+	 * @param {string} id - Location ID
+	 * @returns {Promise<void>}
+	 */
+	async deleteLocation(id: string): Promise<void> {
+		try {
+			// First get the location to find associated images
+			const location = await this.getLocationById(id);
+			if (!location) throw new Error("Location not found");
+
+			// Delete images from storage
+			if (location.image.banner) {
+				try {
+					const url = new URL(location.image.banner);
+					const pathParts = url.pathname.split('/');
+					const filePath = pathParts.slice(-3).join('/');
+					await StorageService.deleteFile(filePath);
+				} catch (error) {
+					console.warn("Failed to delete banner image:", error);
+				}
+			}
+
+			if (location.image[360]) {
+				try {
+					const url = new URL(location.image[360]);
+					const pathParts = url.pathname.split('/');
+					const filePath = pathParts.slice(-3).join('/');
+					await StorageService.deleteFile(filePath);
+				} catch (error) {
+					console.warn("Failed to delete 360 image:", error);
+				}
+			}
+
+			// Delete the location record
+			const { error } = await supabase
+				.from("locations")
+				.delete()
+				.eq("id", id);
+
+			if (error) throw error;
+
+			// Clear cache
+			await CacheService.removeItem("locations_all");
+		} catch (error) {
+			console.error("Error deleting location:", error);
+			throw error;
 		}
 	},
 

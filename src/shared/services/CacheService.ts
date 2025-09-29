@@ -29,7 +29,14 @@ export const CacheService = {
 		} catch (err) {
 			console.error("Error (CacheService.setItem)", err);
 		}
-	}
+	},
+	async removeItem(k: string): Promise<void> {
+		try {
+			await AsyncStorage.removeItem(`cache_${k}`);
+		} catch (err) {
+			console.error("Error (CacheService.removeItem)", err);
+		}
+	},
 	// async prefetch() {
 	// 	try {
 	// 		LocationService.getLocations();
