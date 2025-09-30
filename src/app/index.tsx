@@ -61,7 +61,7 @@ export default function LandingPage() {
 	}
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			{!isOnline && (
 				<View className="mx-4 mt-2 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
 					<Text className="text-xs tracking-tighter-lexend text-black">
@@ -89,8 +89,8 @@ export default function LandingPage() {
 				<View className="w-full space-y-3 px-5 pb-10">
 					<Link href="/(auth)/signup" asChild>
 						<TouchableOpacity
-							className="h-12 w-full flex-row items-center justify-center border border-[#333333] bg-white px-4"
-							style={shadowStyles.standard}
+							className="h-12 w-full flex-row items-center justify-center border border-[#333333] bg-white px-4 rounded-3xl"
+						
 						>
 							<Text
 								className="android:font-normal text-base font-extrabold tracking-tighter-lexend text-black"

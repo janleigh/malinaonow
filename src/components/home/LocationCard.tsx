@@ -239,6 +239,8 @@ export const LocationCard = ({
                     autoLoad: true,
                     compass: true,
                     autoRotate: -3,
+                    minPitch: -50,             
+                    maxPitch: 50,
                     mouseZoom: false
                 });
             </script>
