@@ -1,6 +1,5 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { useAuth } from "@shared/context/AuthContext";
-import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
@@ -50,7 +49,7 @@ export default function SignupScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 flex-col justify-between p-6">
@@ -63,8 +62,8 @@ export default function SignupScreen() {
 						</Text>
 						<View className="mt-1 space-y-4">
 							<View
-								className="my-2 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
+								className="mb-4"
+								
 							>
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									FIRST NAME
@@ -77,13 +76,13 @@ export default function SignupScreen() {
 									}}
 									placeholder="John"
 									placeholderTextColor="#666666"
-									className="text-base text-black"
+									className="text-base text-black my-2 border border-[#333333] bg-white p-2 rounded-md"
 									autoCapitalize="words"
 								/>
 							</View>
 							<View
-								className="my-2 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
+								className="mb-4"
+								
 							>
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									LAST NAME
@@ -96,13 +95,13 @@ export default function SignupScreen() {
 									}}
 									placeholder="Doe"
 									placeholderTextColor="#666666"
-									className="text-base text-black"
+									className="text-base text-black my-2 border border-[#333333] bg-white p-2 rounded-md"
 									autoCapitalize="words"
 								/>
 							</View>
 							<View
-								className="my-2 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
+								className="mb-4"
+								
 							>
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									EMAIL
@@ -115,7 +114,7 @@ export default function SignupScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="text-base text-black"
+									className="text-base text-black my-2 border border-[#333333] bg-white p-2 rounded-md"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
@@ -127,8 +126,8 @@ export default function SignupScreen() {
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
-							style={shadowStyles.standard}
+							className="mt-4 h-12 w-full items-center justify-center border border-[#333333] bg-[#FFBB38] rounded-3xl"
+							
 							onPress={handleSignup}
 							disabled={isLoading}
 						>

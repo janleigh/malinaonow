@@ -2,7 +2,6 @@ import { OAuthButton } from "@/components/auth/OAuthButton";
 import { BaseText as Text } from "@/components/BaseText";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useAuth } from "@shared/context/AuthContext";
-import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
@@ -39,7 +38,7 @@ export default function LoginScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 flex-col justify-between p-6">
@@ -52,8 +51,8 @@ export default function LoginScreen() {
 						</Text>
 						<View className="mt-4 space-y-4">
 							<View
-								className="border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
+								className="mb-4"
+								
 							>
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									EMAIL
@@ -66,7 +65,7 @@ export default function LoginScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="text-base text-black"
+									className="text-base text-black border border-[#333333] bg-white p-4 rounded-md"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
@@ -78,8 +77,8 @@ export default function LoginScreen() {
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
-							style={shadowStyles.standard}
+							className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#FFBB38] rounded-3xl shadow-md"
+						
 							onPress={handleLogin}
 							disabled={isLoading}
 						>

@@ -102,7 +102,7 @@ export default function OTPScreen() {
 	const isComplete = cursorPosition >= 6;
 
 	return (
-		<View className="flex-1 bg-[#faf4f0]">
+		<View className="flex-1 bg-[#C6E3D3]">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 flex-col justify-between p-6">
