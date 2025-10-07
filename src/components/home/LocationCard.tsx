@@ -241,7 +241,11 @@ export const LocationCard = ({
                     autoRotate: -3,
                     minPitch: -50,             
                     maxPitch: 50,
-                    mouseZoom: false
+                    mouseZoom: false,
+                    pitch: 0,           // horizon level
+                    yaw: 0,             // looking forward
+                    hfov: 70,           // horizontal pov
+                    vaov: 90            // vertical pov
                 });
             </script>
         </body>
