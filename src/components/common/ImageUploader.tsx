@@ -21,7 +21,7 @@ interface ImageUploaderProps {
 	currentImageUrl?: string;
 	onImageUploaded: (result: UploadResult) => void;
 	onImageDeleted: () => void;
-	aspect: [number, number];
+	aspect?: [number, number];
 	placeholder: string;
 }
 
@@ -55,7 +55,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 			const result = await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images,
 				allowsEditing: true,
-				aspect: aspect,
+				...(aspect && { aspect }),
 				quality: 0.8
 			});
 
@@ -86,7 +86,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 			// Launch camera
 			const result = await ImagePicker.launchCameraAsync({
 				allowsEditing: true,
-				aspect: aspect,
+				...(aspect && { aspect }),
 				quality: 0.8
 			});
 

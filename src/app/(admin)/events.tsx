@@ -1,6 +1,6 @@
 import { BaseText as Text } from "@/components/BaseText";
+import { ImageUploader } from "@/components/common/ImageUploader";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { supabase } from "@shared/api/supabase";
 import { EventService } from "@shared/services";
 import { Event } from "@shared/types/supabase";
 import { formatDate, formatTime } from "@shared/utils/date";
@@ -20,6 +20,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageEventsScreen() {
+	const [bannerImageFile, setBannerImageFile] = useState<any>(null);
 	const [events, setEvents] = useState<Event[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -62,6 +63,7 @@ export default function ManageEventsScreen() {
 			location: "",
 			bannerImage: ""
 		});
+		setBannerImageFile(null);
 	};
 
 	const openAddModal = () => {
@@ -79,6 +81,7 @@ export default function ManageEventsScreen() {
 			location: event.location,
 			bannerImage: event.banner_image
 		});
+		setBannerImageFile(null);
 		setModalVisible(true);
 	};
 
@@ -127,18 +130,18 @@ export default function ManageEventsScreen() {
 			};
 
 			if (editingEvent) {
-				const { error } = await supabase
-					.from("events")
-					.update(eventData)
-					.eq("id", editingEvent.id);
-
-				if (error) throw error;
+				// Update existing event with image upload
+				await EventService.updateEvent(
+					editingEvent.id,
+					eventData,
+					bannerImageFile
+				);
 			} else {
-				const { error } = await supabase
-					.from("events")
-					.insert([eventData]);
-
-				if (error) throw error;
+				// Create new event with image upload
+				await EventService.createEvent(
+					eventData,
+					bannerImageFile
+				);
 			}
 
 			await fetchEvents();
@@ -167,14 +170,12 @@ export default function ManageEventsScreen() {
 					onPress: async () => {
 						try {
 							setLoading(true);
-							const { error } = await supabase
-								.from("events")
-								.delete()
-								.eq("id", eventId);
-
-							if (error) throw error;
-
+							await EventService.deleteEvent(eventId);
 							await fetchEvents();
+							Alert.alert(
+								"Success",
+								"Event deleted successfully."
+							);
 						} catch (err) {
 							console.error("Error deleting event:", err);
 							Alert.alert(
@@ -468,17 +469,24 @@ export default function ManageEventsScreen() {
 							>
 								BANNER IMAGE
 							</Text>
-							<TextInput
-								value={formData.bannerImage}
-								onChangeText={(text) =>
+							<ImageUploader
+								entityType="events"
+								entityId={editingEvent?.id || "new"}
+								fileType="banner"
+								currentImageUrl={formData.bannerImage}
+								onImageUploaded={(result) => {
 									setFormData({
 										...formData,
-										bannerImage: text
-									})
-								}
-								className="border border-[#333333] bg-white p-3 text-black"
-								placeholder="Banner image URL"
-								placeholderTextColor="#666666"
+										bannerImage: result.url!
+									});
+								}}
+								onImageDeleted={() => {
+									setFormData({
+										...formData,
+										bannerImage: ""
+									});
+								}}
+								placeholder="Upload banner image"
 							/>
 						</View>
 						<TouchableOpacity

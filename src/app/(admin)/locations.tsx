@@ -504,8 +504,7 @@ export default function ManageLocationsScreen() {
 										bannerImage: ""
 									});
 								}}
-								aspect={[4, 3]}
-								placeholder="Upload banner image (4:3 ratio)"
+								placeholder="Upload banner image"
 							/>
 
 							{/* 360° Image Uploader */}
@@ -526,8 +525,7 @@ export default function ManageLocationsScreen() {
 										image360: ""
 									});
 								}}
-								aspect={[16, 9]}
-								placeholder="Upload 360° image (16:9 ratio)"
+								placeholder="Upload 360° image"
 							/>
 						</View>
 						<View className="mb-4">
