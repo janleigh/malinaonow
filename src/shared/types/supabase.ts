@@ -37,7 +37,6 @@ export interface Product {
 	description_fil?: string;
 	description_akl?: string;
 	image_url: string;
-	images?: string[];
 	details?: string;
 	barangay: string;
 	is_available: boolean;
