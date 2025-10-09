@@ -75,13 +75,11 @@ export const ProductService = {
 	 * Create a new product with image uploads
 	 * @param {CreateProductDTO} productData - Product data without ID
 	 * @param {File} mainImage - Main product image file
-	 * @param {File[]} additionalImages - Additional product image files (optional)
 	 * @returns {Promise<Product>} - Created product
 	 */
 	async createProduct(
 		productData: CreateProductDTO,
-		mainImage?: any,
-		additionalImages?: any[]
+		mainImage?: any
 	): Promise<Product> {
 		try {
 			// First create the product record
@@ -109,26 +107,7 @@ export const ProductService = {
 				}
 			}
 
-			// Upload additional images if provided
-			if (additionalImages && additionalImages.length > 0) {
-				const additionalImageUrls: string[] = [];
-
-				for (let i = 0; i < additionalImages.length; i++) {
-					const uploadResult = await StorageService.uploadFile(
-						additionalImages[i],
-						"products",
-						productId,
-						`additional-${i + 1}`
-					);
-					if (uploadResult.success) {
-						additionalImageUrls.push(uploadResult.url!);
-					}
-				}
-
-				updatedProductData.images = additionalImageUrls;
-			}
-
-			// Update product with image URLs
+			// Update product with image URL
 			const { data: updatedProduct, error: updateError } =
 				await supabase
 					.from("products")
@@ -154,19 +133,16 @@ export const ProductService = {
 	 * @param {string} id - Product ID
 	 * @param {UpdateProductDTO} updates - Product updates
 	 * @param {File} mainImage - New main image (optional)
-	 * @param {File[]} additionalImages - New additional images (optional)
 	 * @returns {Promise<Product>} - Updated product
 	 */
 	async updateProduct(
 		id: string,
 		updates: UpdateProductDTO,
-		mainImage?: any,
-		additionalImages?: any[]
+		mainImage?: any
 	): Promise<Product> {
 		try {
 			let updatedImageData = {
-				image_url: updates.image_url || "",
-				images: updates.images || []
+				image_url: updates.image_url || ""
 			};
 
 			// Upload new main image if provided
@@ -182,31 +158,10 @@ export const ProductService = {
 				}
 			}
 
-			// Upload new additional images if provided
-			if (additionalImages && additionalImages.length > 0) {
-				const additionalImageUrls: string[] = [];
-
-				for (let i = 0; i < additionalImages.length; i++) {
-					const uploadResult = await StorageService.uploadFile(
-						additionalImages[i],
-						"products",
-						id,
-						`additional-${i + 1}`
-					);
-					if (uploadResult.success) {
-						additionalImageUrls.push(uploadResult.url!);
-					}
-				}
-
-				updatedImageData.images = additionalImageUrls;
-			}
-
 			// Update product with new data
-			const finalUpdates =
-				updatedImageData.image_url ||
-				updatedImageData.images.length > 0
-					? { ...updates, ...updatedImageData }
-					: updates;
+			const finalUpdates = updatedImageData.image_url
+				? { ...updates, ...updatedImageData }
+				: updates;
 
 			const { data: product, error } = await supabase
 				.from("products")

@@ -19,9 +19,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ManageProductsScreen() {
 	const [mainImageFile, setMainImageFile] = useState<any>(null);
-	const [additionalImageFiles, setAdditionalImageFiles] = useState<
-		any[]
-	>([]);
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -68,7 +65,6 @@ export default function ManageProductsScreen() {
 			is_available: true
 		});
 		setMainImageFile(null);
-		setAdditionalImageFiles([]);
 	};
 
 	const openAddModal = () => {
@@ -89,7 +85,6 @@ export default function ManageProductsScreen() {
 			is_available: product.is_available
 		});
 		setMainImageFile(null);
-		setAdditionalImageFiles([]);
 		setModalVisible(true);
 	};
 
@@ -120,19 +115,13 @@ export default function ManageProductsScreen() {
 				await ProductService.updateProduct(
 					editingProduct.id,
 					productData,
-					mainImageFile,
-					additionalImageFiles.length > 0
-						? additionalImageFiles
-						: undefined
+					mainImageFile
 				);
 				Alert.alert("Success", "Product updated successfully.");
 			} else {
 				await ProductService.createProduct(
 					productData,
-					mainImageFile,
-					additionalImageFiles.length > 0
-						? additionalImageFiles
-						: undefined
+					mainImageFile
 				);
 				Alert.alert("Success", "Product added successfully.");
 			}
@@ -469,17 +458,8 @@ export default function ManageProductsScreen() {
 										image_url: ""
 									});
 								}}
-								aspect={[4, 3]}
-								placeholder="Upload main product image (4:3 ratio)"
+								placeholder="Upload main product image"
 							/>
-						</View>
-						<View className="mb-4">
-							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
-								BARANGAY
-							</Text>
 							<TextInput
 								value={formData.barangay}
 								onChangeText={(text) =>
