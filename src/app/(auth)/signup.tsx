@@ -61,10 +61,7 @@ export default function SignupScreen() {
 							Sign up to get started with MalinaoNow
 						</Text>
 						<View className="mt-1 space-y-4">
-							<View
-								className="mb-4"
-								
-							>
+							<View className="mb-4">
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									FIRST NAME
 								</Text>
@@ -76,14 +73,11 @@ export default function SignupScreen() {
 									}}
 									placeholder="John"
 									placeholderTextColor="#666666"
-									className="text-base text-black my-2 border border-[#333333] bg-white p-2 rounded-md"
+									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
 									autoCapitalize="words"
 								/>
 							</View>
-							<View
-								className="mb-4"
-								
-							>
+							<View className="mb-4">
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									LAST NAME
 								</Text>
@@ -95,14 +89,11 @@ export default function SignupScreen() {
 									}}
 									placeholder="Doe"
 									placeholderTextColor="#666666"
-									className="text-base text-black my-2 border border-[#333333] bg-white p-2 rounded-md"
+									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
 									autoCapitalize="words"
 								/>
 							</View>
-							<View
-								className="mb-4"
-								
-							>
+							<View className="mb-4">
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									EMAIL
 								</Text>
@@ -114,7 +105,7 @@ export default function SignupScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="text-base text-black my-2 border border-[#333333] bg-white p-2 rounded-md"
+									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
@@ -126,8 +117,7 @@ export default function SignupScreen() {
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-4 h-12 w-full items-center justify-center border border-[#333333] bg-[#FFBB38] rounded-3xl"
-							
+							className="mt-4 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38]"
 							onPress={handleSignup}
 							disabled={isLoading}
 						>

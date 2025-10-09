@@ -138,10 +138,7 @@ export default function ManageEventsScreen() {
 				);
 			} else {
 				// Create new event with image upload
-				await EventService.createEvent(
-					eventData,
-					bannerImageFile
-				);
+				await EventService.createEvent(eventData, bannerImageFile);
 			}
 
 			await fetchEvents();

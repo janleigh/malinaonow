@@ -50,10 +50,7 @@ export default function LoginScreen() {
 							Log in to continue using MalinaoNow
 						</Text>
 						<View className="mt-4 space-y-4">
-							<View
-								className="mb-4"
-								
-							>
+							<View className="mb-4">
 								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
 									EMAIL
 								</Text>
@@ -65,7 +62,7 @@ export default function LoginScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="text-base text-black border border-[#333333] bg-white p-4 rounded-md"
+									className="rounded-md border border-[#333333] bg-white p-4 text-base text-black"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
@@ -77,8 +74,7 @@ export default function LoginScreen() {
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#FFBB38] rounded-3xl shadow-md"
-						
+							className="mt-8 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] shadow-md"
 							onPress={handleLogin}
 							disabled={isLoading}
 						>

@@ -88,10 +88,7 @@ export default function LandingPage() {
 				</View>
 				<View className="w-full space-y-3 px-5 pb-10">
 					<Link href="/(auth)/signup" asChild>
-						<TouchableOpacity
-							className="h-12 w-full flex-row items-center justify-center border border-[#333333] bg-white px-4 rounded-3xl"
-						
-						>
+						<TouchableOpacity className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-[#333333] bg-white px-4">
 							<Text
 								className="android:font-normal text-base font-extrabold tracking-tighter-lexend text-black"
 								fontStyle="medium"

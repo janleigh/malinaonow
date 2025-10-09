@@ -42,8 +42,7 @@ export const OAuthButton = ({
 
 	return (
 		<TouchableOpacity
-			className={`h-12 w-full flex-row items-center justify-center border border-[#333333] bg-[#9ee3ae] px-4 rounded-3xl ${className || ""}`}
-		
+			className={`h-12 w-full flex-row items-center justify-center rounded-3xl border border-[#333333] bg-[#9ee3ae] px-4 ${className || ""}`}
 			onPress={handlePress}
 			disabled={loading}
 		>

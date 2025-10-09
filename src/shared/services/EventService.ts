@@ -36,7 +36,7 @@ export const EventService = {
 	 * @returns {Promise<ComponentEvent>} - Created event
 	 */
 	async createEvent(
-		eventData: Omit<SupabaseEvent, 'id' | 'created_at' | 'updated_at'>,
+		eventData: Omit<SupabaseEvent, "id" | "created_at" | "updated_at">,
 		bannerImage?: any
 	): Promise<ComponentEvent> {
 		try {
@@ -114,10 +114,9 @@ export const EventService = {
 			}
 
 			// Update event with new data
-			const finalUpdates =
-				updatedImageData.banner_image
-					? { ...updates, ...updatedImageData }
-					: updates;
+			const finalUpdates = updatedImageData.banner_image
+				? { ...updates, ...updatedImageData }
+				: updates;
 
 			const { data: event, error } = await supabase
 				.from("events")

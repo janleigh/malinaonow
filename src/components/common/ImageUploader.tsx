@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import {
-	View,
-	TouchableOpacity,
-	Text,
-	Image,
-	Alert,
-	ActivityIndicator
-} from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import { Feather } from "@expo/vector-icons";
 import {
 	StorageService,
 	UploadResult
 } from "@shared/api/supabase/storage";
-import { Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useState } from "react";
+import {
+	ActivityIndicator,
+	Alert,
+	Image,
+	Text,
+	TouchableOpacity,
+	View
+} from "react-native";
 
 interface ImageUploaderProps {
 	entityType: string;
@@ -174,7 +174,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 			>
 				{placeholder.toUpperCase()}
 			</Text>
-
 			{displayImageUrl ? (
 				<View className="relative">
 					<Image
@@ -216,7 +215,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 					)}
 				</View>
 			)}
-
 			{!isUploading && (
 				<View className="mt-3 flex-row space-x-3">
 					<TouchableOpacity
