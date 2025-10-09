@@ -38,6 +38,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	const [isUploading, setIsUploading] = useState(false);
 	const [imageUri, setImageUri] = useState<string | null>(null);
 
+	// Check if camera should be shown for this file type
+	const showCamera = fileType !== "360";
+
 	const pickImage = async () => {
 		try {
 			// Request permissions
@@ -216,9 +219,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				</View>
 			)}
 			{!isUploading && (
-				<View className="mt-3 flex-row space-x-3">
+				<View className={`mt-3 flex-row ${showCamera ? 'space-x-3' : ''}`}>
 					<TouchableOpacity
-						className="flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] bg-[#FFBB38] p-3"
+						className={`flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] p-3 ${showCamera ? 'bg-[#FFBB38]' : 'bg-[#FFBB38]'}`}
 						onPress={pickImage}
 					>
 						<Feather name="image" size={16} color="black" />
@@ -230,18 +233,20 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 						</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity
-						className="flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] bg-white p-3"
-						onPress={takePhoto}
-					>
-						<Feather name="camera" size={16} color="black" />
-						<Text
-							className="ml-2 text-black"
-							style={{ fontWeight: "500" }}
+					{showCamera && (
+						<TouchableOpacity
+							className="flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] bg-white p-3"
+							onPress={takePhoto}
 						>
-							Camera
-						</Text>
-					</TouchableOpacity>
+							<Feather name="camera" size={16} color="black" />
+							<Text
+								className="ml-2 text-black"
+								style={{ fontWeight: "500" }}
+							>
+								Camera
+							</Text>
+						</TouchableOpacity>
+					)}
 				</View>
 			)}
 		</View>
