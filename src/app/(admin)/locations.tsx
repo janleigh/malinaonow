@@ -195,8 +195,7 @@ export default function ManageLocationsScreen() {
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4 pb-6">
 					<Text
 						className="android:font-normal racking-tighter-lexend text-2xl text-black"
-						fontStyle="extrabold"
-					>
+						fontStyle="extrabold">
 						Manage Tourist Spots
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -206,13 +205,11 @@ export default function ManageLocationsScreen() {
 				<View className="p-4">
 					<TouchableOpacity
 						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
-						onPress={openAddModal}
-					>
+						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
 							className="ml-2 tracking-tighter-lexend text-black"
-							fontStyle="medium"
-						>
+							fontStyle="medium">
 							Add New Tourist Spot
 						</Text>
 					</TouchableOpacity>
@@ -238,12 +235,10 @@ export default function ManageLocationsScreen() {
 							</Text>
 							<TouchableOpacity
 								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
-								onPress={fetchLocations}
-							>
+								onPress={fetchLocations}>
 								<Text
 									className="text-black"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Retry
 								</Text>
 							</TouchableOpacity>
@@ -252,13 +247,11 @@ export default function ManageLocationsScreen() {
 						<ScrollView
 							contentContainerStyle={{
 								paddingBottom: 80
-							}}
-						>
+							}}>
 							{locations.map((location) => (
 								<View
 									key={location.id}
-									className="mb-4 rounded-xl border border-[#333333] bg-white"
-								>
+									className="mb-4 rounded-xl border border-[#333333] bg-white">
 									<View className="flex-row">
 										<Image
 											source={{
@@ -270,14 +263,12 @@ export default function ManageLocationsScreen() {
 										<View className="flex-1 p-3">
 											<Text
 												className="text-base tracking-tighter-lexend text-black"
-												fontStyle="bold"
-											>
+												fontStyle="bold">
 												{location.name}
 											</Text>
 											<Text
 												numberOfLines={2}
-												className="mt-1 text-sm tracking-tighter-lexend text-[#666666]"
-											>
+												className="mt-1 text-sm tracking-tighter-lexend text-[#666666]">
 												{location.description}
 											</Text>
 										</View>
@@ -287,12 +278,10 @@ export default function ManageLocationsScreen() {
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												openEditModal(location)
-											}
-										>
+											}>
 											<Text
 												className="text-[#333333]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												<Feather
 													name="edit"
 													size={16}
@@ -305,12 +294,10 @@ export default function ManageLocationsScreen() {
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												handleDelete(location.id)
-											}
-										>
+											}>
 											<Text
 												className="text-[#fe5b62]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												<Feather
 													name="trash-2"
 													size={16}
@@ -330,15 +317,13 @@ export default function ManageLocationsScreen() {
 					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 						<Text
 							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold"
-						>
+							fontStyle="extrabold">
 							{editingLocation
 								? "Edit tourist spot"
 								: "Add new tourist spot"}
 						</Text>
 						<TouchableOpacity
-							onPress={() => setModalVisible(false)}
-						>
+							onPress={() => setModalVisible(false)}>
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
 					</View>
@@ -346,8 +331,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								NAME
 							</Text>
 							<TextInput
@@ -366,8 +350,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DESCRIPTION
 							</Text>
 							<TextInput
@@ -390,8 +373,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DESCRIPTION (FIL)
 							</Text>
 							<TextInput
@@ -414,8 +396,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DESCRIPTION (AKL)
 							</Text>
 							<TextInput
@@ -438,8 +419,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								ADDRESS
 							</Text>
 							<TextInput
@@ -482,8 +462,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								IMAGES
 							</Text>
 							{/* Banner Image Uploader */}
@@ -531,8 +510,7 @@ export default function ManageLocationsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								COORDINATES
 							</Text>
 							<View className="flex-row space-x-2">
@@ -567,8 +545,7 @@ export default function ManageLocationsScreen() {
 						<TouchableOpacity
 							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
 							onPress={handleSave}
-							disabled={loading}
-						>
+							disabled={loading}>
 							{loading ? (
 								<ActivityIndicator
 									size="small"
@@ -577,8 +554,7 @@ export default function ManageLocationsScreen() {
 							) : (
 								<Text
 									className="tracking-tighter-lexend text-black"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Save Tourist Spot
 								</Text>
 							)}

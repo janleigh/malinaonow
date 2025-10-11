@@ -187,8 +187,7 @@ export default function HomePage() {
 					</Text>
 					<TouchableOpacity
 						className="p-2"
-						onPress={openSidebar}
-					>
+						onPress={openSidebar}>
 						<Feather name="user" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
@@ -213,8 +212,7 @@ export default function HomePage() {
 							) : eventError ? (
 								<View
 									className="my-4 border border-[#333333] bg-white p-4"
-									style={shadowStyles.standard}
-								>
+									style={shadowStyles.standard}>
 									<View className="items-center">
 										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 											<Feather
@@ -232,8 +230,7 @@ export default function HomePage() {
 										<TouchableOpacity
 											className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 											style={shadowStyles.small}
-											onPress={fetchEvents}
-										>
+											onPress={fetchEvents}>
 											<Text className="tracking-tighter-lexend text-black">
 												Retry
 											</Text>
@@ -243,8 +240,7 @@ export default function HomePage() {
 							) : events.length === 0 ? (
 								<View
 									className="my-4 border border-[#333333] bg-white p-4"
-									style={shadowStyles.standard}
-								>
+									style={shadowStyles.standard}>
 									<View className="items-center">
 										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 											<Feather
@@ -283,16 +279,14 @@ export default function HomePage() {
 													(EVENT_CARD_WIDTH + 16)
 											);
 											setActiveEventIndex(newIndex);
-										}}
-									>
+										}}>
 										{events.map((event, index) => (
 											<View
 												key={event.id}
 												style={{
 													width: EVENT_CARD_WIDTH,
 													marginRight: 16
-												}}
-											>
+												}}>
 												<EventCard event={event} />
 											</View>
 										))}
@@ -318,8 +312,7 @@ export default function HomePage() {
 							</View>
 							<TouchableOpacity
 								className="flex-row items-center"
-								onPress={toggleView}
-							>
+								onPress={toggleView}>
 								<Text className="mr-1 tracking-tighter-lexend text-black">
 									{isGridView
 										? "List View"
@@ -345,8 +338,7 @@ export default function HomePage() {
 						) : error ? (
 							<View
 								className="my-4 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
-							>
+								style={shadowStyles.standard}>
 								<View className="items-center">
 									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<Feather
@@ -364,8 +356,7 @@ export default function HomePage() {
 									<TouchableOpacity
 										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 										style={shadowStyles.small}
-										onPress={fetchLocations}
-									>
+										onPress={fetchLocations}>
 										<Text className="tracking-tighter-lexend text-black">
 											Retry
 										</Text>
@@ -375,8 +366,7 @@ export default function HomePage() {
 						) : locations.length === 0 ? (
 							<View
 								className="my-4 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
-							>
+								style={shadowStyles.standard}>
 								<View className="items-center">
 									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<Feather
@@ -397,8 +387,7 @@ export default function HomePage() {
 						  displayedLocations.length === 0 ? (
 							<View
 								className="my-4 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
-							>
+								style={shadowStyles.standard}>
 								<View className="items-center">
 									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<AntDesign

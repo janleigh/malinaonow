@@ -21,8 +21,7 @@ export const BaseText = ({
 		<Text
 			className={`font-lexend${weightClass} font-${weightClass} ${className}`.trim()}
 			numberOfLines={numberOfLines}
-			{...rest}
-		>
+			{...rest}>
 			{children}
 		</Text>
 	);

@@ -173,8 +173,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		<View className="mb-4">
 			<Text
 				className="mb-2 text-sm text-[#666666]"
-				style={{ fontWeight: "500" }}
-			>
+				style={{ fontWeight: "500" }}>
 				{placeholder.toUpperCase()}
 			</Text>
 			{displayImageUrl ? (
@@ -187,8 +186,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 					<TouchableOpacity
 						className="absolute right-2 top-2 rounded-full bg-red-500 p-2"
 						onPress={handleDeleteImage}
-						disabled={isUploading}
-					>
+						disabled={isUploading}>
 						<Feather name="trash-2" size={16} color="white" />
 					</TouchableOpacity>
 				</View>
@@ -219,30 +217,30 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				</View>
 			)}
 			{!isUploading && (
-				<View className={`mt-3 flex-row ${showCamera ? 'space-x-3' : ''}`}>
+				<View
+					className={`mt-3 flex-row ${showCamera ? "space-x-3" : ""}`}>
 					<TouchableOpacity
-						className={`flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] p-3 ${showCamera ? 'bg-[#FFBB38]' : 'bg-[#FFBB38]'}`}
-						onPress={pickImage}
-					>
+						className={`flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] p-3 ${showCamera ? "bg-[#FFBB38]" : "bg-[#FFBB38]"}`}
+						onPress={pickImage}>
 						<Feather name="image" size={16} color="black" />
 						<Text
 							className="ml-2 text-black"
-							style={{ fontWeight: "500" }}
-						>
+							style={{ fontWeight: "500" }}>
 							Gallery
 						</Text>
 					</TouchableOpacity>
-
 					{showCamera && (
 						<TouchableOpacity
 							className="flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] bg-white p-3"
-							onPress={takePhoto}
-						>
-							<Feather name="camera" size={16} color="black" />
+							onPress={takePhoto}>
+							<Feather
+								name="camera"
+								size={16}
+								color="black"
+							/>
 							<Text
 								className="ml-2 text-black"
-								style={{ fontWeight: "500" }}
-							>
+								style={{ fontWeight: "500" }}>
 								Camera
 							</Text>
 						</TouchableOpacity>

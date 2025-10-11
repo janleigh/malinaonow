@@ -1,16 +1,17 @@
 {
 	"name": "malinaonow",
 	"main": "expo-router/entry",
-	"version": "1.0.0",
+	"version": "1.1.0",
+	"private": true,
 	"scripts": {
-		"start": "expo start --tunnel",
-		"android": "expo start --tunnel --android",
-		"ios": "expo run:ios",
-		"web": "expo start --web",
-		"lint": "expo lint",
-		"lint:fix": "eslint src --ext .ts --fix",
-		"format": "prettier --write src",
-		"format:check": "prettier --check src"
+		"start": "bunx expo start --tunnel",
+		"android": "bunx expo start --tunnel --android",
+		"ios": "bunx expo run:ios",
+		"web": "bunx expo start --web",
+		"lint": "bunx expo lint",
+		"lint:fix": "bunx eslint src --ext .ts --fix",
+		"format": "bunx prettier --write src",
+		"format:check": "bunx prettier --check src"
 	},
 	"dependencies": {
 		"@clerk/clerk-expo": "^2.14.11",
@@ -63,10 +64,11 @@
 		"@types/react": "~19.0.10",
 		"eslint": "^9.25.0",
 		"eslint-config-expo": "~9.2.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.4",
 		"prettier": "3.6.2",
 		"typescript": "~5.8.3"
 	},
-	"private": true,
 	"expo": {
 		"doctor": {
 			"reactNativeDirectoryCheck": {

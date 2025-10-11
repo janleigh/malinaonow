@@ -451,8 +451,7 @@ export const LocationCard = ({
 			<TouchableOpacity
 				key={location.id}
 				className={`my-2 overflow-hidden rounded-xl border border-[#333333] bg-white ${listView ? "" : ""}`}
-				onPress={toggleExpand}
-			>
+				onPress={toggleExpand}>
 				{listView ? (
 					// List view layout
 					<View className="flex-row">
@@ -469,8 +468,7 @@ export const LocationCard = ({
 							<Text
 								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={1}
-								fontStyle="extrabold"
-							>
+								fontStyle="extrabold">
 								{location.name}
 							</Text>
 							<View className="mt-1 flex-row items-center">
@@ -479,8 +477,7 @@ export const LocationCard = ({
 								</Text>
 								<Text
 									className="font-lexend-bold tracking-tighter-lexend text-black"
-									fontStyle="bold"
-								>
+									fontStyle="bold">
 									{rating.toFixed(1)}
 								</Text>
 								<Text className="text-xs tracking-tighter-lexend text-[#666]">
@@ -501,8 +498,7 @@ export const LocationCard = ({
 								/>
 								<Text
 									className="ml-1 flex-1 text-xs tracking-tighter-lexend text-[#555]"
-									numberOfLines={2}
-								>
+									numberOfLines={2}>
 									{getFormattedAddress(location)}
 								</Text>
 							</View>
@@ -524,8 +520,7 @@ export const LocationCard = ({
 							<Text
 								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={2}
-								fontStyle="extrabold"
-							>
+								fontStyle="extrabold">
 								{location.name}
 							</Text>
 							<View className="mt-1 flex-row items-center">
@@ -534,8 +529,7 @@ export const LocationCard = ({
 								</Text>
 								<Text
 									className="font-lexend-bold tracking-tighter-lexend text-black"
-									fontStyle="bold"
-								>
+									fontStyle="bold">
 									{rating.toFixed(1)}
 								</Text>
 								<Text className="text-xs tracking-tighter-lexend text-[#666]">
@@ -556,8 +550,7 @@ export const LocationCard = ({
 								/>
 								<Text
 									className="ml-1 flex-1 text-xs tracking-tighter-lexend text-[#555]"
-									numberOfLines={2}
-								>
+									numberOfLines={2}>
 									{getFormattedAddress(location)}
 								</Text>
 							</View>
@@ -568,8 +561,7 @@ export const LocationCard = ({
 			<Modal
 				visible={expanded}
 				transparent={true}
-				animationType="none"
-			>
+				animationType="none">
 				<Animated.View
 					style={{
 						flex: 1,
@@ -583,8 +575,7 @@ export const LocationCard = ({
 								})
 							}
 						]
-					}}
-				>
+					}}>
 					<SafeAreaView className="flex-1">
 						<View className="flex-row items-center justify-between border-b border-[#333333] p-4">
 							<Text className="font-lexend-bold text-xl tracking-tighter-lexend text-black">
@@ -613,8 +604,7 @@ export const LocationCard = ({
 									</Text>
 									<Text
 										className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-										fontStyle="bold"
-									>
+										fontStyle="bold">
 										{rating.toFixed(1)}
 									</Text>
 									<Text className="text-base tracking-tighter-lexend text-[#666]">
@@ -644,8 +634,7 @@ export const LocationCard = ({
 									onPress={(e) => {
 										e.stopPropagation();
 										handleToggleBookmark(e);
-									}}
-								>
+									}}>
 									<AntDesign
 										name={
 											bookmarked ? "heart" : "hearto"
@@ -658,8 +647,7 @@ export const LocationCard = ({
 								</TouchableOpacity>
 								<Text
 									className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Description
 								</Text>
 								<View
@@ -668,8 +656,7 @@ export const LocationCard = ({
 										maxHeight: isDescriptionExpanded
 											? undefined
 											: 80
-									}}
-								>
+									}}>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base tracking-tighter-lexend text-[#333]">
 											{getLocalizedDescription(
@@ -681,12 +668,10 @@ export const LocationCard = ({
 								{shouldShowToggle && (
 									<TouchableOpacity
 										onPress={toggleDescription}
-										className="mt-2 self-start px-4 py-2"
-									>
+										className="mt-2 self-start px-4 py-2">
 										<Text
 											className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline"
-											fontStyle="medium"
-										>
+											fontStyle="medium">
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}
@@ -696,24 +681,20 @@ export const LocationCard = ({
 								<View className="mt-6 flex-row space-x-2">
 									<TouchableOpacity
 										className="mr-1 h-12 flex-1 items-center justify-center rounded-xl border border-[#333333] bg-[#FFFE96]"
-										onPress={handleViewMap}
-									>
+										onPress={handleViewMap}>
 										<Text
 											className="font-lexend-medium text-base tracking-tighter-lexend text-black"
-											fontStyle="medium"
-										>
+											fontStyle="medium">
 											{t("location.viewOnMap")}
 										</Text>
 									</TouchableOpacity>
 									{location.image[360] ? (
 										<TouchableOpacity
 											className="ml-1 h-12 flex-1 items-center justify-center rounded-xl border border-[#333333] bg-[#FFFDA6]"
-											onPress={handleView360}
-										>
+											onPress={handleView360}>
 											<Text
 												className="font-lexend-medium text-base tracking-tighter-lexend text-black"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												{t("location.view360")}
 											</Text>
 										</TouchableOpacity>
@@ -723,8 +704,7 @@ export const LocationCard = ({
 									<View className="flex-row items-center justify-between">
 										<Text
 											className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-											fontStyle="bold"
-										>
+											fontStyle="bold">
 											Reviews
 										</Text>
 										{isSignedIn && !showReviewForm && (
@@ -732,12 +712,10 @@ export const LocationCard = ({
 												onPress={() =>
 													setShowReviewForm(true)
 												}
-												className="rounded-xl border border-[#333333] bg-[#FFBB38] px-4 py-2"
-											>
+												className="rounded-xl border border-[#333333] bg-[#FFBB38] px-4 py-2">
 												<Text
 													className="font-lexend-medium tracking-tighter-lexend text-black"
-													fontStyle="medium"
-												>
+													fontStyle="medium">
 													{t(
 														"location.writeReview"
 													)}
@@ -759,8 +737,7 @@ export const LocationCard = ({
 													setShowReviewForm(
 														false
 													)
-												}
-											>
+												}>
 												<Text className="text-center text-sm text-[#666]">
 													Cancel
 												</Text>
@@ -793,14 +770,12 @@ export const LocationCard = ({
 			<Modal
 				visible={viewMapOpen}
 				transparent={false}
-				animationType="slide"
-			>
+				animationType="slide">
 				<SafeAreaView className="flex-1 bg-[#faf4f0]">
 					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
 						<Text
 							className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-							fontStyle="bold"
-						>
+							fontStyle="bold">
 							Map View
 						</Text>
 						<TouchableOpacity onPress={closeMapView}>
@@ -863,14 +838,12 @@ export const LocationCard = ({
 			<Modal
 				visible={view360Open}
 				transparent={false}
-				animationType="slide"
-			>
+				animationType="slide">
 				<SafeAreaView className="flex-1 bg-black">
 					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
 						<Text
 							className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-							fontStyle="bold"
-						>
+							fontStyle="bold">
 							360° View
 						</Text>
 						<TouchableOpacity onPress={close360View}>

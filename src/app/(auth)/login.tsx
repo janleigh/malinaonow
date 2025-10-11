@@ -76,15 +76,13 @@ export default function LoginScreen() {
 						<TouchableOpacity
 							className="mt-8 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] shadow-md"
 							onPress={handleLogin}
-							disabled={isLoading}
-						>
+							disabled={isLoading}>
 							{isLoading ? (
 								<ActivityIndicator color="#000" />
 							) : (
 								<Text
 									className="android:font-normal text-base tracking-tighter-lexend text-black"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Login
 								</Text>
 							)}
@@ -114,8 +112,7 @@ export default function LoginScreen() {
 							Don&apos;t have an account?{" "}
 							<Text
 								className="android:font-normal tracking-tighter-lexend text-black"
-								onPress={() => router.replace("/signup")}
-							>
+								onPress={() => router.replace("/signup")}>
 								Sign up
 							</Text>
 						</Text>

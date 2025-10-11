@@ -130,8 +130,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 			transparent={true}
 			animationType="none"
 			onRequestClose={onClose}
-			hardwareAccelerated={true}
-		>
+			hardwareAccelerated={true}>
 			<View className="flex-1">
 				<Animated.View
 					style={{
@@ -142,8 +141,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						bottom: 0,
 						backgroundColor: "black",
 						opacity: fadeAnim
-					}}
-				>
+					}}>
 					<TouchableOpacity
 						activeOpacity={1}
 						onPress={onClose}
@@ -164,20 +162,17 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 							borderLeftColor: "#333333",
 							transform: [{ translateX: slideAnim }]
 						}
-					]}
-				>
+					]}>
 					<Animated.View
 						style={{
 							opacity: contentFadeAnim,
 							flex: 1
-						}}
-					>
+						}}>
 						<SafeAreaView className="flex-1">
 							<View className="flex-row items-center justify-between p-4">
 								<Text
 									className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-									fontStyle="bold"
-								>
+									fontStyle="bold">
 									{t("userSidebar.profile")}
 								</Text>
 								<TouchableOpacity onPress={onClose}>
@@ -200,16 +195,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									<View className="h-20 w-20 items-center justify-center rounded-full border border-[#333333] bg-[#8ED1DC]">
 										<Text
 											className="text-xl font-extrabold tracking-tighter-lexend text-black"
-											fontStyle="extrabold"
-										>
+											fontStyle="extrabold">
 											{getInitials(userName)}
 										</Text>
 									</View>
 								)}
 								<Text
 									className="mt-3 font-lexend-bold text-lg tracking-tighter-lexend text-black"
-									fontStyle="bold"
-								>
+									fontStyle="bold">
 									{userName}
 								</Text>
 								<Text className="text-sm tracking-tighter-lexend text-[#666]">
@@ -223,8 +216,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										onPress={() => {
 											onClose();
 											router.push("/(admin)");
-										}}
-									>
+										}}>
 										<Feather
 											name="shield"
 											size={20}
@@ -240,8 +232,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									onPress={() => {
 										onClose();
 										router.push("/(home)/settings");
-									}}
-								>
+									}}>
 									<Feather
 										name="settings"
 										size={20}
@@ -255,8 +246,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 							<View className="p-4">
 								<TouchableOpacity
 									className="flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] py-3"
-									onPress={handleSignOut}
-								>
+									onPress={handleSignOut}>
 									<Feather
 										name="log-out"
 										size={18}
@@ -264,8 +254,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									/>
 									<Text
 										className="ml-2 font-lexend-medium tracking-tighter-lexend text-black"
-										fontStyle="medium"
-									>
+										fontStyle="medium">
 										{t("userSidebar.signOut")}
 									</Text>
 								</TouchableOpacity>

@@ -57,8 +57,7 @@ export default function RootLayout() {
 	return (
 		<ClerkProvider
 			publishableKey={CLERK_PUBLISHABLE_KEY}
-			tokenCache={tokenCache}
-		>
+			tokenCache={tokenCache}>
 			<TranslationProvider>
 				<AuthProvider>
 					<Stack screenOptions={{ headerShown: false }}>

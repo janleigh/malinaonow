@@ -27,13 +27,11 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 			{reviews.map((review) => (
 				<View
 					key={review.id}
-					className="border-b border-[#eee] pb-4"
-				>
+					className="border-b border-[#eee] pb-4">
 					<View className="flex-row items-center justify-between">
 						<Text
 							className="font-lexend-bold text-lg tracking-tighter-lexend text-black"
-							fontStyle="bold"
-						>
+							fontStyle="bold">
 							{review.user_name || "Anonymous"}
 						</Text>
 						<Text className="font-lexend text-sm tracking-tighter-lexend text-[#999]">
@@ -69,8 +67,7 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
 					style={{
 						fontSize: size,
 						color: star <= rating ? "#FED787" : "#CCCCCC"
-					}}
-				>
+					}}>
 					★
 				</Text>
 			))}

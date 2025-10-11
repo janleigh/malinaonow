@@ -221,8 +221,7 @@ const ProductsScreen = () => {
 					<View className="mb-4">
 						<Text
 							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold"
-						>
+							fontStyle="extrabold">
 							{t("products.title")}
 						</Text>
 					</View>
@@ -238,16 +237,14 @@ const ProductsScreen = () => {
 					</View>
 					<ScrollView
 						horizontal
-						showsHorizontalScrollIndicator={false}
-					>
+						showsHorizontalScrollIndicator={false}>
 						{barangays.map((barangay) => (
 							<TouchableOpacity
 								key={barangay}
 								className={`mr-2 rounded-2xl border border-[#333333] px-3 py-1 ${selectedBarangay === barangay ? "bg-[#FFFD87]" : "bg-white"}`}
 								onPress={() =>
 									setSelectedBarangay(barangay)
-								}
-							>
+								}>
 								<Text className="tracking-tighter-lexend text-black">
 									{barangay}
 								</Text>
@@ -260,8 +257,7 @@ const ProductsScreen = () => {
 						</Text>
 						<TouchableOpacity
 							className="flex-row items-center"
-							onPress={toggleView}
-						>
+							onPress={toggleView}>
 							<Text className="mr-1 tracking-tighter-lexend text-black">
 								{viewMode === "grid"
 									? "List View"
@@ -292,8 +288,7 @@ const ProductsScreen = () => {
 							</Text>
 							<TouchableOpacity
 								onPress={fetchProducts}
-								className="rounded-md bg-[#fed787] px-4 py-2"
-							>
+								className="rounded-md bg-[#fed787] px-4 py-2">
 								<Text className="font-lexend">Retry</Text>
 							</TouchableOpacity>
 						</View>
@@ -303,8 +298,7 @@ const ProductsScreen = () => {
 								showsVerticalScrollIndicator={false}
 								contentContainerStyle={{
 									paddingBottom: 80
-								}}
-							>
+								}}>
 								{renderGridColumns()}
 							</ScrollView>
 						) : (

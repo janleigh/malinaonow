@@ -178,8 +178,7 @@ export default function ManageProductsScreen() {
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 					<Text
 						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-						fontStyle="extrabold"
-					>
+						fontStyle="extrabold">
 						Manage Products
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -189,13 +188,11 @@ export default function ManageProductsScreen() {
 				<View className="p-4">
 					<TouchableOpacity
 						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
-						onPress={openAddModal}
-					>
+						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
 							className="ml-2 tracking-tighter-lexend text-black"
-							fontStyle="medium"
-						>
+							fontStyle="medium">
 							Add New Product
 						</Text>
 					</TouchableOpacity>
@@ -221,8 +218,7 @@ export default function ManageProductsScreen() {
 							</Text>
 							<TouchableOpacity
 								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
-								onPress={fetchProducts}
-							>
+								onPress={fetchProducts}>
 								<Text className="font-lexend-medium text-black">
 									Retry
 								</Text>
@@ -233,8 +229,7 @@ export default function ManageProductsScreen() {
 							{products.map((product) => (
 								<View
 									key={product.id}
-									className="mb-4 rounded-xl border border-[#333333] bg-white"
-								>
+									className="mb-4 rounded-xl border border-[#333333] bg-white">
 									<View className="flex-row">
 										{product.image_url ? (
 											<Image
@@ -258,14 +253,12 @@ export default function ManageProductsScreen() {
 											<Text
 												className="text-base tracking-tighter-lexend text-black"
 												numberOfLines={1}
-												fontStyle="bold"
-											>
+												fontStyle="bold">
 												{product.name}
 											</Text>
 											<Text
 												className="mt-1 text-sm tracking-tighter-lexend text-[#555555]"
-												numberOfLines={1}
-											>
+												numberOfLines={1}>
 												{product.barangay}
 											</Text>
 											<View className="mt-1 flex-row items-center">
@@ -285,12 +278,10 @@ export default function ManageProductsScreen() {
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												openEditModal(product)
-											}
-										>
+											}>
 											<Text
 												className="font-lexend-medium text-[#333333]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												<Feather
 													name="edit"
 													size={16}
@@ -303,12 +294,10 @@ export default function ManageProductsScreen() {
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												handleDelete(product.id)
-											}
-										>
+											}>
 											<Text
 												className="font-lexend-medium text-[#fe5b62]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												<Feather
 													name="trash-2"
 													size={16}
@@ -328,15 +317,13 @@ export default function ManageProductsScreen() {
 					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 						<Text
 							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold"
-						>
+							fontStyle="extrabold">
 							{editingProduct
 								? "Edit Product"
 								: "Add Product"}
 						</Text>
 						<TouchableOpacity
-							onPress={() => setModalVisible(false)}
-						>
+							onPress={() => setModalVisible(false)}>
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
 					</View>
@@ -344,8 +331,7 @@ export default function ManageProductsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								NAME
 							</Text>
 							<TextInput
@@ -364,8 +350,7 @@ export default function ManageProductsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DESCRIPTION
 							</Text>
 							<TextInput
@@ -388,8 +373,7 @@ export default function ManageProductsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DESCRIPTION (FIL)
 							</Text>
 							<TextInput
@@ -412,8 +396,7 @@ export default function ManageProductsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DESCRIPTION (AKL)
 							</Text>
 							<TextInput
@@ -436,8 +419,7 @@ export default function ManageProductsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								PRODUCT IMAGES
 							</Text>
 							{/* Main Product Image Uploader */}
@@ -477,8 +459,7 @@ export default function ManageProductsScreen() {
 						<View className="mb-4 flex-row items-center">
 							<Text
 								className="mr-4 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								AVAILABLE
 							</Text>
 							<TouchableOpacity
@@ -489,8 +470,7 @@ export default function ManageProductsScreen() {
 											!formData.is_available
 									})
 								}
-								className={`h-6 w-10 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#FFBB38]" : "bg-white"} items-center justify-center`}
-							>
+								className={`h-6 w-10 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#FFBB38]" : "bg-white"} items-center justify-center`}>
 								<View
 									className={`h-4 w-4 rounded-full ${formData.is_available ? "ml-4 bg-black" : "ml-0 bg-[#eee]"}`}
 								/>
@@ -499,8 +479,7 @@ export default function ManageProductsScreen() {
 						<TouchableOpacity
 							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
 							onPress={handleSave}
-							disabled={loading}
-						>
+							disabled={loading}>
 							{loading ? (
 								<ActivityIndicator
 									size="small"
@@ -509,8 +488,7 @@ export default function ManageProductsScreen() {
 							) : (
 								<Text
 									className="font-lexend-medium tracking-tighter-lexend text-black"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Save Product
 								</Text>
 							)}

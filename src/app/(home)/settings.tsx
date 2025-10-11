@@ -42,8 +42,7 @@ export default function SettingsScreen() {
 						{t("settings.title")}
 					</Text>
 					<TouchableOpacity
-						onPress={() => router.replace("/(home)")}
-					>
+						onPress={() => router.replace("/(home)")}>
 						<Feather name="x" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
@@ -65,8 +64,7 @@ export default function SettingsScreen() {
 											: "border-gray-300 bg-white"
 									}`}
 									onPress={() => changeLanguage(lang.id)}
-									disabled={isLoading}
-								>
+									disabled={isLoading}>
 									<Text className="tracking-tighter-lexend text-black">
 										{lang.name}
 									</Text>

@@ -59,8 +59,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 		<View className="flex-row justify-around border-t-2 border-[#333] bg-transparent p-4">
 			<TouchableOpacity
 				className="items-center"
-				onPress={handleHomePress}
-			>
+				onPress={handleHomePress}>
 				<AntDesign
 					name="home"
 					size={24}
@@ -70,8 +69,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 			<View className="items-center">
 				<TouchableOpacity
 					onPress={handleProductsPress}
-					className="relative"
-				>
+					className="relative">
 					<AntDesign
 						name="appstore-o"
 						size={24}
@@ -88,8 +86,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 			</View>
 			<TouchableOpacity
 				className="items-center"
-				onPress={handleCalendarPress}
-			>
+				onPress={handleCalendarPress}>
 				<AntDesign
 					name="calendar"
 					size={24}
@@ -98,8 +95,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 			</TouchableOpacity>
 			<TouchableOpacity
 				className="items-center"
-				onPress={handleBookmarksPress}
-			>
+				onPress={handleBookmarksPress}>
 				<AntDesign
 					name="heart"
 					size={24}

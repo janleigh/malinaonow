@@ -132,8 +132,7 @@ export default function OTPScreen() {
 							<TouchableOpacity
 								onPress={focusInput}
 								activeOpacity={0.9}
-								className="mb-2 mt-4 w-full flex-row justify-center"
-							>
+								className="mb-2 mt-4 w-full flex-row justify-center">
 								{[0, 1, 2, 3, 4, 5].map((index) => {
 									const digit = otp[index];
 									const showCursor =
@@ -145,8 +144,7 @@ export default function OTPScreen() {
 											key={`digit-${index}`}
 											className={`mx-1.5 h-12 w-12 items-center justify-center
                                             border ${digit ? "border-[#fed787]" : "border-[#333333]"} bg-white`}
-											style={shadowStyles.standard}
-										>
+											style={shadowStyles.standard}>
 											{showCursor ? (
 												<View className="h-5 w-0.5 animate-pulse bg-black" />
 											) : (
@@ -167,15 +165,13 @@ export default function OTPScreen() {
 								className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
 								style={shadowStyles.standard}
 								onPress={handleVerify}
-								disabled={isLoading || otp.length !== 6}
-							>
+								disabled={isLoading || otp.length !== 6}>
 								{isLoading ? (
 									<ActivityIndicator color="#000" />
 								) : (
 									<Text
 										className="android:font-normal text-base tracking-tighter-lexend text-black"
-										fontStyle="medium"
-									>
+										fontStyle="medium">
 										Verify
 									</Text>
 								)}
@@ -187,8 +183,7 @@ export default function OTPScreen() {
 							Didn&apos;t receive code?{" "}
 							<Text
 								className="android:font-normal tracking-tighter-lexend text-black"
-								onPress={handleResendCode}
-							>
+								onPress={handleResendCode}>
 								{isResending ? "Sending..." : "Resend"}
 							</Text>
 						</Text>

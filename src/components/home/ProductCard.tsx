@@ -102,8 +102,7 @@ export const ProductCard = ({
 			<TouchableOpacity
 				key={product.id}
 				className="overflow-hidden rounded-xl border border-[#333333] bg-white"
-				onPress={toggleExpand}
-			>
+				onPress={toggleExpand}>
 				{listView ? (
 					<View className="flex-row">
 						<View className="h-24 w-1/3">
@@ -128,17 +127,14 @@ export const ProductCard = ({
 								<Text
 									className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 									numberOfLines={1}
-									fontStyle="extrabold"
-								>
+									fontStyle="extrabold">
 									{product.name}
 								</Text>
 								<View
-									className={`rounded px-2 py-1 ${product.is_available ? "bg-green-100" : "bg-red-100"} ml-2`}
-								>
+									className={`rounded px-2 py-1 ${product.is_available ? "bg-green-100" : "bg-red-100"} ml-2`}>
 									<Text
 										className={`font-lexend-medium text-xs tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
-										fontStyle="medium"
-									>
+										fontStyle="medium">
 										{product.is_available
 											? "Available"
 											: "Unavailable"}
@@ -153,15 +149,13 @@ export const ProductCard = ({
 								/>
 								<Text
 									className="ml-1 text-xs tracking-tighter-lexend text-[#555]"
-									numberOfLines={1}
-								>
+									numberOfLines={1}>
 									{product.barangay}
 								</Text>
 							</View>
 							<Text
 								className="mt-1 text-xs tracking-tighter-lexend text-[#666666]"
-								numberOfLines={1}
-							>
+								numberOfLines={1}>
 								{getLocalizedDescription(product)}
 							</Text>
 						</ScrollView>
@@ -188,12 +182,10 @@ export const ProductCard = ({
 						<ScrollView className="p-3">
 							<View className="mb-1 flex-row items-start">
 								<View
-									className={`rounded px-2 py-1 ${product.is_available ? "bg-green-100" : "bg-red-100"}`}
-								>
+									className={`rounded px-2 py-1 ${product.is_available ? "bg-green-100" : "bg-red-100"}`}>
 									<Text
 										className={`font-lexend-medium text-xs tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
-										fontStyle="medium"
-									>
+										fontStyle="medium">
 										{product.is_available
 											? "Available"
 											: "Unavailable"}
@@ -203,14 +195,12 @@ export const ProductCard = ({
 							<Text
 								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
 								numberOfLines={2}
-								fontStyle="extrabold"
-							>
+								fontStyle="extrabold">
 								{product.name}
 							</Text>
 							<Text
 								className="mt-1 text-xs tracking-tighter-lexend text-[#666666]"
-								numberOfLines={2}
-							>
+								numberOfLines={2}>
 								{getLocalizedDescription(product)}
 							</Text>
 						</ScrollView>
@@ -220,8 +210,7 @@ export const ProductCard = ({
 			<Modal
 				visible={expanded}
 				transparent={true}
-				animationType="none"
-			>
+				animationType="none">
 				<Animated.View
 					style={{
 						flex: 1,
@@ -235,15 +224,13 @@ export const ProductCard = ({
 								})
 							}
 						]
-					}}
-				>
+					}}>
 					<View className="flex-1">
 						<View className="border-b border-[#333333] p-4">
 							<View className="mb-2 flex-row items-center justify-between">
 								<Text
 									className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-									fontStyle="bold"
-								>
+									fontStyle="bold">
 									{product.name}
 								</Text>
 								<TouchableOpacity onPress={toggleExpand}>
@@ -275,8 +262,7 @@ export const ProductCard = ({
 										showsHorizontalScrollIndicator={
 											false
 										}
-										className="h-full w-full"
-									>
+										className="h-full w-full">
 										{product.images.map(
 											(
 												img: string,
@@ -287,8 +273,7 @@ export const ProductCard = ({
 													className="h-full w-full"
 													style={{
 														width: "100%"
-													}}
-												>
+													}}>
 													<Image
 														source={{
 															uri: img
@@ -319,8 +304,7 @@ export const ProductCard = ({
 							<View className="p-4">
 								<Text
 									className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Description
 								</Text>
 								<View
@@ -329,8 +313,7 @@ export const ProductCard = ({
 										maxHeight: isDescriptionExpanded
 											? undefined
 											: 300
-									}}
-								>
+									}}>
 									<View onLayout={onDescriptionLayout}>
 										<Text className="text-base tracking-tighter-lexend text-[#333]">
 											{getLocalizedDescription(
@@ -343,12 +326,10 @@ export const ProductCard = ({
 								{shouldShowToggle && (
 									<TouchableOpacity
 										onPress={toggleDescription}
-										className="mt-2 px-4 py-2"
-									>
+										className="mt-2 px-4 py-2">
 										<Text
 											className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline"
-											fontStyle="medium"
-										>
+											fontStyle="medium">
 											{isDescriptionExpanded
 												? t("location.showLess")
 												: t("location.showMore")}

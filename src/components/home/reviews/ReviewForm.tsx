@@ -60,8 +60,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 		<View className="mt-4">
 			<Text
 				className="mb-2 font-lexend-bold text-lg tracking-tighter-lexend text-black"
-				fontStyle="bold"
-			>
+				fontStyle="bold">
 				{t("review.writeReview")}
 			</Text>
 			<View className="space-y-4">
@@ -74,8 +73,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 							<TouchableOpacity
 								key={star}
 								onPress={() => setRating(star)}
-								className="mr-1"
-							>
+								className="mr-1">
 								<Text
 									style={{
 										fontSize: 28,
@@ -83,8 +81,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 											star <= rating
 												? "#FED787"
 												: "#CCCCCC"
-									}}
-								>
+									}}>
 									★
 								</Text>
 							</TouchableOpacity>
@@ -112,15 +109,13 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 				<TouchableOpacity
 					className="mt-2 h-12 w-full items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38]"
 					onPress={handleSubmit}
-					disabled={isSubmitting}
-				>
+					disabled={isSubmitting}>
 					{isSubmitting ? (
 						<ActivityIndicator color="#000" />
 					) : (
 						<Text
 							className="font-lexend-medium text-base tracking-tighter-lexend text-black"
-							fontStyle="medium"
-						>
+							fontStyle="medium">
 							{t("review.submit")}
 						</Text>
 					)}

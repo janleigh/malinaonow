@@ -44,8 +44,7 @@ export const OAuthButton = ({
 		<TouchableOpacity
 			className={`h-12 w-full flex-row items-center justify-center rounded-3xl border border-[#333333] bg-[#9ee3ae] px-4 ${className || ""}`}
 			onPress={handlePress}
-			disabled={loading}
-		>
+			disabled={loading}>
 			{loading ? (
 				<ActivityIndicator color="#000" />
 			) : (
@@ -60,8 +59,7 @@ export const OAuthButton = ({
 					)}
 					<Text
 						className="android:font-normal text-base tracking-tighter-lexend text-black"
-						fontStyle="medium"
-					>
+						fontStyle="medium">
 						{text}
 					</Text>
 				</>

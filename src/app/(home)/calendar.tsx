@@ -80,8 +80,7 @@ export default function CalendarPage() {
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 					<Text
 						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-						fontStyle="extrabold"
-					>
+						fontStyle="extrabold">
 						Calendar
 					</Text>
 				</View>
@@ -103,8 +102,7 @@ export default function CalendarPage() {
 						) : error ? (
 							<View
 								className="my-4 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
-							>
+								style={shadowStyles.standard}>
 								<View className="items-center">
 									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<Feather
@@ -122,8 +120,7 @@ export default function CalendarPage() {
 									<TouchableOpacity
 										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 										style={shadowStyles.small}
-										onPress={fetchEvents}
-									>
+										onPress={fetchEvents}>
 										<Text className="tracking-tighter-lexend text-black">
 											Retry
 										</Text>
@@ -133,8 +130,7 @@ export default function CalendarPage() {
 						) : groupedEvents.length === 0 ? (
 							<View
 								className="my-4 border border-[#333333] bg-white p-4"
-								style={shadowStyles.standard}
-							>
+								style={shadowStyles.standard}>
 								<View className="items-center">
 									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
 										<Feather
@@ -156,8 +152,7 @@ export default function CalendarPage() {
 								{groupedEvents.map((group) => (
 									<View
 										key={group.date}
-										className="mb-6"
-									>
+										className="mb-6">
 										<View className="mb-2 flex-row items-center">
 											<View className="mr-3 h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
 												<AntDesign
@@ -169,8 +164,7 @@ export default function CalendarPage() {
 											<View>
 												<Text
 													className="text-lg tracking-tighter-lexend text-black"
-													fontStyle="bold"
-												>
+													fontStyle="bold">
 													{formatDate(
 														group.date
 													)}
@@ -193,8 +187,7 @@ export default function CalendarPage() {
 														setSelectedEvent(
 															event
 														)
-													}
-												>
+													}>
 													<View className="flex-row justify-between">
 														<View className="flex-1">
 															<Text className="mb-1 text-base tracking-tighter-lexend text-black">

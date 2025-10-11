@@ -48,12 +48,10 @@ export default function InDevelopmentScreen() {
 						<Link href="/" asChild>
 							<TouchableOpacity
 								className="h-12 flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-6"
-								style={shadowStyles.standard}
-							>
+								style={shadowStyles.standard}>
 								<Text
 									className="text-base tracking-tighter-lexend text-black"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Return to landing page
 								</Text>
 							</TouchableOpacity>

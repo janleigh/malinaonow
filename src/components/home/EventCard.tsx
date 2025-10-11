@@ -79,8 +79,7 @@ export const EventCard = ({
 			<TouchableOpacity
 				key={event.id}
 				className="my-2 overflow-hidden rounded-xl border border-[#333333] bg-white"
-				onPress={handlePress}
-			>
+				onPress={handlePress}>
 				<View>
 					<View className="h-32 w-full">
 						<Image
@@ -94,8 +93,7 @@ export const EventCard = ({
 					<View className="p-3">
 						<Text
 							className="text-sm tracking-tighter-lexend text-black"
-							numberOfLines={2}
-						>
+							numberOfLines={2}>
 							{event.name}
 						</Text>
 						<View className="mt-1 flex-row items-center">
@@ -106,8 +104,7 @@ export const EventCard = ({
 							/>
 							<Text
 								className="ml-1 text-sm tracking-tighter-lexend text-[#555]"
-								numberOfLines={1}
-							>
+								numberOfLines={1}>
 								{formatDate(event.date)}
 							</Text>
 						</View>
@@ -138,8 +135,7 @@ export const EventCard = ({
 			<Modal
 				visible={expanded}
 				transparent={true}
-				animationType="none"
-			>
+				animationType="none">
 				<Animated.View
 					style={{
 						flex: 1,
@@ -153,14 +149,12 @@ export const EventCard = ({
 								})
 							}
 						]
-					}}
-				>
+					}}>
 					<SafeAreaView className="flex-1">
 						<View className="flex-row items-center justify-between border-b border-[#333333] p-4">
 							<Text
 								className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-								fontStyle="bold"
-							>
+								fontStyle="bold">
 								{t("event.eventDetails")}
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
@@ -195,8 +189,7 @@ export const EventCard = ({
 										<View className="ml-3">
 											<Text
 												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												{t(
 													"event.date"
 												).toUpperCase()}
@@ -217,8 +210,7 @@ export const EventCard = ({
 										<View className="ml-3">
 											<Text
 												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												{t(
 													"event.time"
 												).toUpperCase()}
@@ -239,8 +231,7 @@ export const EventCard = ({
 										<View className="ml-3">
 											<Text
 												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												{t(
 													"event.location"
 												).toUpperCase()}
@@ -254,12 +245,10 @@ export const EventCard = ({
 								<View className="mt-6">
 									<TouchableOpacity
 										className="h-12 w-full items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38]"
-										onPress={toggleExpand}
-									>
+										onPress={toggleExpand}>
 										<Text
 											className="font-lexend-medium text-base tracking-tighter-lexend text-black"
-											fontStyle="medium"
-										>
+											fontStyle="medium">
 											{t("event.addToCalendar")}
 										</Text>
 									</TouchableOpacity>

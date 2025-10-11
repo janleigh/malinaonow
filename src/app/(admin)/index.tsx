@@ -39,13 +39,11 @@ export default function AdminDashboard() {
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 					<Text
 						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-						fontStyle="extrabold"
-					>
+						fontStyle="extrabold">
 						Admin Panel
 					</Text>
 					<TouchableOpacity
-						onPress={() => router.replace("/(home)")}
-					>
+						onPress={() => router.replace("/(home)")}>
 						<Feather name="x" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
@@ -61,8 +59,7 @@ export default function AdminDashboard() {
 								className="mt-2 rounded-xl border border-[#333333] bg-white p-4"
 								onPress={() =>
 									router.push(option.route as any)
-								}
-							>
+								}>
 								<View className="flex-row items-center">
 									<View className="mr-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
 										<Feather
@@ -74,8 +71,7 @@ export default function AdminDashboard() {
 									<View className="flex-1">
 										<Text
 											className="text-lg tracking-tighter-lexend text-black"
-											fontStyle="bold"
-										>
+											fontStyle="bold">
 											{option.title}
 										</Text>
 										<Text className="text-sm tracking-tighter-lexend text-[#666666]">

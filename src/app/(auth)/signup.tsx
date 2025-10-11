@@ -119,8 +119,7 @@ export default function SignupScreen() {
 						<TouchableOpacity
 							className="mt-4 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38]"
 							onPress={handleSignup}
-							disabled={isLoading}
-						>
+							disabled={isLoading}>
 							{isLoading ? (
 								<ActivityIndicator color="#000" />
 							) : (
@@ -135,8 +134,7 @@ export default function SignupScreen() {
 							Already have an account?{" "}
 							<Text
 								className="android:font-normal tracking-tighter-lexend text-black"
-								onPress={() => router.replace("/login")}
-							>
+								onPress={() => router.replace("/login")}>
 								Log in
 							</Text>
 						</Text>

@@ -194,8 +194,7 @@ export default function ManageEventsScreen() {
 				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 					<Text
 						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-						fontStyle="extrabold"
-					>
+						fontStyle="extrabold">
 						Manage Events
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
@@ -205,13 +204,11 @@ export default function ManageEventsScreen() {
 				<View className="p-4">
 					<TouchableOpacity
 						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
-						onPress={openAddModal}
-					>
+						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
 							className="ml-2 tracking-tighter-lexend text-black"
-							fontStyle="medium"
-						>
+							fontStyle="medium">
 							Add New Event
 						</Text>
 					</TouchableOpacity>
@@ -237,8 +234,7 @@ export default function ManageEventsScreen() {
 							</Text>
 							<TouchableOpacity
 								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
-								onPress={fetchEvents}
-							>
+								onPress={fetchEvents}>
 								<Text className="font-lexend-medium text-black">
 									Retry
 								</Text>
@@ -249,8 +245,7 @@ export default function ManageEventsScreen() {
 							{events.map((event) => (
 								<View
 									key={event.id}
-									className="mb-4 rounded-xl border border-[#333333] bg-white"
-								>
+									className="mb-4 rounded-xl border border-[#333333] bg-white">
 									<View className="flex-row">
 										<Image
 											source={{
@@ -262,8 +257,7 @@ export default function ManageEventsScreen() {
 										<View className="flex-1 p-3">
 											<Text
 												className="text-base tracking-tighter-lexend text-black"
-												fontStyle="bold"
-											>
+												fontStyle="bold">
 												{event.name} in{" "}
 												{event.location}
 											</Text>
@@ -298,12 +292,10 @@ export default function ManageEventsScreen() {
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												openEditModal(event)
-											}
-										>
+											}>
 											<Text
 												className="text-[#333333]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												<Feather
 													name="edit"
 													size={16}
@@ -316,12 +308,10 @@ export default function ManageEventsScreen() {
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												handleDelete(event.id)
-											}
-										>
+											}>
 											<Text
 												className="text-[#fe5b62]"
-												fontStyle="medium"
-											>
+												fontStyle="medium">
 												<Feather
 													name="trash-2"
 													size={16}
@@ -341,13 +331,11 @@ export default function ManageEventsScreen() {
 					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
 						<Text
 							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold"
-						>
+							fontStyle="extrabold">
 							{editingEvent ? "Edit Event" : "Add Event"}
 						</Text>
 						<TouchableOpacity
-							onPress={() => setModalVisible(false)}
-						>
+							onPress={() => setModalVisible(false)}>
 							<Feather name="x" size={24} color="black" />
 						</TouchableOpacity>
 					</View>
@@ -372,21 +360,18 @@ export default function ManageEventsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								DATE
 							</Text>
 							<TouchableOpacity
 								onPress={showDatePicker}
-								className="flex-row items-center justify-between border border-[#333333] bg-white p-3 text-black"
-							>
+								className="flex-row items-center justify-between border border-[#333333] bg-white p-3 text-black">
 								<Text
 									className={
 										formData.date
 											? "text-black"
 											: "text-[#999999]"
-									}
-								>
+									}>
 									{formData.date
 										? formData.date
 										: "Select date"}
@@ -407,21 +392,18 @@ export default function ManageEventsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								TIME
 							</Text>
 							<TouchableOpacity
 								onPress={showTimePicker}
-								className="flex-row items-center justify-between border border-[#333333] bg-white p-3 text-black"
-							>
+								className="flex-row items-center justify-between border border-[#333333] bg-white p-3 text-black">
 								<Text
 									className={
 										formData.time
 											? "text-black"
 											: "text-[#999999]"
-									}
-								>
+									}>
 									{formData.time
 										? formData.time
 										: "Select time"}
@@ -442,8 +424,7 @@ export default function ManageEventsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								LOCATION
 							</Text>
 							<TextInput
@@ -462,8 +443,7 @@ export default function ManageEventsScreen() {
 						<View className="mb-4">
 							<Text
 								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium"
-							>
+								fontStyle="medium">
 								BANNER IMAGE
 							</Text>
 							<ImageUploader
@@ -489,8 +469,7 @@ export default function ManageEventsScreen() {
 						<TouchableOpacity
 							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
 							onPress={handleSave}
-							disabled={loading}
-						>
+							disabled={loading}>
 							{loading ? (
 								<ActivityIndicator
 									size="small"
@@ -499,8 +478,7 @@ export default function ManageEventsScreen() {
 							) : (
 								<Text
 									className="tracking-tighter-lexend text-black"
-									fontStyle="medium"
-								>
+									fontStyle="medium">
 									Save Event
 								</Text>
 							)}
