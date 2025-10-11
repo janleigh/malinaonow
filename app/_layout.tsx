@@ -1,25 +1,46 @@
 import "@/global.css";
 
-import { NAV_THEME } from "@/lib/theme";
-import { ThemeProvider } from "@react-navigation/native";
-import { PortalHost } from "@rn-primitives/portal";
+import { ClerkProvider } from "@clerk/clerk-expo";
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { useColorScheme } from "nativewind";
+import * as SecureStore from "expo-secure-store";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
 
-export {
-	// Catch any errors thrown by the Layout component.
-	ErrorBoundary,
-} from "expo-router";
+const tokenCache = {
+	async getToken<T>(key: string): Promise<T | null> {
+		try {
+			const stored = await SecureStore.getItemAsync(key);
+			if (stored) {
+				return JSON.parse(stored) as T;
+			}
+			return null;
+		} catch (err) {
+			return null;
+		}
+	},
+	async saveToken<T>(key: string, value: T) {
+		try {
+			const serialized = JSON.stringify(value);
+			return SecureStore.setItemAsync(key, serialized);
+		} catch (err) {
+			return;
+		}
+	}
+};
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const { colorScheme } = useColorScheme();
+	useEffect(() => {
+		SplashScreen.hideAsync();
+	}, []);
 
 	return (
-		<ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
-			<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-			<Stack />
-			<PortalHost />
-		</ThemeProvider>
+		<ClerkProvider publishableKey={process.env.CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+			<Stack screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="index" />
+				<Stack.Screen name="+not-found" />
+			</Stack>
+		</ClerkProvider>
 	);
 }

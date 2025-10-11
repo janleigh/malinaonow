@@ -1,87 +1,65 @@
-import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
-import { Text } from "@/components/ui/text";
-import { Link, Stack } from "expo-router";
-import { MoonStarIcon, StarIcon, SunIcon } from "lucide-react-native";
-import { useColorScheme } from "nativewind";
-import * as React from "react";
-import { Image, type ImageStyle, View } from "react-native";
-
-const LOGO = {
-	light: require("@/assets/images/react-native-reusables-light.png"),
-	dark: require("@/assets/images/react-native-reusables-dark.png"),
-};
-
-const SCREEN_OPTIONS = {
-	title: "React Native Reusables",
-	headerTransparent: true,
-	headerRight: () => <ThemeToggle />,
-};
-
-const IMAGE_STYLE: ImageStyle = {
-	height: 76,
-	width: 76,
-};
+import { OAuthButton } from "@/src/components/auth/OAuthButton";
+import { Button, Text } from "@/src/components/ui";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Link, router } from "expo-router";
+import React from "react";
+import { Image, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
-	const { colorScheme } = useColorScheme();
 
 	return (
 		<>
-			<Stack.Screen options={SCREEN_OPTIONS} />
-			<View className="flex-1 items-center justify-center gap-8 p-4">
-				<Image
-					source={LOGO[colorScheme ?? "light"]}
-					style={IMAGE_STYLE}
-					resizeMode="contain"
-				/>
-				<View className="gap-2 p-4">
-					<Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
-						1. Edit <Text variant="code">app/index.tsx</Text>{" "}
-						to get started.
-					</Text>
-					<Text className="ios:text-foreground font-mono text-sm text-muted-foreground">
-						2. Save to see your changes instantly.
-					</Text>
-				</View>
-				<View className="flex-row gap-2">
-					<Link href="https://reactnativereusables.com" asChild>
-						<Button>
-							<Text>Browse the Docs</Text>
-						</Button>
-					</Link>
-					<Link
-						href="https://github.com/founded-labs/react-native-reusables"
-						asChild>
-						<Button variant="ghost">
-							<Text>Star the Repo</Text>
-							<Icon as={StarIcon} />
-						</Button>
-					</Link>
-				</View>
+			<View className="flex-1">
+				<SafeAreaView className="flex-1 items-center justify-center">
+					<View className="flex-1 items-center justify-center">
+						<View className="flex-col items-center">
+							<Image
+								source={require("@/assets/images/icon.png")}
+								className="android:w-32 android:h-32 mb-4 h-6 w-6"
+								resizeMode="cover"
+							/>
+							<Text
+								className="android:text-4xl android:font-normal text-3xl tracking-tighter-lexend text-black"
+							>
+								MalinaoNow
+							</Text>
+						</View>
+					</View>
+					<View className="w-full space-y-3 px-5 pb-10">
+						<Link href="/+not-found" asChild>
+							<Button variant="outline">
+								<Text>Sign up with email</Text>
+							</Button>
+						</Link>
+						<OAuthButton
+							strategy="oauth_google"
+							text="Continue with Google"
+							icon={
+								<AntDesign
+									className="mr-2"
+									name="google"
+									size={24}
+									color="black"
+								/>
+							}
+							className="android:mt-2"
+						/>
+					</View>
+					<View className="mt-6 items-center">
+						<Text className="text-center tracking-tighter-lexend text-[#333333]">
+							Already have an account?{" "}
+							<Text
+								className="android:font-normal font-extrabold tracking-tighter-lexend text-black"
+								onPress={() =>
+									router.push("/")
+								}>
+								Log in
+							</Text>
+						</Text>
+					</View>
+				</SafeAreaView>
 			</View>
 		</>
-	);
-}
-
-const THEME_ICONS = {
-	light: SunIcon,
-	dark: MoonStarIcon,
-};
-
-function ThemeToggle() {
-	const { colorScheme, toggleColorScheme } = useColorScheme();
-
-	return (
-		<Button
-			onPressIn={toggleColorScheme}
-			size="icon"
-			variant="ghost"
-			className="ios:size-9 rounded-full web:mx-4">
-			<Icon
-				as={THEME_ICONS[colorScheme ?? "light"]}
-				className="size-5"
-			/>
-		</Button>
 	);
 }
