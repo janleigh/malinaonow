@@ -1,17 +1,14 @@
 import { createClerkClient } from "@clerk/clerk-sdk-node";
 import { createClient } from "@supabase/supabase-js";
 
-const {
-	SUPABASE_URL,
-	SUPABASE_SERVICE_ROLE_KEY,
-	CLERK_SECRET_KEY
-} = process.env as Record<string, string | undefined>;
+const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, CLERK_SECRET_KEY } =
+	process.env as Record<string, string | undefined>;
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !CLERK_SECRET_KEY) {
 	const missing = [
 		!SUPABASE_URL && "SUPABASE_URL",
 		!SUPABASE_SERVICE_ROLE_KEY && "SUPABASE_SERVICE_ROLE_KEY",
-		!CLERK_SECRET_KEY && "CLERK_SECRET_KEY"
+		!CLERK_SECRET_KEY && "CLERK_SECRET_KEY",
 	]
 		.filter(Boolean)
 		.join(", ");
@@ -49,11 +46,11 @@ async function run() {
 			email: u.emailAddresses?.[0]?.emailAddress ?? null,
 			first_name: u.firstName ?? null,
 			last_name: u.lastName ?? null,
-			image_url: u.imageUrl ?? null
+			image_url: u.imageUrl ?? null,
 		}));
 
 		const { error } = await supabase.from("users").upsert(rows, {
-			onConflict: "id"
+			onConflict: "id",
 		});
 		if (error) {
 			console.error("Upsert error:", error);

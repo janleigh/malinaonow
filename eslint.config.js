@@ -9,7 +9,7 @@ module.exports = defineConfig([
 	{
 		ignores: ["dist/*"],
 		plugins: {
-			"@stylistic": stylistic
+			"@stylistic": stylistic,
 		},
 		rules: {
 			"indent": ["error", "tab"],
@@ -24,10 +24,10 @@ module.exports = defineConfig([
 					ignoreUrls: true,
 					ignoreStrings: true,
 					ignoreTemplateLiterals: true,
-					ignoreRegExpLiterals: true
-				}
-			]
-		}
+					ignoreRegExpLiterals: true,
+				},
+			],
+		},
 	},
-	eslint
+	eslint,
 ]);

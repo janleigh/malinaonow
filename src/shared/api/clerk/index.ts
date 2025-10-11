@@ -1,1 +1,0 @@
-export { useClerkAuth } from "./clerk";

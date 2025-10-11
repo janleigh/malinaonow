@@ -1,42 +1,37 @@
 {
 	"expo": {
-		"name": "MalinaoNow",
+		"name": "malinaonow",
 		"slug": "malinaonow",
-		"version": "1.1.0",
+		"version": "1.0.0",
 		"orientation": "portrait",
-		"icon": "./src/shared/assets/images/icon.png",
+		"icon": "./assets/images/icon.png",
 		"scheme": "malinaonow",
 		"userInterfaceStyle": "automatic",
-		"newArchEnabled": false,
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./src/shared/assets/images/icon.png",
-				"backgroundColor": "#ffffff"
-			},
-			"edgeToEdgeEnabled": true,
-			"package": "com.jnlghmz.malinaonow"
+		"newArchEnabled": true,
+		"splash": {
+			"image": "./assets/images/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
 		},
-		"plugins": [
-			"expo-router",
-			[
-				"expo-splash-screen",
-				{
-					"image": "./src/shared/assets/images/icon.png",
-					"imageWidth": 200,
-					"resizeMode": "contain",
-					"backgroundColor": "#00000000"
-				}
-			],
-			"expo-secure-store"
-		],
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"edgeToEdgeEnabled": true,
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			}
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": ["expo-router"],
 		"experiments": {
 			"typedRoutes": true
-		},
-		"extra": {
-			"router": {},
-			"eas": {
-				"projectId": "3b93606a-5d66-49da-b7c9-66bd3f89a089"
-			}
 		}
 	}
 }
