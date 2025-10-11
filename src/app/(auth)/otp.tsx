@@ -108,7 +108,7 @@ export default function OTPScreen() {
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
 						<Text
-							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
+							className="android:text-4xl android:font-normal text-text-light mb-2 text-3xl"
 							fontName="Poppins_700Bold">
 							Verification Code
 						</Text>
@@ -185,7 +185,7 @@ export default function OTPScreen() {
 					</View>
 					<View className="items-center pb-4">
 						<Text
-							className="text-center text-text-light"
+							className="text-text-light text-center"
 							fontName="Poppins_500Medium">
 							Didn&apos;t receive code?{" "}
 							<Text

@@ -82,7 +82,7 @@ export default function LandingPage() {
 							resizeMode="cover"
 						/>
 						<Text
-							className="android:text-4xl android:font-normal text-3xl text-text-light"
+							className="android:text-4xl android:font-normal text-text-light text-3xl"
 							fontName="Montserrat_700Bold">
 							MalinaoNow
 						</Text>

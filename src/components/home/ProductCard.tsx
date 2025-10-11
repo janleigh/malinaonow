@@ -125,7 +125,7 @@ export const ProductCard = ({
 						<ScrollView className="flex-1 p-3">
 							<View className="flex-row items-center">
 								<Text
-									className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
+									className="font-lexend-extrabold tracking-tighter-lexend text-sm text-black"
 									numberOfLines={1}
 									fontStyle="extrabold">
 									{product.name}
@@ -133,7 +133,7 @@ export const ProductCard = ({
 								<View
 									className={`rounded px-2 py-1 ${product.is_available ? "bg-green-100" : "bg-red-100"} ml-2`}>
 									<Text
-										className={`font-lexend-medium text-xs tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
+										className={`font-lexend-medium tracking-tighter-lexend text-xs ${product.is_available ? "text-green-800" : "text-red-800"}`}
 										fontStyle="medium">
 										{product.is_available
 											? "Available"
@@ -148,13 +148,13 @@ export const ProductCard = ({
 									color="#555"
 								/>
 								<Text
-									className="ml-1 text-xs tracking-tighter-lexend text-[#555]"
+									className="tracking-tighter-lexend ml-1 text-xs text-[#555]"
 									numberOfLines={1}>
 									{product.barangay}
 								</Text>
 							</View>
 							<Text
-								className="mt-1 text-xs tracking-tighter-lexend text-[#666666]"
+								className="tracking-tighter-lexend mt-1 text-xs text-[#666666]"
 								numberOfLines={1}>
 								{getLocalizedDescription(product)}
 							</Text>
@@ -184,7 +184,7 @@ export const ProductCard = ({
 								<View
 									className={`rounded px-2 py-1 ${product.is_available ? "bg-green-100" : "bg-red-100"}`}>
 									<Text
-										className={`font-lexend-medium text-xs tracking-tighter-lexend ${product.is_available ? "text-green-800" : "text-red-800"}`}
+										className={`font-lexend-medium tracking-tighter-lexend text-xs ${product.is_available ? "text-green-800" : "text-red-800"}`}
 										fontStyle="medium">
 										{product.is_available
 											? "Available"
@@ -193,13 +193,13 @@ export const ProductCard = ({
 								</View>
 							</View>
 							<Text
-								className="font-lexend-extrabold text-sm tracking-tighter-lexend text-black"
+								className="font-lexend-extrabold tracking-tighter-lexend text-sm text-black"
 								numberOfLines={2}
 								fontStyle="extrabold">
 								{product.name}
 							</Text>
 							<Text
-								className="mt-1 text-xs tracking-tighter-lexend text-[#666666]"
+								className="tracking-tighter-lexend mt-1 text-xs text-[#666666]"
 								numberOfLines={2}>
 								{getLocalizedDescription(product)}
 							</Text>
@@ -229,7 +229,7 @@ export const ProductCard = ({
 						<View className="border-b border-[#333333] p-4">
 							<View className="mb-2 flex-row items-center justify-between">
 								<Text
-									className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
+									className="font-lexend-bold tracking-tighter-lexend text-xl text-black"
 									fontStyle="bold">
 									{product.name}
 								</Text>
@@ -247,7 +247,7 @@ export const ProductCard = ({
 									size={12}
 									color="#555"
 								/>
-								<Text className="ml-1 text-sm tracking-tighter-lexend text-[#555]">
+								<Text className="tracking-tighter-lexend ml-1 text-sm text-[#555]">
 									{product.barangay}
 								</Text>
 							</View>
@@ -303,7 +303,7 @@ export const ProductCard = ({
 							</View>
 							<View className="p-4">
 								<Text
-									className="mb-2 font-lexend-medium text-base tracking-tighter-lexend text-[#333]"
+									className="font-lexend-medium tracking-tighter-lexend mb-2 text-base text-[#333]"
 									fontStyle="medium">
 									Description
 								</Text>
@@ -315,7 +315,7 @@ export const ProductCard = ({
 											: 300
 									}}>
 									<View onLayout={onDescriptionLayout}>
-										<Text className="text-base tracking-tighter-lexend text-[#333]">
+										<Text className="tracking-tighter-lexend text-base text-[#333]">
 											{getLocalizedDescription(
 												product
 											) ||
@@ -328,7 +328,7 @@ export const ProductCard = ({
 										onPress={toggleDescription}
 										className="mt-2 px-4 py-2">
 										<Text
-											className="font-lexend-medium text-sm tracking-tighter-lexend text-black underline"
+											className="font-lexend-medium tracking-tighter-lexend text-sm text-black underline"
 											fontStyle="medium">
 											{isDescriptionExpanded
 												? t("location.showLess")

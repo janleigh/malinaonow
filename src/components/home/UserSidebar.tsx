@@ -171,7 +171,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						<SafeAreaView className="flex-1">
 							<View className="flex-row items-center justify-between p-4">
 								<Text
-									className="text-text text-xl"
+									className="text-xl text-text"
 									fontName="Montserrat_700Bold">
 									{t("userSidebar.profile")}
 								</Text>
@@ -194,14 +194,14 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 								) : (
 									<View className="h-20 w-32 items-center justify-center rounded-full border border-[#333333] bg-[#8ED1DC]">
 										<Text
-											className="text-text text-xl"
+											className="text-xl text-text"
 											fontName="Montserrat_700Bold">
 											{getInitials(userName)}
 										</Text>
 									</View>
 								)}
 								<Text
-									className="text-text mt-3 text-lg"
+									className="mt-3 text-lg text-text"
 									fontName="Montserrat_700Bold">
 									{userName}
 								</Text>
@@ -226,7 +226,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 											color="#cacbca"
 										/>
 										<Text
-											className="text-text ml-4"
+											className="ml-4 text-text"
 											fontName="Poppins_500Medium">
 											{t("userSidebar.adminPanel")}
 										</Text>
@@ -244,7 +244,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										color="#cacbca"
 									/>
 									<Text
-										className="text-text ml-4"
+										className="ml-4 text-text"
 										fontName="Poppins_500Medium">
 										{t("userSidebar.settings")}
 									</Text>

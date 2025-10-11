@@ -44,7 +44,7 @@ export default function LoginScreen() {
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
 						<Text
-							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
+							className="android:text-4xl android:font-normal text-text-light mb-2 text-3xl"
 							fontName="Montserrat_700Bold">
 							Welcome Back
 						</Text>
@@ -95,7 +95,7 @@ export default function LoginScreen() {
 						</TouchableOpacity>
 						<View className="my-6 flex-row items-center">
 							<View className="h-[1px] flex-1 bg-[#cccccc]" />
-							<Text className="text-text mx-4">OR</Text>
+							<Text className="mx-4 text-text">OR</Text>
 							<View className="h-[1px] flex-1 bg-[#cccccc]" />
 						</View>
 						<OAuthButton
@@ -113,7 +113,7 @@ export default function LoginScreen() {
 					</View>
 					<View className="items-center pb-4">
 						<Text
-							className="text-center text-text-light"
+							className="text-text-light text-center"
 							fontName="Poppins_500Medium">
 							Don&apos;t have an account?{" "}
 							<Text

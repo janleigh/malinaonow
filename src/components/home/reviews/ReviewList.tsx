@@ -32,7 +32,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 					className="border-b border-[#333333] p-2">
 					<View className="flex-row items-center justify-between">
 						<Text
-							className="text-text text-lg"
+							className="text-lg text-text"
 							fontName="Montserrat_700Bold">
 							{review.user_name || "Anonymous"}
 						</Text>
@@ -46,7 +46,7 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 						<RatingStars rating={review.rating} />
 					</View>
 					<Text
-						className="text-text mt-1"
+						className="mt-1 text-text"
 						fontName="Poppins_400Regular">
 						{review.comment}
 					</Text>

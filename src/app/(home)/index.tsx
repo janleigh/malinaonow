@@ -180,7 +180,7 @@ export default function HomePage() {
 				{/* Header */}
 				<View className="flex-row items-center justify-between p-4">
 					<Text
-						className="android:font-normal text-text text-2xl"
+						className="android:font-normal text-2xl text-text"
 						fontName="Montserrat_700Bold">
 						MalinaoNow
 					</Text>
@@ -196,7 +196,7 @@ export default function HomePage() {
 					<View className="mb-6 px-4">
 						<View className="mb-4 flex-row items-center justify-between">
 							<Text
-								className="text-text text-xl"
+								className="text-xl text-text"
 								fontName="Montserrat_700Bold">
 								{t("home.upcomingEvents")}
 							</Text>
@@ -224,7 +224,7 @@ export default function HomePage() {
 												color="#333"
 											/>
 										</View>
-										<Text className="mb-2 text-center text-xl text-text-light">
+										<Text className="text-text-light mb-2 text-center text-xl">
 											Error Loading Events
 										</Text>
 										<Text className="mb-4 text-center text-base text-[#666666]">
@@ -311,7 +311,7 @@ export default function HomePage() {
 						<View className="mb-4 flex-row items-center justify-between">
 							<View className="flex-row items-center">
 								<Text
-									className="text-text text-xl leading-tight"
+									className="text-xl leading-tight text-text"
 									fontName="Poppins_700Bold">
 									{t("home.featuredLocations")}
 								</Text>

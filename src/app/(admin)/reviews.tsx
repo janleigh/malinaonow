@@ -148,53 +148,55 @@ export default function ModerateReviewsScreen() {
 	};
 
 	const renderReviewItem = ({ item }: { item: ReviewWithLocation }) => (
-		<View className="mb-4 border border-[#333333] bg-white p-4">
+		<View className="mb-4 rounded-lg border border-line bg-surface p-4">
 			<View className="mb-2 flex-row items-start justify-between">
 				<Text
-					className="font-lexend-bold text-lg tracking-tighter-lexend text-black"
-					fontStyle="bold">
+					className="android:font-normal text-lg text-text"
+					fontName="Montserrat_700Bold">
 					{item.user_name || "Anonymous"}
 				</Text>
 				<View className="flex-row items-center">
 					<RatingStars rating={item.rating} />
-					<Text className="ml-2 text-black" fontStyle="medium">
+					<Text
+						className="ml-2 text-text"
+						fontName="Poppins_500Medium">
 						{item.rating}/5
 					</Text>
 				</View>
 			</View>
 			{item.comment ? (
-				<Text className="mb-2 tracking-tighter-lexend text-[#333333]">
+				<Text className="mb-2 text-text-inactive">
 					{item.comment}
 				</Text>
 			) : (
-				<Text className="mb-2 italic tracking-tighter-lexend text-[#666666]">
+				<Text className="mb-2 italic text-text-inactive">
 					No comment
 				</Text>
 			)}
 			<View className="flex-row items-center justify-between">
-				<Text className="text-sm tracking-tighter-lexend text-[#666666]">
+				<Text className="text-sm text-text-inactive">
 					{item.locationName || "Unknown Location"}
 				</Text>
-				<Text className="text-xs tracking-tighter-lexend text-[#666666]">
+				<Text className="text-xs text-text-inactive">
 					{formatDate(item.created_at)}
 				</Text>
 			</View>
 			<View className="mt-3 flex-row space-x-2">
 				<TouchableOpacity
-					className={`mr-2 flex-1 items-center rounded-xl border border-[#333333] py-2 ${item.flagged ? "bg-[#FFBB38]" : "bg-white"}`}
+					className={`mr-2 flex-1 items-center rounded-lg border border-line py-2 ${item.flagged ? "bg-primary" : "bg-lighterBackground"}`}
 					onPress={() => handleFlagReview(item.id)}>
 					<Text
-						className="font-lexend-medium tracking-tighter-lexend text-black"
-						fontStyle="medium">
+						className="android:font-normal text-black"
+						fontName="Poppins_500Medium">
 						{item.flagged ? "Flagged" : "Flag"}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					className="flex-1 items-center rounded-xl border border-[#333333] bg-white py-2"
+					className="flex-1 items-center rounded-lg border border-line bg-lighterBackground py-2"
 					onPress={() => handleDeleteReview(item.id)}>
 					<Text
-						className="font-lexend-medium tracking-tighter-lexend text-black"
-						fontStyle="medium">
+						className="android:font-normal text-text"
+						fontName="Poppins_500Medium">
 						Delete
 					</Text>
 				</TouchableOpacity>
@@ -204,9 +206,9 @@ export default function ModerateReviewsScreen() {
 
 	if (loading) {
 		return (
-			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
-				<ActivityIndicator size="large" color="#fed787" />
-				<Text className="mt-2 text-[#666666]">
+			<View className="flex-1 items-center justify-center bg-background">
+				<ActivityIndicator size="large" color="#0ff6be" />
+				<Text className="mt-2 text-text-inactive">
 					Loading reviews...
 				</Text>
 			</View>
@@ -215,16 +217,14 @@ export default function ModerateReviewsScreen() {
 
 	if (error) {
 		return (
-			<View className="flex-1 items-center justify-center bg-[#faf4f0] p-4">
-				<Text className="mb-4 text-center tracking-tighter-lexend text-[#333333]">
-					{error}
-				</Text>
+			<View className="flex-1 items-center justify-center bg-background p-4">
+				<Text className="mb-4 text-center text-text">{error}</Text>
 				<TouchableOpacity
-					className="border border-[#333333] bg-[#fed787] px-6 py-2"
+					className="rounded-lg border border-line bg-primary px-6 py-2"
 					onPress={fetchReviews}>
 					<Text
-						className="font-lexend-medium tracking-tighter-lexend text-black"
-						fontStyle="medium">
+						className="android:font-normal text-black"
+						fontName="Poppins_500Medium">
 						Retry
 					</Text>
 				</TouchableOpacity>
@@ -233,23 +233,23 @@ export default function ModerateReviewsScreen() {
 	}
 
 	return (
-		<View className="flex-1 bg-[#E1F2E9]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
-				<View className="border-b border-[#eee] bg-[#E1F2E9] p-4">
+				<View className="border-b border-line bg-background p-4">
 					<View className="mb-4 flex-row items-center justify-between">
 						<Text
-							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold">
+							className="android:font-normal text-2xl text-text"
+							fontName="Montserrat_700Bold">
 							Moderate Reviews
 						</Text>
 						<TouchableOpacity onPress={() => router.back()}>
-							<Feather name="x" size={24} color="black" />
+							<Feather name="x" size={24} color="#f7f7f7" />
 						</TouchableOpacity>
 					</View>
-					<View className="mb-3 flex-row items-center rounded-xl border border-[#333333] bg-white px-3 py-2">
-						<Feather name="search" size={18} color="#666" />
+					<View className="mb-3 flex-row items-center rounded-lg border border-line bg-surface px-3 py-2">
+						<Feather name="search" size={18} color="#cacbca" />
 						<TextInput
-							className="ml-2 flex-1 text-base text-black"
+							className="ml-2 flex-1 text-base text-text"
 							placeholder="Search reviews..."
 							value={searchQuery}
 							onChangeText={setSearchQuery}
@@ -263,24 +263,24 @@ export default function ModerateReviewsScreen() {
 							className="flex-1">
 							<View className="flex-row space-x-2">
 								<TouchableOpacity
-									className={`mr-1 rounded-2xl border border-[#333333] px-3 py-1 ${filterRating === 0 ? "bg-[#FFBB38]" : "bg-white"}`}
+									className={`mr-1 rounded-lg border border-line px-3 py-1 ${filterRating === 0 ? "bg-primary" : "bg-lighterBackground"}`}
 									onPress={() => setFilterRating(0)}>
 									<Text
-										className="font-lexend-medium tracking-tighter-lexend text-black"
-										fontStyle="medium">
+										className="android:font-normal text-black"
+										fontName="Poppins_500Medium">
 										All
 									</Text>
 								</TouchableOpacity>
 								{[1, 2, 3, 4, 5].map((rating) => (
 									<TouchableOpacity
 										key={rating}
-										className={`mr-1 rounded-xl border border-[#333333] px-3 py-1 ${filterRating === rating ? "bg-[#FFBB38]" : "bg-white"}`}
+										className={`mr-1 rounded-lg border border-line px-3 py-1 ${filterRating === rating ? "bg-primary" : "bg-lighterBackground"}`}
 										onPress={() =>
 											setFilterRating(rating)
 										}>
 										<Text
-											className="font-lexend-medium tracking-tighter-lexend text-black"
-											fontStyle="medium">
+											className="android:font-normal text-black"
+											fontName="Poppins_500Medium">
 											{rating}★
 										</Text>
 									</TouchableOpacity>
@@ -288,11 +288,11 @@ export default function ModerateReviewsScreen() {
 							</View>
 						</ScrollView>
 						<TouchableOpacity
-							className={`rounded-xl border border-[#333333] px-3 py-1 ${showFlagged ? "bg-[#FFBB38]" : "bg-white"}`}
+							className={`rounded-lg border border-line px-3 py-1 ${showFlagged ? "bg-primary" : "bg-lighterBackground"}`}
 							onPress={() => setShowFlagged(!showFlagged)}>
 							<Text
-								className="font-lexend-medium tracking-tighter-lexend text-black"
-								fontStyle="medium">
+								className="android:font-normal text-black"
+								fontName="Poppins_500Medium">
 								Flagged
 							</Text>
 						</TouchableOpacity>
@@ -312,14 +312,14 @@ export default function ModerateReviewsScreen() {
 					) : (
 						<View className="flex-1 items-center justify-center">
 							<Text
-								className="mb-2 text-center text-xl tracking-tighter-lexend text-black"
-								fontStyle="extrabold">
+								className="android:font-normal mb-2 text-center text-xl text-text"
+								fontName="Montserrat_700Bold">
 								{reviews.length === 0
 									? "No Reviews Found"
 									: "No Matching Reviews"}
 							</Text>
 							{reviews.length > 0 && (
-								<Text className="text-center text-base tracking-tighter-lexend text-[#666666]">
+								<Text className="text-center text-base text-text-inactive">
 									Try adjusting your search or filter
 									criteria
 								</Text>

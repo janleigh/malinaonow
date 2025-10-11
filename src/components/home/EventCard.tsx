@@ -79,7 +79,7 @@ export const EventCard = ({
 			{/* Event Card in Homepage */}
 			<TouchableOpacity
 				key={event.id}
-				className="bg-backgroundAlt my-2 overflow-hidden rounded-xl border-2 border-[#000]"
+				className="my-2 overflow-hidden rounded-xl border-2 border-[#000] bg-backgroundAlt"
 				onPress={handlePress}>
 				<View>
 					<View className="h-32 w-full">
@@ -93,7 +93,7 @@ export const EventCard = ({
 					</View>
 					<View className="p-3">
 						<Text
-							className="text-text text-lg"
+							className="text-lg text-text"
 							numberOfLines={2}
 							fontName="Montserrat_700Bold">
 							{event.name}
@@ -158,7 +158,7 @@ export const EventCard = ({
 						{/* Header */}
 						<View className="flex-row items-center justify-between border-b border-line p-4">
 							<Text
-								className="text-text text-xl"
+								className="text-xl text-text"
 								fontName="Montserrat_700Bold">
 								{t("event.eventDetails")}
 							</Text>
@@ -180,7 +180,7 @@ export const EventCard = ({
 							/>
 							<View className="p-4">
 								<Text
-									className="text-text mb-4 text-2xl"
+									className="mb-4 text-2xl text-text"
 									fontName="Montserrat_700Bold">
 									{event.name}
 								</Text>
@@ -204,7 +204,7 @@ export const EventCard = ({
 												).toUpperCase()}
 											</Text>
 											<Text
-												className="text-text text-base"
+												className="text-base text-text"
 												fontName="Poppins_500Medium">
 												{formatDate(event.date)}
 											</Text>
@@ -228,7 +228,7 @@ export const EventCard = ({
 												).toUpperCase()}
 											</Text>
 											<Text
-												className="text-text text-base"
+												className="text-base text-text"
 												fontName="Poppins_500Medium">
 												{formatTime(event.time)}
 											</Text>

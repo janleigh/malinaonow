@@ -448,7 +448,7 @@ export const LocationCard = ({
 		<>
 			<TouchableOpacity
 				key={location.id}
-				className={`bg-lighterBackground my-2 overflow-hidden rounded-xl border border-[#333333]`}
+				className={`my-2 overflow-hidden rounded-xl border border-[#333333] bg-lighterBackground`}
 				onPress={toggleExpand}>
 				<View>
 					<View className="h-32 w-full">
@@ -462,7 +462,7 @@ export const LocationCard = ({
 					</View>
 					<View className="p-3">
 						<Text
-							className="text-text text-sm"
+							className="text-sm text-text"
 							numberOfLines={2}
 							fontName="Montserrat_700Bold">
 							{location.name}
@@ -524,7 +524,7 @@ export const LocationCard = ({
 					<SafeAreaView className="flex-1">
 						<View className="flex-row items-center justify-between border-b border-[#cac6c6] p-4">
 							<Text
-								className="text-text text-xl"
+								className="text-xl text-text"
 								fontName="Montserrat_700Bold">
 								{location.name}
 							</Text>
@@ -550,7 +550,7 @@ export const LocationCard = ({
 										★
 									</Text>
 									<Text
-										className="text-text text-xl"
+										className="text-xl text-text"
 										fontName="Montserrat_700Bold">
 										{rating.toFixed(1)}
 									</Text>
@@ -581,7 +581,7 @@ export const LocationCard = ({
 									</Text>
 								</View>
 								<TouchableOpacity
-									className="border-lighterBackground absolute right-8 top-6 z-10 border-2 bg-surface p-2 px-4 py-2"
+									className="absolute right-8 top-6 z-10 border-2 border-lighterBackground bg-surface p-2 px-4 py-2"
 									onPress={(e) => {
 										e.stopPropagation();
 										handleToggleBookmark(e);
@@ -625,7 +625,7 @@ export const LocationCard = ({
 										onPress={toggleDescription}
 										className="mt-2 self-start px-4 py-2">
 										<Text
-											className="text-text text-sm underline"
+											className="text-sm text-text underline"
 											fontName="Poppins_500Medium">
 											{isDescriptionExpanded
 												? t("location.showLess")
@@ -638,7 +638,7 @@ export const LocationCard = ({
 										className="mr-1 h-12 flex-1 items-center justify-center rounded-xl border border-lineAlt bg-surface"
 										onPress={handleViewMap}>
 										<Text
-											className="text-text text-base"
+											className="text-base text-text"
 											fontName="Poppins_500Medium">
 											{t("location.viewOnMap")}
 										</Text>
@@ -648,7 +648,7 @@ export const LocationCard = ({
 											className="ml-1 h-12 flex-1 items-center justify-center rounded-xl border border-lineAlt bg-surface"
 											onPress={handleView360}>
 											<Text
-												className="text-text text-base"
+												className="text-base text-text"
 												fontName="Poppins_500Medium">
 												{t("location.view360")}
 											</Text>
@@ -658,7 +658,7 @@ export const LocationCard = ({
 								<View className="mt-8">
 									<View className="flex-row items-center justify-between">
 										<Text
-											className="text-text text-xl"
+											className="text-xl text-text"
 											fontName="Montserrat_700Bold">
 											Reviews
 										</Text>

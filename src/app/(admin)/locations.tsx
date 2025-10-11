@@ -190,26 +190,26 @@ export default function ManageLocationsScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row items-center justify-between border-b border-[#eee] p-4 pb-6">
+				<View className="flex-row items-center justify-between p-4 pb-6">
 					<Text
-						className="android:font-normal racking-tighter-lexend text-2xl text-black"
-						fontStyle="extrabold">
+						className="android:font-normal text-2xl text-text"
+						fontName="Montserrat_700Bold">
 						Manage Tourist Spots
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
-						<Feather name="x" size={24} color="black" />
+						<Feather name="x" size={24} color="#f7f7f7" />
 					</TouchableOpacity>
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-4"
 						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
-							className="ml-2 tracking-tighter-lexend text-black"
-							fontStyle="medium">
+							className="ml-2 text-black"
+							fontName="Poppins_700Bold">
 							Add New Tourist Spot
 						</Text>
 					</TouchableOpacity>
@@ -217,9 +217,11 @@ export default function ManageLocationsScreen() {
 						<View className="items-center justify-center py-8">
 							<ActivityIndicator
 								size="large"
-								color="#fed787"
+								color="#0ff6be"
 							/>
-							<Text className="mt-4 text-[#666666]">
+							<Text
+								className="mt-4 text-text-inactive"
+								fontName="Poppins_500Medium">
 								Loading Tourist Spot...
 							</Text>
 						</View>
@@ -228,17 +230,19 @@ export default function ManageLocationsScreen() {
 							<AntDesign
 								name="exclamationcircle"
 								size={40}
-								color="#fed787"
+								color="#0ff6be"
 							/>
-							<Text className="mt-4 text-[#666666]">
+							<Text
+								className="mt-4 text-text-inactive"
+								fontName="Poppins_500Medium">
 								{error}
 							</Text>
 							<TouchableOpacity
-								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
+								className="mt-4 rounded-lg border border-line bg-primary px-4 py-2"
 								onPress={fetchLocations}>
 								<Text
 									className="text-black"
-									fontStyle="medium">
+									fontName="Montserrat_700Bold">
 									Retry
 								</Text>
 							</TouchableOpacity>
@@ -251,7 +255,7 @@ export default function ManageLocationsScreen() {
 							{locations.map((location) => (
 								<View
 									key={location.id}
-									className="mb-4 rounded-xl border border-[#333333] bg-white">
+									className="mb-4 rounded-xl border border-line bg-surface">
 									<View className="flex-row">
 										<Image
 											source={{
@@ -262,26 +266,27 @@ export default function ManageLocationsScreen() {
 										/>
 										<View className="flex-1 p-3">
 											<Text
-												className="text-base tracking-tighter-lexend text-black"
-												fontStyle="bold">
+												className="text-base text-text"
+												fontName="Montserrat_700Bold">
 												{location.name}
 											</Text>
 											<Text
 												numberOfLines={2}
-												className="mt-1 text-sm tracking-tighter-lexend text-[#666666]">
+												className="mt-1 text-sm text-text-inactive"
+												fontName="Poppins_500Medium">
 												{location.description}
 											</Text>
 										</View>
 									</View>
-									<View className="flex-row border-t border-[#eee] p-2">
+									<View className="flex-row border-t border-line p-2">
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												openEditModal(location)
 											}>
 											<Text
-												className="text-[#333333]"
-												fontStyle="medium">
+												className="text-text-inactive"
+												fontName="Poppins_500Medium">
 												<Feather
 													name="edit"
 													size={16}
@@ -289,7 +294,7 @@ export default function ManageLocationsScreen() {
 												Edit
 											</Text>
 										</TouchableOpacity>
-										<View className="mx-2 border-r border-[#eee]" />
+										<View className="mx-2 border-r border-line" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
 											onPress={() =>
@@ -297,7 +302,7 @@ export default function ManageLocationsScreen() {
 											}>
 											<Text
 												className="text-[#fe5b62]"
-												fontStyle="medium">
+												fontName="Poppins_500Medium">
 												<Feather
 													name="trash-2"
 													size={16}
@@ -313,25 +318,25 @@ export default function ManageLocationsScreen() {
 				</View>
 			</SafeAreaView>
 			<Modal visible={modalVisible} animationType="slide">
-				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
-					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+				<SafeAreaView className="flex-1 bg-background">
+					<View className="flex-row items-center justify-between p-4">
 						<Text
-							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold">
+							className="android:font-normal text-2xl text-text"
+							fontName="Montserrat_700Bold">
 							{editingLocation
 								? "Edit tourist spot"
 								: "Add new tourist spot"}
 						</Text>
 						<TouchableOpacity
 							onPress={() => setModalVisible(false)}>
-							<Feather name="x" size={24} color="black" />
+							<Feather name="x" size={24} color="#f7f7f7" />
 						</TouchableOpacity>
 					</View>
 					<ScrollView className="p-4">
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								NAME
 							</Text>
 							<TextInput
@@ -342,15 +347,15 @@ export default function ManageLocationsScreen() {
 										name: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Tourist spot name"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								DESCRIPTION
 							</Text>
 							<TextInput
@@ -361,7 +366,7 @@ export default function ManageLocationsScreen() {
 										description: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Tourist spot description"
 								placeholderTextColor="#666666"
 								multiline
@@ -372,8 +377,8 @@ export default function ManageLocationsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								DESCRIPTION (FIL)
 							</Text>
 							<TextInput
@@ -384,7 +389,7 @@ export default function ManageLocationsScreen() {
 										description_fil: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Filipino description (optional)"
 								placeholderTextColor="#666666"
 								multiline
@@ -395,8 +400,8 @@ export default function ManageLocationsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								DESCRIPTION (AKL)
 							</Text>
 							<TextInput
@@ -407,7 +412,7 @@ export default function ManageLocationsScreen() {
 										description_akl: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Aklanon description (optional)"
 								placeholderTextColor="#666666"
 								multiline
@@ -418,8 +423,8 @@ export default function ManageLocationsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								ADDRESS
 							</Text>
 							<TextInput
@@ -430,7 +435,7 @@ export default function ManageLocationsScreen() {
 										street: text
 									})
 								}
-								className="mb-2 border border-[#333333] bg-white p-3 text-black"
+								className="mb-2 rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Street (can be blank)"
 								placeholderTextColor="#666666"
 							/>
@@ -442,7 +447,7 @@ export default function ManageLocationsScreen() {
 										barangay: text
 									})
 								}
-								className="mb-2 border border-[#333333] bg-white p-3 text-black"
+								className="mb-2 rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Barangay"
 								placeholderTextColor="#666666"
 							/>
@@ -454,15 +459,15 @@ export default function ManageLocationsScreen() {
 										town: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Town"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								IMAGES
 							</Text>
 							{/* Banner Image Uploader */}
@@ -509,8 +514,8 @@ export default function ManageLocationsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								COORDINATES
 							</Text>
 							<View className="flex-row space-x-2">
@@ -522,7 +527,7 @@ export default function ManageLocationsScreen() {
 											latitude: text
 										})
 									}
-									className="flex-1 border border-[#333333] bg-white p-3 text-black"
+									className="flex-1 rounded-lg border border-line bg-surface p-3 text-text"
 									placeholder="Latitude"
 									placeholderTextColor="#666666"
 									keyboardType="numeric"
@@ -535,7 +540,7 @@ export default function ManageLocationsScreen() {
 											longitude: text
 										})
 									}
-									className="flex-1 border border-[#333333] bg-white p-3 text-black"
+									className="flex-1 rounded-lg border border-line bg-surface p-3 text-text"
 									placeholder="Longitude"
 									placeholderTextColor="#666666"
 									keyboardType="numeric"
@@ -543,7 +548,7 @@ export default function ManageLocationsScreen() {
 							</View>
 						</View>
 						<TouchableOpacity
-							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
+							className="mb-4 items-center justify-center rounded-3xl border border-line bg-primary p-4"
 							onPress={handleSave}
 							disabled={loading}>
 							{loading ? (
@@ -553,8 +558,8 @@ export default function ManageLocationsScreen() {
 								/>
 							) : (
 								<Text
-									className="tracking-tighter-lexend text-black"
-									fontStyle="medium">
+									className="text-black"
+									fontName="Montserrat_700Bold">
 									Save Tourist Spot
 								</Text>
 							)}

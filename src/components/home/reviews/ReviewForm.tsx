@@ -59,7 +59,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	return (
 		<View className="mt-4">
 			<Text
-				className="text-text mb-2 text-lg"
+				className="mb-2 text-lg text-text"
 				fontName="Montserrat_700Bold">
 				{t("review.writeReview")}
 			</Text>

@@ -96,19 +96,21 @@ export default function BookmarksPage() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
 				{!isOnline && (
-					<View className="mx-4 mb-1 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
-						<Text className="text-xs tracking-tighter-lexend text-black">
+					<View className="mx-4 mt-2 rounded-md border border-line bg-primary px-3 py-1">
+						<Text className="text-xs text-black">
 							You are currently offline. Some features may be
 							unavailable.
 						</Text>
 					</View>
 				)}
-				<View className="flex-row items-center justify-between border-b border-[#000] p-4">
+				<View className="flex-row items-center justify-between p-4">
 					<View className="flex-row items-center">
-						<Text className="android:font-normal text-2xl tracking-tighter-lexend text-black">
+						<Text
+							className="android:font-normal text-2xl text-text"
+							fontName="Montserrat_700Bold">
 							{t("home.bookmarkedLocations")}
 						</Text>
 					</View>
@@ -116,13 +118,17 @@ export default function BookmarksPage() {
 				<ScrollView className="flex-1">
 					<View className="mt-2 px-4 py-2">
 						<View className="mb-4 flex-row items-center justify-between">
-							<Text className="text-xl tracking-tighter-lexend text-black">
+							<Text
+								className="text-xl text-text"
+								fontName="Poppins_700Bold">
 								{t("home.myBookmarks")}
 							</Text>
 							<TouchableOpacity
 								className="flex-row items-center"
 								onPress={toggleView}>
-								<Text className="mr-1 tracking-tighter-lexend text-black">
+								<Text
+									className="mr-1 text-text-inactive"
+									fontName="Poppins_500Medium">
 									{isGridView
 										? "List View"
 										: "Grid View"}
@@ -130,7 +136,7 @@ export default function BookmarksPage() {
 								<Feather
 									name={isGridView ? "list" : "grid"}
 									size={18}
-									color="black"
+									color="#cacbca"
 								/>
 							</TouchableOpacity>
 						</View>
@@ -138,62 +144,76 @@ export default function BookmarksPage() {
 							<View className="items-center justify-center p-4">
 								<ActivityIndicator
 									size="large"
-									color="#fed787"
+									color="#0ff6be"
 								/>
-								<Text className="mt-2 text-[#666666]">
+								<Text
+									className="mt-2 text-text-inactive"
+									fontName="Poppins_500Medium">
 									Loading bookmarked locations...
 								</Text>
 							</View>
 						) : error ? (
 							<View
-								className="my-4 border border-[#333333] bg-white p-4"
+								className="my-4 rounded-lg border border-line bg-surface p-4"
 								style={shadowStyles.standard}>
 								<View className="items-center">
-									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-line bg-primary">
 										<Feather
 											name="alert-triangle"
 											size={24}
 											color="#333"
 										/>
 									</View>
-									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+									<Text
+										className="mb-2 text-center text-xl text-text"
+										fontName="Montserrat_700Bold">
 										Error Loading Bookmarks
 									</Text>
-									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+									<Text
+										className="mb-4 text-center text-base text-text-inactive"
+										fontName="Poppins_500Medium">
 										{error}
 									</Text>
 									<TouchableOpacity
-										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
+										className="flex-row items-center justify-center rounded-lg border border-line bg-primary px-4 py-2"
 										style={shadowStyles.small}
 										onPress={fetchBookmarkedLocations}>
-										<Text className="tracking-tighter-lexend text-black">
+										<Text
+											className="text-black"
+											fontName="Montserrat_700Bold">
 											Retry
 										</Text>
 									</TouchableOpacity>
 								</View>
 							</View>
 						) : locations.length === 0 ? (
-							<View className="my-4 rounded-lg border border-[#333333] bg-white p-4">
+							<View className="my-4 rounded-lg border border-line bg-surface p-4">
 								<View className="items-center">
-									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-line bg-primary">
 										<AntDesign
 											name="heart"
 											size={24}
 											color="#333"
 										/>
 									</View>
-									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+									<Text
+										className="mb-2 text-center text-xl text-text"
+										fontName="Montserrat_700Bold">
 										{t("home.noBookmarks")}
 									</Text>
-									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+									<Text
+										className="mb-4 text-center text-base text-text-inactive"
+										fontName="Poppins_500Medium">
 										{t("home.noBookmarksDesc")}
 									</Text>
 									<TouchableOpacity
-										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
+										className="flex-row items-center justify-center rounded-lg border border-line bg-primary px-4 py-2"
 										onPress={() =>
 											router.push("/(home)")
 										}>
-										<Text className="tracking-tighter-lexend text-black">
+										<Text
+											className="text-black"
+											fontName="Montserrat_700Bold">
 											{t("home.exploreLocations")}
 										</Text>
 									</TouchableOpacity>
@@ -243,7 +263,6 @@ export default function BookmarksPage() {
 									<LocationCard
 										key={location.id}
 										location={location}
-										listView={true}
 										isBookmarked={true}
 										onToggleBookmark={
 											handleToggleBookmark

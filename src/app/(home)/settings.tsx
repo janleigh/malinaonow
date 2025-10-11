@@ -39,7 +39,7 @@ export default function SettingsScreen() {
 			<SafeAreaView className="flex-1">
 				<View className="flex-row items-center justify-between border-b border-surface p-4">
 					<Text
-						className="android:font-normal text-text text-2xl"
+						className="android:font-normal text-2xl text-text"
 						fontName="Montserrat_700Bold">
 						{t("settings.title")}
 					</Text>
@@ -51,7 +51,7 @@ export default function SettingsScreen() {
 				<ScrollView className="flex-1 p-4">
 					<View className="mb-6">
 						<Text
-							className="text-text text-lg"
+							className="text-lg text-text"
 							fontName="Montserrat_700Bold">
 							{t("settings.language")}
 						</Text>

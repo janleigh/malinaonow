@@ -207,28 +207,28 @@ const ProductsScreen = () => {
 	}, [filteredProducts]);
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
 				{!isOnline && (
-					<View className="mx-4 mb-1 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
-						<Text className="text-xs tracking-tighter-lexend text-black">
+					<View className="mx-4 mt-2 rounded-md border border-line bg-primary px-3 py-1">
+						<Text className="text-xs text-black">
 							You are currently offline. Some features may be
 							unavailable.
 						</Text>
 					</View>
 				)}
-				<View className="border-b border-[#eee] p-4">
+				<View className="p-4">
 					<View className="mb-4">
 						<Text
-							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold">
+							className="android:font-normal text-2xl text-text"
+							fontName="Montserrat_700Bold">
 							{t("products.title")}
 						</Text>
 					</View>
-					<View className="mb-3 flex-row items-center rounded-xl border border-[#333333] bg-white px-3 py-2">
-						<Feather name="search" size={18} color="#666" />
+					<View className="mb-3 flex-row items-center rounded-xl border border-line bg-surface px-3 py-2">
+						<Feather name="search" size={18} color="#cacbca" />
 						<TextInput
-							className="ml-2 flex-1 font-lexend-medium text-base tracking-tighter-lexend text-black"
+							className="ml-2 flex-1 text-base text-text"
 							placeholder={t("products.searchPlaceholder")}
 							value={searchQuery}
 							onChangeText={setSearchQuery}
@@ -241,24 +241,30 @@ const ProductsScreen = () => {
 						{barangays.map((barangay) => (
 							<TouchableOpacity
 								key={barangay}
-								className={`mr-2 rounded-2xl border border-[#333333] px-3 py-1 ${selectedBarangay === barangay ? "bg-[#FFFD87]" : "bg-white"}`}
+								className={`mr-2 rounded-2xl border border-line px-3 py-1 ${selectedBarangay === barangay ? "bg-primary" : "bg-surface"}`}
 								onPress={() =>
 									setSelectedBarangay(barangay)
 								}>
-								<Text className="tracking-tighter-lexend text-black">
+								<Text
+									className="text-text"
+									fontName="Poppins_500Medium">
 									{barangay}
 								</Text>
 							</TouchableOpacity>
 						))}
 					</ScrollView>
 					<View className="mt-4 flex-row items-center justify-between">
-						<Text className="text-lg tracking-tighter-lexend text-black">
+						<Text
+							className="text-lg text-text"
+							fontName="Poppins_700Bold">
 							{t("products.featuredProducts")}
 						</Text>
 						<TouchableOpacity
 							className="flex-row items-center"
 							onPress={toggleView}>
-							<Text className="mr-1 tracking-tighter-lexend text-black">
+							<Text
+								className="mr-1 text-text-inactive"
+								fontName="Poppins_500Medium">
 								{viewMode === "grid"
 									? "List View"
 									: "Grid View"}
@@ -268,7 +274,7 @@ const ProductsScreen = () => {
 									viewMode === "grid" ? "list" : "grid"
 								}
 								size={18}
-								color="black"
+								color="#cacbca"
 							/>
 						</TouchableOpacity>
 					</View>
@@ -278,18 +284,24 @@ const ProductsScreen = () => {
 						<View className="flex-1 items-center justify-center">
 							<ActivityIndicator
 								size="large"
-								color="#fed787"
+								color="#0ff6be"
 							/>
 						</View>
 					) : error ? (
 						<View className="flex-1 items-center justify-center p-4">
-							<Text className="mb-2 text-center text-red-500">
+							<Text
+								className="mb-2 text-center text-red-500"
+								fontName="Poppins_500Medium">
 								{error}
 							</Text>
 							<TouchableOpacity
 								onPress={fetchProducts}
-								className="rounded-md bg-[#fed787] px-4 py-2">
-								<Text className="font-lexend">Retry</Text>
+								className="rounded-md border border-line bg-primary px-4 py-2">
+								<Text
+									className="text-black"
+									fontName="Montserrat_700Bold">
+									Retry
+								</Text>
 							</TouchableOpacity>
 						</View>
 					) : filteredProducts.length > 0 ? (
@@ -328,9 +340,11 @@ const ProductsScreen = () => {
 							<AntDesign
 								name="inbox"
 								size={60}
-								color="#fed787"
+								color="#0ff6be"
 							/>
-							<Text className="mb-2 mt-4 text-center text-xl tracking-tighter-lexend text-black">
+							<Text
+								className="mb-2 mt-4 text-center text-xl text-text"
+								fontName="Montserrat_700Bold">
 								{products.length === 0
 									? t("products.noProducts")
 									: t("products.noMatchingProducts")}

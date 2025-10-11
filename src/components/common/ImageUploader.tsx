@@ -172,7 +172,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 	return (
 		<View className="mb-4">
 			<Text
-				className="mb-2 text-sm text-[#666666]"
+				className="mb-2 text-sm text-text-inactive"
 				style={{ fontWeight: "500" }}>
 				{placeholder.toUpperCase()}
 			</Text>
@@ -191,14 +191,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 					</TouchableOpacity>
 				</View>
 			) : (
-				<View className="h-48 w-full items-center justify-center rounded-lg border-2 border-dashed border-[#333333] bg-gray-50">
+				<View className="h-48 w-full items-center justify-center rounded-lg border-2 border-dashed border-line bg-lighterBackground">
 					{isUploading ? (
 						<View className="items-center">
 							<ActivityIndicator
 								size="large"
-								color="#FFBB38"
+								color="#0ff6be"
 							/>
-							<Text className="mt-2 text-[#666666]">
+							<Text className="mt-2 text-text-inactive">
 								Uploading...
 							</Text>
 						</View>
@@ -207,9 +207,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 							<Feather
 								name="image"
 								size={40}
-								color="#666666"
+								color="#cacbca"
 							/>
-							<Text className="mt-2 text-center text-[#666666]">
+							<Text className="mt-2 text-center text-text-inactive">
 								{placeholder}
 							</Text>
 						</View>
@@ -220,7 +220,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				<View
 					className={`mt-3 flex-row ${showCamera ? "space-x-3" : ""}`}>
 					<TouchableOpacity
-						className={`flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] p-3 ${showCamera ? "bg-[#FFBB38]" : "bg-[#FFBB38]"}`}
+						className={`flex-1 flex-row items-center justify-center rounded-lg border border-line p-3 ${showCamera ? "bg-primary" : "bg-primary"}`}
 						onPress={pickImage}>
 						<Feather name="image" size={16} color="black" />
 						<Text
@@ -231,15 +231,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 					</TouchableOpacity>
 					{showCamera && (
 						<TouchableOpacity
-							className="flex-1 flex-row items-center justify-center rounded-lg border border-[#333333] bg-white p-3"
+							className="flex-1 flex-row items-center justify-center rounded-lg border border-line bg-surface p-3"
 							onPress={takePhoto}>
 							<Feather
 								name="camera"
 								size={16}
-								color="black"
+								color="#f7f7f7"
 							/>
 							<Text
-								className="ml-2 text-black"
+								className="ml-2 text-text"
 								style={{ fontWeight: "500" }}>
 								Camera
 							</Text>

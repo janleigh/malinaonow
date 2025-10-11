@@ -34,21 +34,23 @@ export default function AdminDashboard() {
 	];
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+				<View className="flex-row items-center justify-between p-4">
 					<Text
-						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-						fontStyle="extrabold">
+						className="android:font-normal text-2xl text-text"
+						fontName="Montserrat_700Bold">
 						Admin Panel
 					</Text>
 					<TouchableOpacity
 						onPress={() => router.replace("/(home)")}>
-						<Feather name="x" size={24} color="black" />
+						<Feather name="x" size={24} color="#f7f7f7" />
 					</TouchableOpacity>
 				</View>
 				<View className="p-4">
-					<Text className="mb-6 text-base tracking-tighter-lexend text-[#666666]">
+					<Text
+						className="mb-6 text-base text-text-inactive"
+						fontName="Poppins_500Medium">
 						Manage tourist spots, events, and moderate user
 						reviews.
 					</Text>
@@ -56,12 +58,12 @@ export default function AdminDashboard() {
 						{adminOptions.map((option, index) => (
 							<TouchableOpacity
 								key={index}
-								className="mt-2 rounded-xl border border-[#333333] bg-white p-4"
+								className="mt-2 rounded-xl border border-line bg-surface p-4"
 								onPress={() =>
 									router.push(option.route as any)
 								}>
 								<View className="flex-row items-center">
-									<View className="mr-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
+									<View className="mr-4 h-12 w-12 items-center justify-center rounded-full border border-line bg-primary">
 										<Feather
 											name={option.icon as any}
 											size={24}
@@ -70,18 +72,20 @@ export default function AdminDashboard() {
 									</View>
 									<View className="flex-1">
 										<Text
-											className="text-lg tracking-tighter-lexend text-black"
-											fontStyle="bold">
+											className="text-lg text-text"
+											fontName="Montserrat_700Bold">
 											{option.title}
 										</Text>
-										<Text className="text-sm tracking-tighter-lexend text-[#666666]">
+										<Text
+											className="text-sm text-text-inactive"
+											fontName="Poppins_500Medium">
 											{option.description}
 										</Text>
 									</View>
 									<Feather
 										name="chevron-right"
 										size={24}
-										color="#333"
+										color="#cacbca"
 									/>
 								</View>
 							</TouchableOpacity>

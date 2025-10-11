@@ -173,26 +173,26 @@ export default function ManageProductsScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+				<View className="flex-row items-center justify-between p-4">
 					<Text
-						className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-						fontStyle="extrabold">
+						className="android:font-normal text-2xl text-text"
+						fontName="Montserrat_700Bold">
 						Manage Products
 					</Text>
 					<TouchableOpacity onPress={() => router.back()}>
-						<Feather name="x" size={24} color="black" />
+						<Feather name="x" size={24} color="#f7f7f7" />
 					</TouchableOpacity>
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="mb-4 flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] p-4"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-4"
 						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
-							className="ml-2 tracking-tighter-lexend text-black"
-							fontStyle="medium">
+							className="ml-2 text-black"
+							fontName="Poppins_700Bold">
 							Add New Product
 						</Text>
 					</TouchableOpacity>
@@ -200,9 +200,11 @@ export default function ManageProductsScreen() {
 						<View className="items-center justify-center py-8">
 							<ActivityIndicator
 								size="large"
-								color="#fed787"
+								color="#0ff6be"
 							/>
-							<Text className="mt-4 text-[#666666]">
+							<Text
+								className="mt-4 text-text-inactive"
+								fontName="Poppins_500Medium">
 								Loading products...
 							</Text>
 						</View>
@@ -211,15 +213,19 @@ export default function ManageProductsScreen() {
 							<AntDesign
 								name="exclamationcircle"
 								size={40}
-								color="#fed787"
+								color="#0ff6be"
 							/>
-							<Text className="mt-4 text-[#666666]">
+							<Text
+								className="mt-4 text-text-inactive"
+								fontName="Poppins_500Medium">
 								{error}
 							</Text>
 							<TouchableOpacity
-								className="mt-4 border border-[#333333] bg-[#fed787] px-4 py-2"
+								className="mt-4 rounded-lg border border-line bg-primary px-4 py-2"
 								onPress={fetchProducts}>
-								<Text className="font-lexend-medium text-black">
+								<Text
+									className="text-black"
+									fontName="Montserrat_700Bold">
 									Retry
 								</Text>
 							</TouchableOpacity>
@@ -229,7 +235,7 @@ export default function ManageProductsScreen() {
 							{products.map((product) => (
 								<View
 									key={product.id}
-									className="mb-4 rounded-xl border border-[#333333] bg-white">
+									className="mb-4 rounded-xl border border-line bg-surface">
 									<View className="flex-row">
 										{product.image_url ? (
 											<Image
@@ -240,32 +246,35 @@ export default function ManageProductsScreen() {
 												resizeMode="cover"
 											/>
 										) : (
-											<View className="h-24 w-24 items-center justify-center bg-gray-100">
+											<View className="h-24 w-24 items-center justify-center bg-lighterBackground">
 												<Feather
 													name="package"
 													size={32}
-													color="#999"
+													color="#cacbca"
 												/>
 											</View>
 										)}
 
 										<View className="flex-1 p-3">
 											<Text
-												className="text-base tracking-tighter-lexend text-black"
+												className="text-base text-text"
 												numberOfLines={1}
-												fontStyle="bold">
+												fontName="Montserrat_700Bold">
 												{product.name}
 											</Text>
 											<Text
-												className="mt-1 text-sm tracking-tighter-lexend text-[#555555]"
-												numberOfLines={1}>
+												className="mt-1 text-sm text-text-inactive"
+												numberOfLines={1}
+												fontName="Poppins_500Medium">
 												{product.barangay}
 											</Text>
 											<View className="mt-1 flex-row items-center">
 												<View
 													className={`mr-1 h-3 w-3 rounded-full ${product.is_available ? "bg-green-500" : "bg-red-500"}`}
 												/>
-												<Text className="text-xs text-[#555555]">
+												<Text
+													className="text-xs text-text-inactive"
+													fontName="Poppins_500Medium">
 													{product.is_available
 														? "Available"
 														: "Not Available"}
@@ -273,15 +282,15 @@ export default function ManageProductsScreen() {
 											</View>
 										</View>
 									</View>
-									<View className="flex-row border-t border-[#eee] p-2">
+									<View className="flex-row border-t border-line p-2">
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												openEditModal(product)
 											}>
 											<Text
-												className="font-lexend-medium text-[#333333]"
-												fontStyle="medium">
+												className="text-text-inactive"
+												fontName="Poppins_500Medium">
 												<Feather
 													name="edit"
 													size={16}
@@ -289,15 +298,15 @@ export default function ManageProductsScreen() {
 												Edit
 											</Text>
 										</TouchableOpacity>
-										<View className="mx-2 border-r border-[#eee]" />
+										<View className="mx-2 border-r border-line" />
 										<TouchableOpacity
 											className="flex-1 items-center py-2"
 											onPress={() =>
 												handleDelete(product.id)
 											}>
 											<Text
-												className="font-lexend-medium text-[#fe5b62]"
-												fontStyle="medium">
+												className="text-[#fe5b62]"
+												fontName="Poppins_500Medium">
 												<Feather
 													name="trash-2"
 													size={16}
@@ -313,25 +322,25 @@ export default function ManageProductsScreen() {
 				</View>
 			</SafeAreaView>
 			<Modal visible={modalVisible} animationType="slide">
-				<SafeAreaView className="flex-1 bg-[#E1F2E9]">
-					<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
+				<SafeAreaView className="flex-1 bg-background">
+					<View className="flex-row items-center justify-between p-4">
 						<Text
-							className="android:font-normal text-2xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold">
+							className="android:font-normal text-2xl text-text"
+							fontName="Montserrat_700Bold">
 							{editingProduct
 								? "Edit Product"
 								: "Add Product"}
 						</Text>
 						<TouchableOpacity
 							onPress={() => setModalVisible(false)}>
-							<Feather name="x" size={24} color="black" />
+							<Feather name="x" size={24} color="#f7f7f7" />
 						</TouchableOpacity>
 					</View>
 					<ScrollView className="p-4">
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								NAME
 							</Text>
 							<TextInput
@@ -342,15 +351,15 @@ export default function ManageProductsScreen() {
 										name: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Product name"
 								placeholderTextColor="#666666"
 							/>
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								DESCRIPTION
 							</Text>
 							<TextInput
@@ -361,7 +370,7 @@ export default function ManageProductsScreen() {
 										description: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Product description"
 								placeholderTextColor="#666666"
 								multiline
@@ -372,8 +381,8 @@ export default function ManageProductsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								DESCRIPTION (FIL)
 							</Text>
 							<TextInput
@@ -384,7 +393,7 @@ export default function ManageProductsScreen() {
 										description_fil: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Filipino description (optional)"
 								placeholderTextColor="#666666"
 								multiline
@@ -395,8 +404,8 @@ export default function ManageProductsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								DESCRIPTION (AKL)
 							</Text>
 							<TextInput
@@ -407,7 +416,7 @@ export default function ManageProductsScreen() {
 										description_akl: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Aklanon description (optional)"
 								placeholderTextColor="#666666"
 								multiline
@@ -418,8 +427,8 @@ export default function ManageProductsScreen() {
 						</View>
 						<View className="mb-4">
 							<Text
-								className="mb-1 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mb-1 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								PRODUCT IMAGES
 							</Text>
 							{/* Main Product Image Uploader */}
@@ -450,7 +459,7 @@ export default function ManageProductsScreen() {
 										barangay: text
 									})
 								}
-								className="border border-[#333333] bg-white p-3 text-black"
+								className="mt-4 rounded-lg border border-line bg-surface p-3 text-text"
 								placeholder="Barangay"
 								placeholderTextColor="#666666"
 							/>
@@ -458,8 +467,8 @@ export default function ManageProductsScreen() {
 
 						<View className="mb-4 flex-row items-center">
 							<Text
-								className="mr-4 text-sm text-[#666666]"
-								fontStyle="medium">
+								className="mr-4 text-sm text-text-inactive"
+								fontName="Montserrat_600SemiBold">
 								AVAILABLE
 							</Text>
 							<TouchableOpacity
@@ -470,25 +479,25 @@ export default function ManageProductsScreen() {
 											!formData.is_available
 									})
 								}
-								className={`h-6 w-10 rounded-full border border-[#333333] ${formData.is_available ? "bg-[#FFBB38]" : "bg-white"} items-center justify-center`}>
+								className={`h-6 w-10 rounded-full border border-line ${formData.is_available ? "bg-primary" : "bg-surface"} items-center justify-center`}>
 								<View
-									className={`h-4 w-4 rounded-full ${formData.is_available ? "ml-4 bg-black" : "ml-0 bg-[#eee]"}`}
+									className={`h-4 w-4 rounded-full ${formData.is_available ? "ml-4 bg-black" : "ml-0 bg-lighterBackground"}`}
 								/>
 							</TouchableOpacity>
 						</View>
 						<TouchableOpacity
-							className="mb-4 items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] p-4"
+							className="mb-4 items-center justify-center rounded-lg border border-line bg-primary p-4"
 							onPress={handleSave}
 							disabled={loading}>
 							{loading ? (
 								<ActivityIndicator
 									size="small"
-									color="#333333"
+									color="#161719"
 								/>
 							) : (
 								<Text
-									className="font-lexend-medium tracking-tighter-lexend text-black"
-									fontStyle="medium">
+									className="android:font-normal text-base text-black"
+									fontName="Poppins_700Bold">
 									Save Product
 								</Text>
 							)}
