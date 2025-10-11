@@ -49,20 +49,26 @@ export default function SignupScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background ">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
-						<Text className="android:text-4xl android:font-normal mb-2 text-3xl tracking-tighter-lexend text-black">
+						<Text
+							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
+							fontName="Poppins_700Bold">
 							Create Account
 						</Text>
-						<Text className="mb-8 tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="mb-8 text-text-inactive"
+							fontName="Poppins_500Medium">
 							Sign up to get started with MalinaoNow
 						</Text>
 						<View className="mt-1 space-y-4">
 							<View className="mb-4">
-								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
+								<Text
+									className="mb-1 w-[180px] text-sm text-lineAlt"
+									fontName="Poppins_600SemiBold">
 									FIRST NAME
 								</Text>
 								<TextInput
@@ -78,7 +84,9 @@ export default function SignupScreen() {
 								/>
 							</View>
 							<View className="mb-4">
-								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
+								<Text
+									className="mb-1 w-[180px] text-sm text-lineAlt"
+									fontName="Poppins_600SemiBold">
 									LAST NAME
 								</Text>
 								<TextInput
@@ -94,7 +102,9 @@ export default function SignupScreen() {
 								/>
 							</View>
 							<View className="mb-4">
-								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
+								<Text
+									className="mb-1 w-[180px] text-sm text-lineAlt"
+									fontName="Poppins_600SemiBold">
 									EMAIL
 								</Text>
 								<TextInput
@@ -117,23 +127,28 @@ export default function SignupScreen() {
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-4 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38]"
+							className="mt-4 h-12 w-full items-center justify-center rounded-3xl border border-line bg-primary"
 							onPress={handleSignup}
 							disabled={isLoading}>
 							{isLoading ? (
 								<ActivityIndicator color="#000" />
 							) : (
-								<Text className="android:font-normal font-lexend-medium text-base tracking-tighter-lexend text-black">
+								<Text
+									className="android:font-normal font-lexend-medium text-base text-black"
+									fontName="Poppins_700Bold">
 									Create Account
 								</Text>
 							)}
 						</TouchableOpacity>
 					</View>
 					<View className="items-center pb-4">
-						<Text className="text-center tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="text-center text-text-light"
+							fontName="Poppins_500Medium">
 							Already have an account?{" "}
 							<Text
-								className="android:font-normal tracking-tighter-lexend text-black"
+								className="android:font-normal text-black"
+								fontName="Poppins_700Bold"
 								onPress={() => router.replace("/login")}>
 								Log in
 							</Text>

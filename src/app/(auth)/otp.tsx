@@ -102,15 +102,19 @@ export default function OTPScreen() {
 	const isComplete = cursorPosition >= 6;
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
-						<Text className="android:font-normal mb-2 text-3xl tracking-tighter-lexend text-black">
+						<Text
+							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
+							fontName="Poppins_700Bold">
 							Verification Code
 						</Text>
-						<Text className="mb-8 tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="mb-8 text-text-inactive"
+							fontName="Poppins_500Medium">
 							{`We've sent a 6-digit code to ${email || "your email"}`}
 						</Text>
 						<View className="items-center">
@@ -142,13 +146,14 @@ export default function OTPScreen() {
 									return (
 										<View
 											key={`digit-${index}`}
-											className={`mx-1.5 h-12 w-12 items-center justify-center
-                                            border ${digit ? "border-[#fed787]" : "border-[#333333]"} bg-white`}
+											className={`mx-1.5 h-12 w-12 items-center justify-center border ${digit ? "border-[#fed787]" : "border-[#333333]"} bg-white`}
 											style={shadowStyles.standard}>
 											{showCursor ? (
 												<View className="h-5 w-0.5 animate-pulse bg-black" />
 											) : (
-												<Text className="text-xl font-bold text-black">
+												<Text
+													className="text-xl text-black"
+													fontName="Poppins_700Bold">
 													{digit || ""}
 												</Text>
 											)}
@@ -162,7 +167,7 @@ export default function OTPScreen() {
 								</Text>
 							) : null}
 							<TouchableOpacity
-								className="mt-8 h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
+								className="mt-8 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-primary"
 								style={shadowStyles.standard}
 								onPress={handleVerify}
 								disabled={isLoading || otp.length !== 6}>
@@ -170,8 +175,8 @@ export default function OTPScreen() {
 									<ActivityIndicator color="#000" />
 								) : (
 									<Text
-										className="android:font-normal text-base tracking-tighter-lexend text-black"
-										fontStyle="medium">
+										className="android:font-normal text-base text-black"
+										fontName="Poppins_700Bold">
 										Verify
 									</Text>
 								)}
@@ -179,10 +184,13 @@ export default function OTPScreen() {
 						</View>
 					</View>
 					<View className="items-center pb-4">
-						<Text className="text-center tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="text-center text-text-light"
+							fontName="Poppins_500Medium">
 							Didn&apos;t receive code?{" "}
 							<Text
-								className="android:font-normal tracking-tighter-lexend text-black"
+								className="android:font-normal text-black"
+								fontName="Poppins_700Bold"
 								onPress={handleResendCode}>
 								{isResending ? "Sending..." : "Resend"}
 							</Text>

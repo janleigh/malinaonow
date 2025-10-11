@@ -58,8 +58,8 @@ export const OAuthButton = ({
 						/>
 					)}
 					<Text
-						className="android:font-normal text-base tracking-tighter-lexend text-black"
-						fontStyle="medium">
+						className="android:font-normal text-base text-black"
+						fontName="Poppins_700Bold">
 						{text}
 					</Text>
 				</>

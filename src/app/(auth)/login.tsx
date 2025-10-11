@@ -38,20 +38,26 @@ export default function LoginScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<StatusBar style="dark" />
 			<SafeAreaView className="flex-1">
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
-						<Text className="android:text-4xl android:font-normal mb-2 text-3xl tracking-tighter-lexend text-black">
+						<Text
+							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
+							fontName="Poppins_700Bold">
 							Welcome Back
 						</Text>
-						<Text className="mb-8 tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="mb-8 text-text-inactive"
+							fontName="Poppins_500Medium">
 							Log in to continue using MalinaoNow
 						</Text>
 						<View className="mt-4 space-y-4">
 							<View className="mb-4">
-								<Text className="mb-1 text-xs tracking-tighter-lexend text-[#666666]">
+								<Text
+									className="mb-1 w-[180px] text-sm text-lineAlt"
+									fontName="Poppins_600SemiBold">
 									EMAIL
 								</Text>
 								<TextInput
@@ -62,7 +68,7 @@ export default function LoginScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="rounded-md border border-[#333333] bg-white p-4 text-base text-black"
+									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
@@ -74,15 +80,15 @@ export default function LoginScreen() {
 							) : null}
 						</View>
 						<TouchableOpacity
-							className="mt-8 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-[#FFBB38] shadow-md"
+							className="mt-4 h-12 w-full items-center justify-center rounded-3xl border border-line bg-primary"
 							onPress={handleLogin}
 							disabled={isLoading}>
 							{isLoading ? (
 								<ActivityIndicator color="#000" />
 							) : (
 								<Text
-									className="android:font-normal text-base tracking-tighter-lexend text-black"
-									fontStyle="medium">
+									className="android:font-normal text-base text-black"
+									fontName="Poppins_700Bold">
 									Login
 								</Text>
 							)}
@@ -108,10 +114,13 @@ export default function LoginScreen() {
 						/>
 					</View>
 					<View className="items-center pb-4">
-						<Text className="text-center tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="text-center text-text-light"
+							fontName="Poppins_500Medium">
 							Don&apos;t have an account?{" "}
 							<Text
-								className="android:font-normal tracking-tighter-lexend text-black"
+								className="android:font-normal text-black"
+								fontName="Poppins_700Bold"
 								onPress={() => router.replace("/signup")}>
 								Sign up
 							</Text>

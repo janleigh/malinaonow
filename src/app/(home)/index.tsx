@@ -306,7 +306,9 @@ export default function HomePage() {
 					<View className="mt-2 px-4 py-2">
 						<View className="mb-4 flex-row items-center justify-between">
 							<View className="flex-row items-center">
-								<Text className="text-lg tracking-tighter-lexend text-black">
+								<Text
+									className="w-[160px] text-lg leading-tight tracking-tighter-lexend text-black"
+									numberOfLines={3}>
 									{t("home.featuredLocations")}
 								</Text>
 							</View>

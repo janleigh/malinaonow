@@ -2,6 +2,20 @@ import { API_KEYS } from "@/config";
 import { TranslationProvider } from "@/shared/context/TranslationContext";
 import { LocationService, ProductService } from "@/shared/services";
 import { ClerkProvider } from "@clerk/clerk-expo";
+import {
+	Geist_400Regular,
+	Geist_500Medium,
+	Geist_600SemiBold,
+	Geist_700Bold,
+	Geist_800ExtraBold
+} from "@expo-google-fonts/geist";
+import {
+	Poppins_400Regular,
+	Poppins_500Medium,
+	Poppins_600SemiBold,
+	Poppins_700Bold,
+	Poppins_800ExtraBold
+} from "@expo-google-fonts/poppins";
 import { AuthProvider } from "@shared/context/AuthContext";
 import "@shared/styles/globals.css";
 import { useFonts } from "expo-font";
@@ -14,16 +28,21 @@ import "react-native-reanimated";
 const CLERK_PUBLISHABLE_KEY = API_KEYS.clerk.publishableKey;
 
 const tokenCache = {
-	async getToken(key: string) {
+	async getToken<T>(key: string): Promise<T | null> {
 		try {
-			return SecureStore.getItemAsync(key);
+			const stored = await SecureStore.getItemAsync(key);
+			if (stored) {
+				return JSON.parse(stored) as T;
+			}
+			return null;
 		} catch (err) {
 			return null;
 		}
 	},
-	async saveToken(key: string, value: string) {
+	async saveToken<T>(key: string, value: T) {
 		try {
-			return SecureStore.setItemAsync(key, value);
+			const serialized = JSON.stringify(value);
+			return SecureStore.setItemAsync(key, serialized);
 		} catch (err) {
 			return;
 		}
@@ -38,7 +57,17 @@ export default function RootLayout() {
 		"LexendMega-ExtraBold": require("../shared/assets/fonts/LexendMega-ExtraBold.ttf"),
 		"LexendMega-Medium": require("../shared/assets/fonts/LexendMega-Medium.ttf"),
 		"LexendMega-Regular": require("../shared/assets/fonts/LexendMega-Regular.ttf"),
-		"LexendMega-SemiBold": require("../shared/assets/fonts/LexendMega-SemiBold.ttf")
+		"LexendMega-SemiBold": require("../shared/assets/fonts/LexendMega-SemiBold.ttf"),
+		Geist_400Regular,
+		Geist_500Medium,
+		Geist_600SemiBold,
+		Geist_700Bold,
+		Geist_800ExtraBold,
+		Poppins_400Regular,
+		Poppins_500Medium,
+		Poppins_600SemiBold,
+		Poppins_700Bold,
+		Poppins_800ExtraBold
 	});
 
 	useEffect(() => {

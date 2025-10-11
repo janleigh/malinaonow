@@ -4,18 +4,18 @@
 	"version": "1.1.0",
 	"private": true,
 	"scripts": {
-		"start": "bunx expo start --tunnel",
-		"android": "bunx expo start --tunnel --android",
-		"ios": "bunx expo run:ios",
-		"web": "bunx expo start --web",
+		"dev": "bunx expo start --tunnel",
 		"lint": "bunx expo lint",
 		"lint:fix": "bunx eslint src --ext .ts --fix",
 		"format": "bunx prettier --write src",
-		"format:check": "bunx prettier --check src"
+		"format:check": "bunx prettier --check src",
+		"clean": "rm -rf .expo node_modules"
 	},
 	"dependencies": {
 		"@clerk/clerk-expo": "^2.14.11",
 		"@clerk/clerk-sdk-node": "^5.1.6",
+		"@expo-google-fonts/geist": "^0.4.1",
+		"@expo-google-fonts/poppins": "^0.4.1",
 		"@expo/vector-icons": "^14.1.0",
 		"@react-native-async-storage/async-storage": "2.1.2",
 		"@react-native-community/datetimepicker": "8.4.1",

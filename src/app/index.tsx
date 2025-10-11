@@ -61,10 +61,10 @@ export default function LandingPage() {
 	}
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			{!isOnline && (
-				<View className="mx-4 mt-2 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
-					<Text className="text-xs tracking-tighter-lexend text-black">
+				<View className="border-line mx-4 mt-2 rounded-md border bg-primary px-3 py-1">
+					<Text className="text-xs text-black">
 						You are currently offline. Some features may be
 						unavailable.
 					</Text>
@@ -79,18 +79,18 @@ export default function LandingPage() {
 							resizeMode="cover"
 						/>
 						<Text
-							className="android:text-4xl android:font-normal text-3xl tracking-tighter-lexend text-black"
-							fontStyle="extrabold">
+							className="android:text-4xl android:font-normal text-text-light text-3xl"
+							fontName="Poppins_700Bold">
 							MalinaoNow
 						</Text>
 					</View>
 				</View>
-				<View className="w-full space-y-3 px-5 pb-10">
+				<View className="bg-surface w-full space-y-3 rounded-t-xl px-5 py-10">
 					<Link href="/(auth)/signup" asChild>
-						<TouchableOpacity className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-[#333333] bg-white px-4">
+						<TouchableOpacity className="border-line h-12 w-full flex-row items-center justify-center rounded-3xl border bg-white px-4">
 							<Text
-								className="android:font-normal text-base font-extrabold tracking-tighter-lexend text-black"
-								fontStyle="medium">
+								className="android:font-normal text-base font-extrabold text-black"
+								fontName="Poppins_700Bold">
 								Sign up with email
 							</Text>
 						</TouchableOpacity>
@@ -109,10 +109,13 @@ export default function LandingPage() {
 						className="android:mt-2"
 					/>
 					<View className="mt-6 items-center">
-						<Text className="text-center tracking-tighter-lexend text-[#333333]">
+						<Text
+							className="text-center text-white"
+							fontName="Poppins_500Medium">
 							Already have an account?{" "}
 							<Text
-								className="android:font-normal font-extrabold tracking-tighter-lexend text-black"
+								className="android:font-normal font-extrabold text-black"
+								fontName="Poppins_700Bold"
 								onPress={() =>
 									router.push("/(auth)/login")
 								}>
@@ -128,34 +131,34 @@ export default function LandingPage() {
 				animationType="fade">
 				<View className="flex-1 items-center justify-center bg-black/30">
 					<View
-						className="w-[80%] border-2 border-[#333333] bg-white p-5"
+						className="border-line w-[80%] border-2 bg-white p-5"
 						style={shadowStyles.standard}>
 						<Text
-							className="mb-4 text-center text-xl tracking-tighter-lexend text-black"
+							className="mb-4 text-center text-xl text-black"
 							fontStyle="extrabold">
 							You&apos;re already signed in
 						</Text>
-						<Text className="mb-6 text-center tracking-tighter-lexend text-[#333333]">
+						<Text className="text-line mb-6 text-center">
 							Would you like to continue to the app or sign
 							out?
 						</Text>
 						<View className="space-y-3">
 							<TouchableOpacity
-								className="h-12 w-full items-center justify-center border border-[#333333] bg-[#fed787]"
+								className="border-line h-12 w-full items-center justify-center border bg-primary"
 								style={shadowStyles.standard}
 								onPress={handleGoToHome}>
 								<Text
-									className="text-base tracking-tighter-lexend text-black"
+									className="text-base text-black"
 									fontStyle="medium">
 									Go to home page
 								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								className="mt-2 h-12 w-full items-center justify-center border border-[#333333] bg-white"
+								className="border-line mt-2 h-12 w-full items-center justify-center border bg-white"
 								style={shadowStyles.standard}
 								onPress={handleSignOut}>
 								<Text
-									className="text-base tracking-tighter-lexend text-black"
+									className="text-base text-black"
 									fontStyle="medium">
 									Sign out
 								</Text>
