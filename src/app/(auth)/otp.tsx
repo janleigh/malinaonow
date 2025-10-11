@@ -162,7 +162,7 @@ export default function OTPScreen() {
 								})}
 							</TouchableOpacity>
 							{error ? (
-								<Text className="mt-4 tracking-tighter-lexend text-red-500">
+								<Text className="mt-4 text-red-500">
 									{error}
 								</Text>
 							) : null}

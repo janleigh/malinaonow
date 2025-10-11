@@ -157,7 +157,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 							bottom: 0,
 							right: 0,
 							width: 288,
-							backgroundColor: "#C6E3D3",
+							backgroundColor: "#161719",
 							borderLeftWidth: 1,
 							borderLeftColor: "#333333",
 							transform: [{ translateX: slideAnim }]
@@ -171,19 +171,19 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 						<SafeAreaView className="flex-1">
 							<View className="flex-row items-center justify-between p-4">
 								<Text
-									className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-									fontStyle="bold">
+									className="text-text text-xl"
+									fontName="Montserrat_700Bold">
 									{t("userSidebar.profile")}
 								</Text>
 								<TouchableOpacity onPress={onClose}>
 									<AntDesign
 										name="close"
 										size={24}
-										color="black"
+										color="#f7f7f7"
 									/>
 								</TouchableOpacity>
 							</View>
-							<View className="items-center border-b border-gray-200 py-6">
+							<View className="items-center border-b border-surface py-6">
 								{userProfileImage ? (
 									<Image
 										source={{
@@ -192,20 +192,23 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										className="h-20 w-20 rounded-full border border-[#333333]"
 									/>
 								) : (
-									<View className="h-20 w-20 items-center justify-center rounded-full border border-[#333333] bg-[#8ED1DC]">
+									<View className="h-20 w-32 items-center justify-center rounded-full border border-[#333333] bg-[#8ED1DC]">
 										<Text
-											className="text-xl font-extrabold tracking-tighter-lexend text-black"
-											fontStyle="extrabold">
+											className="text-text text-xl"
+											fontName="Montserrat_700Bold">
 											{getInitials(userName)}
 										</Text>
 									</View>
 								)}
 								<Text
-									className="mt-3 font-lexend-bold text-lg tracking-tighter-lexend text-black"
-									fontStyle="bold">
+									className="text-text mt-3 text-lg"
+									fontName="Montserrat_700Bold">
 									{userName}
 								</Text>
-								<Text className="text-sm tracking-tighter-lexend text-[#666]">
+								<Text
+									className="text-xs text-lineAlt"
+									numberOfLines={1}
+									fontName="Poppins_500Medium">
 									{userEmail}
 								</Text>
 							</View>
@@ -220,9 +223,11 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 										<Feather
 											name="shield"
 											size={20}
-											color="#333"
+											color="#cacbca"
 										/>
-										<Text className="ml-4 tracking-tighter-lexend text-black">
+										<Text
+											className="text-text ml-4"
+											fontName="Poppins_500Medium">
 											{t("userSidebar.adminPanel")}
 										</Text>
 									</TouchableOpacity>
@@ -236,25 +241,27 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									<Feather
 										name="settings"
 										size={20}
-										color="#333"
+										color="#cacbca"
 									/>
-									<Text className="ml-4 tracking-tighter-lexend text-black">
+									<Text
+										className="text-text ml-4"
+										fontName="Poppins_500Medium">
 										{t("userSidebar.settings")}
 									</Text>
 								</TouchableOpacity>
 							</View>
 							<View className="p-4">
 								<TouchableOpacity
-									className="flex-row items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38] py-3"
+									className="flex-row items-center justify-center rounded-3xl border border-[#333333] bg-primary py-3"
 									onPress={handleSignOut}>
 									<Feather
 										name="log-out"
 										size={18}
-										color="#333"
+										color="#161719"
 									/>
 									<Text
-										className="ml-2 font-lexend-medium tracking-tighter-lexend text-black"
-										fontStyle="medium">
+										className="ml-2 text-black"
+										fontName="Montserrat_700Bold">
 										{t("userSidebar.signOut")}
 									</Text>
 								</TouchableOpacity>

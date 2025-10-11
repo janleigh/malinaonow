@@ -10,6 +10,7 @@ import {
 	ActivityIndicator,
 	Image,
 	Modal,
+	Pressable,
 	TouchableOpacity,
 	View
 } from "react-native";
@@ -54,22 +55,24 @@ export default function LandingPage() {
 
 	if (!isLoaded) {
 		return (
-			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
-				<ActivityIndicator size="large" color="#fed787" />
+			<View className="flex-1 items-center justify-center bg-primary">
+				<ActivityIndicator size="large" color="#0ff6be" />
 			</View>
 		);
 	}
 
 	return (
 		<View className="flex-1 bg-background">
+			{/* Offline Banner */}
 			{!isOnline && (
-				<View className="border-line mx-4 mt-2 rounded-md border bg-primary px-3 py-1">
+				<View className="mx-4 mt-2 rounded-md border border-line bg-primary px-3 py-1">
 					<Text className="text-xs text-black">
 						You are currently offline. Some features may be
 						unavailable.
 					</Text>
 				</View>
 			)}
+			{/* Logo and App Name */}
 			<SafeAreaView className="flex-1 items-center justify-center">
 				<View className="flex-1 items-center justify-center">
 					<View className="flex-col items-center">
@@ -79,22 +82,13 @@ export default function LandingPage() {
 							resizeMode="cover"
 						/>
 						<Text
-							className="android:text-4xl android:font-normal text-text-light text-3xl"
-							fontName="Poppins_700Bold">
+							className="android:text-4xl android:font-normal text-3xl text-text-light"
+							fontName="Montserrat_700Bold">
 							MalinaoNow
 						</Text>
 					</View>
 				</View>
-				<View className="bg-surface w-full space-y-3 rounded-t-xl px-5 py-10">
-					<Link href="/(auth)/signup" asChild>
-						<TouchableOpacity className="border-line h-12 w-full flex-row items-center justify-center rounded-3xl border bg-white px-4">
-							<Text
-								className="android:font-normal text-base font-extrabold text-black"
-								fontName="Poppins_700Bold">
-								Sign up with email
-							</Text>
-						</TouchableOpacity>
-					</Link>
+				<View className="w-full space-y-3 rounded-t-xl px-5 py-10">
 					<OAuthButton
 						strategy="oauth_google"
 						text="Continue with Google"
@@ -106,16 +100,30 @@ export default function LandingPage() {
 								color="black"
 							/>
 						}
-						className="android:mt-2"
+						className="android:mb-2"
 					/>
+					<Link href="/(auth)/signup" asChild>
+						<Pressable
+							className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4"
+							android_ripple={{
+								color: "rgba(0,0,0,0.12)",
+								foreground: true
+							}}>
+							<Text
+								className="android:font-normal text-base font-extrabold text-black"
+								fontName="Poppins_500Medium">
+								Sign up with email
+							</Text>
+						</Pressable>
+					</Link>
 					<View className="mt-6 items-center">
 						<Text
 							className="text-center text-white"
 							fontName="Poppins_500Medium">
 							Already have an account?{" "}
 							<Text
-								className="android:font-normal font-extrabold text-black"
-								fontName="Poppins_700Bold"
+								className="android:font-normal font-extrabold text-primary"
+								fontName="Montserrat_700Bold"
 								onPress={() =>
 									router.push("/(auth)/login")
 								}>
@@ -125,26 +133,27 @@ export default function LandingPage() {
 					</View>
 				</View>
 			</SafeAreaView>
+			{/* Already Signed In Dialog */}
 			<Modal
 				visible={showDialog}
 				transparent={true}
 				animationType="fade">
 				<View className="flex-1 items-center justify-center bg-black/30">
 					<View
-						className="border-line w-[80%] border-2 bg-white p-5"
+						className="w-[80%] border-2 border-line bg-white p-5"
 						style={shadowStyles.standard}>
 						<Text
 							className="mb-4 text-center text-xl text-black"
 							fontStyle="extrabold">
 							You&apos;re already signed in
 						</Text>
-						<Text className="text-line mb-6 text-center">
+						<Text className="mb-6 text-center text-line">
 							Would you like to continue to the app or sign
 							out?
 						</Text>
 						<View className="space-y-3">
 							<TouchableOpacity
-								className="border-line h-12 w-full items-center justify-center border bg-primary"
+								className="h-12 w-full items-center justify-center border border-line bg-primary"
 								style={shadowStyles.standard}
 								onPress={handleGoToHome}>
 								<Text
@@ -154,7 +163,7 @@ export default function LandingPage() {
 								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								className="border-line mt-2 h-12 w-full items-center justify-center border bg-white"
+								className="mt-2 h-12 w-full items-center justify-center border border-line bg-white"
 								style={shadowStyles.standard}
 								onPress={handleSignOut}>
 								<Text

@@ -76,9 +76,10 @@ export const EventCard = ({
 
 	return (
 		<>
+			{/* Event Card in Homepage */}
 			<TouchableOpacity
 				key={event.id}
-				className="my-2 overflow-hidden rounded-xl border border-[#333333] bg-white"
+				className="bg-backgroundAlt my-2 overflow-hidden rounded-xl border-2 border-[#000]"
 				onPress={handlePress}>
 				<View>
 					<View className="h-32 w-full">
@@ -92,18 +93,19 @@ export const EventCard = ({
 					</View>
 					<View className="p-3">
 						<Text
-							className="text-sm tracking-tighter-lexend text-black"
-							numberOfLines={2}>
+							className="text-text text-lg"
+							numberOfLines={2}
+							fontName="Montserrat_700Bold">
 							{event.name}
 						</Text>
 						<View className="mt-1 flex-row items-center">
 							<AntDesign
 								name="calendar"
 								size={10}
-								color="#555"
+								color="#cacbca"
 							/>
 							<Text
-								className="ml-1 text-sm tracking-tighter-lexend text-[#555]"
+								className="ml-1 text-sm text-[#cacbca]"
 								numberOfLines={1}>
 								{formatDate(event.date)}
 							</Text>
@@ -112,9 +114,9 @@ export const EventCard = ({
 							<AntDesign
 								name="clockcircleo"
 								size={10}
-								color="#555"
+								color="#cacbca"
 							/>
-							<Text className="ml-1 text-sm tracking-tighter-lexend text-[#555]">
+							<Text className="ml-1 text-sm text-[#cacbca]">
 								{formatTime(event.time)}
 							</Text>
 						</View>
@@ -122,20 +124,22 @@ export const EventCard = ({
 							<AntDesign
 								name="enviromento"
 								size={10}
-								color="#555"
+								color="#cacbca"
 								style={{ marginTop: 2 }}
 							/>
-							<Text className="ml-1 flex-1 text-sm tracking-tighter-lexend text-[#555]">
+							<Text className="ml-1 flex-1 text-sm text-[#cacbca]">
 								{event.location}
 							</Text>
 						</View>
 					</View>
 				</View>
 			</TouchableOpacity>
+			{/* Expanded Modal */}
 			<Modal
 				visible={expanded}
 				transparent={true}
-				animationType="none">
+				animationType="none"
+				onRequestClose={toggleExpand}>
 				<Animated.View
 					style={{
 						flex: 1,
@@ -150,18 +154,19 @@ export const EventCard = ({
 							}
 						]
 					}}>
-					<SafeAreaView className="flex-1">
-						<View className="flex-row items-center justify-between border-b border-[#333333] p-4">
+					<SafeAreaView className="flex-1 bg-background">
+						{/* Header */}
+						<View className="flex-row items-center justify-between border-b border-line p-4">
 							<Text
-								className="font-lexend-bold text-xl tracking-tighter-lexend text-black"
-								fontStyle="bold">
+								className="text-text text-xl"
+								fontName="Montserrat_700Bold">
 								{t("event.eventDetails")}
 							</Text>
 							<TouchableOpacity onPress={toggleExpand}>
 								<Feather
 									name="x"
 									size={24}
-									color="black"
+									color="#f7f7f7"
 								/>
 							</TouchableOpacity>
 						</View>
@@ -171,72 +176,84 @@ export const EventCard = ({
 									uri: event.banner_image
 								}}
 								className="h-52 w-full"
-								resizeMode="cover"
+								resizeMode="center"
 							/>
 							<View className="p-4">
-								<Text className="mb-4 text-2xl tracking-tighter-lexend text-black">
+								<Text
+									className="text-text mb-4 text-2xl"
+									fontName="Montserrat_700Bold">
 									{event.name}
 								</Text>
 								<View className="mb-6 space-y-3">
+									{/* Date, Time, Location */}
+									{/* Date */}
 									<View className="flex-row items-center">
-										<View className="h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
+										<View className="h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-surface">
 											<AntDesign
 												name="calendar"
 												size={20}
-												color="#333"
+												color="#f7f7f7"
 											/>
 										</View>
 										<View className="ml-3">
 											<Text
-												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
-												fontStyle="medium">
+												className="text-xs text-[#cacbca]"
+												fontName="Poppins_500Medium">
 												{t(
 													"event.date"
 												).toUpperCase()}
 											</Text>
-											<Text className="text-base tracking-tighter-lexend text-[#333333]">
+											<Text
+												className="text-text text-base"
+												fontName="Poppins_500Medium">
 												{formatDate(event.date)}
 											</Text>
 										</View>
 									</View>
+									{/* Time */}
 									<View className="flex-row items-center">
-										<View className="mt-2 h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
+										<View className="mt-2 h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-surface">
 											<AntDesign
 												name="clockcircleo"
 												size={20}
-												color="#333"
+												color="#f7f7f7"
 											/>
 										</View>
-										<View className="ml-3">
+										<View className="ml-3 mt-2">
 											<Text
-												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
-												fontStyle="medium">
+												className="text-xs text-[#cacbca]"
+												fontName="Poppins_500Medium">
 												{t(
 													"event.time"
 												).toUpperCase()}
 											</Text>
-											<Text className="text-base tracking-tighter-lexend text-[#333333]">
+											<Text
+												className="text-text text-base"
+												fontName="Poppins_500Medium">
 												{formatTime(event.time)}
 											</Text>
 										</View>
 									</View>
+									{/* Location */}
 									<View className="flex-row items-center">
-										<View className="mt-2 h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-[#FFBB38]">
+										<View className="mt-2 h-10 w-10 items-center justify-center rounded-full border border-[#333333] bg-surface">
 											<AntDesign
 												name="enviromento"
 												size={20}
-												color="#333"
+												color="#f7f7f7"
 											/>
 										</View>
-										<View className="ml-3">
+										<View className="ml-3 mt-2">
 											<Text
-												className="font-lexend-medium text-xs tracking-tighter-lexend text-[#666666]"
-												fontStyle="medium">
+												className="text-xs text-[#cacbca]"
+												fontName="Poppins_500Medium">
 												{t(
 													"event.location"
 												).toUpperCase()}
 											</Text>
-											<Text className="text-base tracking-tighter-lexend text-[#333333]">
+											<Text
+												className="text-text] text-base"
+												fontName="Poppins_500Medium">
 												{event.location}
 											</Text>
 										</View>
@@ -244,11 +261,11 @@ export const EventCard = ({
 								</View>
 								<View className="mt-6">
 									<TouchableOpacity
-										className="h-12 w-full items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38]"
+										className="h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-primary"
 										onPress={toggleExpand}>
 										<Text
-											className="font-lexend-medium text-base tracking-tighter-lexend text-black"
-											fontStyle="medium">
+											className="text-base text-black"
+											fontName="Montserrat_700Bold">
 											{t("event.addToCalendar")}
 										</Text>
 									</TouchableOpacity>

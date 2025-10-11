@@ -15,7 +15,9 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 	if (reviews.length === 0) {
 		return (
 			<View className="py-4">
-				<Text className="text-center font-lexend tracking-tighter-lexend text-[#666666]">
+				<Text
+					className="text-inactive text-center"
+					fontName="Poppins_500Medium">
 					{t("review.noReviews")}
 				</Text>
 			</View>
@@ -27,21 +29,25 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 			{reviews.map((review) => (
 				<View
 					key={review.id}
-					className="border-b border-[#eee] pb-4">
+					className="border-b border-[#333333] p-2">
 					<View className="flex-row items-center justify-between">
 						<Text
-							className="font-lexend-bold text-lg tracking-tighter-lexend text-black"
-							fontStyle="bold">
+							className="text-text text-lg"
+							fontName="Montserrat_700Bold">
 							{review.user_name || "Anonymous"}
 						</Text>
-						<Text className="font-lexend text-sm tracking-tighter-lexend text-[#999]">
+						<Text
+							className="text-sm text-[#cacbca]"
+							fontName="Poppins_400Regular">
 							{formatDate(review.created_at)}
 						</Text>
 					</View>
 					<View className="flex-row items-center py-1">
 						<RatingStars rating={review.rating} />
 					</View>
-					<Text className="mt-1 font-lexend tracking-tighter-lexend text-[#333]">
+					<Text
+						className="text-text mt-1"
+						fontName="Poppins_400Regular">
 						{review.comment}
 					</Text>
 				</View>

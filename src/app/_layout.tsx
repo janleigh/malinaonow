@@ -10,6 +10,13 @@ import {
 	Geist_800ExtraBold
 } from "@expo-google-fonts/geist";
 import {
+	Montserrat_400Regular,
+	Montserrat_500Medium,
+	Montserrat_600SemiBold,
+	Montserrat_700Bold,
+	Montserrat_800ExtraBold
+} from "@expo-google-fonts/montserrat";
+import {
 	Poppins_400Regular,
 	Poppins_500Medium,
 	Poppins_600SemiBold,
@@ -53,16 +60,16 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const [fontsLoaded, fontError] = useFonts({
-		"LexendMega-Bold": require("../shared/assets/fonts/LexendMega-Bold.ttf"),
-		"LexendMega-ExtraBold": require("../shared/assets/fonts/LexendMega-ExtraBold.ttf"),
-		"LexendMega-Medium": require("../shared/assets/fonts/LexendMega-Medium.ttf"),
-		"LexendMega-Regular": require("../shared/assets/fonts/LexendMega-Regular.ttf"),
-		"LexendMega-SemiBold": require("../shared/assets/fonts/LexendMega-SemiBold.ttf"),
 		Geist_400Regular,
 		Geist_500Medium,
 		Geist_600SemiBold,
 		Geist_700Bold,
 		Geist_800ExtraBold,
+		Montserrat_400Regular,
+		Montserrat_500Medium,
+		Montserrat_600SemiBold,
+		Montserrat_700Bold,
+		Montserrat_800ExtraBold,
 		Poppins_400Regular,
 		Poppins_500Medium,
 		Poppins_600SemiBold,

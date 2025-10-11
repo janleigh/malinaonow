@@ -33,7 +33,6 @@ const EVENT_CARD_WIDTH = SCREEN_WIDTH - 28; // Accounting for padding
 
 export default function HomePage() {
 	const [sidebarVisible, setSidebarVisible] = useState(false);
-	const [isGridView, setIsGridView] = useState(true);
 	const [locations, setLocations] = useState<Location[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -135,10 +134,6 @@ export default function HomePage() {
 		fetchBookmarks();
 	}, [user?.id, isSignedIn, fetchBookmarks, fetchLocations]);
 
-	const toggleView = () => {
-		setIsGridView(!isGridView);
-	};
-
 	const handleToggleBookmark = async (
 		locationId: string,
 		newStatus: boolean
@@ -171,30 +166,38 @@ export default function HomePage() {
 		: locations;
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
+				{/* Offline Banner */}
 				{!isOnline && (
-					<View className="mx-4 mb-1 rounded-md border border-[#333333] bg-[#FFBB38] px-3 py-1">
-						<Text className="text-xs tracking-tighter-lexend text-black">
+					<View className="mx-4 mt-2 rounded-md border border-line bg-primary px-3 py-1">
+						<Text className="text-xs text-black">
 							You are currently offline. Some features may be
 							unavailable.
 						</Text>
 					</View>
 				)}
+				{/* Header */}
 				<View className="flex-row items-center justify-between p-4">
-					<Text className="android:font-normal text-2xl tracking-tighter-lexend text-black">
+					<Text
+						className="android:font-normal text-text text-2xl"
+						fontName="Montserrat_700Bold">
 						MalinaoNow
 					</Text>
 					<TouchableOpacity
 						className="p-2"
 						onPress={openSidebar}>
-						<Feather name="user" size={24} color="black" />
+						<Feather name="user" size={24} color="#f7f7f7" />
 					</TouchableOpacity>
 				</View>
+				{/* Main Window */}
 				<ScrollView className="flex-1">
+					{/* Events Section */}
 					<View className="mb-6 px-4">
 						<View className="mb-4 flex-row items-center justify-between">
-							<Text className="text-xl tracking-tighter-lexend text-black">
+							<Text
+								className="text-text text-xl"
+								fontName="Montserrat_700Bold">
 								{t("home.upcomingEvents")}
 							</Text>
 						</View>
@@ -203,7 +206,7 @@ export default function HomePage() {
 								<View className="items-center justify-center p-4">
 									<ActivityIndicator
 										size="large"
-										color="#fed787"
+										color="#0ff6be"
 									/>
 									<Text className="mt-2 text-[#666666]">
 										{t("home.loadingEvents")}
@@ -221,17 +224,17 @@ export default function HomePage() {
 												color="#333"
 											/>
 										</View>
-										<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+										<Text className="mb-2 text-center text-xl text-text-light">
 											Error Loading Events
 										</Text>
-										<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+										<Text className="mb-4 text-center text-base text-[#666666]">
 											{eventError}
 										</Text>
 										<TouchableOpacity
 											className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 											style={shadowStyles.small}
 											onPress={fetchEvents}>
-											<Text className="tracking-tighter-lexend text-black">
+											<Text className="text-text-light">
 												Retry
 											</Text>
 										</TouchableOpacity>
@@ -249,10 +252,10 @@ export default function HomePage() {
 												color="#333"
 											/>
 										</View>
-										<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+										<Text className="mb-2 text-center text-xl text-black">
 											{t("home.noEvents")}
 										</Text>
-										<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+										<Text className="mb-4 text-center text-base text-[#666666]">
 											{t("home.noEventsDesc")}
 										</Text>
 									</View>
@@ -295,7 +298,7 @@ export default function HomePage() {
 										{events.map((_, index) => (
 											<View
 												key={index}
-												className={`mx-1 h-2 w-2 rounded-full ${index === activeEventIndex ? "bg-[#fed787]" : "bg-[#cccccc]"}`}
+												className={`mx-1 h-2 w-2 rounded-full ${index === activeEventIndex ? "bg-[#0ff6be]" : "bg-[#cccccc]"}`}
 											/>
 										))}
 									</View>
@@ -303,35 +306,22 @@ export default function HomePage() {
 							)}
 						</View>
 					</View>
+					{/* Locations Section */}
 					<View className="mt-2 px-4 py-2">
 						<View className="mb-4 flex-row items-center justify-between">
 							<View className="flex-row items-center">
 								<Text
-									className="w-[160px] text-lg leading-tight tracking-tighter-lexend text-black"
-									numberOfLines={3}>
+									className="text-text text-xl leading-tight"
+									fontName="Poppins_700Bold">
 									{t("home.featuredLocations")}
 								</Text>
 							</View>
-							<TouchableOpacity
-								className="flex-row items-center"
-								onPress={toggleView}>
-								<Text className="mr-1 tracking-tighter-lexend text-black">
-									{isGridView
-										? "List View"
-										: "Grid View"}
-								</Text>
-								<Feather
-									name={isGridView ? "list" : "grid"}
-									size={18}
-									color="black"
-								/>
-							</TouchableOpacity>
 						</View>
 						{loading ? (
 							<View className="items-center justify-center p-4">
 								<ActivityIndicator
 									size="large"
-									color="#fed787"
+									color="#0ff6be"
 								/>
 								<Text className="mt-2 text-[#666666]">
 									{t("home.loadingLocations")}
@@ -349,17 +339,17 @@ export default function HomePage() {
 											color="#333"
 										/>
 									</View>
-									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+									<Text className="mb-2 text-center text-xl text-black">
 										Error Loading Data
 									</Text>
-									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+									<Text className="mb-4 text-center text-base text-[#666666]">
 										{error}
 									</Text>
 									<TouchableOpacity
 										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
 										style={shadowStyles.small}
 										onPress={fetchLocations}>
-										<Text className="tracking-tighter-lexend text-black">
+										<Text className="text-black">
 											Retry
 										</Text>
 									</TouchableOpacity>
@@ -377,10 +367,10 @@ export default function HomePage() {
 											color="#333"
 										/>
 									</View>
-									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+									<Text className="mb-2 text-center text-xl text-black">
 										{t("home.noLocations")}
 									</Text>
-									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+									<Text className="mb-4 text-center text-base text-[#666666]">
 										{t("home.noLocationsDesc")}
 									</Text>
 								</View>
@@ -398,16 +388,15 @@ export default function HomePage() {
 											color="#333"
 										/>
 									</View>
-									<Text className="mb-2 text-center text-xl tracking-tighter-lexend text-black">
+									<Text className="mb-2 text-center text-xl text-black">
 										{t("home.noBookmarks")}
 									</Text>
-									<Text className="mb-4 text-center text-base tracking-tighter-lexend text-[#666666]">
+									<Text className="mb-4 text-center text-base text-[#666666]">
 										{t("home.noBookmarksDesc")}
 									</Text>
 								</View>
 							</View>
-						) : isGridView ? (
-							// Grid View
+						) : (
 							<View className="flex-row justify-between">
 								<View className="w-[48%] space-y-4">
 									{displayedLocations
@@ -452,23 +441,6 @@ export default function HomePage() {
 											/>
 										))}
 								</View>
-							</View>
-						) : (
-							// List View
-							<View className="space-y-4">
-								{displayedLocations.map((location) => (
-									<LocationCard
-										key={location.id}
-										location={location}
-										listView={true}
-										isBookmarked={bookmarkedLocations.includes(
-											location.id
-										)}
-										onToggleBookmark={
-											handleToggleBookmark
-										}
-									/>
-								))}
 							</View>
 						)}
 					</View>

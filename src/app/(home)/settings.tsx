@@ -35,37 +35,45 @@ export default function SettingsScreen() {
 	};
 
 	return (
-		<View className="flex-1 bg-[#C6E3D3]">
+		<View className="flex-1 bg-background">
 			<SafeAreaView className="flex-1">
-				<View className="flex-row items-center justify-between border-b border-[#eee] p-4">
-					<Text className="android:font-normal text-2xl tracking-tighter-lexend text-black">
+				<View className="flex-row items-center justify-between border-b border-surface p-4">
+					<Text
+						className="android:font-normal text-text text-2xl"
+						fontName="Montserrat_700Bold">
 						{t("settings.title")}
 					</Text>
 					<TouchableOpacity
 						onPress={() => router.replace("/(home)")}>
-						<Feather name="x" size={24} color="black" />
+						<Feather name="x" size={24} color="#f7f7f7" />
 					</TouchableOpacity>
 				</View>
 				<ScrollView className="flex-1 p-4">
 					<View className="mb-6">
-						<Text className="mb-2 text-lg tracking-tighter-lexend text-black">
+						<Text
+							className="text-text text-lg"
+							fontName="Montserrat_700Bold">
 							{t("settings.language")}
 						</Text>
-						<Text className="mb-4 text-sm tracking-tighter-lexend text-gray-600">
+						<Text
+							className="mb-2 text-sm text-lineAlt"
+							fontName="Poppins_500Medium">
 							{t("settings.selectLanguage")}
 						</Text>
 						<View className="space-y-3">
 							{LANGUAGES.map((lang) => (
 								<TouchableOpacity
 									key={lang.id}
-									className={`flex-row items-center justify-between rounded-3xl border p-4 ${
+									className={`my-1 flex-row items-center justify-between rounded-3xl border p-4 ${
 										language === lang.id
-											? "border-black bg-[#FFBB38]"
+											? "border-black bg-[#0ff6be]"
 											: "border-gray-300 bg-white"
 									}`}
 									onPress={() => changeLanguage(lang.id)}
 									disabled={isLoading}>
-									<Text className="tracking-tighter-lexend text-black">
+									<Text
+										className="text-black"
+										fontName="Montserrat_700Bold">
 										{lang.name}
 									</Text>
 									{language === lang.id && (

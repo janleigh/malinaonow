@@ -56,7 +56,7 @@ export default function SignupScreen() {
 					<View>
 						<Text
 							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
-							fontName="Poppins_700Bold">
+							fontName="Montserrat_700Bold">
 							Create Account
 						</Text>
 						<Text
@@ -68,7 +68,7 @@ export default function SignupScreen() {
 							<View className="mb-4">
 								<Text
 									className="mb-1 w-[180px] text-sm text-lineAlt"
-									fontName="Poppins_600SemiBold">
+									fontName="Montserrat_700Bold">
 									FIRST NAME
 								</Text>
 								<TextInput
@@ -79,14 +79,14 @@ export default function SignupScreen() {
 									}}
 									placeholder="John"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
 									autoCapitalize="words"
 								/>
 							</View>
 							<View className="mb-4">
 								<Text
 									className="mb-1 w-[180px] text-sm text-lineAlt"
-									fontName="Poppins_600SemiBold">
+									fontName="Montserrat_700Bold">
 									LAST NAME
 								</Text>
 								<TextInput
@@ -97,14 +97,14 @@ export default function SignupScreen() {
 									}}
 									placeholder="Doe"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
 									autoCapitalize="words"
 								/>
 							</View>
 							<View className="mb-4">
 								<Text
 									className="mb-1 w-[180px] text-sm text-lineAlt"
-									fontName="Poppins_600SemiBold">
+									fontName="Montserrat_700Bold">
 									EMAIL
 								</Text>
 								<TextInput
@@ -115,13 +115,13 @@ export default function SignupScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
 							</View>
 							{error ? (
-								<Text className="tracking-tighter-lexend text-red-500">
+								<Text className="text-red-500">
 									{error}
 								</Text>
 							) : null}
@@ -134,8 +134,8 @@ export default function SignupScreen() {
 								<ActivityIndicator color="#000" />
 							) : (
 								<Text
-									className="android:font-normal font-lexend-medium text-base text-black"
-									fontName="Poppins_700Bold">
+									className="android:font-normal text-base text-black"
+									fontName="Montserrat_700Bold">
 									Create Account
 								</Text>
 							)}
@@ -147,8 +147,8 @@ export default function SignupScreen() {
 							fontName="Poppins_500Medium">
 							Already have an account?{" "}
 							<Text
-								className="android:font-normal text-black"
-								fontName="Poppins_700Bold"
+								className="android:font-normal text-primary"
+								fontName="Montserrat_700Bold"
 								onPress={() => router.replace("/login")}>
 								Log in
 							</Text>

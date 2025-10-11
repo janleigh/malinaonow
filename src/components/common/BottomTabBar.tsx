@@ -2,7 +2,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { BaseText as Text } from "../BaseText";
 
 export type TabName = "home" | "products" | "calendar" | "bookmarks";
 
@@ -12,7 +11,6 @@ interface BottomTabBarProps {
 	onProductsPress?: () => void;
 	onCalendarPress?: () => void;
 	onBookmarksPress?: () => void;
-	cartItemCount?: number;
 }
 
 export const BottomTabBar: React.FC<BottomTabBarProps> = ({
@@ -20,8 +18,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 	onHomePress,
 	onProductsPress,
 	onCalendarPress,
-	onBookmarksPress,
-	cartItemCount = 0
+	onBookmarksPress
 }) => {
 	const handleHomePress = () => {
 		if (onHomePress) {
@@ -56,14 +53,14 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 	};
 
 	return (
-		<View className="flex-row justify-around border-t-2 border-[#333] bg-transparent p-4">
+		<View className="bg-backround flex-row justify-around border-t border-surface p-4">
 			<TouchableOpacity
 				className="items-center"
 				onPress={handleHomePress}>
 				<AntDesign
 					name="home"
 					size={24}
-					color={activeTab === "home" ? "#333" : "#999"}
+					color={activeTab === "home" ? "#0ff6be" : "#666666"}
 				/>
 			</TouchableOpacity>
 			<View className="items-center">
@@ -73,15 +70,12 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 					<AntDesign
 						name="appstore-o"
 						size={24}
-						color={activeTab === "products" ? "#333" : "#999"}
+						color={
+							activeTab === "products"
+								? "#0ff6be"
+								: "#666666"
+						}
 					/>
-					{cartItemCount > 0 && (
-						<View className="absolute -right-2 -top-2 h-5 w-5 items-center justify-center rounded-full bg-red-500">
-							<Text className="text-xs font-bold text-white">
-								{cartItemCount > 9 ? "9+" : cartItemCount}
-							</Text>
-						</View>
-					)}
 				</TouchableOpacity>
 			</View>
 			<TouchableOpacity
@@ -90,7 +84,9 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 				<AntDesign
 					name="calendar"
 					size={24}
-					color={activeTab === "calendar" ? "#333" : "#999"}
+					color={
+						activeTab === "calendar" ? "#0ff6be" : "#666666"
+					}
 				/>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -99,7 +95,9 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 				<AntDesign
 					name="heart"
 					size={24}
-					color={activeTab === "bookmarks" ? "#FE5B62" : "#999"}
+					color={
+						activeTab === "bookmarks" ? "#FE5B62" : "#666666"
+					}
 				/>
 			</TouchableOpacity>
 		</View>

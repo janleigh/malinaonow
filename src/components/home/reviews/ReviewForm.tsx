@@ -59,15 +59,17 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	return (
 		<View className="mt-4">
 			<Text
-				className="mb-2 font-lexend-bold text-lg tracking-tighter-lexend text-black"
-				fontStyle="bold">
+				className="text-text mb-2 text-lg"
+				fontName="Montserrat_700Bold">
 				{t("review.writeReview")}
 			</Text>
 			<View className="space-y-4">
 				<View>
-					<Text className="mb-1 font-lexend text-sm tracking-tighter-lexend text-[#666666]">
+					{/* <Text
+						className="text-inactive text-sm"
+						fontName="Poppins_500Medium">
 						{t("review.rating")}
-					</Text>
+					</Text> */}
 					<View className="mb-2 flex-row">
 						{[1, 2, 3, 4, 5].map((star) => (
 							<TouchableOpacity
@@ -94,7 +96,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 						onChangeText={setComment}
 						placeholder={t("review.commentPlaceholder")}
 						placeholderTextColor="#666666"
-						className="font-lexend text-base text-black"
+						className="rounded-3xl text-base text-black"
 						multiline
 						numberOfLines={4}
 						textAlignVertical="top"
@@ -102,20 +104,22 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 					/>
 				</View>
 				{error ? (
-					<Text className="font-lexend tracking-tighter-lexend text-red-500">
+					<Text
+						className="text-red-500"
+						fontName="Poppins_500Medium">
 						{error}
 					</Text>
 				) : null}
 				<TouchableOpacity
-					className="mt-2 h-12 w-full items-center justify-center rounded-xl border border-[#333333] bg-[#FFBB38]"
+					className="mt-2 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-primary"
 					onPress={handleSubmit}
 					disabled={isSubmitting}>
 					{isSubmitting ? (
 						<ActivityIndicator color="#000" />
 					) : (
 						<Text
-							className="font-lexend-medium text-base tracking-tighter-lexend text-black"
-							fontStyle="medium">
+							className="text-base text-black"
+							fontName="Montserrat_700Bold">
 							{t("review.submit")}
 						</Text>
 					)}

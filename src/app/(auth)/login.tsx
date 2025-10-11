@@ -45,7 +45,7 @@ export default function LoginScreen() {
 					<View>
 						<Text
 							className="android:text-4xl android:font-normal mb-2 text-3xl text-text-light"
-							fontName="Poppins_700Bold">
+							fontName="Montserrat_700Bold">
 							Welcome Back
 						</Text>
 						<Text
@@ -57,7 +57,7 @@ export default function LoginScreen() {
 							<View className="mb-4">
 								<Text
 									className="mb-1 w-[180px] text-sm text-lineAlt"
-									fontName="Poppins_600SemiBold">
+									fontName="Montserrat_600SemiBold">
 									EMAIL
 								</Text>
 								<TextInput
@@ -68,13 +68,13 @@ export default function LoginScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-md border border-[#333333] bg-white p-2 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
 							</View>
 							{error ? (
-								<Text className="tracking-tighter-lexend text-red-500">
+								<Text className="text-red-500">
 									{error}
 								</Text>
 							) : null}
@@ -88,16 +88,14 @@ export default function LoginScreen() {
 							) : (
 								<Text
 									className="android:font-normal text-base text-black"
-									fontName="Poppins_700Bold">
+									fontName="Montserrat_700Bold">
 									Login
 								</Text>
 							)}
 						</TouchableOpacity>
 						<View className="my-6 flex-row items-center">
 							<View className="h-[1px] flex-1 bg-[#cccccc]" />
-							<Text className="mx-4 tracking-tighter-lexend text-[#666666]">
-								OR
-							</Text>
+							<Text className="text-text mx-4">OR</Text>
 							<View className="h-[1px] flex-1 bg-[#cccccc]" />
 						</View>
 						<OAuthButton
@@ -119,8 +117,8 @@ export default function LoginScreen() {
 							fontName="Poppins_500Medium">
 							Don&apos;t have an account?{" "}
 							<Text
-								className="android:font-normal text-black"
-								fontName="Poppins_700Bold"
+								className="android:font-normal text-primary"
+								fontName="Montserrat_700Bold"
 								onPress={() => router.replace("/signup")}>
 								Sign up
 							</Text>

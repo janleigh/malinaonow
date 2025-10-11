@@ -8,19 +8,11 @@ module.exports = {
 	presets: [require("nativewind/preset")],
 	theme: {
 		extend: {
-			fontFamily: {
-				"lexend": ["LexendMega-ExtraBold", "sans-serif"],
-				"lexend-bold": ["LexendMega-Bold", "sans-serif"],
-				"lexend-extrabold": ["LexendMega-ExtraBold", "sans-serif"],
-				"lexend-medium": ["LexendMega-Medium", "sans-serif"],
-				"lexend-regular": ["LexendMega-Regular", "sans-serif"]
-			},
-			letterSpacing: {
-				"tighter-lexend": "-0.15em"
-			},
 			colors: {
-				background: "#292c31",
-				surface: "#565960",
+				background: "#161719",
+				backgroundAlt: "#141617",
+				lighterBackground: "#2e3034",
+				surface: "#262729",
 				line: "#333333",
 				lineAlt: "#666666",
 				primary: {
@@ -28,8 +20,8 @@ module.exports = {
 					dark: "#3a514b"
 				},
 				text: {
-					light: "#f7f7f7",
-					inactive: "#979897"
+					DEFAULT: "#f7f7f7",
+					inactive: "#cacbca"
 				}
 			}
 		}
