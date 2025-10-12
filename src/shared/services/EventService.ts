@@ -1,6 +1,6 @@
 import { Event as ComponentEvent } from "@/components/home";
 import { supabase } from "@shared/api/supabase";
-import { StorageService } from "@shared/api/supabase/storage";
+import { StorageService } from "@shared/services";
 import { Event as SupabaseEvent } from "@shared/types/supabase";
 
 export const EventService = {

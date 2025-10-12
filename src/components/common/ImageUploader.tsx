@@ -1,8 +1,6 @@
 import { Feather } from "@expo/vector-icons";
-import {
-	StorageService,
-	UploadResult
-} from "@shared/api/supabase/storage";
+import { StorageService } from "@shared/services";
+import { UploadResult } from "@shared/types/storage";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {

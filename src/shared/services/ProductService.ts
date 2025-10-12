@@ -1,5 +1,5 @@
 import { supabase } from "@shared/api/supabase";
-import { StorageService } from "@shared/api/supabase/storage";
+import { StorageService } from "@shared/services";
 import {
 	CreateProductDTO,
 	Product,

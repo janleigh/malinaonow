@@ -404,13 +404,11 @@ export const LocationCard = ({
 `;
 
 	const getLocalizedDescription = (loc: Location): string => {
-		if (language === "fil" && loc.description_fil) {
-			return loc.description_fil;
-		} else if (language === "akl" && loc.description_akl) {
-			return loc.description_akl;
-		}
-
-		return loc.description;
+		return language === "fil" && loc.description_fil
+			? loc.description_fil
+			: language === "akl" && loc.description_akl
+				? loc.description_akl
+				: loc.description || "";
 	};
 
 	const getUserLocation = async () => {
