@@ -12,6 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
 	ActivityIndicator,
 	Animated,
+	FlatList,
 	GestureResponderEvent,
 	Image,
 	LayoutChangeEvent,
@@ -542,6 +543,45 @@ export const LocationCard = ({
 								className="h-52 w-full"
 								resizeMode="cover"
 							/>
+
+							{/* Display additional images if available */}
+							{location.images &&
+								location.images.length > 0 && (
+									<View className="px-4">
+										<Text
+											className="mb-3 text-lg text-text"
+											fontName="Montserrat_700Bold">
+											{location.images.length} Photos
+										</Text>
+										<FlatList
+											key={`location-images-horizontal`}
+											data={location.images}
+											renderItem={({ item }) => (
+												<View className="mr-3">
+													<Image
+														source={{
+															uri: item
+														}}
+														className="h-64 w-64 rounded-xl"
+														resizeMode="cover"
+													/>
+												</View>
+											)}
+											keyExtractor={(item, index) =>
+												`${item}-${index}`
+											}
+											horizontal={true}
+											showsHorizontalScrollIndicator={
+												false
+											}
+											scrollEnabled={true}
+											contentContainerStyle={{
+												paddingHorizontal: 0
+											}}
+										/>
+									</View>
+								)}
+
 							<View className="p-4">
 								<View className="mb-2 flex-row items-center">
 									<Text className="mb-1 mr-1 text-2xl text-[#FFBB38]">

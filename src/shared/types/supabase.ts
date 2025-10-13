@@ -19,6 +19,7 @@ export interface Location {
 		banner: string;
 		360?: string;
 	};
+	images?: string[]; // Array of image URLs for multiple pictures
 	coordinates: {
 		latitude: number;
 		longitude: number;

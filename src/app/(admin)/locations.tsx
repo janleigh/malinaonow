@@ -1,4 +1,5 @@
 import { BaseText as Text } from "@/components/BaseText";
+import { MultiImageUploader } from "@/components/common/MultiImageUploader";
 import { ImageUploader } from "@/components/common/ImageUploader";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { LocationService } from "@shared/services";
@@ -36,6 +37,7 @@ export default function ManageLocationsScreen() {
 		town: "",
 		bannerImage: "",
 		image360: "",
+		images: [] as string[],
 		latitude: "",
 		longitude: ""
 	});
@@ -69,6 +71,7 @@ export default function ManageLocationsScreen() {
 			town: "",
 			bannerImage: "",
 			image360: "",
+			images: [],
 			latitude: "",
 			longitude: ""
 		});
@@ -94,6 +97,7 @@ export default function ManageLocationsScreen() {
 			town: location.address.town || "",
 			bannerImage: location.image.banner,
 			image360: location.image[360] || "",
+			images: location.images || [],
 			latitude: String(location.coordinates.latitude),
 			longitude: String(location.coordinates.longitude)
 		});
@@ -118,6 +122,7 @@ export default function ManageLocationsScreen() {
 					banner: formData.bannerImage,
 					360: formData.image360
 				},
+				images: formData.images,
 				coordinates: {
 					latitude: parseFloat(formData.latitude),
 					longitude: parseFloat(formData.longitude)
@@ -257,13 +262,37 @@ export default function ManageLocationsScreen() {
 									key={location.id}
 									className="mb-4 rounded-xl border border-line bg-surface">
 									<View className="flex-row">
-										<Image
-											source={{
-												uri: location.image.banner
-											}}
-											className="h-24 w-24"
-											resizeMode="cover"
-										/>
+										<View className="relative">
+											<Image
+												source={{
+													uri:
+														location.image
+															.banner ||
+														(location.images &&
+														location.images
+															.length > 0
+															? location
+																	.images[0]
+															: "")
+												}}
+												className="h-24 w-24"
+												resizeMode="cover"
+											/>
+											{location.images &&
+												location.images.length >
+													1 && (
+													<View className="absolute -bottom-1 -right-1 rounded-full bg-primary px-1">
+														<Text className="text-xs font-bold text-black">
+															+
+															{
+																location
+																	.images
+																	.length
+															}
+														</Text>
+													</View>
+												)}
+										</View>
 										<View className="flex-1 p-3">
 											<Text
 												className="text-base text-text"
@@ -470,6 +499,21 @@ export default function ManageLocationsScreen() {
 								fontName="Montserrat_600SemiBold">
 								IMAGES
 							</Text>
+							{/* Multi Image Uploader for additional photos */}
+							<MultiImageUploader
+								entityType="locations"
+								entityId={editingLocation?.id || "new"}
+								images={formData.images}
+								onImagesChange={(images) => {
+									setFormData({
+										...formData,
+										images
+									});
+								}}
+								placeholder="Upload location images"
+								maxImages={10}
+							/>
+
 							{/* Banner Image Uploader */}
 							<ImageUploader
 								entityType="locations"
