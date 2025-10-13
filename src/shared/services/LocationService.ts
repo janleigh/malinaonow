@@ -259,6 +259,23 @@ export const LocationService = {
 				}
 			}
 
+			// Delete multiple images from storage
+			if (location.images && location.images.length > 0) {
+				for (const imageUrl of location.images) {
+					try {
+						const url = new URL(imageUrl);
+						const pathParts = url.pathname.split("/");
+						const filePath = pathParts.slice(-3).join("/");
+						await StorageService.deleteFile(filePath);
+					} catch (error) {
+						console.warn(
+							"Failed to delete location image:",
+							error
+						);
+					}
+				}
+			}
+
 			// Delete the location record
 			const { error } = await supabase
 				.from("locations")
@@ -289,6 +306,7 @@ export const LocationService = {
 				banner: location.image.banner,
 				360: location.image["360"] || ""
 			},
+			images: location.images || [],
 			coordinates: location.coordinates,
 			description: location.description,
 			description_fil: location.description_fil || "",
