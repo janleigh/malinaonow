@@ -1,6 +1,6 @@
 import { BaseText as Text } from "@/components/BaseText";
-import { MultiImageUploader } from "@/components/common/MultiImageUploader";
 import { ImageUploader } from "@/components/common/ImageUploader";
+import { MultiImageUploader } from "@/components/common/MultiImageUploader";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { LocationService } from "@shared/services";
 import { Location } from "@shared/types/supabase";
@@ -209,7 +209,7 @@ export default function ManageLocationsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-4"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-3"
 						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
@@ -571,7 +571,7 @@ export default function ManageLocationsScreen() {
 											latitude: text
 										})
 									}
-									className="flex-1 rounded-lg border border-line bg-surface p-3 text-text"
+									className="mr-2 flex-1 rounded-lg border border-line bg-surface p-3 text-text"
 									placeholder="Latitude"
 									placeholderTextColor="#666666"
 									keyboardType="numeric"
@@ -584,7 +584,7 @@ export default function ManageLocationsScreen() {
 											longitude: text
 										})
 									}
-									className="flex-1 rounded-lg border border-line bg-surface p-3 text-text"
+									className="ml-2 flex-1 rounded-lg border border-line bg-surface p-3 text-text"
 									placeholder="Longitude"
 									placeholderTextColor="#666666"
 									keyboardType="numeric"
@@ -592,7 +592,7 @@ export default function ManageLocationsScreen() {
 							</View>
 						</View>
 						<TouchableOpacity
-							className="mb-4 items-center justify-center rounded-3xl border border-line bg-primary p-4"
+							className="mb-4 items-center justify-center rounded-3xl border border-line bg-primary p-3"
 							onPress={handleSave}
 							disabled={loading}>
 							{loading ? (

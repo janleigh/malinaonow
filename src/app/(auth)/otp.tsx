@@ -98,6 +98,12 @@ export default function OTPScreen() {
 		}
 	};
 
+	const censorEmail = (email: string) => {
+		return email.replace(/(.{2})(.*)(?=@)/, (_, a, b) => {
+			return a + "*".repeat(b.length);
+		});
+	};
+
 	const cursorPosition = otp.length;
 	const isComplete = cursorPosition >= 6;
 
@@ -108,14 +114,14 @@ export default function OTPScreen() {
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
 						<Text
-							className="android:text-4xl android:font-normal text-text-light mb-2 text-3xl"
+							className="android:text-4xl android:font-normal mb-2 text-3xl text-text"
 							fontName="Poppins_700Bold">
 							Verification Code
 						</Text>
 						<Text
 							className="mb-8 text-text-inactive"
 							fontName="Poppins_500Medium">
-							{`We've sent a 6-digit code to ${email || "your email"}`}
+							{`We've sent a 6-digit code to ${censorEmail(email ?? "your email")}`}
 						</Text>
 						<View className="items-center">
 							<TextInput
@@ -146,13 +152,13 @@ export default function OTPScreen() {
 									return (
 										<View
 											key={`digit-${index}`}
-											className={`mx-1.5 h-12 w-12 items-center justify-center border ${digit ? "border-[#fed787]" : "border-[#333333]"} bg-white`}
+											className={`mx-1.5 h-12 w-12 items-center justify-center rounded-xl border ${digit ? "border-primary" : "border-[#333333]"} bg-surface`}
 											style={shadowStyles.standard}>
 											{showCursor ? (
-												<View className="h-5 w-0.5 animate-pulse bg-black" />
+												<View className="h-5 w-0.5 animate-pulse bg-primary" />
 											) : (
 												<Text
-													className="text-xl text-black"
+													className="text-xl text-text"
 													fontName="Poppins_700Bold">
 													{digit || ""}
 												</Text>
@@ -185,12 +191,12 @@ export default function OTPScreen() {
 					</View>
 					<View className="items-center pb-4">
 						<Text
-							className="text-text-light text-center"
+							className="text-center text-text"
 							fontName="Poppins_500Medium">
 							Didn&apos;t receive code?{" "}
 							<Text
-								className="android:font-normal text-black"
-								fontName="Poppins_700Bold"
+								className="android:font-normal text-primary"
+								fontName="Montserrat_700Bold"
 								onPress={handleResendCode}>
 								{isResending ? "Sending..." : "Resend"}
 							</Text>

@@ -69,11 +69,13 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
 		<View className="flex-row">
 			{[1, 2, 3, 4, 5].map((star) => (
 				<Text
+					className="mb-2"
 					key={star}
 					style={{
 						fontSize: size,
 						color: star <= rating ? "#FED787" : "#CCCCCC"
-					}}>
+					}}
+					fontName="Poppins_700Bold">
 					★
 				</Text>
 			))}

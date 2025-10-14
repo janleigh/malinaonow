@@ -187,7 +187,7 @@ export default function ManageProductsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-4"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-3"
 						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
@@ -486,7 +486,7 @@ export default function ManageProductsScreen() {
 							</TouchableOpacity>
 						</View>
 						<TouchableOpacity
-							className="mb-4 items-center justify-center rounded-lg border border-line bg-primary p-4"
+							className="mb-4 items-center justify-center rounded-3xl border border-line bg-primary p-3"
 							onPress={handleSave}
 							disabled={loading}>
 							{loading ? (

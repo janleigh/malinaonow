@@ -94,6 +94,14 @@ export default function ManageEventsScreen() {
 	};
 
 	const handleDateConfirm = (date: Date) => {
+		if (date < new Date()) {
+			Alert.alert(
+				"Invalid Time",
+				"You cannot select a time in the past."
+			);
+			return;
+		}
+
 		const formattedDate = date.toISOString().split("T")[0];
 		setFormData({ ...formData, date: formattedDate });
 		hideDatePicker();
@@ -203,7 +211,7 @@ export default function ManageEventsScreen() {
 				</View>
 				<View className="p-4">
 					<TouchableOpacity
-						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-4"
+						className="mb-4 flex-row items-center justify-center rounded-xl border border-line bg-primary p-3"
 						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text

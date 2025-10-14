@@ -1,8 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { StorageService } from "@shared/services";
-import { UploadResult } from "@shared/types/storage";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	ActivityIndicator,
 	Alert,
@@ -275,7 +274,7 @@ export const MultiImageUploader: React.FC<MultiImageUploaderProps> = ({
 					<View className="border-t border-line p-3">
 						<View className="flex-row space-x-2">
 							<TouchableOpacity
-								className="flex-1 flex-row items-center justify-center rounded-lg bg-primary p-3"
+								className="mr-2 flex-1 flex-row items-center justify-center rounded-lg bg-primary p-3"
 								onPress={pickImage}>
 								<Feather
 									name="image"
@@ -289,7 +288,7 @@ export const MultiImageUploader: React.FC<MultiImageUploaderProps> = ({
 								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								className="flex-1 flex-row items-center justify-center rounded-lg bg-surface p-3"
+								className="ml-2 flex-1 flex-row items-center justify-center rounded-lg bg-surface p-3"
 								onPress={takePhoto}>
 								<Feather
 									name="camera"

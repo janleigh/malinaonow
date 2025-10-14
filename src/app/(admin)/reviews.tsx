@@ -186,7 +186,7 @@ export default function ModerateReviewsScreen() {
 					className={`mr-2 flex-1 items-center rounded-lg border border-line py-2 ${item.flagged ? "bg-primary" : "bg-lighterBackground"}`}
 					onPress={() => handleFlagReview(item.id)}>
 					<Text
-						className="android:font-normal text-black"
+						className={`android:font-normal ${item.flagged ? "text-black" : "text-text"}`}
 						fontName="Poppins_500Medium">
 						{item.flagged ? "Flagged" : "Flag"}
 					</Text>
@@ -246,7 +246,7 @@ export default function ModerateReviewsScreen() {
 							<Feather name="x" size={24} color="#f7f7f7" />
 						</TouchableOpacity>
 					</View>
-					<View className="mb-3 flex-row items-center rounded-lg border border-line bg-surface px-3 py-2">
+					<View className="mb-3 flex-row items-center rounded-lg border border-line bg-surface px-4 py-1">
 						<Feather name="search" size={18} color="#cacbca" />
 						<TextInput
 							className="ml-2 flex-1 text-base text-text"
@@ -279,7 +279,7 @@ export default function ModerateReviewsScreen() {
 											setFilterRating(rating)
 										}>
 										<Text
-											className="android:font-normal text-black"
+											className={`android:font-normal ${filterRating === rating ? "text-black" : "text-text"}`}
 											fontName="Poppins_500Medium">
 											{rating}★
 										</Text>
@@ -291,7 +291,7 @@ export default function ModerateReviewsScreen() {
 							className={`rounded-lg border border-line px-3 py-1 ${showFlagged ? "bg-primary" : "bg-lighterBackground"}`}
 							onPress={() => setShowFlagged(!showFlagged)}>
 							<Text
-								className="android:font-normal text-black"
+								className={`android:font-normal ${showFlagged ? "text-black" : "text-text"}`}
 								fontName="Poppins_500Medium">
 								Flagged
 							</Text>

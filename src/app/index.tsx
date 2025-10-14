@@ -82,7 +82,7 @@ export default function LandingPage() {
 							resizeMode="cover"
 						/>
 						<Text
-							className="android:text-4xl android:font-normal text-text-light text-3xl"
+							className="android:text-4xl android:font-normal text-3xl text-text"
 							fontName="Montserrat_700Bold">
 							MalinaoNow
 						</Text>
@@ -104,15 +104,16 @@ export default function LandingPage() {
 					/>
 					<Link href="/(auth)/signup" asChild>
 						<Pressable
-							className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4"
+							className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4 disabled:opacity-50"
 							android_ripple={{
 								color: "rgba(0,0,0,0.12)",
 								foreground: true
-							}}>
+							}}
+							disabled>
 							<Text
 								className="android:font-normal text-base font-extrabold text-black"
 								fontName="Poppins_500Medium">
-								Sign up with email
+								Sign up with email (DISABLED)
 							</Text>
 						</Pressable>
 					</Link>
@@ -124,9 +125,7 @@ export default function LandingPage() {
 							<Text
 								className="android:font-normal font-extrabold text-primary"
 								fontName="Montserrat_700Bold"
-								onPress={() =>
-									router.push("/(auth)/login")
-								}>
+								onPress={() => router.push("/(auth)/otp")}>
 								Log in
 							</Text>
 						</Text>

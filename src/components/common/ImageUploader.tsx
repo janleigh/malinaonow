@@ -218,7 +218,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 				<View
 					className={`mt-3 flex-row ${showCamera ? "space-x-3" : ""}`}>
 					<TouchableOpacity
-						className={`flex-1 flex-row items-center justify-center rounded-lg border border-line p-3 ${showCamera ? "bg-primary" : "bg-primary"}`}
+						className={`mr-2 flex-1 flex-row items-center justify-center rounded-lg border border-line p-3 ${showCamera ? "bg-primary" : "bg-primary"}`}
 						onPress={pickImage}>
 						<Feather name="image" size={16} color="black" />
 						<Text
@@ -229,7 +229,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 					</TouchableOpacity>
 					{showCamera && (
 						<TouchableOpacity
-							className="flex-1 flex-row items-center justify-center rounded-lg border border-line bg-surface p-3"
+							className="ml-2 flex-1 flex-row items-center justify-center rounded-lg border border-line bg-surface p-3"
 							onPress={takePhoto}>
 							<Feather
 								name="camera"

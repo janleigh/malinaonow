@@ -55,7 +55,7 @@ export default function SignupScreen() {
 				<View className="flex-1 flex-col justify-between p-6">
 					<View>
 						<Text
-							className="android:text-4xl android:font-normal text-text-light mb-2 text-3xl"
+							className="android:text-4xl android:font-normal mb-2 text-3xl text-text"
 							fontName="Montserrat_700Bold">
 							Create Account
 						</Text>
@@ -79,7 +79,7 @@ export default function SignupScreen() {
 									}}
 									placeholder="John"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-surface p-2 pl-4 text-base text-text"
 									autoCapitalize="words"
 								/>
 							</View>
@@ -97,7 +97,7 @@ export default function SignupScreen() {
 									}}
 									placeholder="Doe"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-surface p-2 pl-4 text-base text-text"
 									autoCapitalize="words"
 								/>
 							</View>
@@ -115,7 +115,7 @@ export default function SignupScreen() {
 									}}
 									placeholder="youremail@company.com"
 									placeholderTextColor="#666666"
-									className="my-2 rounded-lg border border-[#333333] bg-white p-2 pl-4 text-base text-black"
+									className="my-2 rounded-lg border border-[#333333] bg-surface p-2 pl-4 text-base text-text"
 									autoCapitalize="none"
 									keyboardType="email-address"
 								/>
@@ -143,7 +143,7 @@ export default function SignupScreen() {
 					</View>
 					<View className="items-center pb-4">
 						<Text
-							className="text-text-light text-center"
+							className="text-center text-text"
 							fontName="Poppins_500Medium">
 							Already have an account?{" "}
 							<Text

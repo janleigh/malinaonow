@@ -206,7 +206,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 									{userName}
 								</Text>
 								<Text
-									className="text-xs text-lineAlt"
+									className="w-32 text-xs text-lineAlt"
 									numberOfLines={1}
 									fontName="Poppins_500Medium">
 									{userEmail}
