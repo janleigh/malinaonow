@@ -61,12 +61,12 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 				Animated.parallel([
 					Animated.timing(slideAnim, {
 						toValue: 0,
-						duration: 300,
+						duration: 200,
 						useNativeDriver: true
 					}),
 					Animated.timing(fadeAnim, {
 						toValue: 0.3,
-						duration: 300,
+						duration: 200,
 						useNativeDriver: true
 					})
 				]).start();
@@ -74,7 +74,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 				const contentTimeout = setTimeout(() => {
 					Animated.timing(contentFadeAnim, {
 						toValue: 1,
-						duration: 250,
+						duration: 150,
 						useNativeDriver: true
 					}).start();
 				}, 100);
@@ -87,12 +87,12 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 			Animated.parallel([
 				Animated.timing(slideAnim, {
 					toValue: Dimensions.get("window").width,
-					duration: 300,
+					duration: 150,
 					useNativeDriver: true
 				}),
 				Animated.timing(fadeAnim, {
 					toValue: 0,
-					duration: 300,
+					duration: 150,
 					useNativeDriver: true
 				}),
 				Animated.timing(contentFadeAnim, {

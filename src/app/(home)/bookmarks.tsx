@@ -207,7 +207,7 @@ export default function BookmarksPage() {
 										{t("home.noBookmarksDesc")}
 									</Text>
 									<TouchableOpacity
-										className="flex-row items-center justify-center rounded-lg border border-line bg-primary px-4 py-2"
+										className="flex-row items-center justify-center rounded-3xl border border-line bg-primary px-4 py-2"
 										onPress={() =>
 											router.push("/(home)")
 										}>

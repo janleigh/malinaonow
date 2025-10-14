@@ -81,7 +81,7 @@ export const TranslationProvider: React.FC<{
 				typeof result === "object" &&
 				nestedKey in result
 			) {
-				// @ts-ignore
+				// @ts-expect-error
 				result = result[nestedKey];
 			} else {
 				return key;

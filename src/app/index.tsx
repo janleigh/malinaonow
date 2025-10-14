@@ -55,7 +55,7 @@ export default function LandingPage() {
 
 	if (!isLoaded) {
 		return (
-			<View className="flex-1 items-center justify-center bg-primary">
+			<View className="flex-1 items-center justify-center bg-background">
 				<ActivityIndicator size="large" color="#0ff6be" />
 			</View>
 		);

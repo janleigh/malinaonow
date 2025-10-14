@@ -199,9 +199,11 @@ export const ProductService = {
 			// Delete main image from storage
 			if (product.image_url) {
 				try {
-					const url = new URL(product.image_url);
-					const pathParts = url.pathname.split("/");
-					const filePath = pathParts.slice(-3).join("/");
+					const { pathname } = new URL(product.image_url);
+					const filePath = pathname
+						.split("/")
+						.slice(-3)
+						.join("/");
 					await StorageService.deleteFile(filePath);
 				} catch (error) {
 					console.warn(

@@ -225,7 +225,7 @@ const ProductsScreen = () => {
 							{t("products.title")}
 						</Text>
 					</View>
-					<View className="mb-3 flex-row items-center rounded-xl border border-line bg-surface px-3 py-2">
+					<View className="mb-3 flex-row items-center rounded-xl border border-line bg-surface px-4 py-1">
 						<Feather name="search" size={18} color="#cacbca" />
 						<TextInput
 							className="ml-2 flex-1 text-base text-text"
@@ -246,7 +246,7 @@ const ProductsScreen = () => {
 									setSelectedBarangay(barangay)
 								}>
 								<Text
-									className="text-text"
+									className={`${selectedBarangay === barangay ? "text-black" : "text-text"}`}
 									fontName="Poppins_500Medium">
 									{barangay}
 								</Text>

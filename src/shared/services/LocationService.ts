@@ -239,9 +239,11 @@ export const LocationService = {
 			// Delete images from storage
 			if (location.image.banner) {
 				try {
-					const url = new URL(location.image.banner);
-					const pathParts = url.pathname.split("/");
-					const filePath = pathParts.slice(-3).join("/");
+					const { pathname } = new URL(location.image.banner);
+					const filePath = pathname
+						.split("/")
+						.slice(-3)
+						.join("/");
 					await StorageService.deleteFile(filePath);
 				} catch (error) {
 					console.warn("Failed to delete banner image:", error);
@@ -250,9 +252,11 @@ export const LocationService = {
 
 			if (location.image[360]) {
 				try {
-					const url = new URL(location.image[360]);
-					const pathParts = url.pathname.split("/");
-					const filePath = pathParts.slice(-3).join("/");
+					const { pathname } = new URL(location.image[360]);
+					const filePath = pathname
+						.split("/")
+						.slice(-3)
+						.join("/");
 					await StorageService.deleteFile(filePath);
 				} catch (error) {
 					console.warn("Failed to delete 360 image:", error);
@@ -263,9 +267,11 @@ export const LocationService = {
 			if (location.images && location.images.length > 0) {
 				for (const imageUrl of location.images) {
 					try {
-						const url = new URL(imageUrl);
-						const pathParts = url.pathname.split("/");
-						const filePath = pathParts.slice(-3).join("/");
+						const { pathname } = new URL(imageUrl);
+						const filePath = pathname
+							.split("/")
+							.slice(-3)
+							.join("/");
 						await StorageService.deleteFile(filePath);
 					} catch (error) {
 						console.warn(
