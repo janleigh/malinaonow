@@ -1,30 +1,30 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { BottomTabBar } from "@/components/common";
 import {
-    Event,
-    EventCard,
-    LocationCard,
-    UserSidebar
+	Event,
+	EventCard,
+	LocationCard,
+	UserSidebar
 } from "@/components/home";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useAuth } from "@shared/context/AuthContext";
 import {
-    BookmarkService,
-    EventService,
-    LocationService
+	BookmarkService,
+	EventService,
+	LocationService
 } from "@shared/services";
 import { Location } from "@shared/types/supabase";
 import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Dimensions,
-    ScrollView,
-    TouchableOpacity,
-    View
+	ActivityIndicator,
+	Dimensions,
+	ScrollView,
+	TouchableOpacity,
+	View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -224,7 +224,7 @@ export default function HomePage() {
 												color="#333"
 											/>
 										</View>
-										<Text className="text-text mb-2 text-center text-xl">
+										<Text className="mb-2 text-center text-xl text-text">
 											Error Loading Events
 										</Text>
 										<Text className="mb-4 text-center text-base text-[#666666]">

@@ -117,6 +117,25 @@ export default function LandingPage() {
 							</Text>
 						</Pressable>
 					</Link>
+					<View className="my-6 flex-row items-center">
+						<View className="h-[1px] flex-1 bg-[#cccccc]" />
+						<Text className="mx-4 text-text">OR</Text>
+						<View className="h-[1px] flex-1 bg-[#cccccc]" />
+					</View>
+					<Link href="/(home)/products" asChild>
+						<Pressable
+							className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4"
+							android_ripple={{
+								color: "rgba(0,0,0,0.12)",
+								foreground: true
+							}}>
+							<Text
+								className="android:font-normal text-base font-extrabold text-black"
+								fontName="Poppins_500Medium">
+								Continue as Guest
+							</Text>
+						</Pressable>
+					</Link>
 					<View className="mt-6 items-center">
 						<Text
 							className="text-center text-white"
