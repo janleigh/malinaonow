@@ -72,14 +72,20 @@ export const ReviewService = {
 	/**
 	 * Delete a review
 	 * @param {string} reviewId - The ID of the review to delete
+	 * @param {string} userId - The ID of the user deleting the review
 	 * @returns {Promise<boolean>} - A promise that resolves to true if successful, false otherwise
 	 */
-	async deleteReview(reviewId: string): Promise<boolean> {
+	async deleteReview(
+		reviewId: string,
+		userId: string
+	): Promise<boolean> {
 		try {
+			// Delete only if the review belongs to the user
 			const { error } = await supabase
 				.from("reviews")
 				.delete()
-				.eq("id", reviewId);
+				.eq("id", reviewId)
+				.eq("user_id", userId);
 
 			if (error) {
 				console.error("Error deleting review:", error);

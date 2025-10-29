@@ -1,8 +1,8 @@
 import { Feather } from "@expo/vector-icons";
 import { StorageService } from "@shared/services";
 import { UploadResult } from "@shared/types/storage";
+import { compressImage } from "@shared/utils/imageCompression";
 import * as ImagePicker from "expo-image-picker";
-import * as ImageManipulator from "expo-image-manipulator";
 import React, { useState } from "react";
 import {
 	ActivityIndicator,
@@ -100,26 +100,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		} catch (error) {
 			console.error("Error taking photo:", error);
 			Alert.alert("Error", "Failed to take photo");
-		}
-	};
-
-	const compressImage = async (uri: string): Promise<string> => {
-		try {
-			// Compress and resize the image
-			const manipulatedImage =
-				await ImageManipulator.manipulateAsync(
-					uri,
-					[{ resize: { width: 1920 } }], // Resize to max width of 1920px
-					{
-						compress: 0.7, // Compress to 70% quality
-						format: ImageManipulator.SaveFormat.JPEG
-					}
-				);
-			return manipulatedImage.uri;
-		} catch (error) {
-			console.error("Error compressing image:", error);
-			// Return original URI if compression fails
-			return uri;
 		}
 	};
 

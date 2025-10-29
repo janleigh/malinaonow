@@ -24,6 +24,8 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 	>(null);
 
 	const handleDeleteReview = async (reviewId: string) => {
+		if (!user) return;
+
 		Alert.alert(
 			t("review.deleteTitle") || "Delete Review",
 			t("review.deleteConfirm") ||
@@ -40,7 +42,10 @@ export const ReviewList: React.FC<ReviewListProps> = ({
 						try {
 							setDeletingReviewId(reviewId);
 							const success =
-								await ReviewService.deleteReview(reviewId);
+								await ReviewService.deleteReview(
+									reviewId,
+									user.id
+								);
 
 							if (success) {
 								onReviewDeleted?.(reviewId);
