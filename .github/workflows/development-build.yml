@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: EAS Development Build
+    name: Development Build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,17 +26,14 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Setup Expo and EAS
+      - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
-          eas-version: latest
+          expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
         run: bun install
 
-      - name: Build for Android (development)
-        run: eas build --platform android --profile development --non-interactive
-
-      - name: Build for iOS (development)
-        run: eas build --platform ios --profile development --non-interactive
+      - name: Run Expo Prebuild
+        run: bunx expo prebuild --clean
