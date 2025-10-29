@@ -92,6 +92,10 @@ export default {
 		rating: "Rating",
 		commentPlaceholder: "Share your thoughts about this place...",
 		submit: "Submit Review",
-		noReviews: "No reviews yet. Be the first to leave a review!"
+		noReviews: "No reviews yet. Be the first to leave a review!",
+		delete: "Delete",
+		deleteTitle: "Delete Review",
+		deleteConfirm: "Are you sure you want to delete this review?",
+		deleteFailed: "Failed to delete review. Please try again."
 	}
 };

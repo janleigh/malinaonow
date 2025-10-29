@@ -94,6 +94,10 @@ export default {
 		rating: "Rating",
 		commentPlaceholder: "Isueat ro imo nga review iya...",
 		submit: "I-submit",
-		noReviews: "Uwa it mga Review"
+		noReviews: "Uwa it mga Review",
+		delete: "Paghale",
+		deleteTitle: "Paghale it Review",
+		deleteConfirm: "Sigurado ka nga gusto mo paghale ini nga review?",
+		deleteFailed: "Dai mapaghale an review. Mag-try liwat."
 	}
 };

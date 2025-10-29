@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { StorageService } from "@shared/services";
+import { compressImage } from "@shared/utils/imageCompression";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
@@ -114,13 +115,16 @@ export const MultiImageUploader: React.FC<MultiImageUploaderProps> = ({
 				const asset = assets[i];
 				setUploadingIndex(i);
 
-				// Create a blob from the image URI
-				const response = await fetch(asset.uri);
+				// Compress the image before uploading
+				const compressedUri = await compressImage(asset.uri);
+
+				// Create a blob from the compressed image URI
+				const response = await fetch(compressedUri);
 				const blob = await response.blob();
 
 				// Convert blob to the format expected by StorageService
 				const file = {
-					uri: asset.uri,
+					uri: compressedUri,
 					type: blob.type || "image/jpeg",
 					name: `image-${Date.now()}-${i}.jpg`,
 					size: blob.size
