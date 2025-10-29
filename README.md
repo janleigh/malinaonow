@@ -12,6 +12,8 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 2. Set up environment variables
 
+    **For Local Development:**
+    
     Copy `.env.example` to `.env` and fill in your API keys:
 
     ```bash
@@ -23,6 +25,10 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     - `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key
     - `EXPO_PUBLIC_SUPABASE_URL`: Your Supabase project URL
     - `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: Your Supabase publishable key
+
+    **For CI/CD (GitHub Actions):**
+    
+    Environment variables are automatically injected from GitHub repository secrets. The secrets are already configured in the repository settings.
 
 3. Start the app
 
@@ -58,6 +64,14 @@ To use the development build workflow, you need to:
    - Get your token from [Expo Access Tokens](https://expo.dev/settings/access-tokens)
    - Add it to GitHub: Settings > Secrets and variables > Actions > New repository secret
    - Name: `EXPO_TOKEN`
+
+2. Environment variables for the app are configured as repository secrets:
+   - `EXPO_PUBLIC_MAPBOX_APIKEY`
+   - `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `EXPO_PUBLIC_SUPABASE_URL`
+   - `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+   
+   These are automatically injected during the build process.
 
 The workflow will run `expo prebuild` to generate native iOS and Android projects for development.
 
