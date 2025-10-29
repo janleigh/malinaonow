@@ -25,6 +25,28 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## Development Builds
+
+This project includes a GitHub Action workflow for automated development builds.
+
+### Triggering a Development Build
+
+The development build workflow can be triggered in two ways:
+
+1. **Manual trigger**: Go to Actions > Development Build > Run workflow
+2. **Automatic trigger**: Push to `dev`, `develop`, or `development` branches
+
+### Setup Requirements
+
+To use the development build workflow, you need to:
+
+1. Add `EXPO_TOKEN` to your repository secrets (optional):
+   - Get your token from [Expo Access Tokens](https://expo.dev/settings/access-tokens)
+   - Add it to GitHub: Settings > Secrets and variables > Actions > New repository secret
+   - Name: `EXPO_TOKEN`
+
+The workflow will run `expo prebuild` to generate native iOS and Android projects for development.
+
 ## Get a fresh project
 
 When you're ready, run:
