@@ -10,7 +10,21 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     npm install
     ```
 
-2. Start the app
+2. Set up environment variables
+
+    Copy `.env.example` to `.env` and fill in your API keys:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Then edit `.env` with your actual API keys:
+    - `EXPO_PUBLIC_MAPBOX_APIKEY`: Your MapBox API key
+    - `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key
+    - `EXPO_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+    - `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: Your Supabase publishable key
+
+3. Start the app
 
     ```bash
     npx expo start

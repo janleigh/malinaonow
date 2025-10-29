@@ -1,3 +1,24 @@
+// Warn about missing environment variables in development
+if (__DEV__) {
+	const missing: string[] = [];
+	if (!process.env.EXPO_PUBLIC_MAPBOX_APIKEY)
+		missing.push("EXPO_PUBLIC_MAPBOX_APIKEY");
+	if (!process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY)
+		missing.push("EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY");
+	if (!process.env.EXPO_PUBLIC_SUPABASE_URL)
+		missing.push("EXPO_PUBLIC_SUPABASE_URL");
+	if (!process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
+		missing.push("EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
+
+	if (missing.length > 0) {
+		console.warn(
+			"⚠️  Missing environment variables:\n" +
+				missing.map((key) => `  - ${key}`).join("\n") +
+				"\n\nPlease create a .env file from .env.example and fill in the required values."
+		);
+	}
+}
+
 export const API_KEYS = {
 	mapbox: process.env.EXPO_PUBLIC_MAPBOX_APIKEY,
 	clerk: {
