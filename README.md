@@ -25,6 +25,28 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## Development Builds
+
+This project includes a GitHub Action workflow for automated development builds using EAS Build.
+
+### Triggering a Development Build
+
+The development build workflow can be triggered in two ways:
+
+1. **Manual trigger**: Go to Actions > Development Build > Run workflow
+2. **Automatic trigger**: Push to `dev`, `develop`, or `development` branches
+
+### Setup Requirements
+
+To use the development build workflow, you need to:
+
+1. Add `EXPO_TOKEN` to your repository secrets:
+   - Get your token from [expo.dev/accounts/[account]/settings/access-tokens](https://expo.dev/accounts/[account]/settings/access-tokens)
+   - Add it to GitHub: Settings > Secrets and variables > Actions > New repository secret
+   - Name: `EXPO_TOKEN`
+
+The workflow will build for both Android and iOS platforms using the `development` profile defined in `eas.json`.
+
 ## Get a fresh project
 
 When you're ready, run:
