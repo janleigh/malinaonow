@@ -67,5 +67,29 @@ export const ReviewService = {
 			0
 		);
 		return Number((sum / reviews.length).toFixed(1));
+	},
+
+	/**
+	 * Delete a review
+	 * @param {string} reviewId - The ID of the review to delete
+	 * @returns {Promise<boolean>} - A promise that resolves to true if successful, false otherwise
+	 */
+	async deleteReview(reviewId: string): Promise<boolean> {
+		try {
+			const { error } = await supabase
+				.from("reviews")
+				.delete()
+				.eq("id", reviewId);
+
+			if (error) {
+				console.error("Error deleting review:", error);
+				return false;
+			}
+
+			return true;
+		} catch (error) {
+			console.error("Exception deleting review:", error);
+			return false;
+		}
 	}
 };

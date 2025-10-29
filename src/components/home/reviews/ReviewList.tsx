@@ -1,16 +1,71 @@
 import { useTranslation } from "@/hooks/useTranslation";
+import { Feather } from "@expo/vector-icons";
+import { useAuth } from "@shared/context/AuthContext";
+import { ReviewService } from "@shared/services";
 import { Review } from "@shared/types/supabase";
 import { formatDate } from "@shared/utils/date";
-import React from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { BaseText as Text } from "../../BaseText";
 
 interface ReviewListProps {
 	reviews: Review[];
+	onReviewDeleted?: (reviewId: string) => void;
 }
 
-export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+export const ReviewList: React.FC<ReviewListProps> = ({
+	reviews,
+	onReviewDeleted
+}) => {
 	const { t } = useTranslation();
+	const { user } = useAuth();
+	const [deletingReviewId, setDeletingReviewId] = useState<
+		string | null
+	>(null);
+
+	const handleDeleteReview = async (reviewId: string) => {
+		Alert.alert(
+			t("review.deleteTitle") || "Delete Review",
+			t("review.deleteConfirm") ||
+				"Are you sure you want to delete this review?",
+			[
+				{
+					text: t("common.cancel") || "Cancel",
+					style: "cancel"
+				},
+				{
+					text: t("review.delete") || "Delete",
+					style: "destructive",
+					onPress: async () => {
+						try {
+							setDeletingReviewId(reviewId);
+							const success =
+								await ReviewService.deleteReview(reviewId);
+
+							if (success) {
+								onReviewDeleted?.(reviewId);
+							} else {
+								Alert.alert(
+									t("common.error") || "Error",
+									t("review.deleteFailed") ||
+										"Failed to delete review. Please try again."
+								);
+							}
+						} catch (error) {
+							console.error("Error deleting review:", error);
+							Alert.alert(
+								t("common.error") || "Error",
+								t("review.deleteFailed") ||
+									"Failed to delete review. Please try again."
+							);
+						} finally {
+							setDeletingReviewId(null);
+						}
+					}
+				}
+			]
+		);
+	};
 
 	if (reviews.length === 0) {
 		return (
@@ -26,32 +81,59 @@ export const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 
 	return (
 		<View className="space-y-4">
-			{reviews.map((review) => (
-				<View
-					key={review.id}
-					className="border-b border-[#333333] p-2">
-					<View className="flex-row items-center justify-between">
+			{reviews.map((review) => {
+				const isOwnReview = user && review.user_id === user.id;
+
+				return (
+					<View
+						key={review.id}
+						className="border-b border-[#333333] p-2">
+						<View className="flex-row items-center justify-between">
+							<Text
+								className="text-lg text-text"
+								fontName="Montserrat_700Bold">
+								{review.user_name || "Anonymous"}
+							</Text>
+							<View className="flex-row items-center">
+								<Text
+									className="text-sm text-[#cacbca]"
+									fontName="Poppins_400Regular">
+									{formatDate(review.created_at)}
+								</Text>
+								{isOwnReview && (
+									<TouchableOpacity
+										onPress={() =>
+											handleDeleteReview(review.id)
+										}
+										disabled={
+											deletingReviewId === review.id
+										}
+										className="ml-2 p-1">
+										<Feather
+											name="trash-2"
+											size={16}
+											color={
+												deletingReviewId ===
+												review.id
+													? "#666666"
+													: "#cacbca"
+											}
+										/>
+									</TouchableOpacity>
+								)}
+							</View>
+						</View>
+						<View className="flex-row items-center py-1">
+							<RatingStars rating={review.rating} />
+						</View>
 						<Text
-							className="text-lg text-text"
-							fontName="Montserrat_700Bold">
-							{review.user_name || "Anonymous"}
-						</Text>
-						<Text
-							className="text-sm text-[#cacbca]"
+							className="mt-1 text-text"
 							fontName="Poppins_400Regular">
-							{formatDate(review.created_at)}
+							{review.comment}
 						</Text>
 					</View>
-					<View className="flex-row items-center py-1">
-						<RatingStars rating={review.rating} />
-					</View>
-					<Text
-						className="mt-1 text-text"
-						fontName="Poppins_400Regular">
-						{review.comment}
-					</Text>
-				</View>
-			))}
+				);
+			})}
 		</View>
 	);
 };

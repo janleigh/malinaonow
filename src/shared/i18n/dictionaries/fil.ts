@@ -95,6 +95,11 @@ export default {
 		rating: "Rating",
 		commentPlaceholder: "Mag-iwan ng iyong komento dito...",
 		submit: "I-submit",
-		noReviews: "Wala pang mga Review"
+		noReviews: "Wala pang mga Review",
+		delete: "Burahin",
+		deleteTitle: "Burahin ang Review",
+		deleteConfirm:
+			"Sigurado ka bang gusto mong burahin ang review na ito?",
+		deleteFailed: "Hindi nabura ang review. Pakisubukan muli."
 	}
 };

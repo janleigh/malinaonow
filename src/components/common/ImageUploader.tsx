@@ -2,6 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { StorageService } from "@shared/services";
 import { UploadResult } from "@shared/types/storage";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import React, { useState } from "react";
 import {
 	ActivityIndicator,
@@ -102,19 +103,42 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		}
 	};
 
+	const compressImage = async (uri: string): Promise<string> => {
+		try {
+			// Compress and resize the image
+			const manipulatedImage =
+				await ImageManipulator.manipulateAsync(
+					uri,
+					[{ resize: { width: 1920 } }], // Resize to max width of 1920px
+					{
+						compress: 0.7, // Compress to 70% quality
+						format: ImageManipulator.SaveFormat.JPEG
+					}
+				);
+			return manipulatedImage.uri;
+		} catch (error) {
+			console.error("Error compressing image:", error);
+			// Return original URI if compression fails
+			return uri;
+		}
+	};
+
 	const uploadImage = async (
 		imageAsset: ImagePicker.ImagePickerAsset
 	) => {
 		try {
 			setIsUploading(true);
 
-			// Create a blob from the image URI
-			const response = await fetch(imageAsset.uri);
+			// Compress the image before uploading
+			const compressedUri = await compressImage(imageAsset.uri);
+
+			// Create a blob from the compressed image URI
+			const response = await fetch(compressedUri);
 			const blob = await response.blob();
 
 			// Convert blob to the format expected by StorageService
 			const file = {
-				uri: imageAsset.uri,
+				uri: compressedUri,
 				type: blob.type || "image/jpeg",
 				name: `${fileType}-${Date.now()}.jpg`,
 				size: blob.size

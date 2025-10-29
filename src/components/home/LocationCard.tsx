@@ -753,6 +753,32 @@ export const LocationCard = ({
 										<View className="mt-4">
 											<ReviewList
 												reviews={reviews}
+												onReviewDeleted={(
+													reviewId
+												) => {
+													// Remove the deleted review from the list
+													const updatedReviews =
+														reviews.filter(
+															(r) =>
+																r.id !==
+																reviewId
+														);
+													setReviews(
+														updatedReviews
+													);
+
+													// Update the average rating and count
+													const newAvgRating =
+														ReviewService.calculateAverageRating(
+															updatedReviews
+														);
+													setAvgRating(
+														newAvgRating
+													);
+													setTotalReviews(
+														updatedReviews.length
+													);
+												}}
 											/>
 										</View>
 									)}
