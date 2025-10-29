@@ -45,6 +45,14 @@ To use the development build workflow, you need to:
    - Add it to GitHub: Settings > Secrets and variables > Actions > New repository secret
    - Name: `EXPO_TOKEN`
 
+2. Environment variables for the app are configured as repository secrets:
+   - `EXPO_PUBLIC_MAPBOX_APIKEY`
+   - `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `EXPO_PUBLIC_SUPABASE_URL`
+   - `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+   
+   These are automatically injected during the build process.
+
 The workflow will run `expo prebuild` to generate native iOS and Android projects for development.
 
 ## Get a fresh project
