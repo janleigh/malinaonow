@@ -1,0 +1,42 @@
+{
+	"expo": {
+		"name": "MalinaoNow",
+		"slug": "malinaonow",
+		"version": "1.1.0",
+		"orientation": "portrait",
+		"icon": "./src/shared/assets/images/icon.png",
+		"scheme": "malinaonow",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": false,
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./src/shared/assets/images/icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"edgeToEdgeEnabled": true,
+			"package": "com.jnlghmz.malinaonow"
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"image": "./src/shared/assets/images/icon.png",
+					"imageWidth": 200,
+					"resizeMode": "contain",
+					"backgroundColor": "#161719"
+				}
+			],
+			"expo-secure-store"
+		],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"extra": {
+			"router": {},
+			"eas": {
+				"projectId": "3b93606a-5d66-49da-b7c9-66bd3f89a089"
+			}
+		}
+	}
+}
