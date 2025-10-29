@@ -41,7 +41,7 @@ The development build workflow can be triggered in two ways:
 To use the development build workflow, you need to:
 
 1. Add `EXPO_TOKEN` to your repository secrets:
-   - Get your token from [expo.dev/accounts/[account]/settings/access-tokens](https://expo.dev/accounts/[account]/settings/access-tokens)
+   - Get your token from [Expo Access Tokens](https://expo.dev/settings/access-tokens) (replace `[account]` with your account name in the URL)
    - Add it to GitHub: Settings > Secrets and variables > Actions > New repository secret
    - Name: `EXPO_TOKEN`
 
