@@ -46,7 +46,17 @@ export const MapRouteService = {
 			const data = await AsyncStorage.getItem(key);
 			if (!data) return null;
 
-			return JSON.parse(data) as RouteData;
+			const parsed = JSON.parse(data);
+			// Validate the structure of cached data
+			if (
+				parsed &&
+				typeof parsed === "object" &&
+				parsed.destination &&
+				typeof parsed.timestamp === "number"
+			) {
+				return parsed as RouteData;
+			}
+			return null;
 		} catch (error) {
 			console.error("Error getting route:", error);
 			return null;

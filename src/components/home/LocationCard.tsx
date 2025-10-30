@@ -349,11 +349,12 @@ export const LocationCard = ({
                     if (event.route && event.route.length > 0) {
                         const route = event.route[0];
                         const originData = directions.getOrigin();
+                        const originCoords = originData?.geometry?.coordinates;
                         const routeData = {
-                            origin: originData?.geometry?.coordinates 
+                            origin: originCoords 
                                 ? {
-                                    latitude: originData.geometry.coordinates[1],
-                                    longitude: originData.geometry.coordinates[0]
+                                    latitude: originCoords[1],
+                                    longitude: originCoords[0]
                                 } 
                                 : null,
                             destination: {
