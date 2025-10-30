@@ -340,7 +340,7 @@ export const LocationCard = ({
                             const userLocation = [position.coords.longitude, position.coords.latitude];
                             directions.setOrigin(userLocation);
                         }, error => {
-                            console.error('Failed to get user location for route origin:', error);
+                            console.error('Failed to get user location for route origin:', error.message || error);
                         }, {
                             enableHighAccuracy: true,
                             timeout: 5000,
