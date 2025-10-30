@@ -212,9 +212,9 @@ export const LocationService = {
 			// Upload new 360 image and delete old one if provided
 			if (image360) {
 				// Delete old 360 image if it exists
-				if (existingLocation.image[360]) {
+				if (existingLocation.image["360"]) {
 					const filePath = extractFilePathFromUrl(
-						existingLocation.image[360]
+						existingLocation.image["360"]
 					);
 					if (filePath) {
 						try {

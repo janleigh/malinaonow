@@ -3,11 +3,11 @@ import { supabase } from "@shared/api/supabase";
 import { extractFilePathFromUrl, StorageService } from "@shared/services";
 import { Event as SupabaseEvent } from "@shared/types/supabase";
 
-// Track the last time past due events were cleaned up
-let lastCleanupTime = 0;
-const CLEANUP_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
-
 export const EventService = {
+	// Track the last time past due events were cleaned up
+	_lastCleanupTime: 0,
+	_CLEANUP_INTERVAL_MS: 60 * 60 * 1000, // 1 hour
+
 	/**
 	 * Fetch all events
 	 * @returns {Promise<ComponentEvent[]>} - A promise that resolves to an array of ComponentEvent objects
@@ -16,9 +16,9 @@ export const EventService = {
 		try {
 			// Only clean up past due events if enough time has passed since last cleanup
 			const now = Date.now();
-			if (now - lastCleanupTime > CLEANUP_INTERVAL_MS) {
+			if (now - this._lastCleanupTime > this._CLEANUP_INTERVAL_MS) {
 				await this.deletePastDueEvents();
-				lastCleanupTime = now;
+				this._lastCleanupTime = now;
 			}
 
 			const { data, error } = await supabase
