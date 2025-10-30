@@ -147,6 +147,31 @@ export const ProductService = {
 
 			// Upload new main image if provided
 			if (mainImage) {
+				// First get the existing product to retrieve old image URL
+				const existingProduct = await this.getProductById(id);
+				if (!existingProduct) {
+					throw new Error("Product not found");
+				}
+
+				// Delete old main image if it exists
+				if (existingProduct.image_url) {
+					try {
+						const { pathname } = new URL(
+							existingProduct.image_url
+						);
+						const filePath = pathname
+							.split("/")
+							.slice(-3)
+							.join("/");
+						await StorageService.deleteFile(filePath);
+					} catch (error) {
+						console.warn(
+							"Failed to delete old product image:",
+							error
+						);
+					}
+				}
+
 				const uploadResult = await StorageService.uploadFile(
 					mainImage,
 					"products",

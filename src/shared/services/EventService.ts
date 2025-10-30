@@ -102,6 +102,34 @@ export const EventService = {
 
 			// Upload new banner image if provided
 			if (bannerImage) {
+				// First get the existing event to retrieve old banner image URL
+				const { data: existingEvent, error: fetchError } =
+					await supabase
+						.from("events")
+						.select("banner_image")
+						.eq("id", id)
+						.single();
+
+				if (fetchError)
+					throw new Error(
+						"Event not found: " + fetchError.message
+					);
+
+				// Delete old banner image if it exists
+				if (existingEvent?.banner_image) {
+					try {
+						const url = new URL(existingEvent.banner_image);
+						const pathParts = url.pathname.split("/");
+						const filePath = pathParts.slice(-3).join("/");
+						await StorageService.deleteFile(filePath);
+					} catch (error) {
+						console.warn(
+							"Failed to delete old event banner image:",
+							error
+						);
+					}
+				}
+
 				const uploadResult = await StorageService.uploadFile(
 					bannerImage,
 					"events",
