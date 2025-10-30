@@ -40,6 +40,7 @@ jobs:
         with:
           expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+          cache: false
 
       - name: Install dependencies
         run: bun install
