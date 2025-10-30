@@ -51,7 +51,7 @@ export const LocationCard = ({
 		latitude: number;
 		longitude: number;
 	} | null>(null);
-	const { isSignedIn, user, offlineMode } = useAuth();
+	const { isSignedIn, user } = useAuth();
 	const { language, t } = useTranslation();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -700,25 +700,21 @@ export const LocationCard = ({
 											fontName="Montserrat_700Bold">
 											Reviews
 										</Text>
-										{isSignedIn &&
-											!offlineMode &&
-											!showReviewForm && (
-												<TouchableOpacity
-													onPress={() =>
-														setShowReviewForm(
-															true
-														)
-													}
-													className="rounded-xl border border-lineAlt bg-surface px-4 py-2">
-													<Text
-														className="text-text"
-														fontName="Poppins_500Medium">
-														{t(
-															"location.writeReview"
-														)}
-													</Text>
-												</TouchableOpacity>
-											)}
+										{isSignedIn && !showReviewForm && (
+											<TouchableOpacity
+												onPress={() =>
+													setShowReviewForm(true)
+												}
+												className="rounded-xl border border-lineAlt bg-surface px-4 py-2">
+												<Text
+													className="text-text"
+													fontName="Poppins_500Medium">
+													{t(
+														"location.writeReview"
+													)}
+												</Text>
+											</TouchableOpacity>
+										)}
 									</View>
 									{showReviewForm && (
 										<View className="mt-4">
