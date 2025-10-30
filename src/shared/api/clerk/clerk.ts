@@ -14,11 +14,24 @@ export const useClerkAuth = () => {
 		lastName?: string
 	) => {
 		try {
-			const result = await clerkSignUp?.create({
-				emailAddress: email,
-				firstName,
-				lastName
-			});
+			// Build the payload dynamically, only including firstName and lastName if they have values
+			const payload: {
+				emailAddress: string;
+				firstName?: string;
+				lastName?: string;
+			} = {
+				emailAddress: email
+			};
+
+			if (firstName && firstName.trim()) {
+				payload.firstName = firstName.trim();
+			}
+
+			if (lastName && lastName.trim()) {
+				payload.lastName = lastName.trim();
+			}
+
+			const result = await clerkSignUp?.create(payload);
 
 			if (!result) {
 				throw new Error("Failed to create user account");
