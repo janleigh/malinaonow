@@ -115,7 +115,7 @@ export default function HomePage() {
 	};
 
 	const fetchBookmarks = useCallback(async () => {
-		if (!isSignedIn || !user || isGuestMode) {
+		if (!user || isGuestMode) {
 			setBookmarkedLocations([]);
 			return;
 		}
@@ -126,7 +126,7 @@ export default function HomePage() {
 		} catch (err) {
 			console.error("Failed to fetch bookmarks:", err);
 		}
-	}, [isSignedIn, user, isGuestMode]);
+	}, [user, isGuestMode]);
 
 	useEffect(() => {
 		fetchLocations();
@@ -138,7 +138,7 @@ export default function HomePage() {
 		locationId: string,
 		newStatus: boolean
 	) => {
-		if (!isSignedIn || !user || isGuestMode) return;
+		if (!user || isGuestMode) return;
 
 		try {
 			if (newStatus) {

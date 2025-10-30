@@ -31,7 +31,7 @@ export default function BookmarksPage() {
 	const { isOnline } = useNetworkStatus();
 
 	const fetchBookmarkedLocations = useCallback(async () => {
-		if (!isSignedIn || !user || isGuestMode) {
+		if (!user || isGuestMode) {
 			setBookmarkedLocations([]);
 			setLocations([]);
 			setLoading(false);
@@ -64,7 +64,7 @@ export default function BookmarksPage() {
 		} finally {
 			setLoading(false);
 		}
-	}, [isSignedIn, user, isGuestMode]);
+	}, [user, isGuestMode]);
 
 	useEffect(() => {
 		fetchBookmarkedLocations();
@@ -78,7 +78,7 @@ export default function BookmarksPage() {
 		locationId: string,
 		newStatus: boolean
 	) => {
-		if (!isSignedIn || !user) return;
+		if (!user || isGuestMode) return;
 
 		try {
 			if (!newStatus) {
