@@ -22,11 +22,11 @@ export const useClerkAuth = () => {
 				emailAddress: email
 			};
 
-			if (firstName) {
+			if (firstName && firstName.trim()) {
 				signUpData.firstName = firstName;
 			}
 
-			if (lastName) {
+			if (lastName && lastName.trim()) {
 				signUpData.lastName = lastName;
 			}
 

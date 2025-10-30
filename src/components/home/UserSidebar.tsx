@@ -71,7 +71,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 				Animated.timing(contentFadeAnim, {
 					toValue: 1,
 					duration: 200,
-					delay: 50,
+					delay: 50, // Reduced from original 100ms to improve perceived responsiveness
 					useNativeDriver: true
 				})
 			]).start();
