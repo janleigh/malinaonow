@@ -284,27 +284,8 @@ export const LocationCard = ({
 					margin-bottom: 1.75em;
                 }
                 .destination-info h3 {
-                    margin: 0 0 5px 0;
+                    margin: 0;
                     font-size: 16px;
-                }
-                .button-container {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                    margin-top: 10px;
-                }
-                .map-btn {
-                    background-color: #fed787;
-                    border: 1px solid #333333;
-                    padding: 8px 12px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-weight: bold;
-					font-family: 'Lexend Mega', sans-serif;
-					letter-spacing: -0.15em;
-                }
-                .map-btn.active {
-                    background-color: #e5c067;
                 }
             </style>
         </head>
@@ -312,17 +293,12 @@ export const LocationCard = ({
             <div id="map"></div>
             <div class="destination-info">
                 <h3>${name}</h3>
-                <div class="button-container">
-                    <button id="useMyLocation" class="map-btn">Use My Location</button>
-                    <button id="toggleSteps" class="map-btn active">Hide Step Instructions</button>
-                </div>
             </div>
             <script>
                 mapboxgl.accessToken = '${API_KEYS.mapbox}';
                 
                 const destinationCoords = [${location.coordinates.longitude}, ${location.coordinates.latitude}];
                 let directions;
-                let showSteps = true;
                 
                 const map = new mapboxgl.Map({
                     container: 'map',
@@ -337,10 +313,10 @@ export const LocationCard = ({
                     unit: 'metric',
                     profile: 'mapbox/driving',
                     controls: {
-                        inputs: true,
+                        inputs: false,
                         instructions: true
                     },
-                    placeholderOrigin: 'Enter your starting point',
+                    placeholderOrigin: 'Your Location',
                     placeholderDestination: 'Destination',
                     geocoder: {
                         language: 'en'
@@ -355,30 +331,8 @@ export const LocationCard = ({
                     new mapboxgl.Marker({color: '#fed787'})
                         .setLngLat(destinationCoords)
                         .addTo(map);
-                        
-                    window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'mapLoaded'}));
-                });
-                
-                function toggleStepInstructions() {
-                    showSteps = !showSteps;
-                    const instructionsElement = document.querySelector('.mapbox-directions-instructions');
-                    const toggleBtn = document.getElementById('toggleSteps');
                     
-                    if (instructionsElement) {
-                        if (showSteps) {
-                            instructionsElement.style.display = 'block';
-                            toggleBtn.textContent = 'Hide Step Instructions';
-                            toggleBtn.classList.add('active');
-                        } else {
-                            instructionsElement.style.display = 'none';
-                            toggleBtn.textContent = 'Show Step Instructions';
-                            toggleBtn.classList.remove('active');
-                        }
-                    }
-                }
-                
-                document.getElementById('toggleSteps').addEventListener('click', toggleStepInstructions);
-                document.getElementById('useMyLocation').addEventListener('click', function() {
+                    // Automatically get user's location and set as origin
                     window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'getLocation'}));
                     
                     if (!window.ReactNativeWebView) {
@@ -388,16 +342,15 @@ export const LocationCard = ({
                                 directions.setOrigin(userLocation);
                             }, error => {
                                 console.error('Error getting location:', error);
-                                alert('Unable to get your location. Please enter it manually.');
                             }, {
                                 enableHighAccuracy: true,
                                 timeout: 5000,
                                 maximumAge: 0
                             });
-                        } else {
-                            alert('Geolocation is not supported by this browser.');
                         }
                     }
+                        
+                    window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'mapLoaded'}));
                 });
             </script>
         </body>
