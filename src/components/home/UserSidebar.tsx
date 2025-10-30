@@ -2,7 +2,6 @@ import { BaseText as Text } from "@/components/BaseText";
 import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useAuth } from "@shared/context/AuthContext";
-import { shadowStyles } from "@shared/utils/styles";
 import { router } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -57,42 +56,34 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 			fadeAnim.setValue(0);
 			contentFadeAnim.setValue(0);
 
-			const animationTimeout = setTimeout(() => {
-				Animated.parallel([
-					Animated.timing(slideAnim, {
-						toValue: 0,
-						duration: 200,
-						useNativeDriver: true
-					}),
-					Animated.timing(fadeAnim, {
-						toValue: 0.3,
-						duration: 200,
-						useNativeDriver: true
-					})
-				]).start();
-
-				const contentTimeout = setTimeout(() => {
-					Animated.timing(contentFadeAnim, {
-						toValue: 1,
-						duration: 150,
-						useNativeDriver: true
-					}).start();
-				}, 100);
-
-				return () => clearTimeout(contentTimeout);
-			}, 10);
-
-			return () => clearTimeout(animationTimeout);
+			// Simplified animation with shorter duration and no nested timeouts
+			Animated.parallel([
+				Animated.timing(slideAnim, {
+					toValue: 0,
+					duration: 250,
+					useNativeDriver: true
+				}),
+				Animated.timing(fadeAnim, {
+					toValue: 0.3,
+					duration: 250,
+					useNativeDriver: true
+				}),
+				Animated.timing(contentFadeAnim, {
+					toValue: 1,
+					duration: 250,
+					useNativeDriver: true
+				})
+			]).start();
 		} else if (!visible && modalVisible) {
 			Animated.parallel([
 				Animated.timing(slideAnim, {
 					toValue: Dimensions.get("window").width,
-					duration: 150,
+					duration: 200,
 					useNativeDriver: true
 				}),
 				Animated.timing(fadeAnim, {
 					toValue: 0,
-					duration: 150,
+					duration: 200,
 					useNativeDriver: true
 				}),
 				Animated.timing(contentFadeAnim, {
@@ -130,7 +121,8 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 			transparent={true}
 			animationType="none"
 			onRequestClose={onClose}
-			hardwareAccelerated={true}>
+			hardwareAccelerated={true}
+			statusBarTranslucent={true}>
 			<View className="flex-1">
 				<Animated.View
 					style={{
@@ -150,7 +142,6 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 				</Animated.View>
 				<Animated.View
 					style={[
-						shadowStyles.small,
 						{
 							position: "absolute",
 							top: 0,

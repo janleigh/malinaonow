@@ -18,7 +18,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	locationId,
 	onSubmit
 }) => {
-	const { isSignedIn, user } = useAuth();
+	const { isSignedIn, user, isGuestMode } = useAuth();
 	const [rating, setRating] = useState(5);
 	const [comment, setComment] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,7 +26,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	const { t } = useTranslation();
 
 	const handleSubmit = async () => {
-		if (!isSignedIn) {
+		if (!isSignedIn || isGuestMode) {
 			setError("You must be signed in to leave a review");
 			return;
 		}
@@ -113,7 +113,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 				<TouchableOpacity
 					className="mt-2 h-12 w-full items-center justify-center rounded-3xl border border-[#333333] bg-primary"
 					onPress={handleSubmit}
-					disabled={isSubmitting}>
+					disabled={isSubmitting || isGuestMode}>
 					{isSubmitting ? (
 						<ActivityIndicator color="#000" />
 					) : (

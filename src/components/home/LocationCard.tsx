@@ -51,7 +51,7 @@ export const LocationCard = ({
 		latitude: number;
 		longitude: number;
 	} | null>(null);
-	const { isSignedIn, user } = useAuth();
+	const { isSignedIn, user, isGuestMode } = useAuth();
 	const { language, t } = useTranslation();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -651,7 +651,7 @@ export const LocationCard = ({
 											fontName="Montserrat_700Bold">
 											Reviews
 										</Text>
-										{isSignedIn && !showReviewForm && (
+										{isSignedIn && !isGuestMode && !showReviewForm && (
 											<TouchableOpacity
 												onPress={() =>
 													setShowReviewForm(true)
