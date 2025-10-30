@@ -1,10 +1,12 @@
 import { BaseText as Text } from "@/components/BaseText";
 import { ReviewForm, ReviewList } from "@/components/home/reviews";
 import { API_KEYS } from "@/config";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { supabase } from "@shared/api/supabase";
 import { useAuth } from "@shared/context/AuthContext";
+import { MapRouteService } from "@shared/services";
 import { ReviewService } from "@shared/services/ReviewService";
 import { Location, Review } from "@shared/types/supabase";
 import * as ELocation from "expo-location";
@@ -51,8 +53,11 @@ export const LocationCard = ({
 		latitude: number;
 		longitude: number;
 	} | null>(null);
+	const [isOfflineMode, setIsOfflineMode] = useState(false);
+	const [cachedRoute, setCachedRoute] = useState<any>(null);
 	const { isSignedIn, user, isGuestMode } = useAuth();
 	const { language, t } = useTranslation();
+	const { isOnline } = useNetworkStatus();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const opacityAnim = useRef(new Animated.Value(0)).current;
 	const webViewRef = useRef<WebView>(null);
@@ -112,7 +117,20 @@ export const LocationCard = ({
 		setView360Open(false);
 	};
 
-	const handleViewMap = () => {
+	const handleViewMap = async () => {
+		// Check if offline and try to load cached route
+		if (!isOnline) {
+			const cached = await MapRouteService.getRoute(location.id);
+			if (cached) {
+				setCachedRoute(cached);
+				setIsOfflineMode(true);
+			} else {
+				setIsOfflineMode(true);
+				setCachedRoute(null);
+			}
+		} else {
+			setIsOfflineMode(false);
+		}
 		setViewMapOpen(true);
 	};
 
@@ -326,6 +344,38 @@ export const LocationCard = ({
                 
                 map.addControl(directions, 'top-left');
                 
+                // Listen for route changes to cache route data
+                directions.on('route', function(event) {
+                    if (event.route && event.route.length > 0) {
+                        const route = event.route[0];
+                        const originData = directions.getOrigin();
+                        const originCoords = originData?.geometry?.coordinates;
+                        const routeData = {
+                            origin: originCoords 
+                                ? {
+                                    latitude: originCoords[1],
+                                    longitude: originCoords[0]
+                                } 
+                                : null,
+                            destination: {
+                                latitude: ${location.coordinates.latitude},
+                                longitude: ${location.coordinates.longitude}
+                            },
+                            distance: route.distance ? (route.distance / 1000).toFixed(2) + ' km' : null,
+                            duration: route.duration ? Math.round(route.duration / 60) + ' min' : null,
+                            timestamp: Date.now()
+                        };
+                        
+                        // Send route data to React Native to cache
+                        if (window.ReactNativeWebView && routeData.origin) {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({
+                                type: 'saveRoute',
+                                data: routeData
+                            }));
+                        }
+                    }
+                });
+                
                 map.on('load', function() {
                     directions.setDestination(destinationCoords);
                     
@@ -355,6 +405,152 @@ export const LocationCard = ({
         </body>
     </html>
 `;
+
+	// HTML for offline map view with cached route data
+	const getOfflineMapHTML = (name: string) => {
+		const hasRoute = cachedRoute && cachedRoute.origin;
+		return `
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+            <style>
+                body { 
+                    margin: 0; 
+                    padding: 20px; 
+                    background: #161719;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    color: #f7f7f7;
+                }
+                .offline-container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                }
+                .offline-header {
+                    background: #FFA500;
+                    color: #161719;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                }
+                .location-info {
+                    background: #1f2023;
+                    padding: 20px;
+                    border-radius: 8px;
+                    border: 1px solid #333333;
+                    margin-bottom: 20px;
+                }
+                .location-info h2 {
+                    margin: 0 0 15px 0;
+                    color: #0ff6be;
+                }
+                .info-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    border-bottom: 1px solid #333333;
+                }
+                .info-row:last-child {
+                    border-bottom: none;
+                }
+                .info-label {
+                    color: #cacbca;
+                }
+                .info-value {
+                    color: #f7f7f7;
+                    font-weight: bold;
+                }
+                .no-route {
+                    background: #1f2023;
+                    padding: 30px;
+                    border-radius: 8px;
+                    border: 1px solid #333333;
+                    text-align: center;
+                }
+                .coordinates {
+                    background: #1f2023;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 1px solid #333333;
+                    margin-top: 10px;
+                    font-size: 14px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="offline-container">
+                <div class="offline-header">
+                    <h3 style="margin: 0;">📵 Offline Mode</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 14px;">You are currently offline. ${hasRoute ? "Showing cached route information." : "No cached route available."}</p>
+                </div>
+                
+                <div class="location-info">
+                    <h2>${name}</h2>
+                    <div class="info-row">
+                        <span class="info-label">Destination Latitude:</span>
+                        <span class="info-value">${location.coordinates.latitude}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Destination Longitude:</span>
+                        <span class="info-value">${location.coordinates.longitude}</span>
+                    </div>
+                </div>
+                
+                ${
+					hasRoute
+						? `
+                    <div class="location-info">
+                        <h3 style="margin: 0 0 15px 0; color: #0ff6be;">Cached Route Information</h3>
+                        ${
+							cachedRoute.distance
+								? `<div class="info-row">
+                            <span class="info-label">Distance:</span>
+                            <span class="info-value">${cachedRoute.distance}</span>
+                        </div>`
+								: ""
+						}
+                        ${
+							cachedRoute.duration
+								? `<div class="info-row">
+                            <span class="info-label">Estimated Duration:</span>
+                            <span class="info-value">${cachedRoute.duration}</span>
+                        </div>`
+								: ""
+						}
+                        ${
+							cachedRoute.origin
+								? `
+                        <div class="coordinates">
+                            <strong>Origin:</strong><br/>
+                            Lat: ${cachedRoute.origin.latitude}<br/>
+                            Lng: ${cachedRoute.origin.longitude}
+                        </div>
+                        `
+								: ""
+						}
+                        <div class="coordinates">
+                            <strong>Destination:</strong><br/>
+                            Lat: ${cachedRoute.destination.latitude}<br/>
+                            Lng: ${cachedRoute.destination.longitude}
+                        </div>
+                        <p style="margin: 15px 0 0 0; font-size: 12px; color: #cacbca; text-align: center;">
+                            Cached ${new Date(cachedRoute.timestamp).toLocaleString()}
+                        </p>
+                    </div>
+                `
+						: `
+                    <div class="no-route">
+                        <p style="margin: 0; color: #cacbca;">No route has been saved for this location yet. Please go online and view the map to cache route information for offline use.</p>
+                    </div>
+                `
+				}
+            </div>
+        </body>
+    </html>
+        `;
+	};
 
 	const getLocalizedDescription = (loc: Location): string => {
 		return language === "fil" && loc.description_fil
@@ -755,7 +951,9 @@ export const LocationCard = ({
 							className="text-xl text-text"
 							fontName="Montserrat_700Bold"
 							fontStyle="bold">
-							Map View
+							{isOfflineMode
+								? "Offline Map View"
+								: "Map View"}
 						</Text>
 						<TouchableOpacity onPress={closeMapView}>
 							<Feather name="x" size={24} color="white" />
@@ -765,7 +963,9 @@ export const LocationCard = ({
 						<WebView
 							ref={webViewRef}
 							source={{
-								html: getMapViewerHTML(location.name)
+								html: isOfflineMode
+									? getOfflineMapHTML(location.name)
+									: getMapViewerHTML(location.name)
 							}}
 							style={{
 								flex: 1,
@@ -775,13 +975,19 @@ export const LocationCard = ({
 							domStorageEnabled={true}
 							geolocationEnabled={true}
 							startInLoadingState={true}
-							onMessage={(event) => {
+							onMessage={async (event) => {
 								try {
 									const data = JSON.parse(
 										event.nativeEvent.data
 									);
 									if (data.type === "getLocation") {
 										getUserLocation();
+									} else if (data.type === "saveRoute") {
+										// Save the route data for offline use
+										await MapRouteService.saveRoute(
+											location.id,
+											data.data
+										);
 									}
 								} catch (e) {
 									console.error(
