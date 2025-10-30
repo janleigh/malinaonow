@@ -22,7 +22,7 @@ export default function InDevelopmentScreen() {
 	if (!isLoaded) {
 		return (
 			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
-				<ActivityIndicator size="large" color="#fed787" />
+				<ActivityIndicator size="large" color="#0ff6be" />
 			</View>
 		);
 	}

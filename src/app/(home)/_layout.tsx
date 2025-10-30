@@ -23,8 +23,8 @@ export default function HomeLayout() {
 
 	if (!isLoaded && !offlineMode) {
 		return (
-			<View className="flex-1 items-center justify-center bg-[#faf4f0]">
-				<ActivityIndicator size="large" color="#fed787" />
+			<View className="flex-1 items-center justify-center bg-background">
+				<ActivityIndicator size="large" color="#0ff6be" />
 			</View>
 		);
 	}

@@ -217,7 +217,7 @@ export default function HomePage() {
 									className="my-4 border border-[#333333] bg-white p-4"
 									style={shadowStyles.standard}>
 									<View className="items-center">
-										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#0ff6be]">
 											<Feather
 												name="alert-triangle"
 												size={24}
@@ -231,10 +231,10 @@ export default function HomePage() {
 											{eventError}
 										</Text>
 										<TouchableOpacity
-											className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
+											className="flex-row items-center justify-center border border-[#333333] bg-[#0ff6be] px-4 py-2"
 											style={shadowStyles.small}
 											onPress={fetchEvents}>
-											<Text className="text-text">
+											<Text className="text-black">
 												Retry
 											</Text>
 										</TouchableOpacity>
@@ -245,7 +245,7 @@ export default function HomePage() {
 									className="my-4 border border-[#333333] bg-white p-4"
 									style={shadowStyles.standard}>
 									<View className="items-center">
-										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+										<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#0ff6be]">
 											<Feather
 												name="calendar"
 												size={24}
@@ -332,7 +332,7 @@ export default function HomePage() {
 								className="my-4 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}>
 								<View className="items-center">
-									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#0ff6be]">
 										<Feather
 											name="alert-triangle"
 											size={24}
@@ -346,7 +346,7 @@ export default function HomePage() {
 										{error}
 									</Text>
 									<TouchableOpacity
-										className="flex-row items-center justify-center border border-[#333333] bg-[#fed787] px-4 py-2"
+										className="flex-row items-center justify-center border border-[#333333] bg-[#0ff6be] px-4 py-2"
 										style={shadowStyles.small}
 										onPress={fetchLocations}>
 										<Text className="text-black">
@@ -360,7 +360,7 @@ export default function HomePage() {
 								className="my-4 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}>
 								<View className="items-center">
-									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#0ff6be]">
 										<Feather
 											name="tool"
 											size={24}
@@ -381,7 +381,7 @@ export default function HomePage() {
 								className="my-4 border border-[#333333] bg-white p-4"
 								style={shadowStyles.standard}>
 								<View className="items-center">
-									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#fed787]">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-[#333333] bg-[#0ff6be]">
 										<AntDesign
 											name="heart"
 											size={24}
