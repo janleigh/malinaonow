@@ -4,17 +4,22 @@ import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 export default function HomeLayout() {
-	const { isSignedIn, isLoaded, offlineMode } = useAuth();
+	const { isSignedIn, isLoaded, offlineMode, isGuestMode } = useAuth();
 	const router = useRouter();
 
 	useEffect(() => {
-		if (isLoaded && !offlineMode && isSignedIn === false) {
+		if (
+			isLoaded &&
+			!offlineMode &&
+			!isGuestMode &&
+			isSignedIn === false
+		) {
 			const timer = setTimeout(() => {
 				router.replace("/");
 			}, 50);
 			return () => clearTimeout(timer);
 		}
-	}, [isSignedIn, isLoaded, offlineMode, router]);
+	}, [isSignedIn, isLoaded, offlineMode, isGuestMode, router]);
 
 	if (!isLoaded && !offlineMode) {
 		return (
@@ -24,7 +29,7 @@ export default function HomeLayout() {
 		);
 	}
 
-	if (!isSignedIn && !offlineMode) {
+	if (!isSignedIn && !offlineMode && !isGuestMode) {
 		return null;
 	}
 
