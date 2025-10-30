@@ -101,7 +101,7 @@ export const ProductCard = ({
 		<View className="mb-2">
 			<TouchableOpacity
 				key={product.id}
-				className="overflow-hidden rounded-xl border border-[#333333] bg-white"
+				className="overflow-hidden rounded-xl border border-[#333333] bg-lighterBackground"
 				onPress={toggleExpand}>
 				{listView ? (
 					<View className="flex-row">
@@ -125,7 +125,7 @@ export const ProductCard = ({
 						<ScrollView className="flex-1 p-3">
 							<View className="flex-row items-center">
 								<Text
-									className="font-lexend-extrabold tracking-tighter-lexend text-sm text-black"
+									className="font-lexend-extrabold tracking-tighter-lexend text-sm text-text"
 									numberOfLines={1}
 									fontStyle="extrabold">
 									{product.name}
@@ -145,16 +145,16 @@ export const ProductCard = ({
 								<AntDesign
 									name="enviromento"
 									size={10}
-									color="#555"
+									color="#cacbca"
 								/>
 								<Text
-									className="tracking-tighter-lexend ml-1 text-xs text-[#555]"
+									className="tracking-tighter-lexend ml-1 text-xs text-[#cacbca]"
 									numberOfLines={1}>
 									{product.barangay}
 								</Text>
 							</View>
 							<Text
-								className="tracking-tighter-lexend mt-1 text-xs text-[#666666]"
+								className="tracking-tighter-lexend mt-1 text-xs text-[#cacbca]"
 								numberOfLines={1}>
 								{getLocalizedDescription(product)}
 							</Text>
@@ -193,13 +193,13 @@ export const ProductCard = ({
 								</View>
 							</View>
 							<Text
-								className="font-lexend-extrabold tracking-tighter-lexend text-sm text-black"
+								className="font-lexend-extrabold tracking-tighter-lexend text-sm text-text"
 								numberOfLines={2}
 								fontStyle="extrabold">
 								{product.name}
 							</Text>
 							<Text
-								className="tracking-tighter-lexend mt-1 text-xs text-[#666666]"
+								className="tracking-tighter-lexend mt-1 text-xs text-[#cacbca]"
 								numberOfLines={2}>
 								{getLocalizedDescription(product)}
 							</Text>
@@ -214,7 +214,7 @@ export const ProductCard = ({
 				<Animated.View
 					style={{
 						flex: 1,
-						backgroundColor: "#C6E3D3",
+						backgroundColor: "#161719",
 						opacity: opacityAnim,
 						transform: [
 							{
@@ -229,7 +229,7 @@ export const ProductCard = ({
 						<View className="border-b border-[#333333] p-4">
 							<View className="mb-2 flex-row items-center justify-between">
 								<Text
-									className="font-lexend-bold tracking-tighter-lexend text-xl text-black"
+									className="font-lexend-bold tracking-tighter-lexend text-xl text-text"
 									fontStyle="bold">
 									{product.name}
 								</Text>
@@ -237,7 +237,7 @@ export const ProductCard = ({
 									<Feather
 										name="x"
 										size={24}
-										color="black"
+										color="#f7f7f7"
 									/>
 								</TouchableOpacity>
 							</View>
@@ -245,9 +245,9 @@ export const ProductCard = ({
 								<AntDesign
 									name="enviromento"
 									size={12}
-									color="#555"
+									color="#cacbca"
 								/>
-								<Text className="tracking-tighter-lexend ml-1 text-sm text-[#555]">
+								<Text className="tracking-tighter-lexend ml-1 text-sm text-[#cacbca]">
 									{product.barangay}
 								</Text>
 							</View>
@@ -303,19 +303,19 @@ export const ProductCard = ({
 							</View>
 							<View className="p-4">
 								<Text
-									className="font-lexend-medium tracking-tighter-lexend mb-2 text-base text-[#333]"
+									className="font-lexend-medium tracking-tighter-lexend mb-2 text-base text-[#cacbca]"
 									fontStyle="medium">
 									Description
 								</Text>
 								<View
-									className="border-l-4 border-[#FFBB38] pl-2"
+									className="border-l-4 border-primary pl-2"
 									style={{
 										maxHeight: isDescriptionExpanded
 											? undefined
 											: 300
 									}}>
 									<View onLayout={onDescriptionLayout}>
-										<Text className="tracking-tighter-lexend text-base text-[#333]">
+										<Text className="tracking-tighter-lexend text-base text-[#cacbca]">
 											{getLocalizedDescription(
 												product
 											) ||
@@ -328,7 +328,7 @@ export const ProductCard = ({
 										onPress={toggleDescription}
 										className="mt-2 px-4 py-2">
 										<Text
-											className="font-lexend-medium tracking-tighter-lexend text-sm text-black underline"
+											className="font-lexend-medium tracking-tighter-lexend text-sm text-text underline"
 											fontStyle="medium">
 											{isDescriptionExpanded
 												? t("location.showLess")

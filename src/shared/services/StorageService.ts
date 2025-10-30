@@ -1,6 +1,26 @@
 import { supabase } from "../api/supabase";
 import { UploadResult } from "../types/storage";
 
+/**
+ * Safely extract file path from storage URL
+ * @param {string} url - The full storage URL
+ * @returns {string | null} - The file path or null if extraction fails
+ */
+export const extractFilePathFromUrl = (url: string): string | null => {
+	try {
+		const parsedUrl = new URL(url);
+		const pathParts = parsedUrl.pathname.split("/").filter(Boolean);
+		// Ensure we have at least 3 parts for the path (entityType/entityId/filename)
+		if (pathParts.length >= 3) {
+			return pathParts.slice(-3).join("/");
+		}
+		return null;
+	} catch (error) {
+		console.error("Failed to parse URL:", error);
+		return null;
+	}
+};
+
 export interface IStorageService {
 	uploadFile(
 		file: any,

@@ -1,5 +1,5 @@
 import { supabase } from "@shared/api/supabase";
-import { StorageService } from "@shared/services";
+import { extractFilePathFromUrl, StorageService } from "@shared/services";
 import {
 	Location as CardLocation,
 	Location as SupabaseLocation
@@ -165,13 +165,36 @@ export const LocationService = {
 		image360?: any
 	): Promise<CardLocation> {
 		try {
+			// First get the existing location to retrieve old image URLs
+			const existingLocation = await this.getLocationById(id);
+			if (!existingLocation) {
+				throw new Error("Location not found");
+			}
+
 			let updatedImageData = updates.image || {
 				"banner": "",
 				"360": ""
 			};
 
-			// Upload new images if provided
+			// Upload new banner image and delete old one if provided
 			if (bannerImage) {
+				// Delete old banner image if it exists
+				if (existingLocation.image.banner) {
+					const filePath = extractFilePathFromUrl(
+						existingLocation.image.banner
+					);
+					if (filePath) {
+						try {
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								"Failed to delete old banner image:",
+								error
+							);
+						}
+					}
+				}
+
 				const uploadResult = await StorageService.uploadFile(
 					bannerImage,
 					"locations",
@@ -186,7 +209,25 @@ export const LocationService = {
 				}
 			}
 
+			// Upload new 360 image and delete old one if provided
 			if (image360) {
+				// Delete old 360 image if it exists
+				if (existingLocation.image["360"]) {
+					const filePath = extractFilePathFromUrl(
+						existingLocation.image["360"]
+					);
+					if (filePath) {
+						try {
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								"Failed to delete old 360 image:",
+								error
+							);
+						}
+					}
+				}
+
 				const uploadResult = await StorageService.uploadFile(
 					image360,
 					"locations",

@@ -1,15 +1,26 @@
 import { Event as ComponentEvent } from "@/components/home";
 import { supabase } from "@shared/api/supabase";
-import { StorageService } from "@shared/services";
+import { extractFilePathFromUrl, StorageService } from "@shared/services";
 import { Event as SupabaseEvent } from "@shared/types/supabase";
 
 export const EventService = {
+	// Track the last time past due events were cleaned up
+	_lastCleanupTime: 0,
+	_CLEANUP_INTERVAL_MS: 60 * 60 * 1000, // 1 hour
+
 	/**
 	 * Fetch all events
 	 * @returns {Promise<ComponentEvent[]>} - A promise that resolves to an array of ComponentEvent objects
 	 */
 	async getEvents(): Promise<ComponentEvent[]> {
 		try {
+			// Only clean up past due events if enough time has passed since last cleanup
+			const now = Date.now();
+			if (now - this._lastCleanupTime > this._CLEANUP_INTERVAL_MS) {
+				await this.deletePastDueEvents();
+				this._lastCleanupTime = now;
+			}
+
 			const { data, error } = await supabase
 				.from("events")
 				.select("*")
@@ -102,6 +113,36 @@ export const EventService = {
 
 			// Upload new banner image if provided
 			if (bannerImage) {
+				// First get the existing event to retrieve old banner image URL
+				const { data: existingEvent, error: fetchError } =
+					await supabase
+						.from("events")
+						.select("banner_image")
+						.eq("id", id)
+						.single();
+
+				if (fetchError)
+					throw new Error(
+						"Event not found: " + fetchError.message
+					);
+
+				// Delete old banner image if it exists
+				if (existingEvent?.banner_image) {
+					const filePath = extractFilePathFromUrl(
+						existingEvent.banner_image
+					);
+					if (filePath) {
+						try {
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								"Failed to delete old event banner image:",
+								error
+							);
+						}
+					}
+				}
+
 				const uploadResult = await StorageService.uploadFile(
 					bannerImage,
 					"events",
@@ -152,16 +193,18 @@ export const EventService = {
 
 			// Delete banner image from storage if it exists
 			if (event.banner_image) {
-				try {
-					const url = new URL(event.banner_image);
-					const pathParts = url.pathname.split("/");
-					const filePath = pathParts.slice(-3).join("/");
-					await StorageService.deleteFile(filePath);
-				} catch (error) {
-					console.warn(
-						"Failed to delete event banner image:",
-						error
-					);
+				const filePath = extractFilePathFromUrl(
+					event.banner_image
+				);
+				if (filePath) {
+					try {
+						await StorageService.deleteFile(filePath);
+					} catch (error) {
+						console.warn(
+							"Failed to delete event banner image:",
+							error
+						);
+					}
 				}
 			}
 
@@ -175,6 +218,87 @@ export const EventService = {
 		} catch (error) {
 			console.error("Error deleting event:", error);
 			throw error;
+		}
+	},
+
+	/**
+	 * Delete all past due events (events where date is before today)
+	 * @returns {Promise<number>} - Number of events deleted
+	 */
+	async deletePastDueEvents(): Promise<number> {
+		try {
+			// Get current date in YYYY-MM-DD format (UTC)
+			const todayString = new Date().toISOString().split("T")[0];
+
+			// Fetch all past due events
+			const { data: pastEvents, error: fetchError } = await supabase
+				.from("events")
+				.select("*")
+				.lt("date", todayString);
+
+			if (fetchError) {
+				console.error(
+					"Error fetching past due events:",
+					fetchError
+				);
+				return 0;
+			}
+
+			if (!pastEvents || pastEvents.length === 0) {
+				console.log("No past due events to delete");
+				return 0;
+			}
+
+			// Delete each event and its associated banner image
+			let deletedCount = 0;
+			for (const event of pastEvents) {
+				try {
+					// Delete banner image from storage if it exists
+					if (event.banner_image) {
+						const filePath = extractFilePathFromUrl(
+							event.banner_image
+						);
+						if (filePath) {
+							try {
+								await StorageService.deleteFile(filePath);
+							} catch (error) {
+								console.warn(
+									`Failed to delete banner image for event ${event.id}:`,
+									error
+								);
+							}
+						}
+					}
+
+					// Delete the event record
+					const { error: deleteError } = await supabase
+						.from("events")
+						.delete()
+						.eq("id", event.id);
+
+					if (deleteError) {
+						console.error(
+							`Failed to delete event ${event.id}:`,
+							deleteError
+						);
+					} else {
+						deletedCount++;
+					}
+				} catch (error) {
+					console.error(
+						`Exception deleting event ${event.id}:`,
+						error
+					);
+				}
+			}
+
+			console.log(
+				`Successfully deleted ${deletedCount} past due events`
+			);
+			return deletedCount;
+		} catch (error) {
+			console.error("Error in deletePastDueEvents:", error);
+			return 0;
 		}
 	},
 

@@ -1,5 +1,5 @@
 import { supabase } from "@shared/api/supabase";
-import { StorageService } from "@shared/services";
+import { extractFilePathFromUrl, StorageService } from "@shared/services";
 import {
 	CreateProductDTO,
 	Product,
@@ -147,6 +147,29 @@ export const ProductService = {
 
 			// Upload new main image if provided
 			if (mainImage) {
+				// First get the existing product to retrieve old image URL
+				const existingProduct = await this.getProductById(id);
+				if (!existingProduct) {
+					throw new Error("Product not found");
+				}
+
+				// Delete old main image if it exists
+				if (existingProduct.image_url) {
+					const filePath = extractFilePathFromUrl(
+						existingProduct.image_url
+					);
+					if (filePath) {
+						try {
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								"Failed to delete old product image:",
+								error
+							);
+						}
+					}
+				}
+
 				const uploadResult = await StorageService.uploadFile(
 					mainImage,
 					"products",
