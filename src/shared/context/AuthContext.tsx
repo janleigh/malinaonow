@@ -105,7 +105,7 @@ const useAuthValue = () => {
 	}, [clerkLoaded, isSignedIn, user, isAdmin]);
 
 	useEffect(() => {
-		if (!clerkLoaded && !isOnline && !offlineUser) {
+		if (!clerkLoaded && !isOnline && !offlineUser && !isGuestMode) {
 			(async () => {
 				try {
 					const raw = await AsyncStorage.getItem("offline_user");
@@ -119,7 +119,7 @@ const useAuthValue = () => {
 				} catch {}
 			})();
 		}
-	}, [clerkLoaded, isOnline, offlineUser]);
+	}, [clerkLoaded, isOnline, offlineUser, isGuestMode]);
 
 	useEffect(() => {
 		if (clerkLoaded && offlineMode) {
@@ -130,6 +130,9 @@ const useAuthValue = () => {
 	const setGuestMode = (enabled: boolean) => {
 		setIsGuestMode(enabled);
 		if (enabled) {
+			// If enabling guest mode, disable offline mode
+			setOfflineMode(false);
+			setOfflineUser(null);
 			setIsLoaded(true);
 		}
 	};
