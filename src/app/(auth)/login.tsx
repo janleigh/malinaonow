@@ -94,9 +94,9 @@ export default function LoginScreen() {
 							)}
 						</TouchableOpacity>
 						<View className="my-6 flex-row items-center">
-							<View className="h-[1px] flex-1 bg-[#cccccc]" />
+							<View className="h-[1px] flex-1 bg-[#666]" />
 							<Text className="mx-4 text-text">OR</Text>
-							<View className="h-[1px] flex-1 bg-[#cccccc]" />
+							<View className="h-[1px] flex-1 bg-[#666]" />
 						</View>
 						<OAuthButton
 							strategy="oauth_google"

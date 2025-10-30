@@ -1,3 +1,4 @@
+import { BaseText as Text } from "@/components/BaseText";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
@@ -53,33 +54,35 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 	};
 
 	return (
-		<View className="bg-backround flex-row justify-around border-t border-surface p-4">
+		<View className="bg-backround flex-row border-t border-surface p-4">
 			<TouchableOpacity
-				className="items-center"
+				className="flex-1 items-center"
 				onPress={handleHomePress}>
 				<AntDesign
 					name="home"
 					size={24}
 					color={activeTab === "home" ? "#0ff6be" : "#666666"}
 				/>
+				<Text fontName="Poppins_500Medium" className="text-xs">
+					Home
+				</Text>
 			</TouchableOpacity>
-			<View className="items-center">
-				<TouchableOpacity
-					onPress={handleProductsPress}
-					className="relative">
-					<AntDesign
-						name="appstore-o"
-						size={24}
-						color={
-							activeTab === "products"
-								? "#0ff6be"
-								: "#666666"
-						}
-					/>
-				</TouchableOpacity>
-			</View>
 			<TouchableOpacity
-				className="items-center"
+				onPress={handleProductsPress}
+				className="flex-1 items-center">
+				<AntDesign
+					name="appstore-o"
+					size={24}
+					color={
+						activeTab === "products" ? "#0ff6be" : "#666666"
+					}
+				/>
+				<Text fontName="Poppins_500Medium" className="text-xs">
+					Products
+				</Text>
+			</TouchableOpacity>
+			<TouchableOpacity
+				className="flex-1 items-center"
 				onPress={handleCalendarPress}>
 				<AntDesign
 					name="calendar"
@@ -88,17 +91,23 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
 						activeTab === "calendar" ? "#0ff6be" : "#666666"
 					}
 				/>
+				<Text fontName="Poppins_500Medium" className="text-xs">
+					Calendar
+				</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
-				className="items-center"
+				className="flex-1 items-center"
 				onPress={handleBookmarksPress}>
 				<AntDesign
 					name="heart"
 					size={24}
 					color={
-						activeTab === "bookmarks" ? "#FE5B62" : "#666666"
+						activeTab === "bookmarks" ? "#0ff6be" : "#666666"
 					}
 				/>
+				<Text fontName="Poppins_500Medium" className="text-xs">
+					Bookmarks
+				</Text>
 			</TouchableOpacity>
 		</View>
 	);

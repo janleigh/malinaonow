@@ -2,6 +2,7 @@ import { BaseText as Text } from "@/components/BaseText";
 import { useTranslation } from "@/hooks/useTranslation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { formatDate, formatTime } from "@shared/utils/date";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useRef, useState } from "react";
 import {
 	Animated,
@@ -79,7 +80,7 @@ export const EventCard = ({
 			{/* Event Card in Homepage */}
 			<TouchableOpacity
 				key={event.id}
-				className="my-2 overflow-hidden rounded-xl border-2 border-[#000] bg-backgroundAlt"
+				className="my-2 overflow-hidden rounded-xl bg-lighterBackground"
 				onPress={handlePress}>
 				<View>
 					<View className="h-32 w-full">
@@ -89,6 +90,10 @@ export const EventCard = ({
 							}}
 							className="h-full w-full"
 							resizeMode="cover"
+						/>
+						<LinearGradient
+							colors={["transparent", "rgba(0,0,0,0.7)"]}
+							className="absolute bottom-0 left-0 right-0 h-16"
 						/>
 					</View>
 					<View className="p-3">

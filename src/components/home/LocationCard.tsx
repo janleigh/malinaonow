@@ -272,7 +272,7 @@ export const LocationCard = ({
                     position: absolute;
                     bottom: 10px;
                     left: 10px;
-                    background: white;
+                    background: #161719;
                     padding: 10px;
                     border-radius: 4px;
                     z-index: 1;
@@ -286,6 +286,7 @@ export const LocationCard = ({
                 .destination-info h3 {
                     margin: 0;
                     font-size: 16px;
+					color: #f7f7f7;
                 }
             </style>
         </head>
@@ -328,7 +329,7 @@ export const LocationCard = ({
                 map.on('load', function() {
                     directions.setDestination(destinationCoords);
                     
-                    new mapboxgl.Marker({color: '#fed787'})
+                    new mapboxgl.Marker({color: '#0ff6be'})
                         .setLngLat(destinationCoords)
                         .addTo(map);
                     
@@ -472,7 +473,7 @@ export const LocationCard = ({
 						]
 					}}>
 					<SafeAreaView className="flex-1">
-						<View className="flex-row items-center justify-between border-b border-[#cac6c6] p-4">
+						<View className="flex-row items-center justify-between border-b border-line p-4">
 							<Text
 								className="text-xl text-text"
 								fontName="Montserrat_700Bold">
@@ -651,21 +652,25 @@ export const LocationCard = ({
 											fontName="Montserrat_700Bold">
 											Reviews
 										</Text>
-										{isSignedIn && !isGuestMode && !showReviewForm && (
-											<TouchableOpacity
-												onPress={() =>
-													setShowReviewForm(true)
-												}
-												className="rounded-xl border border-lineAlt bg-surface px-4 py-2">
-												<Text
-													className="text-text"
-													fontName="Poppins_500Medium">
-													{t(
-														"location.writeReview"
-													)}
-												</Text>
-											</TouchableOpacity>
-										)}
+										{isSignedIn &&
+											!isGuestMode &&
+											!showReviewForm && (
+												<TouchableOpacity
+													onPress={() =>
+														setShowReviewForm(
+															true
+														)
+													}
+													className="rounded-xl border border-lineAlt bg-surface px-4 py-2">
+													<Text
+														className="text-text"
+														fontName="Poppins_500Medium">
+														{t(
+															"location.writeReview"
+														)}
+													</Text>
+												</TouchableOpacity>
+											)}
 									</View>
 									{showReviewForm && (
 										<View className="mt-4">
@@ -744,15 +749,16 @@ export const LocationCard = ({
 				visible={viewMapOpen}
 				transparent={false}
 				animationType="slide">
-				<SafeAreaView className="flex-1 bg-[#faf4f0]">
-					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
+				<SafeAreaView className="flex-1 bg-background">
+					<View className="flex-row items-center justify-between border-b border-[#333333] bg-background p-4">
 						<Text
-							className="font-lexend-bold text-xl text-black"
+							className="text-xl text-text"
+							fontName="Montserrat_700Bold"
 							fontStyle="bold">
 							Map View
 						</Text>
 						<TouchableOpacity onPress={closeMapView}>
-							<Feather name="x" size={24} color="black" />
+							<Feather name="x" size={24} color="white" />
 						</TouchableOpacity>
 					</View>
 					<View className="flex-1">
@@ -785,12 +791,12 @@ export const LocationCard = ({
 								}
 							}}
 							renderLoading={() => (
-								<View className="absolute inset-0 flex-1 items-center justify-center bg-[#faf4f0]">
+								<View className="absolute inset-0 flex-1 items-center justify-center bg-background">
 									<ActivityIndicator
 										size="large"
-										color="#fed787"
+										color="#0ff6be"
 									/>
-									<Text className="mt-2 text-[#666666]">
+									<Text className="mt-2 text-text">
 										{t("common.loading")}
 									</Text>
 								</View>
@@ -813,15 +819,16 @@ export const LocationCard = ({
 				visible={view360Open}
 				transparent={false}
 				animationType="slide">
-				<SafeAreaView className="flex-1 bg-black">
-					<View className="flex-row items-center justify-between border-b border-[#333333] bg-[#faf4f0] p-4">
+				<SafeAreaView className="flex-1 bg-background">
+					<View className="flex-row items-center justify-between border-b border-[#333333] bg-background p-4">
 						<Text
-							className="font-lexend-bold text-xl text-black"
+							className="text-xl text-text"
+							fontName="Montserrat_700Bold"
 							fontStyle="bold">
 							360° View
 						</Text>
 						<TouchableOpacity onPress={close360View}>
-							<Feather name="x" size={24} color="black" />
+							<Feather name="x" size={24} color="white" />
 						</TouchableOpacity>
 					</View>
 					<View className="flex-1">

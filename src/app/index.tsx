@@ -4,7 +4,7 @@ import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useAuth } from "@shared/context/AuthContext";
 import { shadowStyles } from "@shared/utils/styles";
-import { Link, router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import {
 	ActivityIndicator,
@@ -55,7 +55,7 @@ export default function LandingPage() {
 
 	const handleContinueAsGuest = () => {
 		setGuestMode(true);
-		router.replace("/(home)/products");
+		router.replace("/(home)");
 	};
 
 	if (!isLoaded) {
@@ -93,7 +93,7 @@ export default function LandingPage() {
 						</Text>
 					</View>
 				</View>
-				<View className="w-full space-y-3 rounded-t-xl px-5 py-10">
+				<View className="w-full space-y-3 rounded-t-xl p-5">
 					<OAuthButton
 						strategy="oauth_google"
 						text="Continue with Google"
@@ -105,27 +105,27 @@ export default function LandingPage() {
 								color="black"
 							/>
 						}
-						className="android:mb-2"
+						// className="android:mb-2"
 					/>
-					<Link href="/(auth)/signup" asChild>
+					{/* yeah i really need to pay for this now so disabled. */}
+					{/* <Link href="/(auth)/signup" asChild>
 						<Pressable
 							className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4 disabled:opacity-50"
 							android_ripple={{
 								color: "rgba(0,0,0,0.12)",
 								foreground: true
-							}}
-							disabled>
+							}}>
 							<Text
 								className="android:font-normal text-base font-extrabold text-black"
 								fontName="Poppins_500Medium">
-								Sign up with email (DISABLED)
+								Sign up with email
 							</Text>
 						</Pressable>
-					</Link>
+					</Link> */}
 					<View className="my-6 flex-row items-center">
-						<View className="h-[1px] flex-1 bg-[#cccccc]" />
+						<View className="h-[1px] flex-1 bg-[#666]" />
 						<Text className="mx-4 text-text">OR</Text>
-						<View className="h-[1px] flex-1 bg-[#cccccc]" />
+						<View className="h-[1px] flex-1 bg-[#666]" />
 					</View>
 					<Pressable
 						className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4"
