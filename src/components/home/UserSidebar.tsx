@@ -57,32 +57,24 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 			fadeAnim.setValue(0);
 			contentFadeAnim.setValue(0);
 
-			const animationTimeout = setTimeout(() => {
-				Animated.parallel([
-					Animated.timing(slideAnim, {
-						toValue: 0,
-						duration: 200,
-						useNativeDriver: true
-					}),
-					Animated.timing(fadeAnim, {
-						toValue: 0.3,
-						duration: 200,
-						useNativeDriver: true
-					})
-				]).start();
-
-				const contentTimeout = setTimeout(() => {
-					Animated.timing(contentFadeAnim, {
-						toValue: 1,
-						duration: 150,
-						useNativeDriver: true
-					}).start();
-				}, 100);
-
-				return () => clearTimeout(contentTimeout);
-			}, 10);
-
-			return () => clearTimeout(animationTimeout);
+			Animated.parallel([
+				Animated.timing(slideAnim, {
+					toValue: 0,
+					duration: 200,
+					useNativeDriver: true
+				}),
+				Animated.timing(fadeAnim, {
+					toValue: 0.3,
+					duration: 200,
+					useNativeDriver: true
+				}),
+				Animated.timing(contentFadeAnim, {
+					toValue: 1,
+					duration: 200,
+					delay: 50,
+					useNativeDriver: true
+				})
+			]).start();
 		} else if (!visible && modalVisible) {
 			Animated.parallel([
 				Animated.timing(slideAnim, {
@@ -97,7 +89,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 				}),
 				Animated.timing(contentFadeAnim, {
 					toValue: 0,
-					duration: 200,
+					duration: 150,
 					useNativeDriver: true
 				})
 			]).start(() => {

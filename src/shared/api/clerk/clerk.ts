@@ -14,11 +14,23 @@ export const useClerkAuth = () => {
 		lastName?: string
 	) => {
 		try {
-			const result = await clerkSignUp?.create({
-				emailAddress: email,
-				firstName,
-				lastName
-			});
+			const signUpData: {
+				emailAddress: string;
+				firstName?: string;
+				lastName?: string;
+			} = {
+				emailAddress: email
+			};
+
+			if (firstName) {
+				signUpData.firstName = firstName;
+			}
+
+			if (lastName) {
+				signUpData.lastName = lastName;
+			}
+
+			const result = await clerkSignUp?.create(signUpData);
 
 			if (!result) {
 				throw new Error("Failed to create user account");
