@@ -4,4 +4,4 @@ export { EventService } from "./EventService";
 export { LocationService } from "./LocationService";
 export { ProductService } from "./ProductService";
 export { ReviewService } from "./ReviewService";
-export { StorageService } from "./StorageService";
+export { extractFilePathFromUrl, StorageService } from "./StorageService";

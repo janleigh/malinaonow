@@ -1,5 +1,5 @@
 import { supabase } from "@shared/api/supabase";
-import { StorageService } from "@shared/services";
+import { extractFilePathFromUrl, StorageService } from "@shared/services";
 import {
 	Location as CardLocation,
 	Location as SupabaseLocation
@@ -180,20 +180,18 @@ export const LocationService = {
 			if (bannerImage) {
 				// Delete old banner image if it exists
 				if (existingLocation.image.banner) {
-					try {
-						const { pathname } = new URL(
-							existingLocation.image.banner
-						);
-						const filePath = pathname
-							.split("/")
-							.slice(-3)
-							.join("/");
-						await StorageService.deleteFile(filePath);
-					} catch (error) {
-						console.warn(
-							"Failed to delete old banner image:",
-							error
-						);
+					const filePath = extractFilePathFromUrl(
+						existingLocation.image.banner
+					);
+					if (filePath) {
+						try {
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								"Failed to delete old banner image:",
+								error
+							);
+						}
 					}
 				}
 
@@ -215,20 +213,18 @@ export const LocationService = {
 			if (image360) {
 				// Delete old 360 image if it exists
 				if (existingLocation.image[360]) {
-					try {
-						const { pathname } = new URL(
-							existingLocation.image[360]
-						);
-						const filePath = pathname
-							.split("/")
-							.slice(-3)
-							.join("/");
-						await StorageService.deleteFile(filePath);
-					} catch (error) {
-						console.warn(
-							"Failed to delete old 360 image:",
-							error
-						);
+					const filePath = extractFilePathFromUrl(
+						existingLocation.image[360]
+					);
+					if (filePath) {
+						try {
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								"Failed to delete old 360 image:",
+								error
+							);
+						}
 					}
 				}
 
