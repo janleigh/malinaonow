@@ -333,21 +333,19 @@ export const LocationCard = ({
                         .addTo(map);
                     
                     // Automatically get user's location and set as origin
-                    window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'getLocation'}));
-                    
-                    if (!window.ReactNativeWebView) {
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(position => {
-                                const userLocation = [position.coords.longitude, position.coords.latitude];
-                                directions.setOrigin(userLocation);
-                            }, error => {
-                                console.error('Error getting location:', error);
-                            }, {
-                                enableHighAccuracy: true,
-                                timeout: 5000,
-                                maximumAge: 0
-                            });
-                        }
+                    if (window.ReactNativeWebView) {
+                        window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getLocation'}));
+                    } else if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(position => {
+                            const userLocation = [position.coords.longitude, position.coords.latitude];
+                            directions.setOrigin(userLocation);
+                        }, error => {
+                            console.error('Failed to get user location for route origin:', error);
+                        }, {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        });
                     }
                         
                     window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'mapLoaded'}));
