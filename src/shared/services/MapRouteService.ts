@@ -14,11 +14,6 @@ export interface RouteData {
 	timestamp: number;
 }
 
-interface CachedRoute {
-	locationId: string;
-	route: RouteData;
-}
-
 /**
  * Service for caching map route data for offline use
  */
@@ -34,11 +29,7 @@ export const MapRouteService = {
 	): Promise<void> {
 		try {
 			const key = `map_route_${locationId}`;
-			const cacheData: CachedRoute = {
-				locationId,
-				route: routeData
-			};
-			await AsyncStorage.setItem(key, JSON.stringify(cacheData));
+			await AsyncStorage.setItem(key, JSON.stringify(routeData));
 		} catch (error) {
 			console.error("Error saving route:", error);
 		}
@@ -55,8 +46,7 @@ export const MapRouteService = {
 			const data = await AsyncStorage.getItem(key);
 			if (!data) return null;
 
-			const cached: CachedRoute = JSON.parse(data);
-			return cached.route;
+			return JSON.parse(data) as RouteData;
 		} catch (error) {
 			console.error("Error getting route:", error);
 			return null;
@@ -77,7 +67,7 @@ export const MapRouteService = {
 	},
 
 	/**
-	 * Clear all cached routes
+	 * Clear all cached routes (use with caution on large datasets)
 	 */
 	async clearAllRoutes(): Promise<void> {
 		try {
@@ -85,7 +75,9 @@ export const MapRouteService = {
 			const routeKeys = keys.filter((key) =>
 				key.startsWith("map_route_")
 			);
-			await AsyncStorage.multiRemove(routeKeys);
+			if (routeKeys.length > 0) {
+				await AsyncStorage.multiRemove(routeKeys);
+			}
 		} catch (error) {
 			console.error("Error clearing all routes:", error);
 		}

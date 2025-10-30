@@ -348,11 +348,12 @@ export const LocationCard = ({
                 directions.on('route', function(event) {
                     if (event.route && event.route.length > 0) {
                         const route = event.route[0];
+                        const originData = directions.getOrigin();
                         const routeData = {
-                            origin: directions.getOrigin()?.geometry?.coordinates 
+                            origin: originData?.geometry?.coordinates 
                                 ? {
-                                    latitude: directions.getOrigin().geometry.coordinates[1],
-                                    longitude: directions.getOrigin().geometry.coordinates[0]
+                                    latitude: originData.geometry.coordinates[1],
+                                    longitude: originData.geometry.coordinates[0]
                                 } 
                                 : null,
                             destination: {
@@ -413,16 +414,12 @@ export const LocationCard = ({
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-			<link rel="preconnect" href="https://fonts.googleapis.com">
-			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-			<link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
             <style>
                 body { 
                     margin: 0; 
                     padding: 20px; 
                     background: #161719;
-                    font-family: 'Lexend Mega', sans-serif;
-                    letter-spacing: -0.15em;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
                     color: #f7f7f7;
                 }
                 .offline-container {
