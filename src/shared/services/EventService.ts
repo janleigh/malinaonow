@@ -10,6 +10,9 @@ export const EventService = {
 	 */
 	async getEvents(): Promise<ComponentEvent[]> {
 		try {
+			// First, clean up past due events
+			await this.deletePastDueEvents();
+
 			const { data, error } = await supabase
 				.from("events")
 				.select("*")
@@ -203,6 +206,87 @@ export const EventService = {
 		} catch (error) {
 			console.error("Error deleting event:", error);
 			throw error;
+		}
+	},
+
+	/**
+	 * Delete all past due events (events where date is before today)
+	 * @returns {Promise<number>} - Number of events deleted
+	 */
+	async deletePastDueEvents(): Promise<number> {
+		try {
+			// Get current date in YYYY-MM-DD format
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+			const todayString = today.toISOString().split("T")[0];
+
+			// Fetch all past due events
+			const { data: pastEvents, error: fetchError } = await supabase
+				.from("events")
+				.select("*")
+				.lt("date", todayString);
+
+			if (fetchError) {
+				console.error(
+					"Error fetching past due events:",
+					fetchError
+				);
+				return 0;
+			}
+
+			if (!pastEvents || pastEvents.length === 0) {
+				console.log("No past due events to delete");
+				return 0;
+			}
+
+			// Delete each event and its associated banner image
+			let deletedCount = 0;
+			for (const event of pastEvents) {
+				try {
+					// Delete banner image from storage if it exists
+					if (event.banner_image) {
+						try {
+							const url = new URL(event.banner_image);
+							const pathParts = url.pathname.split("/");
+							const filePath = pathParts.slice(-3).join("/");
+							await StorageService.deleteFile(filePath);
+						} catch (error) {
+							console.warn(
+								`Failed to delete banner image for event ${event.id}:`,
+								error
+							);
+						}
+					}
+
+					// Delete the event record
+					const { error: deleteError } = await supabase
+						.from("events")
+						.delete()
+						.eq("id", event.id);
+
+					if (deleteError) {
+						console.error(
+							`Failed to delete event ${event.id}:`,
+							deleteError
+						);
+					} else {
+						deletedCount++;
+					}
+				} catch (error) {
+					console.error(
+						`Exception deleting event ${event.id}:`,
+						error
+					);
+				}
+			}
+
+			console.log(
+				`Successfully deleted ${deletedCount} past due events`
+			);
+			return deletedCount;
+		} catch (error) {
+			console.error("Error in deletePastDueEvents:", error);
+			return 0;
 		}
 	},
 
