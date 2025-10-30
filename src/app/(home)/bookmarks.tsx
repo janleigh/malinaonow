@@ -26,12 +26,12 @@ export default function BookmarksPage() {
 	>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const { user, isSignedIn } = useAuth();
+	const { user, isSignedIn, isGuestMode } = useAuth();
 	const { t } = useTranslation();
 	const { isOnline } = useNetworkStatus();
 
 	const fetchBookmarkedLocations = useCallback(async () => {
-		if (!isSignedIn || !user) {
+		if (!user || isGuestMode) {
 			setBookmarkedLocations([]);
 			setLocations([]);
 			setLoading(false);
@@ -64,7 +64,7 @@ export default function BookmarksPage() {
 		} finally {
 			setLoading(false);
 		}
-	}, [isSignedIn, user]);
+	}, [user, isGuestMode]);
 
 	useEffect(() => {
 		fetchBookmarkedLocations();
@@ -78,7 +78,7 @@ export default function BookmarksPage() {
 		locationId: string,
 		newStatus: boolean
 	) => {
-		if (!isSignedIn || !user) return;
+		if (!user || isGuestMode) return;
 
 		try {
 			if (!newStatus) {
@@ -182,6 +182,40 @@ export default function BookmarksPage() {
 											className="text-black"
 											fontName="Montserrat_700Bold">
 											Retry
+										</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+						) : isGuestMode ? (
+							<View className="my-4 rounded-lg border border-line bg-surface p-4">
+								<View className="items-center">
+									<View className="mb-4 h-12 w-12 items-center justify-center rounded-full border border-line bg-primary">
+										<AntDesign
+											name="user"
+											size={24}
+											color="#333"
+										/>
+									</View>
+									<Text
+										className="mb-2 text-center text-xl text-text"
+										fontName="Montserrat_700Bold">
+										Sign In Required
+									</Text>
+									<Text
+										className="mb-4 text-center text-base text-text-inactive"
+										fontName="Poppins_500Medium">
+										Bookmarks are only available for
+										signed in users. Please sign in to
+										save and view your favorite
+										locations.
+									</Text>
+									<TouchableOpacity
+										className="flex-row items-center justify-center rounded-3xl border border-line bg-primary px-4 py-2"
+										onPress={() => router.push("/")}>
+										<Text
+											className="text-black"
+											fontName="Montserrat_700Bold">
+											Sign In
 										</Text>
 									</TouchableOpacity>
 								</View>

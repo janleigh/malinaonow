@@ -47,7 +47,7 @@ export default function HomePage() {
 	>([]);
 	const [showingBookmarksOnly, setShowingBookmarksOnly] =
 		useState(false);
-	const { user, isSignedIn } = useAuth();
+	const { user, isSignedIn, isGuestMode } = useAuth();
 	const { t } = useTranslation();
 	const { isOnline } = useNetworkStatus();
 
@@ -115,7 +115,7 @@ export default function HomePage() {
 	};
 
 	const fetchBookmarks = useCallback(async () => {
-		if (!isSignedIn || !user) {
+		if (!user || isGuestMode) {
 			setBookmarkedLocations([]);
 			return;
 		}
@@ -126,7 +126,7 @@ export default function HomePage() {
 		} catch (err) {
 			console.error("Failed to fetch bookmarks:", err);
 		}
-	}, [isSignedIn, user]);
+	}, [user, isGuestMode]);
 
 	useEffect(() => {
 		fetchLocations();
@@ -138,7 +138,7 @@ export default function HomePage() {
 		locationId: string,
 		newStatus: boolean
 	) => {
-		if (!isSignedIn || !user) return;
+		if (!user || isGuestMode) return;
 
 		try {
 			if (newStatus) {

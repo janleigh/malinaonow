@@ -17,7 +17,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LandingPage() {
-	const { isSignedIn, isLoaded, signOut } = useAuth();
+	const { isSignedIn, isLoaded, signOut, setGuestMode } = useAuth();
 	const [showDialog, setShowDialog] = useState(false);
 	const { isOnline } = useNetworkStatus();
 
@@ -51,6 +51,11 @@ export default function LandingPage() {
 		} catch (error) {
 			console.error("Sign out error:", error);
 		}
+	};
+
+	const handleContinueAsGuest = () => {
+		setGuestMode(true);
+		router.replace("/(home)/products");
 	};
 
 	if (!isLoaded) {
@@ -122,20 +127,19 @@ export default function LandingPage() {
 						<Text className="mx-4 text-text">OR</Text>
 						<View className="h-[1px] flex-1 bg-[#cccccc]" />
 					</View>
-					<Link href="/(home)/products" asChild>
-						<Pressable
-							className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4"
-							android_ripple={{
-								color: "rgba(0,0,0,0.12)",
-								foreground: true
-							}}>
-							<Text
-								className="android:font-normal text-base font-extrabold text-black"
-								fontName="Poppins_500Medium">
-								Continue as Guest
-							</Text>
-						</Pressable>
-					</Link>
+					<Pressable
+						className="h-12 w-full flex-row items-center justify-center rounded-3xl border border-line bg-white px-4"
+						android_ripple={{
+							color: "rgba(0,0,0,0.12)",
+							foreground: true
+						}}
+						onPress={handleContinueAsGuest}>
+						<Text
+							className="android:font-normal text-base font-extrabold text-black"
+							fontName="Poppins_500Medium">
+							Continue as Guest
+						</Text>
+					</Pressable>
 					<View className="mt-6 items-center">
 						<Text
 							className="text-center text-white"

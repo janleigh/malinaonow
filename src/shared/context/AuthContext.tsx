@@ -21,6 +21,8 @@ interface AuthContextProps {
 	user?: ReturnType<typeof useUser>["user"];
 	isAdmin: boolean;
 	offlineMode: boolean;
+	isGuestMode: boolean;
+	setGuestMode: (enabled: boolean) => void;
 	signUp: ReturnType<typeof useClerkAuth>["signUp"];
 	signIn: ReturnType<typeof useClerkAuth>["signIn"];
 	verifyOtp: ReturnType<typeof useClerkAuth>["verifyOtp"];
@@ -38,6 +40,7 @@ const useAuthValue = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [authStateStable, setAuthStateStable] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
+	const [isGuestMode, setIsGuestMode] = useState(false);
 
 	useLayoutEffect(() => {
 		if (clerkLoaded) {
@@ -102,7 +105,7 @@ const useAuthValue = () => {
 	}, [clerkLoaded, isSignedIn, user, isAdmin]);
 
 	useEffect(() => {
-		if (!clerkLoaded && !isOnline && !offlineUser) {
+		if (!clerkLoaded && !isOnline && !offlineUser && !isGuestMode) {
 			(async () => {
 				try {
 					const raw = await AsyncStorage.getItem("offline_user");
@@ -116,7 +119,7 @@ const useAuthValue = () => {
 				} catch {}
 			})();
 		}
-	}, [clerkLoaded, isOnline, offlineUser]);
+	}, [clerkLoaded, isOnline, offlineUser, isGuestMode]);
 
 	useEffect(() => {
 		if (clerkLoaded && offlineMode) {
@@ -124,17 +127,41 @@ const useAuthValue = () => {
 		}
 	}, [clerkLoaded, offlineMode]);
 
+	const setGuestMode = (enabled: boolean) => {
+		setIsGuestMode(enabled);
+		if (enabled) {
+			// If enabling guest mode, disable offline mode
+			setOfflineMode(false);
+			setOfflineUser(null);
+			setIsLoaded(true);
+		}
+	};
+
+	const handleSignOut = async () => {
+		if (isGuestMode) {
+			// For guest mode, just clear the state
+			setIsGuestMode(false);
+			setIsLoaded(false);
+			// Will be redirected by the layout
+		} else {
+			// For authenticated users, do regular sign out
+			await signOut();
+		}
+	};
+
 	return {
 		isLoaded,
-		isSignedIn: isSignedIn || !!offlineUser,
+		isSignedIn: isSignedIn || !!offlineUser || isGuestMode,
 		userId: user?.id,
 		user: user || offlineUser,
 		isAdmin,
 		offlineMode,
+		isGuestMode,
+		setGuestMode,
 		signUp,
 		signIn,
 		verifyOtp,
-		signOut
+		signOut: handleSignOut
 	};
 };
 
