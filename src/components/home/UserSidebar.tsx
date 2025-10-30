@@ -9,6 +9,7 @@ import {
 	Dimensions,
 	Image,
 	Modal,
+	Platform,
 	TouchableOpacity,
 	View
 } from "react-native";
@@ -122,7 +123,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 			animationType="none"
 			onRequestClose={onClose}
 			hardwareAccelerated={true}
-			statusBarTranslucent={true}>
+			statusBarTranslucent={Platform.OS === "android"}>
 			<View className="flex-1">
 				<Animated.View
 					style={{

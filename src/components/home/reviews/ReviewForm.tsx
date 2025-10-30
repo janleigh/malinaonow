@@ -26,8 +26,13 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 	const { t } = useTranslation();
 
 	const handleSubmit = async () => {
-		if (!isSignedIn || isGuestMode) {
+		if (!isSignedIn) {
 			setError("You must be signed in to leave a review");
+			return;
+		}
+
+		if (isGuestMode) {
+			setError("Guest users cannot leave reviews. Please sign in with an account.");
 			return;
 		}
 
