@@ -4,15 +4,11 @@
 		"slug": "malinaonow",
 		"version": "1.1.0",
 		"orientation": "portrait",
-		"icon": "./src/shared/assets/images/icon.png",
+		"icon": "./src/shared/assets/images/app-icon.png",
 		"scheme": "malinaonow",
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": false,
 		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./src/shared/assets/images/icon.png",
-				"backgroundColor": "#ffffff"
-			},
 			"edgeToEdgeEnabled": true,
 			"package": "com.jnlghmz.malinaonow"
 		},
