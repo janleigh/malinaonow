@@ -70,10 +70,6 @@ export default function BookmarksPage() {
 		fetchBookmarkedLocations();
 	}, [fetchBookmarkedLocations]);
 
-	const toggleView = () => {
-		setIsGridView(!isGridView);
-	};
-
 	const handleToggleBookmark = async (
 		locationId: string,
 		newStatus: boolean
@@ -123,22 +119,6 @@ export default function BookmarksPage() {
 								fontName="Poppins_700Bold">
 								{t("home.myBookmarks")}
 							</Text>
-							<TouchableOpacity
-								className="flex-row items-center"
-								onPress={toggleView}>
-								<Text
-									className="mr-1 text-text-inactive"
-									fontName="Poppins_500Medium">
-									{isGridView
-										? "List View"
-										: "Grid View"}
-								</Text>
-								<Feather
-									name={isGridView ? "list" : "grid"}
-									size={18}
-									color="#cacbca"
-								/>
-							</TouchableOpacity>
 						</View>
 						{loading ? (
 							<View className="items-center justify-center p-4">
@@ -253,7 +233,7 @@ export default function BookmarksPage() {
 									</TouchableOpacity>
 								</View>
 							</View>
-						) : isGridView ? (
+						) : (
 							// Grid View
 							<View className="flex-row justify-between">
 								<View className="w-[48%] space-y-4">
@@ -289,20 +269,6 @@ export default function BookmarksPage() {
 											/>
 										))}
 								</View>
-							</View>
-						) : (
-							// List View
-							<View className="space-y-4">
-								{locations.map((location) => (
-									<LocationCard
-										key={location.id}
-										location={location}
-										isBookmarked={true}
-										onToggleBookmark={
-											handleToggleBookmark
-										}
-									/>
-								))}
 							</View>
 						)}
 					</View>

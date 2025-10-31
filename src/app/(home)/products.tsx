@@ -63,7 +63,6 @@ const ProductsScreen = () => {
 	const [loading, setLoading] = useState(true);
 	const [refreshing, setRefreshing] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [viewMode, setViewMode] = useState<ViewMode>("grid");
 	const [selectedBarangay, setSelectedBarangay] = useState("All");
 	const [error, setError] = useState<string | null>(null);
 	const flatListRef = useRef<FlatList>(null);
@@ -141,20 +140,6 @@ const ProductsScreen = () => {
 		[products, searchQuery, selectedBarangay]
 	);
 
-	const toggleView = useCallback(
-		() => setViewMode((prev) => (prev === "grid" ? "list" : "grid")),
-		[]
-	);
-
-	const getItemLayout = useCallback(
-		(data: any, index: number) => ({
-			length: ITEM_HEIGHT,
-			offset: ITEM_HEIGHT * index,
-			index
-		}),
-		[]
-	);
-
 	const onViewableItemsChanged = useRef(
 		({ viewableItems }: { viewableItems: ViewToken[] }) => {}
 	).current;
@@ -167,14 +152,8 @@ const ProductsScreen = () => {
 	]);
 
 	const renderProductItem = useCallback<ListRenderItem<Product>>(
-		({ item }) => (
-			<ProductCard
-				key={item.id}
-				product={item}
-				listView={viewMode === "list"}
-			/>
-		),
-		[viewMode]
+		({ item }) => <ProductCard key={item.id} product={item} />,
+		[]
 	);
 
 	const renderGridColumns = useCallback(() => {
@@ -259,24 +238,6 @@ const ProductsScreen = () => {
 							fontName="Poppins_700Bold">
 							{t("products.featuredProducts")}
 						</Text>
-						<TouchableOpacity
-							className="flex-row items-center"
-							onPress={toggleView}>
-							<Text
-								className="mr-1 text-text-inactive"
-								fontName="Poppins_500Medium">
-								{viewMode === "grid"
-									? "List View"
-									: "Grid View"}
-							</Text>
-							<Feather
-								name={
-									viewMode === "grid" ? "list" : "grid"
-								}
-								size={18}
-								color="#cacbca"
-							/>
-						</TouchableOpacity>
 					</View>
 				</View>
 				<View className="flex-1 px-2">
@@ -305,36 +266,13 @@ const ProductsScreen = () => {
 							</TouchableOpacity>
 						</View>
 					) : filteredProducts.length > 0 ? (
-						viewMode === "grid" ? (
-							<ScrollView
-								showsVerticalScrollIndicator={false}
-								contentContainerStyle={{
-									paddingBottom: 80
-								}}>
-								{renderGridColumns()}
-							</ScrollView>
-						) : (
-							<FlatList
-								ref={flatListRef}
-								data={filteredProducts}
-								renderItem={renderProductItem}
-								keyExtractor={(item) => item.id}
-								initialNumToRender={4}
-								maxToRenderPerBatch={6}
-								updateCellsBatchingPeriod={50}
-								windowSize={5}
-								getItemLayout={getItemLayout}
-								viewabilityConfig={viewabilityConfig}
-								viewabilityConfigCallbackPairs={
-									viewabilityConfigCallbackPairs.current
-								}
-								contentContainerStyle={[
-									styles.listContent,
-									{ paddingBottom: 80 }
-								]}
-								showsVerticalScrollIndicator={false}
-							/>
-						)
+						<ScrollView
+							showsVerticalScrollIndicator={false}
+							contentContainerStyle={{
+								paddingBottom: 80
+							}}>
+							{renderGridColumns()}
+						</ScrollView>
 					) : (
 						<View className="flex-1 items-center justify-center">
 							<AntDesign

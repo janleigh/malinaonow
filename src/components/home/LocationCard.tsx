@@ -691,15 +691,14 @@ export const LocationCard = ({
 								className="h-52 w-full"
 								resizeMode="cover"
 							/>
-
 							{/* Display additional images if available */}
 							{location.images &&
 								location.images.length > 0 && (
-									<View className="px-4">
+									<View className="mt-3 px-4">
 										<Text
 											className="mb-3 text-lg text-text"
 											fontName="Montserrat_700Bold">
-											{location.images.length} Photos
+											Gallery
 										</Text>
 										<FlatList
 											key={`location-images-horizontal`}
@@ -729,7 +728,6 @@ export const LocationCard = ({
 										/>
 									</View>
 								)}
-
 							<View className="p-4">
 								<View className="mb-2 flex-row items-center">
 									<Text className="mb-1 mr-1 text-2xl text-[#FFBB38]">
@@ -767,7 +765,7 @@ export const LocationCard = ({
 									</Text>
 								</View>
 								<TouchableOpacity
-									className="absolute right-8 top-6 z-10 border-2 border-lighterBackground bg-surface p-2 px-4 py-2"
+									className="absolute right-8 top-6 z-10 p-2 px-4 py-2"
 									onPress={(e) => {
 										e.stopPropagation();
 										handleToggleBookmark(e);

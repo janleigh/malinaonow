@@ -83,14 +83,14 @@ export default function LandingPage() {
 					<View className="flex-col items-center">
 						<Image
 							source={require("@shared/assets/images/icon.png")}
-							className="android:w-32 android:h-32 mb-4 h-6 w-6"
+							className="android:w-48 android:h-48 mb-4 h-6 w-6"
 							resizeMode="cover"
 						/>
-						<Text
+						{/* <Text
 							className="android:text-4xl android:font-normal text-3xl text-text"
 							fontName="Montserrat_700Bold">
 							MalinaoNow
-						</Text>
+						</Text> */}
 					</View>
 				</View>
 				<View className="w-full space-y-3 rounded-t-xl p-5">

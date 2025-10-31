@@ -261,7 +261,7 @@ export default function ModerateReviewsScreen() {
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							className="flex-1">
-							<View className="flex-row space-x-2">
+							<View className="flex-row space-x-2 pr-2">
 								<TouchableOpacity
 									className={`mr-1 rounded-lg border border-line px-3 py-1 ${filterRating === 0 ? "bg-primary" : "bg-lighterBackground"}`}
 									onPress={() => setFilterRating(0)}>

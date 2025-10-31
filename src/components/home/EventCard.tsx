@@ -80,7 +80,7 @@ export const EventCard = ({
 			{/* Event Card in Homepage */}
 			<TouchableOpacity
 				key={event.id}
-				className="my-2 overflow-hidden rounded-xl bg-lighterBackground"
+				className="my-2 overflow-hidden rounded-xl border border-line bg-lighterBackground"
 				onPress={handlePress}>
 				<View>
 					<View className="h-32 w-full">

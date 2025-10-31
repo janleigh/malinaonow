@@ -213,8 +213,8 @@ export default function ManageLocationsScreen() {
 						onPress={openAddModal}>
 						<AntDesign name="plus" size={20} color="black" />
 						<Text
-							className="ml-2 text-black"
-							fontName="Poppins_700Bold">
+							className="ml-2 mt-0.5 text-black"
+							fontName="Montserrat_700Bold">
 							Add New Tourist Spot
 						</Text>
 					</TouchableOpacity>

@@ -59,7 +59,7 @@ export const StorageService: IStorageService = {
 			const fileName = `${fileType}-${timestamp}-${randomId}.${fileExtension}`;
 
 			// Create file path: assets/{entityType}/{entityId}/{fileName}
-			const filePath = `assets/${entityType}/${entityId}/${fileName}`;
+			const filePath = `${entityType}/${entityId}/${fileName}`;
 
 			// Determine content type
 			let contentType = "image/jpeg"; // default
