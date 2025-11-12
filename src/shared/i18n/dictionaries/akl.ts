@@ -10,7 +10,10 @@ export default {
 		back: "Balik",
 		confirm: "Kompirmahon",
 		error: "May Saea",
-		success: "Madinaeag-on"
+		success: "Madinaeag-on",
+		guestSignedOut: "Naka-sign Out na",
+		guestSignedOutMessage:
+			"Naka-sign out ka na. Pakihimo it relaunch sa app para magpadayon."
 	},
 	home: {
 		title: "MalinaoNow",

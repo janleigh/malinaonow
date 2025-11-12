@@ -10,7 +10,10 @@ export default {
 		back: "Bumalik",
 		confirm: "Kumpirmahin",
 		error: "May Error",
-		success: "Tagumpay"
+		success: "Tagumpay",
+		guestSignedOut: "Naka-sign Out na",
+		guestSignedOutMessage:
+			"Naka-sign out ka na. Mangyaring i-relaunch ang app para magpatuloy."
 	},
 	home: {
 		title: "MalinaoNow",

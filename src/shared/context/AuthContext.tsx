@@ -1,4 +1,5 @@
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import { useTranslation } from "@/hooks/useTranslation";
 import { useUser } from "@clerk/clerk-expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useClerkAuth } from "@shared/api/clerk";
@@ -13,6 +14,7 @@ import React, {
 	useLayoutEffect,
 	useState
 } from "react";
+import { Alert, BackHandler, Platform } from "react-native";
 
 interface AuthContextProps {
 	isLoaded: boolean;
@@ -35,6 +37,7 @@ const useAuthValue = () => {
 	const { isLoaded: clerkLoaded, isSignedIn, user } = useUser();
 	const { signUp, signIn, verifyOtp, signOut } = useClerkAuth();
 	const { isOnline } = useNetworkStatus();
+	const { t } = useTranslation();
 	const [offlineMode, setOfflineMode] = useState(false);
 	const [offlineUser, setOfflineUser] = useState<any>(null);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -139,10 +142,35 @@ const useAuthValue = () => {
 
 	const handleSignOut = async () => {
 		if (isGuestMode) {
-			// For guest mode, just clear the state
-			setIsGuestMode(false);
-			setIsLoaded(false);
-			// Will be redirected by the layout
+			// For guest mode, show alert and close app
+			Alert.alert(
+				t("common.guestSignedOut"),
+				t("common.guestSignedOutMessage"),
+				[
+					{
+						text: "OK",
+						onPress: () => {
+							// Clear guest mode state
+							setIsGuestMode(false);
+							setIsLoaded(false);
+
+							// Close the app after a short delay
+							setTimeout(() => {
+								if (Platform.OS === "android") {
+									BackHandler.exitApp();
+								} else if (Platform.OS === "ios") {
+									// iOS doesn't allow programmatic app exit
+									// The app will remain in background state
+									console.log(
+										"iOS: App cannot be programmatically closed"
+									);
+								}
+							}, 500);
+						}
+					}
+				],
+				{ cancelable: false }
+			);
 		} else {
 			// For authenticated users, do regular sign out
 			await signOut();

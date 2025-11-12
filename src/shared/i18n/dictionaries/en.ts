@@ -10,7 +10,10 @@ export default {
 		back: "Back",
 		confirm: "Confirm",
 		error: "Error",
-		success: "Success"
+		success: "Success",
+		guestSignedOut: "Signed Out",
+		guestSignedOutMessage:
+			"You have been signed out. Please relaunch the app to continue."
 	},
 	home: {
 		title: "MalinaoNow",

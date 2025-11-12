@@ -140,7 +140,7 @@ export default function LandingPage() {
 							Continue as Guest
 						</Text>
 					</Pressable>
-					<View className="mt-6 items-center">
+					{/* <View className="mt-6 items-center">
 						<Text
 							className="text-center text-white"
 							fontName="Poppins_500Medium">
@@ -152,7 +152,7 @@ export default function LandingPage() {
 								Log in
 							</Text>
 						</Text>
-					</View>
+					</View> */}
 				</View>
 			</SafeAreaView>
 			{/* Already Signed In Dialog */}
