@@ -9,6 +9,7 @@ import { useAuth } from "@shared/context/AuthContext";
 import { MapRouteService } from "@shared/services";
 import { ReviewService } from "@shared/services/ReviewService";
 import { Location, Review } from "@shared/types/supabase";
+import * as ELocation from "expo-location";
 import React, { useEffect, useRef, useState } from "react";
 import {
 	ActivityIndicator,
@@ -150,6 +151,8 @@ export const LocationCard = ({
 					.from("reviews")
 					.select("*")
 					.eq("location_id", location.id);
+				
+				// TODO! Cache reviews.
 
 				if (reviewStats && reviewStats.length > 0) {
 					const reviews = reviewStats as Review[];
@@ -266,7 +269,7 @@ export const LocationCard = ({
         </html>
     `;
 
-	// HTML for the map viewer
+	// HTML for the map viewer with directions 
 	const getMapViewerHTML = (name: string) => `
     <!DOCTYPE html>
     <html>
@@ -278,6 +281,8 @@ export const LocationCard = ({
 			<link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
             <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet">
             <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
+			<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css">
+            <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
             <style>
                 body { margin: 0; padding: 0; }
                 #map { position: absolute; top: 0; bottom: 0; width: 100%; }
@@ -301,6 +306,36 @@ export const LocationCard = ({
                     font-size: 16px;
 					color: #f7f7f7;
                 }
+                .directions-toggle {
+                    position: absolute;
+                    bottom: 24px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 5;
+                    background: #0ff6be;
+                    color: #161719;
+                    border: none;
+                    border-radius: 999px;
+                    padding: 10px 20px;
+                    font-family: 'Lexend Mega', sans-serif;
+                    font-size: 12px;
+                    letter-spacing: -0.05em;
+                    cursor: pointer;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+                }
+                .directions-toggle:active {
+                    transform: translateX(-50%) scale(0.97);
+                }
+                .mapbox-directions-instructions.collapsible,
+                .directions-control-instructions.collapsible {
+                    max-width: 320px;
+                    max-height: 60vh;
+                    overflow-y: auto;
+                }
+                .mapbox-directions-instructions.collapsible.collapsed,
+                .directions-control-instructions.collapsible.collapsed {
+                    display: none !important;
+                }
             </style>
         </head>
         <body>
@@ -308,11 +343,55 @@ export const LocationCard = ({
             <div class="destination-info">
                 <h3>${name}</h3>
             </div>
+            <button id="toggle-directions" class="directions-toggle" aria-expanded="false" type="button">
+                Show Directions
+            </button>
             <script>
                 mapboxgl.accessToken = '${API_KEYS.mapbox}';
                 
                 const destinationCoords = [${location.coordinates.longitude}, ${location.coordinates.latitude}];
-                
+                let directions;
+                const toggleButton = document.getElementById('toggle-directions');
+                let instructionsContainer = null;
+                let instructionsVisible = false;
+
+                const updateInstructionsVisibility = () => {
+                    if (!instructionsContainer || !toggleButton) return;
+                    if (instructionsVisible) {
+                        instructionsContainer.classList.remove('collapsed');
+                        toggleButton.textContent = 'Hide Directions';
+                        toggleButton.setAttribute('aria-expanded', 'true');
+                    } else {
+                        instructionsContainer.classList.add('collapsed');
+                        toggleButton.textContent = 'Show Directions';
+                        toggleButton.setAttribute('aria-expanded', 'false');
+                    }
+                };
+
+                const initializeInstructionsToggle = () => {
+                    if (!toggleButton) return;
+                    const nextContainer = document.querySelector('.mapbox-directions-instructions')
+                        || document.querySelector('.directions-control-instructions');
+                    if (!nextContainer) {
+                        setTimeout(initializeInstructionsToggle, 100);
+                        return;
+                    }
+                    if (instructionsContainer !== nextContainer) {
+                        instructionsContainer = nextContainer;
+                        instructionsContainer.classList.add('collapsible');
+                        updateInstructionsVisibility();
+                        return;
+                    }
+                    updateInstructionsVisibility();
+                };
+
+                if (toggleButton) {
+                    toggleButton.addEventListener('click', () => {
+                        instructionsVisible = !instructionsVisible;
+                        updateInstructionsVisibility();
+                    });
+                }
+
                 const map = new mapboxgl.Map({
                     container: 'map',
                     center: destinationCoords,
@@ -321,11 +400,79 @@ export const LocationCard = ({
                 
                 map.addControl(new mapboxgl.NavigationControl());
                 
+                directions = new MapboxDirections({
+                    accessToken: mapboxgl.accessToken,
+                    unit: 'metric',
+                    profile: 'mapbox/driving',
+                    controls: {
+                        inputs: false,
+                        instructions: true
+                    },
+                    placeholderOrigin: 'Your Location',
+                    placeholderDestination: 'Destination',
+                    geocoder: {
+                        language: 'en'
+                    }
+                });
+                
+                map.addControl(directions, 'top-left');
+                
+                // Listen for route changes to cache route data
+                directions.on('route', function(event) {
+                    if (event.route && event.route.length > 0) {
+                        const route = event.route[0];
+                        const originData = directions.getOrigin();
+                        const originCoords = originData?.geometry?.coordinates;
+                        const routeData = {
+                            origin: originCoords 
+                                ? {
+                                    latitude: originCoords[1],
+                                    longitude: originCoords[0]
+                                } 
+                                : null,
+                            destination: {
+                                latitude: ${location.coordinates.latitude},
+                                longitude: ${location.coordinates.longitude}
+                            },
+                            distance: route.distance ? (route.distance / 1000).toFixed(2) + ' km' : null,
+                            duration: route.duration ? Math.round(route.duration / 60) + ' min' : null,
+                            timestamp: Date.now()
+                        };
+                        
+                        // Send route data to React Native to cache
+                        if (window.ReactNativeWebView && routeData.origin) {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({
+                                type: 'saveRoute',
+                                data: routeData
+                            }));
+                        }
+                        initializeInstructionsToggle();
+                    }
+                });
+
                 map.on('load', function() {
+                    directions.setDestination(destinationCoords);
+
                     new mapboxgl.Marker({color: '#0ff6be'})
                         .setLngLat(destinationCoords)
                         .addTo(map);
                         
+                    // Automatically get user's location and set as origin
+                    if (window.ReactNativeWebView) {
+                        window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getLocation'}));
+                    } else if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(position => {
+                            const userLocation = [position.coords.longitude, position.coords.latitude];
+                            directions.setOrigin(userLocation);
+                        }, error => {
+                            console.error('Failed to get user location for route origin:', error instanceof Error ? error.message : String(error));
+                        }, {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        });
+                    }
+
                     window.ReactNativeWebView?.postMessage(JSON.stringify({type: 'mapLoaded'}));
                 });
             </script>
@@ -485,6 +632,37 @@ export const LocationCard = ({
 			: language === "akl" && loc.description_akl
 				? loc.description_akl
 				: loc.description || "";
+	};
+
+	const getUserLocation = async () => {
+		try {
+			const { status } =
+				await ELocation.requestForegroundPermissionsAsync();
+
+			if (status !== "granted") {
+				alert("Permission to access location was denied");
+				return;
+			}
+
+			const location = await ELocation.getCurrentPositionAsync({});
+			setUserLocation({
+				latitude: location.coords.latitude,
+				longitude: location.coords.longitude
+			});
+
+			if (webViewRef.current) {
+				const jsCode = `
+					const userLocation = [${location.coords.longitude}, ${location.coords.latitude}];
+					if (typeof directions !== 'undefined') {
+						directions.setOrigin(userLocation);
+					}
+				`;
+				webViewRef.current.injectJavaScript(jsCode);
+			}
+		} catch (error) {
+			console.error("Error getting location:", error);
+			alert("Unable to get your location. Please try again.");
+		}
 	};
 
 	return (
@@ -874,7 +1052,15 @@ export const LocationCard = ({
 									const data = JSON.parse(
 										event.nativeEvent.data
 									);
-									// Handle any future message types here if needed
+									if (data.type === "getLocation") {
+										getUserLocation();
+									} else if (data.type === "saveRoute") {
+										// Save the route data for offline use
+										await MapRouteService.saveRoute(
+											location.id,
+											data.data
+										);
+									}
 								} catch (e) {
 									console.error(
 										"Error parsing WebView message:",
