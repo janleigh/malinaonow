@@ -8,6 +8,7 @@ import { useAuth } from "@shared/context/AuthContext";
 import { BookmarkService, LocationService } from "@shared/services";
 import { Location } from "@shared/types/supabase";
 import { shadowStyles } from "@shared/utils/styles";
+import { sortLocations } from "@shared/utils/sorting";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -55,7 +56,10 @@ export default function BookmarksPage() {
 			const bookmarkedLocationsData = allLocations.filter(
 				(location) => bookmarks.includes(location.id)
 			);
-			setLocations(bookmarkedLocationsData);
+			const sortedLocations = await sortLocations(
+				bookmarkedLocationsData
+			);
+			setLocations(sortedLocations);
 		} catch (err) {
 			console.error("Failed to fetch bookmarked locations:", err);
 			setError(
@@ -235,40 +239,57 @@ export default function BookmarksPage() {
 							</View>
 						) : (
 							// Grid View
-							<View className="flex-row justify-between">
-								<View className="w-[48%] space-y-4">
-									{locations
-										.slice(
-											0,
-											Math.ceil(locations.length / 2)
-										)
-										.map((location) => (
-											<LocationCard
-												key={location.id}
-												location={location}
-												isBookmarked={true}
-												onToggleBookmark={
-													handleToggleBookmark
-												}
-											/>
-										))}
-								</View>
-								<View className="w-[48%] space-y-4">
-									{locations
-										.slice(
-											Math.ceil(locations.length / 2)
-										)
-										.map((location) => (
-											<LocationCard
-												key={location.id}
-												location={location}
-												isBookmarked={true}
-												onToggleBookmark={
-													handleToggleBookmark
-												}
-											/>
-										))}
-								</View>
+							<View className="space-y-4">
+								{Array.from({
+									length: Math.ceil(locations.length / 2)
+								}).map((_, rowIndex) => (
+									<View
+										key={`row-${rowIndex}`}
+										className="flex-row justify-between">
+										{locations[rowIndex * 2] && (
+											<View className="w-[48%]">
+												<LocationCard
+													key={
+														locations[
+															rowIndex * 2
+														].id
+													}
+													location={
+														locations[
+															rowIndex * 2
+														]
+													}
+													isBookmarked={true}
+													onToggleBookmark={
+														handleToggleBookmark
+													}
+												/>
+											</View>
+										)}
+										{locations[rowIndex * 2 + 1] && (
+											<View className="w-[48%]">
+												<LocationCard
+													key={
+														locations[
+															rowIndex * 2 +
+																1
+														].id
+													}
+													location={
+														locations[
+															rowIndex * 2 +
+																1
+														]
+													}
+													isBookmarked={true}
+													onToggleBookmark={
+														handleToggleBookmark
+													}
+												/>
+											</View>
+										)}
+									</View>
+								))}
 							</View>
 						)}
 					</View>

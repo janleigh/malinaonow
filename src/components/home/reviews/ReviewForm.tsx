@@ -27,7 +27,9 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
 	const handleSubmit = async () => {
 		if (isGuestMode) {
-			setError("Guest users cannot leave reviews. Please sign in with an account.");
+			setError(
+				"Guest users cannot leave reviews. Please sign in with an account."
+			);
 			return;
 		}
 

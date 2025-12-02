@@ -4,53 +4,31 @@ import {
 	Location as CardLocation,
 	Location as SupabaseLocation
 } from "@shared/types/supabase";
-import { CacheService } from "./CacheService";
 
 export const LocationService = {
 	/**
-	 * Fetch all locations
+	 * Fetch all locations (fresh fetch, no caching)
 	 * @returns {Promise<CardLocation[]>} - A promise that resolves to an array of CardLocation objects
 	 */
 	async getLocations(): Promise<CardLocation[]> {
 		try {
 			const { data, error } = await supabase
 				.from("locations")
-				.select("*")
-				.order("name");
+				.select("*");
 
 			if (error) {
 				console.error("Error fetching locations:", error);
-				const cached =
-					await CacheService.getItem<CardLocation[]>(
-						"locations_all"
-					);
-				return cached || [];
+				return [];
 			}
 
 			const map = (data || []).map((location) =>
 				this.mapToCardLocation(location)
 			);
-			CacheService.setItem("locations_all", map);
 			return map;
 		} catch (error) {
 			console.error("Exception fetching locations:", error);
-			const cached =
-				await CacheService.getItem<CardLocation[]>(
-					"locations_all"
-				);
-			return cached || [];
+			return [];
 		}
-	},
-
-	/**
-	 * what do you think it does?
-	 */
-	async getCachedLocations(): Promise<CardLocation[]> {
-		return (
-			(await CacheService.getItem<CardLocation[]>(
-				"locations_all"
-			)) || []
-		);
 	},
 
 	/**
@@ -139,9 +117,6 @@ export const LocationService = {
 					.single();
 
 			if (updateError) throw updateError;
-
-			// Clear cache to force refresh
-			await CacheService.removeItem("locations_all");
 
 			return this.mapToCardLocation(updatedLocation);
 		} catch (error) {
@@ -256,9 +231,6 @@ export const LocationService = {
 
 			if (error) throw error;
 
-			// Clear cache to force refresh
-			await CacheService.removeItem("locations_all");
-
 			return this.mapToCardLocation(location);
 		} catch (error) {
 			console.error("Error updating location:", error);
@@ -330,9 +302,6 @@ export const LocationService = {
 				.eq("id", id);
 
 			if (error) throw error;
-
-			// Clear cache
-			await CacheService.removeItem("locations_all");
 		} catch (error) {
 			console.error("Error deleting location:", error);
 			throw error;

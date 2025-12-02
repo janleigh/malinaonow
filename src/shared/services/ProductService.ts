@@ -5,11 +5,10 @@ import {
 	Product,
 	UpdateProductDTO
 } from "@shared/types/supabase";
-import { CacheService } from "./CacheService";
 
 export const ProductService = {
 	/**
-	 * Fetch all products
+	 * Fetch all products (fresh fetch, no caching)
 	 * @returns {Promise<Product[]>} - A promise that resolves to an array of Product objects
 	 */
 	async getAllProducts(): Promise<Product[]> {
@@ -21,29 +20,15 @@ export const ProductService = {
 
 			if (error) {
 				console.error("Error fetching products:", error);
-				const cached =
-					await CacheService.getItem<Product[]>("products_all");
-				return cached || [];
+				return [];
 			}
 
 			const list = (data || []) as Product[];
-			CacheService.setItem("products_all", list);
 			return list;
 		} catch (error) {
 			console.error("Exception fetching products:", error);
-			const cached =
-				await CacheService.getItem<Product[]>("products_all");
-			return cached || [];
+			return [];
 		}
-	},
-
-	/**
-	 * what do you think it does again?
-	 */
-	async getCachedProducts(): Promise<Product[]> {
-		return (
-			(await CacheService.getItem<Product[]>("products_all")) || []
-		);
 	},
 
 	/**
@@ -117,9 +102,6 @@ export const ProductService = {
 					.single();
 
 			if (updateError) throw updateError;
-
-			// Clear cache to force refresh
-			await CacheService.removeItem("products_all");
 
 			return updatedProduct as Product;
 		} catch (error) {
@@ -198,9 +180,6 @@ export const ProductService = {
 
 			if (error) throw error;
 
-			// Clear cache to force refresh
-			await CacheService.removeItem("products_all");
-
 			return product as Product;
 		} catch (error) {
 			console.error("Error updating product:", error);
@@ -243,9 +222,6 @@ export const ProductService = {
 				.eq("id", id);
 
 			if (error) throw error;
-
-			// Clear cache
-			await CacheService.removeItem("products_all");
 		} catch (error) {
 			console.error("Error deleting product:", error);
 			throw error;

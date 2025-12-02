@@ -17,6 +17,7 @@ import {
 } from "@shared/services";
 import { Location } from "@shared/types/supabase";
 import { shadowStyles } from "@shared/utils/styles";
+import { sortLocations } from "@shared/utils/sorting";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -79,17 +80,14 @@ export default function HomePage() {
 			setError(null);
 
 			if (!isOnline) {
-				const cached =
-					await LocationService.getCachedLocations?.();
-				if (cached?.length) {
-					setLocations(cached);
-				}
+				setError("You are offline. Please check your connection.");
 				setLoading(false);
 				return;
 			}
 
 			const data = await LocationService.getLocations();
-			setLocations(data);
+			const sortedData = await sortLocations(data);
+			setLocations(sortedData);
 		} catch (err) {
 			console.error("Failed to fetch locations:", err);
 			if (!locations.length) {
@@ -397,50 +395,72 @@ export default function HomePage() {
 								</View>
 							</View>
 						) : (
-							<View className="flex-row justify-between">
-								<View className="w-[48%] space-y-4">
-									{displayedLocations
-										.slice(
-											0,
-											Math.ceil(
-												displayedLocations.length /
-													2
-											)
-										)
-										.map((location) => (
-											<LocationCard
-												key={location.id}
-												location={location}
-												isBookmarked={bookmarkedLocations.includes(
-													location.id
-												)}
-												onToggleBookmark={
-													handleToggleBookmark
-												}
-											/>
-										))}
-								</View>
-								<View className="w-[48%] space-y-4">
-									{displayedLocations
-										.slice(
-											Math.ceil(
-												displayedLocations.length /
-													2
-											)
-										)
-										.map((location) => (
-											<LocationCard
-												key={location.id}
-												location={location}
-												isBookmarked={bookmarkedLocations.includes(
-													location.id
-												)}
-												onToggleBookmark={
-													handleToggleBookmark
-												}
-											/>
-										))}
-								</View>
+							<View className="space-y-4">
+								{Array.from({
+									length: Math.ceil(
+										displayedLocations.length / 2
+									)
+								}).map((_, rowIndex) => (
+									<View
+										key={`row-${rowIndex}`}
+										className="flex-row justify-between">
+										{displayedLocations[
+											rowIndex * 2
+										] && (
+											<View className="w-[48%]">
+												<LocationCard
+													key={
+														displayedLocations[
+															rowIndex * 2
+														].id
+													}
+													location={
+														displayedLocations[
+															rowIndex * 2
+														]
+													}
+													isBookmarked={bookmarkedLocations.includes(
+														displayedLocations[
+															rowIndex * 2
+														].id
+													)}
+													onToggleBookmark={
+														handleToggleBookmark
+													}
+												/>
+											</View>
+										)}
+										{displayedLocations[
+											rowIndex * 2 + 1
+										] && (
+											<View className="w-[48%]">
+												<LocationCard
+													key={
+														displayedLocations[
+															rowIndex * 2 +
+																1
+														].id
+													}
+													location={
+														displayedLocations[
+															rowIndex * 2 +
+																1
+														]
+													}
+													isBookmarked={bookmarkedLocations.includes(
+														displayedLocations[
+															rowIndex * 2 +
+																1
+														].id
+													)}
+													onToggleBookmark={
+														handleToggleBookmark
+													}
+												/>
+											</View>
+										)}
+									</View>
+								))}
 							</View>
 						)}
 					</View>

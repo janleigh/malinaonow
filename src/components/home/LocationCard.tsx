@@ -151,7 +151,7 @@ export const LocationCard = ({
 					.from("reviews")
 					.select("*")
 					.eq("location_id", location.id);
-				
+
 				// TODO! Cache reviews.
 
 				if (reviewStats && reviewStats.length > 0) {
@@ -269,7 +269,7 @@ export const LocationCard = ({
         </html>
     `;
 
-	// HTML for the map viewer with directions 
+	// HTML for the map viewer with directions
 	const getMapViewerHTML = (name: string) => `
     <!DOCTYPE html>
     <html>

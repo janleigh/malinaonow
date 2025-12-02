@@ -79,10 +79,7 @@ const ProductsScreen = () => {
 
 		try {
 			if (!isOnline) {
-				const c = await ProductService.getCachedProducts?.();
-				if (c?.length) {
-					setProducts(c);
-				}
+				setError("You are offline. Please check your connection.");
 				setLoading(false);
 				return;
 			}
